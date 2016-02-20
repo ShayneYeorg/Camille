@@ -12,11 +12,15 @@
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
 		34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C741C78149E004264C2 /* CMLAccountingViewController.m */; };
 		34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */; };
-		34D21C8F1C7814F3004264C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C811C7814F3004264C2 /* ViewController.m */; };
 		34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C841C7814F3004264C2 /* AppDelegate.m */; };
 		34D21C911C7814F3004264C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C861C7814F3004264C2 /* main.m */; };
-		34D21C921C7814F3004264C2 /* Camille.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */; };
 		34D21C931C7814F3004264C2 /* CMLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C8D1C7814F3004264C2 /* CMLTool.m */; };
+		34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C991C78892E004264C2 /* Camille.xcdatamodeld */; };
+		34D21CA41C788948004264C2 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CA31C788948004264C2 /* UIView+Extension.m */; };
+		34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CA81C788A28004264C2 /* UIBarButtonItem+Extension.m */; };
+		34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CAB1C789085004264C2 /* CMLTabBarController.m */; };
+		34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CAE1C7890AE004264C2 /* CMLNavigationController.m */; };
+		34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,15 +34,22 @@
 		34D21C741C78149E004264C2 /* CMLAccountingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingViewController.m; sourceTree = "<group>"; };
 		34D21C791C7814CC004264C2 /* CMLRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordViewController.h; sourceTree = "<group>"; };
 		34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordViewController.m; sourceTree = "<group>"; };
-		34D21C801C7814F3004264C2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		34D21C811C7814F3004264C2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		34D21C831C7814F3004264C2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34D21C841C7814F3004264C2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		34D21C851C7814F3004264C2 /* CMLConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLConstant.h; sourceTree = "<group>"; };
 		34D21C861C7814F3004264C2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		34D21C891C7814F3004264C2 /* Camille.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Camille.xcdatamodel; sourceTree = "<group>"; };
 		34D21C8C1C7814F3004264C2 /* CMLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTool.h; sourceTree = "<group>"; };
 		34D21C8D1C7814F3004264C2 /* CMLTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTool.m; sourceTree = "<group>"; };
+		34D21C9A1C78892E004264C2 /* Camille.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Camille.xcdatamodel; sourceTree = "<group>"; };
+		34D21CA21C788948004264C2 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		34D21CA31C788948004264C2 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		34D21CA71C788A28004264C2 /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
+		34D21CA81C788A28004264C2 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
+		34D21CAA1C789085004264C2 /* CMLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTabBarController.h; sourceTree = "<group>"; };
+		34D21CAB1C789085004264C2 /* CMLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTabBarController.m; sourceTree = "<group>"; };
+		34D21CAD1C7890AE004264C2 /* CMLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLNavigationController.h; sourceTree = "<group>"; };
+		34D21CAE1C7890AE004264C2 /* CMLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLNavigationController.m; sourceTree = "<group>"; };
+		34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +135,7 @@
 			children = (
 				34D21C731C78149E004264C2 /* CMLAccountingViewController.h */,
 				34D21C741C78149E004264C2 /* CMLAccountingViewController.m */,
+				34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -169,22 +181,14 @@
 			isa = PBXGroup;
 			children = (
 				34D21C821C7814F3004264C2 /* Main */,
-				34D21C871C7814F3004264C2 /* Models */,
-				34D21C8E1C7814F3004264C2 /* Views */,
-				34D21C7F1C7814F3004264C2 /* Controllers */,
+				34D21C981C78892E004264C2 /* Model */,
+				34D21C9C1C788938004264C2 /* View */,
+				34D21C9D1C788940004264C2 /* Controller */,
 				34D21C8B1C7814F3004264C2 /* Tools */,
+				34D21CA11C788948004264C2 /* Category */,
 				34D21C8A1C7814F3004264C2 /* Other */,
 			);
 			path = "Public(公共)";
-			sourceTree = "<group>";
-		};
-		34D21C7F1C7814F3004264C2 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				34D21C801C7814F3004264C2 /* ViewController.h */,
-				34D21C811C7814F3004264C2 /* ViewController.m */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		34D21C821C7814F3004264C2 /* Main */ = {
@@ -196,14 +200,6 @@
 				34D21C861C7814F3004264C2 /* main.m */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		34D21C871C7814F3004264C2 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		34D21C8A1C7814F3004264C2 /* Other */ = {
@@ -222,11 +218,41 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
-		34D21C8E1C7814F3004264C2 /* Views */ = {
+		34D21C981C78892E004264C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				34D21C991C78892E004264C2 /* Camille.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		34D21C9C1C788938004264C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			path = View;
+			sourceTree = "<group>";
+		};
+		34D21C9D1C788940004264C2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				34D21CAA1C789085004264C2 /* CMLTabBarController.h */,
+				34D21CAB1C789085004264C2 /* CMLTabBarController.m */,
+				34D21CAD1C7890AE004264C2 /* CMLNavigationController.h */,
+				34D21CAE1C7890AE004264C2 /* CMLNavigationController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		34D21CA11C788948004264C2 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				34D21CA21C788948004264C2 /* UIView+Extension.h */,
+				34D21CA31C788948004264C2 /* UIView+Extension.m */,
+				34D21CA71C788A28004264C2 /* UIBarButtonItem+Extension.h */,
+				34D21CA81C788A28004264C2 /* UIBarButtonItem+Extension.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +314,7 @@
 			files = (
 				344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */,
 				344A00481C75E0D8008281BB /* Assets.xcassets in Resources */,
+				34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */,
 				344A00431C75E0D8008281BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,11 +327,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
+				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
-				34D21C921C7814F3004264C2 /* Camille.xcdatamodeld in Sources */,
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
-				34D21C8F1C7814F3004264C2 /* ViewController.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
+				34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */,
+				34D21CA41C788948004264C2 /* UIView+Extension.m in Sources */,
+				34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */,
+				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -467,12 +497,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */ = {
+		34D21C991C78892E004264C2 /* Camille.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				34D21C891C7814F3004264C2 /* Camille.xcdatamodel */,
+				34D21C9A1C78892E004264C2 /* Camille.xcdatamodel */,
 			);
-			currentVersion = 34D21C891C7814F3004264C2 /* Camille.xcdatamodel */;
+			currentVersion = 34D21C9A1C78892E004264C2 /* Camille.xcdatamodel */;
 			path = Camille.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

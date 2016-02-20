@@ -10,4 +10,9 @@
 
 @implementation CMLAccountingViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+}
+
 @end

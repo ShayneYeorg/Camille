@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CMLTool.h"
+#import "UIView+Extension.h"
 
 //NSLog
 #ifdef DEBUG

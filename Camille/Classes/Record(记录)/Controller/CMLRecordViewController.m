@@ -10,4 +10,12 @@
 
 @implementation CMLRecordViewController
 
+#pragma mark - Life Cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor lightGrayColor];
+}
+
 @end

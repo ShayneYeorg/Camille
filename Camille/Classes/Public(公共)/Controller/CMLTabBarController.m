@@ -9,6 +9,7 @@
 #import "CMLTabBarController.h"
 #import "CMLNavigationController.h"
 #import "CMLAccountingViewController.h"
+#import "CMLRecordViewController.h"
 
 @implementation CMLTabBarController
 
@@ -24,14 +25,10 @@
 - (void)detailsOfViewDidLoad{
     //初始化子控制器，这里指定了程序会有几个页面
     CMLAccountingViewController *accountingViewController = [[CMLAccountingViewController alloc] init];
-    [self addChildVc:accountingViewController navTitle:@"Camille" tabbarTitle:@"记账" image:@"" selectedImage:@""];
+    [self addChildVc:accountingViewController navTitle:@"Camille" tabbarTitle:@"记账" image:@"accounting_icon" selectedImage:@"accounting_icon_selected"];
     
-    //先砍掉这个功能
-    //    SYRectGraphViewController *rectGraphView = [[SYRectGraphViewController alloc] init];
-    //    [self addChildVc:rectGraphView navTitle:@"ondine" tabbarTitle:@"矩形图" image:@"tabbar_rect_graph" selectedImage:@"tabbar_rect_graph_selected"];
-    
-//    SYPercentageGraphViewController *percentageGraphView = [[SYPercentageGraphViewController alloc] init];
-//    [self addChildVc:percentageGraphView navTitle:@"ondine" tabbarTitle:@"统计" image:@"tabbar_percentage_graph" selectedImage:@"tabbar_percentage_graph_selected"];
+    CMLRecordViewController *recordViewController = [[CMLRecordViewController alloc] init];
+    [self addChildVc:recordViewController navTitle:@"记录" tabbarTitle:@"记录" image:@"record_icon" selectedImage:@"record_icon_selected"];
 }
 
 - (void)addChildVc:(UIViewController *)childVc navTitle:(NSString *)navTitle tabbarTitle:(NSString *)tabbarTitle image:(NSString *)image selectedImage:(NSString *)selectedImage
@@ -46,9 +43,9 @@
     
     //设置tabBar文字的样式
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
-    textAttrs[NSForegroundColorAttributeName] = RGB(150, 150, 150);
+    textAttrs[NSForegroundColorAttributeName] = kAppTextCoclor;
     NSMutableDictionary *selectTextAttrs = [NSMutableDictionary dictionary];
-    selectTextAttrs[NSForegroundColorAttributeName] = RGB(0, 150, 30);
+    selectTextAttrs[NSForegroundColorAttributeName] = kAppTextCoclor;
     [childVc.tabBarItem setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
     [childVc.tabBarItem setTitleTextAttributes:selectTextAttrs forState:UIControlStateSelected];
     

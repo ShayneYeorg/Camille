@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CMLTabBarController.h"
+#import "CMLRecordViewController.h"
 
 @interface AppDelegate ()
 

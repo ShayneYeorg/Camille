@@ -17,7 +17,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CMLLog(@"123");
 }
 
 - (void)didReceiveMemoryWarning {

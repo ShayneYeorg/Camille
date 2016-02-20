@@ -10,11 +10,13 @@
 		344A00431C75E0D8008281BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00411C75E0D8008281BB /* Main.storyboard */; };
 		344A00481C75E0D8008281BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344A00471C75E0D8008281BB /* Assets.xcassets */; };
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
-		34D21C671C777007004264C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C591C777007004264C2 /* ViewController.m */; };
-		34D21C681C777007004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C5C1C777007004264C2 /* AppDelegate.m */; };
-		34D21C691C777007004264C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C5E1C777007004264C2 /* main.m */; };
-		34D21C6A1C777007004264C2 /* Camille.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C601C777007004264C2 /* Camille.xcdatamodeld */; };
-		34D21C6B1C777007004264C2 /* CMLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C651C777007004264C2 /* CMLTool.m */; };
+		34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C741C78149E004264C2 /* CMLAccountingViewController.m */; };
+		34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */; };
+		34D21C8F1C7814F3004264C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C811C7814F3004264C2 /* ViewController.m */; };
+		34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C841C7814F3004264C2 /* AppDelegate.m */; };
+		34D21C911C7814F3004264C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C861C7814F3004264C2 /* main.m */; };
+		34D21C921C7814F3004264C2 /* Camille.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */; };
+		34D21C931C7814F3004264C2 /* CMLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C8D1C7814F3004264C2 /* CMLTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,15 +26,19 @@
 		344A004A1C75E0D8008281BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		344A004C1C75E0D8008281BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34D21C501C776EF4004264C2 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		34D21C581C777007004264C2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		34D21C591C777007004264C2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		34D21C5B1C777007004264C2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		34D21C5C1C777007004264C2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		34D21C5D1C777007004264C2 /* CMLConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLConstant.h; sourceTree = "<group>"; };
-		34D21C5E1C777007004264C2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		34D21C611C777007004264C2 /* Camille.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Camille.xcdatamodel; sourceTree = "<group>"; };
-		34D21C641C777007004264C2 /* CMLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTool.h; sourceTree = "<group>"; };
-		34D21C651C777007004264C2 /* CMLTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTool.m; sourceTree = "<group>"; };
+		34D21C731C78149E004264C2 /* CMLAccountingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingViewController.h; sourceTree = "<group>"; };
+		34D21C741C78149E004264C2 /* CMLAccountingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingViewController.m; sourceTree = "<group>"; };
+		34D21C791C7814CC004264C2 /* CMLRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordViewController.h; sourceTree = "<group>"; };
+		34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordViewController.m; sourceTree = "<group>"; };
+		34D21C801C7814F3004264C2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		34D21C811C7814F3004264C2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		34D21C831C7814F3004264C2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		34D21C841C7814F3004264C2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		34D21C851C7814F3004264C2 /* CMLConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLConstant.h; sourceTree = "<group>"; };
+		34D21C861C7814F3004264C2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		34D21C891C7814F3004264C2 /* Camille.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Camille.xcdatamodel; sourceTree = "<group>"; };
+		34D21C8C1C7814F3004264C2 /* CMLTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTool.h; sourceTree = "<group>"; };
+		34D21C8D1C7814F3004264C2 /* CMLTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +92,9 @@
 		34D21C2D1C776CC8004264C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				34D21C7E1C7814F3004264C2 /* Public(公共) */,
 				34D21C2E1C776CC8004264C2 /* Accounting(记账) */,
 				34D21C381C776CC8004264C2 /* Record(记录) */,
-				34D21C561C777007004264C2 /* Other */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -96,6 +102,9 @@
 		34D21C2E1C776CC8004264C2 /* Accounting(记账) */ = {
 			isa = PBXGroup;
 			children = (
+				34D21C721C78149E004264C2 /* Controller */,
+				34D21C751C78149E004264C2 /* Model */,
+				34D21C761C78149E004264C2 /* View */,
 			);
 			path = "Accounting(记账)";
 			sourceTree = "<group>";
@@ -103,68 +112,117 @@
 		34D21C381C776CC8004264C2 /* Record(记录) */ = {
 			isa = PBXGroup;
 			children = (
+				34D21C781C7814CC004264C2 /* Controller */,
+				34D21C7B1C7814CC004264C2 /* Model */,
+				34D21C7C1C7814CC004264C2 /* View */,
 			);
 			path = "Record(记录)";
 			sourceTree = "<group>";
 		};
-		34D21C561C777007004264C2 /* Other */ = {
+		34D21C721C78149E004264C2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				34D21C5A1C777007004264C2 /* Main */,
-				34D21C5F1C777007004264C2 /* Models */,
-				34D21C661C777007004264C2 /* Views */,
-				34D21C571C777007004264C2 /* Controllers */,
-				34D21C631C777007004264C2 /* Tools */,
-				34D21C621C777007004264C2 /* Other */,
+				34D21C731C78149E004264C2 /* CMLAccountingViewController.h */,
+				34D21C741C78149E004264C2 /* CMLAccountingViewController.m */,
 			);
-			path = Other;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		34D21C571C777007004264C2 /* Controllers */ = {
+		34D21C751C78149E004264C2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				34D21C581C777007004264C2 /* ViewController.h */,
-				34D21C591C777007004264C2 /* ViewController.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		34D21C761C78149E004264C2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		34D21C781C7814CC004264C2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				34D21C791C7814CC004264C2 /* CMLRecordViewController.h */,
+				34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		34D21C7B1C7814CC004264C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		34D21C7C1C7814CC004264C2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		34D21C7E1C7814F3004264C2 /* Public(公共) */ = {
+			isa = PBXGroup;
+			children = (
+				34D21C821C7814F3004264C2 /* Main */,
+				34D21C871C7814F3004264C2 /* Models */,
+				34D21C8E1C7814F3004264C2 /* Views */,
+				34D21C7F1C7814F3004264C2 /* Controllers */,
+				34D21C8B1C7814F3004264C2 /* Tools */,
+				34D21C8A1C7814F3004264C2 /* Other */,
+			);
+			path = "Public(公共)";
+			sourceTree = "<group>";
+		};
+		34D21C7F1C7814F3004264C2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				34D21C801C7814F3004264C2 /* ViewController.h */,
+				34D21C811C7814F3004264C2 /* ViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		34D21C5A1C777007004264C2 /* Main */ = {
+		34D21C821C7814F3004264C2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				34D21C5B1C777007004264C2 /* AppDelegate.h */,
-				34D21C5C1C777007004264C2 /* AppDelegate.m */,
-				34D21C5D1C777007004264C2 /* CMLConstant.h */,
-				34D21C5E1C777007004264C2 /* main.m */,
+				34D21C831C7814F3004264C2 /* AppDelegate.h */,
+				34D21C841C7814F3004264C2 /* AppDelegate.m */,
+				34D21C851C7814F3004264C2 /* CMLConstant.h */,
+				34D21C861C7814F3004264C2 /* main.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
 		};
-		34D21C5F1C777007004264C2 /* Models */ = {
+		34D21C871C7814F3004264C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				34D21C601C777007004264C2 /* Camille.xcdatamodeld */,
+				34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		34D21C621C777007004264C2 /* Other */ = {
+		34D21C8A1C7814F3004264C2 /* Other */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Other;
 			sourceTree = "<group>";
 		};
-		34D21C631C777007004264C2 /* Tools */ = {
+		34D21C8B1C7814F3004264C2 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				34D21C641C777007004264C2 /* CMLTool.h */,
-				34D21C651C777007004264C2 /* CMLTool.m */,
+				34D21C8C1C7814F3004264C2 /* CMLTool.h */,
+				34D21C8D1C7814F3004264C2 /* CMLTool.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
 		};
-		34D21C661C777007004264C2 /* Views */ = {
+		34D21C8E1C7814F3004264C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -241,11 +299,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34D21C681C777007004264C2 /* AppDelegate.m in Sources */,
-				34D21C691C777007004264C2 /* main.m in Sources */,
-				34D21C6B1C777007004264C2 /* CMLTool.m in Sources */,
-				34D21C671C777007004264C2 /* ViewController.m in Sources */,
-				34D21C6A1C777007004264C2 /* Camille.xcdatamodeld in Sources */,
+				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
+				34D21C911C7814F3004264C2 /* main.m in Sources */,
+				34D21C921C7814F3004264C2 /* Camille.xcdatamodeld in Sources */,
+				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
+				34D21C8F1C7814F3004264C2 /* ViewController.m in Sources */,
+				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
+				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,12 +467,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		34D21C601C777007004264C2 /* Camille.xcdatamodeld */ = {
+		34D21C881C7814F3004264C2 /* Camille.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				34D21C611C777007004264C2 /* Camille.xcdatamodel */,
+				34D21C891C7814F3004264C2 /* Camille.xcdatamodel */,
 			);
-			currentVersion = 34D21C611C777007004264C2 /* Camille.xcdatamodel */;
+			currentVersion = 34D21C891C7814F3004264C2 /* Camille.xcdatamodel */;
 			path = Camille.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

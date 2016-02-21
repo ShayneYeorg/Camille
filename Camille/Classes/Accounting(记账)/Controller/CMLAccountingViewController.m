@@ -7,6 +7,7 @@
 //
 
 #import "CMLAccountingViewController.h"
+#import "CMLAccountingRegistrationViewController.h"
 
 @implementation CMLAccountingViewController
 
@@ -14,8 +15,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Button Action
+
+- (IBAction)incomeBtnClick:(id)sender {
+    CMLAccountingRegistrationViewController *accountingRegistrationViewController = [[CMLAccountingRegistrationViewController alloc]init];
+    accountingRegistrationViewController.type = Accounting_Type_Income;
+    [self.navigationController pushViewController:accountingRegistrationViewController animated:YES];
+}
+
+- (IBAction)costBtnClick:(id)sender {
+    CMLAccountingRegistrationViewController *accountingRegistrationViewController = [[CMLAccountingRegistrationViewController alloc]init];
+    accountingRegistrationViewController.type = Accounting_Type_Cost;
+    [self.navigationController pushViewController:accountingRegistrationViewController animated:YES];
 }
 
 @end

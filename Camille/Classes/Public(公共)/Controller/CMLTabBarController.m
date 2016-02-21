@@ -28,7 +28,7 @@
     [self addChildVc:accountingViewController navTitle:@"Camille" tabbarTitle:@"记账" image:@"accounting_icon" selectedImage:@"accounting_icon_selected"];
     
     CMLRecordViewController *recordViewController = [[CMLRecordViewController alloc] init];
-    [self addChildVc:recordViewController navTitle:@"记录" tabbarTitle:@"记录" image:@"record_icon" selectedImage:@"record_icon_selected"];
+    [self addChildVc:recordViewController navTitle:@"账务明细" tabbarTitle:@"明细" image:@"record_icon" selectedImage:@"record_icon_selected"];
 }
 
 - (void)addChildVc:(UIViewController *)childVc navTitle:(NSString *)navTitle tabbarTitle:(NSString *)tabbarTitle image:(NSString *)image selectedImage:(NSString *)selectedImage

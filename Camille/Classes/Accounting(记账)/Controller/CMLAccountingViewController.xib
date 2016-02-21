@@ -15,13 +15,49 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nrw-d2-DfN">
-                    <rect key="frame" x="137" y="128" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na4-0r-MP1">
+                    <rect key="frame" x="60" y="232" width="200" height="40"/>
+                    <color key="backgroundColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="Ebb-Ru-lZu"/>
+                        <constraint firstAttribute="height" constant="40" id="Hhf-ty-QXD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="收入">
+                        <color key="titleColor" red="0.98823529409999999" green="0.79215686269999996" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nrw-d2-DfN">
+                    <rect key="frame" x="60" y="296" width="200" height="40"/>
+                    <color key="backgroundColor" red="0.1764705882352941" green="0.098039215686274508" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="B2o-GZ-WSH"/>
+                        <constraint firstAttribute="width" constant="200" id="dua-q9-CkM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="支出">
+                        <color key="titleColor" red="0.9882352941176471" green="0.792156862745098" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="450" y="-105"/>
+            <constraints>
+                <constraint firstItem="Nrw-d2-DfN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="32" id="36y-Ec-baG"/>
+                <constraint firstItem="Na4-0r-MP1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-32" id="C19-q1-d6P"/>
+                <constraint firstItem="Na4-0r-MP1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Jy3-Tn-v8H"/>
+                <constraint firstItem="Nrw-d2-DfN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ptO-W7-j1t"/>
+            </constraints>
+            <point key="canvasLocation" x="330" y="-95"/>
         </view>
     </objects>
 </document>

@@ -9,7 +9,7 @@
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
 
-@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
@@ -85,20 +85,21 @@
     [self.view addSubview:self.tableView];
 }
 
+#pragma mark - CMLAccountingItemCellDelegate
+
+- (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell {
+    self.isItemCellExpand = !self.isItemCellExpand;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:accountingItemCell];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return [CMLAccountingItemCell heightForCellByExpand:self.isItemCellExpand];
     }
-    return 30;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        self.isItemCellExpand = !self.isItemCellExpand;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
+    return 44;
 }
 
 #pragma mark - UITableViewDataSource
@@ -110,8 +111,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         CMLAccountingItemCell *cell = [CMLAccountingItemCell loadFromNib];
-        [cell refreshWithExpand:self.isItemCellExpand];
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell refreshWithExpand:self.isItemCellExpand];
         return cell;
         
     } else {

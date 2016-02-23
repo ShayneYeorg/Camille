@@ -13,20 +13,19 @@
 @property (weak, nonatomic) IBOutlet UIView *topView; //上部区域
 @property (weak, nonatomic) IBOutlet UIView *bottomView; //选择项目的区域
 
-
 @end
 
 @implementation CMLAccountingItemCell
 
 + (instancetype)loadFromNib {
-    CMLAccountingItemCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"CMLAccountingItemCell" owner:self options:nil] lastObject];
+    CMLAccountingItemCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"CMLAccountingItemCell" owner:self options:nil] firstObject];
     
     return cell;
 }
 
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand {
     if (isExpand) {
-        return 400.5;
+        return 300.5;
         
     } else {
         return 50.5;
@@ -39,6 +38,12 @@
         
     } else {
         self.bottomView.hidden = YES;
+    }
+}
+
+- (IBAction)expandTap:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(accountingItemCellDidTapExpandArea:)]) {
+        [self.delegate accountingItemCellDidTapExpandArea:self];
     }
 }
 

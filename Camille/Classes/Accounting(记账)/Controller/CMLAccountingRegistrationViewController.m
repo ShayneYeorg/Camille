@@ -82,6 +82,7 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
 }
 
@@ -98,14 +99,17 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return [CMLAccountingItemCell heightForCellByExpand:self.isItemCellExpand];
+        
+    } else if (indexPath.row == 3) {
+        return 250;
     }
-    return 44;
+    return 50;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,12 +117,19 @@
         CMLAccountingItemCell *cell = [CMLAccountingItemCell loadFromNib];
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = RGB(137, 187, 92);
         [cell refreshWithExpand:self.isItemCellExpand];
         return cell;
         
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 3) {
+            cell.backgroundColor = [UIColor whiteColor];
+            
+        } else {
+            cell.backgroundColor = RGB(137, 187, 92);
+        }
         return cell;
     }
 }

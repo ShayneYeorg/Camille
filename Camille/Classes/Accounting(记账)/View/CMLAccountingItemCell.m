@@ -6,6 +6,9 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
+#define kTopViewHeight    50
+#define kBottomViewHeight 250
+
 #import "CMLAccountingItemCell.h"
 
 @interface CMLAccountingItemCell () <UITableViewDelegate, UITableViewDataSource>
@@ -30,10 +33,10 @@
 
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand {
     if (isExpand) {
-        return 300.5;
+        return kTopViewHeight + kBottomViewHeight + 0.5;
         
     } else {
-        return 50.5;
+        return kTopViewHeight + 0.5;
     }
 }
 
@@ -57,10 +60,12 @@
 - (void)awakeFromNib {
     self.leftTableViewWidthContraint.constant = kContent_Width * 0.35;
     
+    self.leftTableView.backgroundColor = RGB(250, 230, 150);
     self.leftTableView.delegate = self;
     self.leftTableView.dataSource = self;
     self.leftTableView.tableFooterView = [UIView new];
     
+    self.rightTableView.backgroundColor = RGB(255, 250, 235);
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
@@ -74,6 +79,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]init];
+    if (tableView == self.leftTableView) {
+        cell.backgroundColor = RGB(250, 230, 150);
+    } else {
+        cell.backgroundColor = RGB(255, 250, 235);
+    }
     return cell;
 }
 

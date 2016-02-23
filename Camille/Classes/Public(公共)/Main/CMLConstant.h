@@ -21,7 +21,8 @@
 #define RGB(r, g, b) [UIColor colorWithRed:((r) / 255.0) green:((g) / 255.0) blue:((b) / 255.0) alpha:1.0]
 
 //App
-#define kAppBGCoclor RGB(252,202,28)
+#define kAppCoclor RGB(252,202,28)
+#define kAppViewColor RGB(255,250,230)
 #define kAppTextCoclor RGB(45,25,0)
 #define kApp ((AppDelegate *)[UIApplication sharedApplication].delegate)
 #define kManagedObjectContext (((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext)

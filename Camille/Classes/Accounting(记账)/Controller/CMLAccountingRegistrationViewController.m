@@ -78,6 +78,7 @@
 
 - (void)configTableView {
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height - 64)];
+    self.tableView.backgroundColor = kAppViewColor;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
@@ -117,7 +118,7 @@
         CMLAccountingItemCell *cell = [CMLAccountingItemCell loadFromNib];
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = RGB(137, 187, 92);
+        cell.backgroundColor = kCellBackgroundColor;
         [cell refreshWithExpand:self.isItemCellExpand];
         return cell;
         
@@ -125,10 +126,10 @@
         UITableViewCell *cell = [[UITableViewCell alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 3) {
-            cell.backgroundColor = [UIColor whiteColor];
+            cell.backgroundColor = kAppViewColor;
             
         } else {
-            cell.backgroundColor = RGB(137, 187, 92);
+            cell.backgroundColor = kCellBackgroundColor;
         }
         return cell;
     }

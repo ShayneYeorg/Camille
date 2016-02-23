@@ -6,6 +6,8 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
+#define kCellBackgroundColor RGB(193,229,158)
+
 #import <UIKit/UIKit.h>
 
 @class CMLAccountingItemCell;

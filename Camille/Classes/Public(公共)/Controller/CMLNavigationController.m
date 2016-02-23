@@ -21,7 +21,7 @@
 
 - (void)configDetails {
     //指定导航控制器的背景色为程序统一色
-    self.navigationBar.barTintColor = kAppBGCoclor;
+    self.navigationBar.barTintColor = kAppCoclor;
     
     // 设置navigationBar标题的颜色
     NSMutableDictionary *navTitleAttrs = [NSMutableDictionary dictionary];

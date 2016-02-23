@@ -6,8 +6,10 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
-#define kTopViewHeight    50
-#define kBottomViewHeight 250
+#define kTopViewHeight       50
+#define kBottomViewHeight    250
+#define kLeftTableViewColor  RGB(250,230,150)
+//#define kRightTableViewColor RGB(255,250,235)
 
 #import "CMLAccountingItemCell.h"
 
@@ -19,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTableViewWidthContraint;//左菜单的宽度约束
 
+@property (nonatomic, strong) NSIndexPath *leftTableViewSelectedIndexPath;//左菜单选中项
+
 @end
 
 @implementation CMLAccountingItemCell
@@ -27,6 +31,7 @@
 
 + (instancetype)loadFromNib {
     CMLAccountingItemCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"CMLAccountingItemCell" owner:self options:nil] firstObject];
+    cell.topView.backgroundColor = kCellBackgroundColor;
     
     return cell;
 }
@@ -59,16 +64,26 @@
 
 - (void)awakeFromNib {
     self.leftTableViewWidthContraint.constant = kContent_Width * 0.35;
+    self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
-    self.leftTableView.backgroundColor = RGB(250, 230, 150);
+    self.leftTableView.backgroundColor = kLeftTableViewColor;
     self.leftTableView.delegate = self;
     self.leftTableView.dataSource = self;
     self.leftTableView.tableFooterView = [UIView new];
     
-    self.rightTableView.backgroundColor = RGB(255, 250, 235);
+    self.rightTableView.backgroundColor = kAppViewColor;
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.leftTableView) {
+        self.leftTableViewSelectedIndexPath = indexPath;
+        [self.leftTableView reloadData];
+    }
 }
 
 #pragma mark - TableViewDataSource
@@ -79,10 +94,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]init];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView == self.leftTableView) {
-        cell.backgroundColor = RGB(250, 230, 150);
+        if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
+            cell.backgroundColor = kAppViewColor;
+            
+        } else {
+            cell.backgroundColor = kLeftTableViewColor;
+        }
+        
     } else {
-        cell.backgroundColor = RGB(255, 250, 235);
+        cell.backgroundColor = kAppViewColor;
     }
     return cell;
 }

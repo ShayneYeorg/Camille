@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3441D0AD1C7C098A00D6FE0C /* CMLAccountingItemCell.m */; };
+		3441D0B01C7C098A00D6FE0C /* CMLAccountingItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441D0AE1C7C098A00D6FE0C /* CMLAccountingItemCell.xib */; };
 		344A00431C75E0D8008281BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00411C75E0D8008281BB /* Main.storyboard */; };
 		344A00481C75E0D8008281BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344A00471C75E0D8008281BB /* Assets.xcassets */; };
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
 		3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */; };
-		3490A2ED1C798D0900DEC138 /* CMLAccountingRegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3490A2EB1C798D0900DEC138 /* CMLAccountingRegistrationViewController.xib */; };
 		34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C741C78149E004264C2 /* CMLAccountingViewController.m */; };
 		34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */; };
 		34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C841C7814F3004264C2 /* AppDelegate.m */; };
@@ -26,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3441D0AC1C7C098A00D6FE0C /* CMLAccountingItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingItemCell.h; sourceTree = "<group>"; };
+		3441D0AD1C7C098A00D6FE0C /* CMLAccountingItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingItemCell.m; sourceTree = "<group>"; };
+		3441D0AE1C7C098A00D6FE0C /* CMLAccountingItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingItemCell.xib; sourceTree = "<group>"; };
 		344A00351C75E0D8008281BB /* Camille.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camille.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344A00421C75E0D8008281BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		344A00471C75E0D8008281BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -33,7 +37,6 @@
 		344A004C1C75E0D8008281BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3490A2E91C798D0900DEC138 /* CMLAccountingRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingRegistrationViewController.h; sourceTree = "<group>"; };
 		3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingRegistrationViewController.m; sourceTree = "<group>"; };
-		3490A2EB1C798D0900DEC138 /* CMLAccountingRegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingRegistrationViewController.xib; sourceTree = "<group>"; };
 		34D21C501C776EF4004264C2 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		34D21C731C78149E004264C2 /* CMLAccountingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingViewController.h; sourceTree = "<group>"; };
 		34D21C741C78149E004264C2 /* CMLAccountingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingViewController.m; sourceTree = "<group>"; };
@@ -143,7 +146,6 @@
 				34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */,
 				3490A2E91C798D0900DEC138 /* CMLAccountingRegistrationViewController.h */,
 				3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */,
-				3490A2EB1C798D0900DEC138 /* CMLAccountingRegistrationViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -158,6 +160,9 @@
 		34D21C761C78149E004264C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3441D0AC1C7C098A00D6FE0C /* CMLAccountingItemCell.h */,
+				3441D0AD1C7C098A00D6FE0C /* CMLAccountingItemCell.m */,
+				3441D0AE1C7C098A00D6FE0C /* CMLAccountingItemCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -322,7 +327,7 @@
 			files = (
 				344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */,
 				344A00481C75E0D8008281BB /* Assets.xcassets in Resources */,
-				3490A2ED1C798D0900DEC138 /* CMLAccountingRegistrationViewController.xib in Resources */,
+				3441D0B01C7C098A00D6FE0C /* CMLAccountingItemCell.xib in Resources */,
 				34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */,
 				344A00431C75E0D8008281BB /* Main.storyboard in Resources */,
 			);
@@ -343,6 +348,7 @@
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
 				34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */,
 				34D21CA41C788948004264C2 /* UIView+Extension.m in Sources */,
+				3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */,
 				34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */,
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,

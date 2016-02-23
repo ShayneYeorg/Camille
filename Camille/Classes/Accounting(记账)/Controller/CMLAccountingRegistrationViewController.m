@@ -7,8 +7,12 @@
 //
 
 #import "CMLAccountingRegistrationViewController.h"
+#import "CMLAccountingItemCell.h"
 
-@interface CMLAccountingRegistrationViewController ()
+@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign) BOOL isItemCellExpand;
 
 @end
 
@@ -19,8 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self configViewDetails];
     [self configTitle];
     [self configBarBtns];
+    [self configTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,6 +35,11 @@
 }
 
 #pragma mark - Private
+
+- (void)configViewDetails {
+    self.isItemCellExpand = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
 
 - (void)configTitle {
     self.title = @"收入";
@@ -64,4 +76,54 @@
     
 }
 
+- (void)configTableView {
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height - 64)];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.tableView];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return [CMLAccountingItemCell heightForCellByExpand:self.isItemCellExpand];
+    }
+    return 30;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        self.isItemCellExpand = !self.isItemCellExpand;
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        CMLAccountingItemCell *cell = [CMLAccountingItemCell loadFromNib];
+        [cell refreshWithExpand:self.isItemCellExpand];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    } else {
+        UITableViewCell *cell = [[UITableViewCell alloc]init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+}
+
 @end
+
+
+
+
+

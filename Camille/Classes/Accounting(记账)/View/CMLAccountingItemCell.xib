@@ -14,25 +14,62 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5jr-6Q-wL9">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5jr-6Q-wL9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="FOL-ZW-iAU"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="sgE-N4-vNl" appends="YES" id="ggw-Dz-sMb"/>
                         </connections>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUS-KN-qAe">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUS-KN-qAe">
                         <rect key="frame" x="0.0" y="50" width="320" height="250"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dXv-b6-Tki">
+                                <rect key="frame" x="0.0" y="0.0" width="119" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="ScF-I0-JZb"/>
+                                </constraints>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UjV-iO-6hj">
+                                <rect key="frame" x="119" y="0.0" width="201" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="UjV-iO-6hj" secondAttribute="bottom" id="Hid-XB-YUu"/>
+                            <constraint firstItem="UjV-iO-6hj" firstAttribute="top" secondItem="XUS-KN-qAe" secondAttribute="top" id="M06-Ix-D0U"/>
+                            <constraint firstItem="dXv-b6-Tki" firstAttribute="leading" secondItem="XUS-KN-qAe" secondAttribute="leading" id="Ojt-O7-5np"/>
+                            <constraint firstItem="dXv-b6-Tki" firstAttribute="top" secondItem="XUS-KN-qAe" secondAttribute="top" id="afV-pG-svJ"/>
+                            <constraint firstAttribute="trailing" secondItem="UjV-iO-6hj" secondAttribute="trailing" id="ajg-RE-KO4"/>
+                            <constraint firstAttribute="bottom" secondItem="dXv-b6-Tki" secondAttribute="bottom" id="bf7-3b-PyX"/>
+                            <constraint firstAttribute="height" constant="250" id="jT3-Qc-KGb"/>
+                            <constraint firstItem="UjV-iO-6hj" firstAttribute="leading" secondItem="dXv-b6-Tki" secondAttribute="trailing" id="zs3-jN-a37"/>
+                        </constraints>
                     </view>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="XUS-KN-qAe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="7md-k6-hG1"/>
+                    <constraint firstAttribute="trailing" secondItem="XUS-KN-qAe" secondAttribute="trailing" id="Afw-ru-KhW"/>
+                    <constraint firstItem="XUS-KN-qAe" firstAttribute="top" secondItem="5jr-6Q-wL9" secondAttribute="bottom" id="Pvf-Ji-ME1"/>
+                    <constraint firstItem="5jr-6Q-wL9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ndh-u1-El3"/>
+                    <constraint firstAttribute="trailing" secondItem="5jr-6Q-wL9" secondAttribute="trailing" id="ndx-IN-Loj"/>
+                    <constraint firstItem="5jr-6Q-wL9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="uIR-fM-kb5"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bottomView" destination="XUS-KN-qAe" id="HBj-CP-wTt"/>
+                <outlet property="leftTableView" destination="dXv-b6-Tki" id="vOu-mj-bpP"/>
+                <outlet property="leftTableViewWidthContraint" destination="ScF-I0-JZb" id="Vh9-s8-9La"/>
+                <outlet property="rightTableView" destination="UjV-iO-6hj" id="8qu-ti-RuR"/>
                 <outlet property="topView" destination="5jr-6Q-wL9" id="k8m-rC-eal"/>
             </connections>
-            <point key="canvasLocation" x="127" y="362.25"/>
+            <point key="canvasLocation" x="307" y="395.25"/>
         </tableViewCell>
         <tapGestureRecognizer id="sgE-N4-vNl">
             <connections>

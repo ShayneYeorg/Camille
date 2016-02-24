@@ -6,7 +6,8 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
-#define kCellBackgroundColor RGB(193,229,158)
+//#define kCellBackgroundColor RGB(193,229,158)
+#define kCellBackgroundColor kAppViewColor
 
 #import <UIKit/UIKit.h>
 

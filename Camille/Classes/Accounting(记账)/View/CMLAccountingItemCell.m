@@ -8,10 +8,12 @@
 
 #define kTopViewHeight       50
 #define kBottomViewHeight    250
-#define kLeftTableViewColor  RGB(250,230,150)
-//#define kRightTableViewColor RGB(255,250,235)
+#define kLeftTableViewColor  RGB(191,226,151)
+#define kRightTableViewColor RGB(252,212,108)
 
 #import "CMLAccountingItemCell.h"
+#import "CMLAccountingItemLeftCell.h"
+#import "CMLAccountingItemRightCell.h"
 
 @interface CMLAccountingItemCell () <UITableViewDelegate, UITableViewDataSource>
 
@@ -66,12 +68,12 @@
     self.leftTableViewWidthContraint.constant = kContent_Width * 0.35;
     self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
-    self.leftTableView.backgroundColor = kLeftTableViewColor;
+    self.leftTableView.backgroundColor = kItemLeftTableViewColor;
     self.leftTableView.delegate = self;
     self.leftTableView.dataSource = self;
     self.leftTableView.tableFooterView = [UIView new];
     
-    self.rightTableView.backgroundColor = kAppViewColor;
+    self.rightTableView.backgroundColor = kItemRightTableViewColor;
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
@@ -97,14 +99,14 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView == self.leftTableView) {
         if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
-            cell.backgroundColor = kAppViewColor;
+            cell.backgroundColor = kRightTableViewColor;
             
         } else {
             cell.backgroundColor = kLeftTableViewColor;
         }
         
     } else {
-        cell.backgroundColor = kAppViewColor;
+        cell.backgroundColor = kRightTableViewColor;
     }
     return cell;
 }

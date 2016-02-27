@@ -14,7 +14,7 @@
 
 + (instancetype)loadFromNib {
     CMLAccountingItemLeftCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"CMLAccountingItemLeftCell" owner:self options:nil] firstObject];
-    cell.backgroundColor = kLeftTableViewColor;
+    cell.backgroundColor = kItemLeftTableViewColor;
     
     return cell;
 }

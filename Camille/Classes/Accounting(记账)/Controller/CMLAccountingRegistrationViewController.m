@@ -8,6 +8,7 @@
 
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
+#import "CMLCoreDataAccess.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
 

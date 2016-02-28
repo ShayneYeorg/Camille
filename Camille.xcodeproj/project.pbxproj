@@ -21,6 +21,8 @@
 		3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC51C82D8F2004EE4BD /* CMLResponse.m */; };
 		3499BDCB1C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC81C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.m */; };
 		3499BDCC1C82D9F6004EE4BD /* CMLAccounting.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDCA1C82D9F6004EE4BD /* CMLAccounting.m */; };
+		3499BDD11C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDCE1C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.m */; };
+		3499BDD21C82EB42004EE4BD /* CMLItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDD01C82EB42004EE4BD /* CMLItemCategory.m */; };
 		34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C741C78149E004264C2 /* CMLAccountingViewController.m */; };
 		34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */; };
 		34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C841C7814F3004264C2 /* AppDelegate.m */; };
@@ -59,6 +61,10 @@
 		3499BDC81C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLAccounting+CoreDataProperties.m"; sourceTree = "<group>"; };
 		3499BDC91C82D9F6004EE4BD /* CMLAccounting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccounting.h; sourceTree = "<group>"; };
 		3499BDCA1C82D9F6004EE4BD /* CMLAccounting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccounting.m; sourceTree = "<group>"; };
+		3499BDCD1C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CMLItemCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		3499BDCE1C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLItemCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		3499BDCF1C82EB42004EE4BD /* CMLItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemCategory.h; sourceTree = "<group>"; };
+		3499BDD01C82EB42004EE4BD /* CMLItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemCategory.m; sourceTree = "<group>"; };
 		34D21C501C776EF4004264C2 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		34D21C731C78149E004264C2 /* CMLAccountingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingViewController.h; sourceTree = "<group>"; };
 		34D21C741C78149E004264C2 /* CMLAccountingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingViewController.m; sourceTree = "<group>"; };
@@ -267,6 +273,10 @@
 			isa = PBXGroup;
 			children = (
 				34D21C991C78892E004264C2 /* Camille.xcdatamodeld */,
+				3499BDCD1C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.h */,
+				3499BDCE1C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.m */,
+				3499BDCF1C82EB42004EE4BD /* CMLItemCategory.h */,
+				3499BDD01C82EB42004EE4BD /* CMLItemCategory.m */,
 				3499BDC71C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.h */,
 				3499BDC81C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.m */,
 				3499BDC91C82D9F6004EE4BD /* CMLAccounting.h */,
@@ -383,10 +393,12 @@
 				3499BDCB1C82D9F6004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */,
+				3499BDD21C82EB42004EE4BD /* CMLItemCategory.m in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
 				3499BDCC1C82D9F6004EE4BD /* CMLAccounting.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
+				3499BDD11C82EB42004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
 				3441D0B41C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m in Sources */,
 				3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */,
 				34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */,

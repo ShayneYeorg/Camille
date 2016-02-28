@@ -6,7 +6,12 @@
         <attribute name="happenTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="CMLItemCategory" representedClassName="CMLItemCategory" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="75"/>
     </elements>
 </model>

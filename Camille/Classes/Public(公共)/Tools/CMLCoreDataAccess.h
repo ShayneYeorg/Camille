@@ -7,10 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CMLItemCategory.h"
 #import "CMLAccounting.h"
 #import "CMLResponse.h"
 
 @interface CMLCoreDataAccess : NSObject
+
+/**
+ *  查询所有记账项目
+ *
+ *  
+ */
 
 /**
  *  保存账务

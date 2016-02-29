@@ -15,19 +15,42 @@
 @interface CMLCoreDataAccess : NSObject
 
 /**
- *  取出所有记账项目
+ *  取出所有记账科目(并排序)
  *
- *  @param callBack     回调
+ *  @param callBack             回调
  */
 + (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
 
 /**
+ *  取出所有一级记账科目(并排序)
+ *
+ *  @param callBack             回调
+ */
++ (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  新增一级记账科目
+ *
+ *  @param ItemCategoryName     科目名称
+ *  @param callBack             回调
+ */
++ (void)addItemCategory:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  新增二级记账科目
+ *
+ *  @param ItemCategoryName     科目名称
+ *  @param callBack             回调
+ */
++ (void)addItem:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  保存账务
  *
- *  @param item         项目名称
- *  @param amount       项目金额
- *  @param happenTime   发生时间
- *  @param callBack     回调
+ *  @param item                 项目名称
+ *  @param amount               项目金额
+ *  @param happenTime           发生时间
+ *  @param callBack             回调
  */
 + (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
 

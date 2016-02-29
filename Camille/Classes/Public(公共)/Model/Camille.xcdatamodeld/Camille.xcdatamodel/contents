@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
-    <entity name="CMLAccounting" syncable="YES">
+    <entity name="CMLAccounting" representedClassName="CMLAccounting" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="createTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="happenTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CMLItem" representedClassName="CMLItem" syncable="YES">
+        <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextItemID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CMLItemCategory" representedClassName="CMLItemCategory" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextCategoryID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="75"/>
+        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="90"/>
+        <element name="CMLItem" positionX="-27" positionY="54" width="128" height="105"/>
     </elements>
 </model>

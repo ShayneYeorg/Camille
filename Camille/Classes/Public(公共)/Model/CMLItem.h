@@ -1,5 +1,5 @@
 //
-//  CMLAccounting.h
+//  CMLItem.h
 //  Camille
 //
 //  Created by 杨淳引 on 16/2/29.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CMLAccounting : NSManagedObject
+@interface CMLItem : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "CMLAccounting+CoreDataProperties.h"
+#import "CMLItem+CoreDataProperties.h"

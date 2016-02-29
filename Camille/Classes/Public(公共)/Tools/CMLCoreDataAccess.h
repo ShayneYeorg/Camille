@@ -7,17 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CMLItemCategory.h"
 #import "CMLAccounting.h"
+#import "CMLItemCategory.h"
+#import "CMLItem.h"
 #import "CMLResponse.h"
 
 @interface CMLCoreDataAccess : NSObject
 
 /**
- *  查询所有记账项目
+ *  取出所有记账项目
  *
- *  
+ *  @param callBack     回调
  */
++ (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  保存账务
@@ -27,6 +29,6 @@
  *  @param happenTime   发生时间
  *  @param callBack     回调
  */
-+ (void)addAccountingWithItem:(NSString *)item amount:(NSNumber *)amount happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
++ (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
 
 @end

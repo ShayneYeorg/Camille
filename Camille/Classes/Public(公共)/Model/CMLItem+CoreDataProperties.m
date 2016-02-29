@@ -1,5 +1,5 @@
 //
-//  CMLAccounting+CoreDataProperties.m
+//  CMLItem+CoreDataProperties.m
 //  Camille
 //
 //  Created by 杨淳引 on 16/2/29.
@@ -9,13 +9,13 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "CMLAccounting+CoreDataProperties.h"
+#import "CMLItem+CoreDataProperties.h"
 
-@implementation CMLAccounting (CoreDataProperties)
+@implementation CMLItem (CoreDataProperties)
 
-@dynamic amount;
-@dynamic createTime;
-@dynamic happenTime;
+@dynamic itemName;
 @dynamic itemID;
+@dynamic nextItemID;
+@dynamic categoryID;
 
 @end

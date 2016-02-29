@@ -2,7 +2,7 @@
 //  CMLItemCategory+CoreDataProperties.m
 //  Camille
 //
-//  Created by 杨淳引 on 16/2/28.
+//  Created by 杨淳引 on 16/2/29.
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,7 +13,8 @@
 
 @implementation CMLItemCategory (CoreDataProperties)
 
-@dynamic category;
-@dynamic item;
+@dynamic categoryName;
+@dynamic categoryID;
+@dynamic nextCategoryID;
 
 @end

@@ -34,15 +34,16 @@
  *  @param ItemCategoryName     科目名称
  *  @param callBack             回调
  */
-+ (void)addItemCategory:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
++ (void)addItemCategory:(NSString *)itemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增二级记账科目
  *
  *  @param ItemCategoryName     科目名称
+ *  @param categoryID           一级科目ID
  *  @param callBack             回调
  */
-+ (void)addItem:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
++ (void)addItem:(NSString *)itemName categoryID:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录

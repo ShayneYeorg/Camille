@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [CMLCoreDataAccess addItemCategory:@"第十一个" callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess addItemCategory:@"第3个" callBack:^(CMLResponse *response) {
         if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
         }

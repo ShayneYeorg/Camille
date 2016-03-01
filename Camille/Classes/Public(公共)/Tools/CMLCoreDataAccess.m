@@ -143,12 +143,6 @@
     [request setEntity:entity];
     
     //设置排序规则
-    //comparator不可用
-//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"categoryID" ascending:NO comparator:^(CMLItemCategory *obj1, CMLItemCategory *obj2) {
-//        NSInteger idNum1 = [obj1.categoryID integerValue];
-//        NSInteger idNum2 = [obj2.categoryID integerValue];
-//        return [@(idNum1) compare:@(idNum2)];
-//    }];
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"categoryID" ascending:NO  selector:@selector(localizedStandardCompare:)];//像Mac finder中的排序方式一般
     NSArray *sortDescriptors = @[sort];
     [request setSortDescriptors:sortDescriptors];
@@ -173,17 +167,75 @@
         return [NSString stringWithFormat:@"%zd", newID];
         
     } else {
-        //是第一个一级科目
-        return @"0";
+        //还没有任何一级科目
+        //建立一级科目链表头
+        [CMLCoreDataAccess createItemCategoryListHead];
+        //返回第一个一级科目ID
+        return @"1";
+    }
+}
+
+//建立一级科目链表头
++ (void)createItemCategoryListHead {
+    //Entity
+    CMLItemCategory *itemCategory = [NSEntityDescription insertNewObjectForEntityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
+#warning 要禁止记账科目使用这个名称
+    itemCategory.categoryName = @"CATEGORY_LIST_HEAD"; //在APP里成关键字，要禁止记账科目使用这个名称
+    itemCategory.categoryID = @"0";
+    itemCategory.nextCategoryID = nil;
+    
+    //保存
+    NSError *error = nil;
+    if (error) {
+        CMLLog(@"建立一级科目链表头时发生错误:%@,%@",error,[error userInfo]);
+        
+    } else {
+        CMLLog(@"%@", [NSString stringWithFormat:@"建立一级科目链表头成功"]);
     }
 }
 
 //将一级科目链表最后一个科目的nextCategoryID置为newID
 + (void)setLastItemCategoryNextID:(NSString *)nextID {
+    //第一个科目滚蛋
+//    if ([nextID isEqualToString:@"0"]) return;
     
+    //先获取链表最后一个科目，再修改它的nextCategoryID
+    CMLLog(@"获取链表最后一个科目所在的线程是：%@", [NSThread currentThread]);
     
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
     
+    //设置排序规则
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"categoryID" ascending:YES  selector:@selector(localizedStandardCompare:)];//像Mac Finder中的排序方式一般
+    NSArray *sortDescriptors = @[sort];
+    [request setSortDescriptors:sortDescriptors];
     
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"nextCategoryID==NULL"];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    //设置数据条数
+    [request setFetchLimit:1];
+    [request setFetchOffset:0];
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *itemCategories = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (itemCategories == nil) {
+        //查询过程中出错
+        CMLLog(@"查询一级科目链表最后一个科目时发生错误:%@,%@",error,[error userInfo]);
+        
+    } else if (itemCategories.count) {
+        //正常
+        CMLItemCategory *ic = itemCategories[0];
+        ic.nextCategoryID = nextID;
+        
+        NSError *error = nil;
+        if ([kManagedObjectContext save:&error]) CMLLog(@"修改最后一个科目(%@)的nextCategoryID(%@)成功", ic.categoryID, ic.nextCategoryID);
+    }
 }
 
 //新增数据

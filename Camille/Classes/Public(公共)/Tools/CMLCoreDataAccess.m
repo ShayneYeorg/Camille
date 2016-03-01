@@ -110,15 +110,21 @@
         //保存
         NSError *error = nil;
         if ([kManagedObjectContext save:&error]) {
-            if (error) CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
-            cmlResponse.code = RESPONSE_CODE_FAILD;
-            cmlResponse.desc = @"保存一级科目出错";
-            cmlResponse.responseDic = nil;
-            
-        } else {
-            cmlResponse.code = RESPONSE_CODE_SUCCEED;
-            cmlResponse.desc = @"保存一级科目成功";
-            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
+            if (error) {
+                CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
+                cmlResponse.code = RESPONSE_CODE_FAILD;
+                cmlResponse.desc = @"保存一级科目出错";
+                cmlResponse.responseDic = nil;
+                
+            } else {
+                cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                cmlResponse.desc = [NSString stringWithFormat:@"保存一级科目成功:%@ %@",newID, ItemCategoryName];
+                cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
+                CMLLog(@"%@", cmlResponse.desc);
+                
+                //将一级科目链表最后一个科目的nextCategoryID置为newID
+                [CMLCoreDataAccess setLastItemCategoryNextID:newID];
+            }
         }
         
         //回调
@@ -137,12 +143,14 @@
     [request setEntity:entity];
     
     //设置排序规则
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"createTime" ascending:NO comparator:^(CMLItemCategory *obj1, CMLItemCategory *obj2) {
-        NSInteger idNum1 = [obj1.categoryID integerValue];
-        NSInteger idNum2 = [obj2.categoryID integerValue];
-        return [@(idNum1) compare:@(idNum2)];
-    }];
-    NSArray * sortDescriptors = @[sort];
+    //comparator不可用
+//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"categoryID" ascending:NO comparator:^(CMLItemCategory *obj1, CMLItemCategory *obj2) {
+//        NSInteger idNum1 = [obj1.categoryID integerValue];
+//        NSInteger idNum2 = [obj2.categoryID integerValue];
+//        return [@(idNum1) compare:@(idNum2)];
+//    }];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"categoryID" ascending:NO  selector:@selector(localizedStandardCompare:)];//像Mac finder中的排序方式一般
+    NSArray *sortDescriptors = @[sort];
     [request setSortDescriptors:sortDescriptors];
     
     //设置数据条数
@@ -152,18 +160,30 @@
     //查询
     NSError *error = nil;
     NSMutableArray *itemCategories = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (itemCategories.count) {
+    if (itemCategories == nil) {
+        //查询过程中出错
+        CMLLog(@"查询一级科目最大ID时发生错误:%@,%@",error,[error userInfo]);
+        return nil;
+        
+    } else if (itemCategories.count) {
+        //正常
         CMLItemCategory *ic = itemCategories[0];
         NSInteger newID = ic.categoryID.integerValue + 1;
         CMLLog(@"新分配的一级科目ID是：%zd", newID);
         return [NSString stringWithFormat:@"%zd", newID];
         
     } else {
-        //要么是查询过程中出错
-        //要么是第一个一级科目（这是不可能的）
-        CMLLog(@"查询一级科目最大ID时发生错误:%@,%@",error,[error userInfo]);
-        return nil;
+        //是第一个一级科目
+        return @"0";
     }
+}
+
+//将一级科目链表最后一个科目的nextCategoryID置为newID
++ (void)setLastItemCategoryNextID:(NSString *)nextID {
+    
+    
+    
+    
 }
 
 //新增数据

@@ -23,12 +23,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [CMLCoreDataAccess addItemCategory:@"第十一个" callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+        }
+    }];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self configViewDetails];
-    [self configTitle];
-    [self configBarBtns];
-    [self configTableView];
+    
+    //暂时注释
+//    self.view.backgroundColor = kAppViewColor;
+//    [self configViewDetails];
+//    [self configTitle];
+//    [self configBarBtns];
+//    [self configTableView];
 }
 
 - (void)didReceiveMemoryWarning {

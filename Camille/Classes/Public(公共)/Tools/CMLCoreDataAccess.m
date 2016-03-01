@@ -102,7 +102,6 @@
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"分配新的一级科目ID出错";
         cmlResponse.responseDic = nil;
-        callBack(cmlResponse);
         
     } else {
         //Entity
@@ -121,19 +120,25 @@
                 cmlResponse.responseDic = nil;
                 
             } else {
-                cmlResponse.code = RESPONSE_CODE_SUCCEED;
-                cmlResponse.desc = [NSString stringWithFormat:@"保存一级科目成功:%@ %@",newID, ItemCategoryName];
-                cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
-                CMLLog(@"%@", cmlResponse.desc);
-                
                 //将一级科目链表最后一个科目的nextCategoryID置为newID
-                [CMLCoreDataAccess setLastItemCategoryNextID:newID];
+                if ([CMLCoreDataAccess setLastItemCategoryNextID:newID]) {
+                    cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                    cmlResponse.desc = [NSString stringWithFormat:@"保存一级科目成功:%@ %@",newID, ItemCategoryName];
+                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
+                    CMLLog(@"%@", cmlResponse.desc);
+                    
+                } else {
+                    CMLLog(@"将一级科目链表最后一个科目的nextCategoryID置为newID时发生错误:%@,%@",error,[error userInfo]);
+                    cmlResponse.code = RESPONSE_CODE_FAILD;
+                    cmlResponse.desc = @"保存一级科目出错";
+                    cmlResponse.responseDic = nil;
+                }
             }
         }
-        
-        //回调
-        callBack(cmlResponse);
     }
+    
+    //回调
+    callBack(cmlResponse);
 }
 
 //新分配一个一级记账科目的ID
@@ -173,14 +178,19 @@
     } else {
         //还没有任何一级科目
         //建立一级科目链表头
-        [CMLCoreDataAccess createItemCategoryListHead];
-        //返回第一个一级科目ID
-        return @"1";
+        if ([CMLCoreDataAccess createItemCategoryListHead]) {
+            //成功则返回第一个一级科目ID
+            return @"1";
+            
+        } else {
+            //建立链表头失败
+            return nil;
+        }
     }
 }
 
 //建立一级科目链表头
-+ (void)createItemCategoryListHead {
++ (BOOL)createItemCategoryListHead {
     //Entity
     CMLItemCategory *itemCategory = [NSEntityDescription insertNewObjectForEntityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
 #warning 要禁止记账科目使用这个名称
@@ -192,14 +202,16 @@
     NSError *error = nil;
     if (error) {
         CMLLog(@"建立一级科目链表头时发生错误:%@,%@",error,[error userInfo]);
+        return NO;
         
     } else {
         CMLLog(@"%@", [NSString stringWithFormat:@"建立一级科目链表头成功"]);
+        return YES;
     }
 }
 
 //将一级科目链表最后一个科目的nextCategoryID置为newID
-+ (void)setLastItemCategoryNextID:(NSString *)nextID {
++ (BOOL)setLastItemCategoryNextID:(NSString *)nextID {
     //先获取链表最后一个科目，再修改它的nextCategoryID
     CMLLog(@"获取链表最后一个科目所在的线程是：%@", [NSThread currentThread]);
     
@@ -228,6 +240,7 @@
     if (itemCategories == nil) {
         //查询过程中出错
         CMLLog(@"查询一级科目链表最后一个科目时发生错误:%@,%@",error,[error userInfo]);
+        return NO;
         
     } else if (itemCategories.count) {
         //正常
@@ -235,8 +248,12 @@
         ic.nextCategoryID = nextID;
         
         NSError *error = nil;
-        if ([kManagedObjectContext save:&error]) CMLLog(@"修改最后一个科目(%@)的nextCategoryID(%@)成功", ic.categoryID, ic.nextCategoryID);
+        if ([kManagedObjectContext save:&error]) {
+            CMLLog(@"修改最后一个科目(%@)的nextCategoryID(%@)成功", ic.categoryID, ic.nextCategoryID);
+            return YES;
+        }
     }
+    return NO;
 }
 
 #pragma mark - 新增二级记账科目相关方法

@@ -18,7 +18,7 @@
     NSMutableArray *returnArr = [NSMutableArray array];
     
     //取出第一条一级记账科目
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID==0"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID=='0'"];
     NSArray *filteredCategories = [itemCategories filteredArrayUsingPredicate:predicate];
     if (filteredCategories.count) { //正常情况下肯定有值
         CMLItemCategory *firstCategory = filteredCategories[0];

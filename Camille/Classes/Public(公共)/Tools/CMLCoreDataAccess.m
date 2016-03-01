@@ -10,6 +10,44 @@
 
 @implementation CMLCoreDataAccess
 
+#pragma mark - 查询已存在的记账科目项目相关方法
+
+//取出所有一级记账科目(并排序)
++ (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //异步取数据
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //Response
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        
+        //查询
+        NSError *error = nil;
+        NSMutableArray *itemCategories = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        //取数据
+        if (itemCategories == nil) {
+            CMLLog(@"查询所有数据时发生错误:%@,%@",error,[error userInfo]);
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"读取失败";
+            cmlResponse.responseDic = nil;
+            
+        } else {
+            cmlResponse.code = RESPONSE_CODE_SUCCEED;
+            cmlResponse.desc = @"读取成功";
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItemCategory sortItemCategories:itemCategories], @"items", nil];
+        }
+        
+        //回调
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callBack(cmlResponse);
+        });
+    });
+}
+
 //取出所有记账科目(并排序)
 + (void)fetchAllItems:(void(^)(CMLResponse *response))callBack {
     //request和entity
@@ -49,41 +87,7 @@
     });
 }
 
-//取出所有一级记账科目(并排序)
-+ (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack {
-    //request和entity
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
-    [request setEntity:entity];
-    
-    //异步取数据
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //Response
-        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
-        
-        //查询
-        NSError *error = nil;
-        NSMutableArray *itemCategories = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-        
-        //取数据
-        if (itemCategories == nil) {
-            CMLLog(@"查询所有数据时发生错误:%@,%@",error,[error userInfo]);
-            cmlResponse.code = RESPONSE_CODE_FAILD;
-            cmlResponse.desc = @"读取失败";
-            cmlResponse.responseDic = nil;
-            
-        } else {
-            cmlResponse.code = RESPONSE_CODE_SUCCEED;
-            cmlResponse.desc = @"读取成功";
-            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItemCategory sortItemCategories:itemCategories], @"items", nil];
-        }
-        
-        //回调
-        dispatch_async(dispatch_get_main_queue(), ^{
-            callBack(cmlResponse);
-        });
-    });
-}
+#pragma mark - 新增一级记账科目相关方法
 
 //新增一级记账科目
 + (void)addItemCategory:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack {
@@ -196,9 +200,6 @@
 
 //将一级科目链表最后一个科目的nextCategoryID置为newID
 + (void)setLastItemCategoryNextID:(NSString *)nextID {
-    //第一个科目滚蛋
-//    if ([nextID isEqualToString:@"0"]) return;
-    
     //先获取链表最后一个科目，再修改它的nextCategoryID
     CMLLog(@"获取链表最后一个科目所在的线程是：%@", [NSThread currentThread]);
     
@@ -238,7 +239,15 @@
     }
 }
 
-//新增数据
+#pragma mark - 新增二级记账科目相关方法
+
++ (void)addItem:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack {
+    
+}
+
+#pragma mark - 新增账务记录
+
+//新增账务记录
 + (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack {
     //Entity
     CMLAccounting *accounting = [NSEntityDescription insertNewObjectForEntityForName:@"CMLAccounting" inManagedObjectContext:kManagedObjectContext];

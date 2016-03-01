@@ -45,7 +45,7 @@
 + (void)addItem:(NSString *)ItemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
- *  保存账务
+ *  新增账务记录
  *
  *  @param item                 项目名称
  *  @param amount               项目金额

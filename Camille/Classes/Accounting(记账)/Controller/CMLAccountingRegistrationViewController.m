@@ -24,12 +24,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [CMLCoreDataAccess addItemCategory:@"第3个" callBack:^(CMLResponse *response) {
-        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+    //手动添加一级记账科目
+//    [CMLCoreDataAccess addItemCategory:@"第6个" callBack:^(CMLResponse *response) {
+//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+//        }
+//    }];
+
+    //取出一级记账科目（已排序）
+    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
+        NSDictionary *dic = response.responseDic;
+        NSArray *arr = dic[@"items"];
+        for (int i = 0; i < arr.count; i++) {
+            CMLLog(@"%@", ((CMLItemCategory *)arr[i]).categoryID);
         }
     }];
-    
     
     //暂时注释
 //    self.view.backgroundColor = kAppViewColor;

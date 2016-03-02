@@ -30,6 +30,13 @@
 //            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
 //        }
 //    }];
+    
+    //手动添加二级记账科目
+    [CMLCoreDataAccess addItem:@"第三个" categoryID:@"1" callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            CMLLog(@"%@", response.responseDic[@"itemID"]);
+        }
+    }];
 
     //取出一级记账科目（已排序）
 //    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {

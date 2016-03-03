@@ -89,6 +89,38 @@
     });
 }
 
+#pragma mark - 新增完整记账科目相关方法
+
+//新增完整记账科目
++ (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName callBack:(void(^)(CMLResponse *response))callBack {
+    //根据categoryName获得categoryID
+    
+    //在相应categoryID下保存itemName
+    
+    //回调
+}
+
+//根据categoryName获得categoryID
++ (NSString *)getCategoryIDByCategoryName:(NSString *)categoryName {
+    //判断categoryName是否存在
+    
+    //categoryName存在则直接返回对应categoryID
+    
+    //categoryName不存在则新建并返回对应categoryID
+    
+    return nil;
+}
+
+//在相应categoryID下保存itemName
++ (void)saveItem:(NSString *)itemName inCategory:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack {
+    //判断在categoryID下itemName是否存在
+    
+    //itemName存在则直接返回对应itemID
+    
+    //itemName不存在则新建并返回对应itemID
+    
+}
+
 #pragma mark - 新增二级记账科目相关方法
 
 //新增二级记账科目(sync)

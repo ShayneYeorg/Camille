@@ -14,8 +14,6 @@
 
 @interface CMLCoreDataAccess : NSObject
 
-+ (BOOL)createItemListHeadInCategory:(NSString *)categoryID;
-
 
 
 /**
@@ -31,6 +29,15 @@
  *  @param callBack             回调
  */
 + (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  新增记账科目
+ *
+ *  @param ItemName             二级科目名称
+ *  @param ItemCategoryName     一级科目名称
+ *  @param callBack             回调
+ */
++ (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增一级记账科目

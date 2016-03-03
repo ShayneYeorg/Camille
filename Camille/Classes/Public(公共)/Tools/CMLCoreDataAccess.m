@@ -10,7 +10,7 @@
 
 @implementation CMLCoreDataAccess
 
-#pragma mark - 查询已存在的记账科目项目相关方法
+#pragma mark - 查询所有一级记账科目（排序）
 
 //取出所有一级记账科目(并排序)
 + (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack {
@@ -48,6 +48,8 @@
     });
 }
 
+#pragma mark - 查询所有二级记账科目（分组排序）
+
 //取出所有记账科目(并排序)
 + (void)fetchAllItems:(void(^)(CMLResponse *response))callBack {
     //request和entity
@@ -57,6 +59,7 @@
     
     //异步取数据
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CMLLog(@"开始取出所有记账科目...");
         //Response
         CMLResponse *cmlResponse = [[CMLResponse alloc]init];
         
@@ -72,6 +75,7 @@
             cmlResponse.responseDic = nil;
             
         } else {
+            CMLLog(@"已取出所有记账科目...");
             cmlResponse.code = RESPONSE_CODE_SUCCEED;
             cmlResponse.desc = @"读取成功";
             cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItem sortItems:items], @"items", nil];
@@ -79,6 +83,7 @@
         
         //回调
         dispatch_async(dispatch_get_main_queue(), ^{
+            CMLLog(@"返回所有记账科目...");
             callBack(cmlResponse);
         });
     });
@@ -194,6 +199,7 @@
 
 //建立二级科目链表头
 + (BOOL)createItemListHeadInCategory:(NSString *)categoryID {
+    CMLLog(@"开始为一级科目(%@)建立二级科目链表头...", categoryID);
     //Entity
     CMLItem *item = [NSEntityDescription insertNewObjectForEntityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
 #warning 要禁止记账科目使用这个名称
@@ -204,14 +210,19 @@
     
     //保存
     NSError *error = nil;
-    if (error) {
-        CMLLog(@"建立二级科目链表头时发生错误:%@,%@",error,[error userInfo]);
-        return NO;
-        
-    } else {
-        CMLLog(@"%@", [NSString stringWithFormat:@"建立二级科目链表头成功"]);
-        return YES;
+    if ([kManagedObjectContext save:&error]) {
+        if (error) {
+            CMLLog(@"为一级科目(%@)建立二级科目链表头失败...", categoryID);
+            CMLLog(@"错误:%@,%@",error,[error userInfo]);
+            return NO;
+            
+        } else {
+            CMLLog(@"为一级科目(%@)建立二级科目链表头成功...", categoryID);
+            return YES;
+        }
     }
+    CMLLog(@"为一级科目(%@)建立二级科目链表头失败...", categoryID);
+    return NO;
 }
 
 + (BOOL)setLastItemNextID:(NSString *)nextID inCategory:(NSString *)categoryID {
@@ -263,7 +274,7 @@
 
 //新增一级记账科目(sync)
 + (void)addItemCategory:(NSString *)itemCategoryName callBack:(void(^)(CMLResponse *response))callBack {
-    CMLLog(@"新增一级记账科目所在的线程是：%@", [NSThread currentThread]);
+    CMLLog(@"开始建立一级科目...");
     
     //Response
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
@@ -283,9 +294,11 @@
         itemCategory.nextCategoryID = nil;
         
         //保存
+        CMLLog(@"开始保存新建立的一级科目...");
         NSError *error = nil;
         if ([kManagedObjectContext save:&error]) {
             if (error) {
+                CMLLog(@"保存新建立的一级科目失败...");
                 CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
                 cmlResponse.code = RESPONSE_CODE_FAILD;
                 cmlResponse.desc = @"保存一级科目出错";
@@ -293,14 +306,16 @@
                 
             } else {
                 //将一级科目链表最后一个科目的nextCategoryID置为newID
-                if ([CMLCoreDataAccess setLastItemCategoryNextID:newID]) {
+                //为新建立的一级科目建立一个二级科目链表头
+                if ([CMLCoreDataAccess setLastItemCategoryNextID:newID] && [CMLCoreDataAccess createItemListHeadInCategory:newID]) {
+                    CMLLog(@"保存一级科目成功...");
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
                     cmlResponse.desc = [NSString stringWithFormat:@"保存一级科目成功:%@ %@",newID, itemCategoryName];
                     cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
-                    CMLLog(@"%@", cmlResponse.desc);
                     
                 } else {
-                    CMLLog(@"将一级科目链表最后一个科目的nextCategoryID置为newID时发生错误:%@,%@",error,[error userInfo]);
+                    CMLLog(@"保存一级科目失败...");
+                    CMLLog(@"错误:%@,%@",error,[error userInfo]);
                     cmlResponse.code = RESPONSE_CODE_FAILD;
                     cmlResponse.desc = @"保存一级科目出错";
                     cmlResponse.responseDic = nil;
@@ -310,13 +325,14 @@
     }
     
     //回调
+    CMLLog(@"建立一级科目成功...");
     callBack(cmlResponse);
 }
 
 //新分配一个一级记账科目的ID
 + (NSString *)getANewItemCategoryID {
     //先获取最大ID，再加1
-    CMLLog(@"新分配一个一级记账科目的ID所在的线程是：%@", [NSThread currentThread]);
+    CMLLog(@"开始为一级科目分配新ID...");
     
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -344,18 +360,22 @@
         //正常
         CMLItemCategory *ic = itemCategories[0];
         NSInteger newID = ic.categoryID.integerValue + 1;
-        CMLLog(@"新分配的一级科目ID是：%zd", newID);
+        CMLLog(@"为一级科目分配新ID成功...");
+        CMLLog(@"新分配的ID是：%zd", newID);
         return [NSString stringWithFormat:@"%zd", newID];
         
     } else {
         //还没有任何一级科目
         //建立一级科目链表头
+        CMLLog(@"还没有任何一级科目，需要先建立一级科目链表头...");
         if ([CMLCoreDataAccess createItemCategoryListHead]) {
             //成功则返回第一个一级科目ID
+            CMLLog(@"为一级科目分配新ID成功...");
             return @"1";
             
         } else {
             //建立链表头失败
+            CMLLog(@"为一级科目分配新ID失败...");
             return nil;
         }
     }
@@ -363,6 +383,7 @@
 
 //建立一级科目链表头
 + (BOOL)createItemCategoryListHead {
+    CMLLog(@"开始建立一级科目链表头...");
     //Entity
     CMLItemCategory *itemCategory = [NSEntityDescription insertNewObjectForEntityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
 #warning 要禁止记账科目使用这个名称
@@ -372,20 +393,25 @@
     
     //保存
     NSError *error = nil;
-    if (error) {
-        CMLLog(@"建立一级科目链表头时发生错误:%@,%@",error,[error userInfo]);
-        return NO;
-        
-    } else {
-        CMLLog(@"%@", [NSString stringWithFormat:@"建立一级科目链表头成功"]);
-        return YES;
+    if ([kManagedObjectContext save:&error]) {
+        if (error) {
+            CMLLog(@"建立一级科目链表头失败...");
+            CMLLog(@"错误:%@,%@",error,[error userInfo]);
+            return NO;
+            
+        } else {
+            CMLLog(@"建立一级科目链表头成功...");
+            return YES;
+        }
     }
+    CMLLog(@"建立一级科目链表头失败...");
+    return NO;
 }
 
 //将一级科目链表最后一个科目的nextCategoryID置为newID
 + (BOOL)setLastItemCategoryNextID:(NSString *)nextID {
     //先获取链表最后一个科目，再修改它的nextCategoryID
-    CMLLog(@"获取链表最后一个科目所在的线程是：%@", [NSThread currentThread]);
+    CMLLog(@"开始将一级科目链表最后一个科目的nextCategoryID置为newID...");
     
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -411,7 +437,8 @@
     NSMutableArray *itemCategories = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     if (itemCategories == nil) {
         //查询过程中出错
-        CMLLog(@"查询一级科目链表最后一个科目时发生错误:%@,%@",error,[error userInfo]);
+        CMLLog(@"将一级科目链表最后一个科目的nextCategoryID置为newID失败...");
+        CMLLog(@"错误:%@,%@",error,[error userInfo]);
         return NO;
         
     } else if (itemCategories.count) {
@@ -421,7 +448,8 @@
         
         NSError *error = nil;
         if ([kManagedObjectContext save:&error]) {
-            CMLLog(@"修改最后一个科目(%@)的nextCategoryID(%@)成功", ic.categoryID, ic.nextCategoryID);
+            CMLLog(@"将一级科目链表最后一个科目的nextCategoryID置为newID成功...");
+            CMLLog(@"将最后一个科目(%@)的nextCategoryID设置为了(%@)", ic.categoryID, ic.nextCategoryID);
             return YES;
         }
     }

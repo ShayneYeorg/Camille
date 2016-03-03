@@ -25,14 +25,14 @@
     [super viewDidLoad];
 
     //手动添加一级记账科目
-//    [CMLCoreDataAccess addItemCategory:@"第8个" callBack:^(CMLResponse *response) {
-//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-//            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
-//        }
-//    }];
+    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+        }
+    }];
     
     //手动添加二级记账科目
-//    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"4" callBack:^(CMLResponse *response) {
+//    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"1" callBack:^(CMLResponse *response) {
 //        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
 //            CMLLog(@"%@", response.responseDic[@"itemID"]);
 //        }

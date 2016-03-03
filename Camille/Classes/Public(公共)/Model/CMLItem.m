@@ -21,6 +21,7 @@
     NSMutableDictionary *returnDic = [NSMutableDictionary dictionary];
     
     //2、分组
+    CMLLog(@"开始对所有记账科目进行分组...");
     //依次取出数组里的每一个item
     for (int i = 0; i < items.count; i++) {
         //判断在tempDic里item所属的category是否存在
@@ -35,14 +36,17 @@
             [tempDic setValue:tempArr forKey:tempDicKey];
         }
     }
+    CMLLog(@"所有记账科目分组完成...");
     
     //3、排序
+    CMLLog(@"开始对每个分组的记账科目进行排序...");
     //将tempDic里每一个value数组进行排序，然后对应key存入returnDic
     NSArray *tempDicAllKeys = tempDic.allKeys;
     for (int i = 0; i < tempDicAllKeys.count; i++) {
         NSString *dicKey = tempDicAllKeys[i];
         [returnDic setValue:[CMLItem sortItemsInACategory:(NSMutableArray *)tempDic[dicKey]] forKey:dicKey];
     }
+    CMLLog(@"所有记账科目排序完成...");
     
     //返回
     return returnDic;

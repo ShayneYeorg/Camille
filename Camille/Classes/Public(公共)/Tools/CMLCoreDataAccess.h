@@ -14,6 +14,10 @@
 
 @interface CMLCoreDataAccess : NSObject
 
++ (BOOL)createItemListHeadInCategory:(NSString *)categoryID;
+
+
+
 /**
  *  取出所有记账科目(并排序)
  *

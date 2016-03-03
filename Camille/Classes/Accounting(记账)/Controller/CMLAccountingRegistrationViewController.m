@@ -32,12 +32,27 @@
 //    }];
     
     //手动添加二级记账科目
-    [CMLCoreDataAccess addItem:@"第三个" categoryID:@"1" callBack:^(CMLResponse *response) {
-        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            CMLLog(@"%@", response.responseDic[@"itemID"]);
-        }
-    }];
+//    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"4" callBack:^(CMLResponse *response) {
+//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            CMLLog(@"%@", response.responseDic[@"itemID"]);
+//        }
+//    }];
 
+    //取出二级记账科目（已排序）
+//    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
+//        NSDictionary *dic = response.responseDic;
+//        NSDictionary *itemsDic = dic[@"items"];
+//        NSArray *dicAllKeys = itemsDic.allKeys;
+//        for (int i = 0; i < dicAllKeys.count; i++) {
+//            NSString *cid = dicAllKeys[i];
+//            CMLLog(@"分类：%@", cid);
+//            NSArray *a = (NSArray *)itemsDic[cid];
+//            for (CMLItem *i in a) {
+//                CMLLog(@"%@", i.itemID);
+//            }
+//        }
+//    }];
+    
     //取出一级记账科目（已排序）
 //    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
 //        NSDictionary *dic = response.responseDic;

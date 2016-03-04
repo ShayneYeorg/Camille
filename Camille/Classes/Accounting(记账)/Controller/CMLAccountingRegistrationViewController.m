@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
+//@property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
+//@property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
+@property (nonatomic, strong) CMLAccountingItemCell *accountingItemCell; //第一个cell
 
 @end
 
@@ -22,56 +25,62 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //手动添加完整记账项目
-//    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
-//        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-//            CMLLog(@"%@", response.responseDic[@"itemID"]);
-//        }
-//    }];
-
-    //手动添加一级记账科目
-//    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
-//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-//            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
-//        }
-//    }];
-    
-    //手动添加二级记账科目
-//    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"1" callBack:^(CMLResponse *response) {
-//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-//            CMLLog(@"%@", response.responseDic[@"itemID"]);
-//        }
-//    }];
-
-    //取出二级记账科目（已排序）
-//    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
-//        NSDictionary *dic = response.responseDic;
-//        NSDictionary *itemsDic = dic[@"items"];
-//        NSArray *dicAllKeys = itemsDic.allKeys;
-//        for (int i = 0; i < dicAllKeys.count; i++) {
-//            NSString *cid = dicAllKeys[i];
-//            CMLLog(@"分类：%@", cid);
-//            NSArray *a = (NSArray *)itemsDic[cid];
-//            for (CMLItem *i in a) {
-//                CMLLog(@"%@", i.itemID);
-//            }
-//        }
-//    }];
-    
-    //取出一级记账科目（已排序）
-//    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
-//        NSDictionary *dic = response.responseDic;
-//        NSArray *arr = dic[@"items"];
-//        for (int i = 0; i < arr.count; i++) {
-//            CMLLog(@"%@", ((CMLItemCategory *)arr[i]).categoryID);
-//        }
-//    }];
     
     self.view.backgroundColor = kAppViewColor;
     [self configViewDetails];
     [self configTitle];
     [self configBarBtns];
     [self configTableView];
+    
+    //一进来就请求数据
+    [self fetchItemsData];
+}
+
+- (void)tempBackUp {
+    //手动添加完整记账项目
+    //    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
+    //        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+    //            CMLLog(@"%@", response.responseDic[@"itemID"]);
+    //        }
+    //    }];
+    
+    //手动添加一级记账科目
+    //    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
+    //        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+    //            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+    //        }
+    //    }];
+    
+    //手动添加二级记账科目
+    //    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"1" callBack:^(CMLResponse *response) {
+    //        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+    //            CMLLog(@"%@", response.responseDic[@"itemID"]);
+    //        }
+    //    }];
+    
+    //取出二级记账科目（已排序）
+    //    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
+    //        NSDictionary *dic = response.responseDic;
+    //        NSDictionary *itemsDic = dic[@"items"];
+    //        NSArray *dicAllKeys = itemsDic.allKeys;
+    //        for (int i = 0; i < dicAllKeys.count; i++) {
+    //            NSString *cid = dicAllKeys[i];
+    //            CMLLog(@"分类：%@", cid);
+    //            NSArray *a = (NSArray *)itemsDic[cid];
+    //            for (CMLItem *i in a) {
+    //                CMLLog(@"%@", i.itemID);
+    //            }
+    //        }
+    //    }];
+    
+    //取出一级记账科目（已排序）
+    //    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
+    //        NSDictionary *dic = response.responseDic;
+    //        NSArray *arr = dic[@"items"];
+    //        for (int i = 0; i < arr.count; i++) {
+    //            CMLLog(@"%@", ((CMLItemCategory *)arr[i]).categoryID);
+    //        }
+    //    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -131,6 +140,37 @@
     [self.view addSubview:self.tableView];
 }
 
+#pragma mark - Getter
+
+- (CMLAccountingItemCell *)accountingItemCell {
+    if (_accountingItemCell == nil) {
+        _accountingItemCell = [CMLAccountingItemCell loadFromNib];
+        _accountingItemCell.delegate = self;
+        _accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        _accountingItemCell.backgroundColor = kCellBackgroundColor;
+    }
+    return _accountingItemCell;
+}
+
+#pragma mark - AsyncFetchData
+
+- (void)fetchItemsData {
+    __weak typeof(self) weakSelf = self;
+    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            [weakSelf.accountingItemCell refreshLeftTableView:dic[@"categories"]];
+        }
+    }];
+    
+    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            [weakSelf.accountingItemCell refreshRightTableView:dic[@"items"]];
+        }
+    }];
+}
+
 #pragma mark - CMLAccountingItemCellDelegate
 
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell {
@@ -159,12 +199,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        CMLAccountingItemCell *cell = [CMLAccountingItemCell loadFromNib];
-        cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = kCellBackgroundColor;
-        [cell refreshWithExpand:self.isItemCellExpand];
-        return cell;
+        [self.accountingItemCell refreshWithExpand:self.isItemCellExpand];
+        return self.accountingItemCell;
         
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc]init];

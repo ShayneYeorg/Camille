@@ -26,5 +26,7 @@
 + (instancetype)loadFromNib;
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand;
 - (void)refreshWithExpand:(BOOL)isExpand;
+- (void)refreshLeftTableView:(NSArray *)categoryModels;
+- (void)refreshRightTableView:(NSDictionary *)itemsDic;
 
 @end

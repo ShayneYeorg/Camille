@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTableViewWidthContraint;//左菜单的宽度约束
 
 @property (nonatomic, strong) NSIndexPath *leftTableViewSelectedIndexPath;//左菜单选中项
+@property (nonatomic, strong) NSArray *categoryModels; //左菜单的模型
+@property (nonatomic, strong) NSDictionary *itemsDic; //右菜单的模型
+@property (nonatomic, strong) NSArray *itemsModel; //当前所显示右菜单的模型
 
 @end
 
@@ -56,6 +59,17 @@
     }
 }
 
+- (void)refreshLeftTableView:(NSArray *)categoryModels {
+    self.categoryModels = categoryModels;
+    [self.leftTableView reloadData];
+}
+
+- (void)refreshRightTableView:(NSDictionary *)itemsDic {
+    self.itemsDic = itemsDic;
+    self.itemsModel = self.itemsDic[@"1"];
+    [self.rightTableView reloadData];
+}
+
 #pragma mark - Private
 
 - (IBAction)expandTap:(id)sender {
@@ -79,19 +93,44 @@
     self.rightTableView.tableFooterView = [UIView new];
 }
 
+#pragma mark - Getter
+
+- (NSArray *)itemsModel {
+    if (_itemsModel == nil) {
+        _itemsModel = [NSArray array];
+    }
+    return _itemsModel;
+}
+
+- (NSArray *)categoryModels {
+    if (_categoryModels == nil) {
+        _categoryModels = [NSArray array];
+    }
+    return _categoryModels;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.leftTableView) {
         self.leftTableViewSelectedIndexPath = indexPath;
         [self.leftTableView reloadData];
+        
+        CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];
+        self.itemsModel = self.itemsDic[selectedCategory.categoryID];
+        [self.rightTableView reloadData];
     }
 }
 
 #pragma mark - TableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    if (tableView == self.leftTableView) {
+        return self.categoryModels.count;
+        
+    } else {
+        return self.itemsModel.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,10 +143,15 @@
         } else {
             cell.backgroundColor = kLeftTableViewColor;
         }
+        CMLItemCategory *category = self.categoryModels[indexPath.row];
+        cell.textLabel.text = category.categoryName;
         
     } else {
         cell.backgroundColor = kRightTableViewColor;
+        CMLItem *item = self.itemsModel[indexPath.row];
+        cell.textLabel.text = item.itemName;
     }
+    
     return cell;
 }
 

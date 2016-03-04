@@ -65,7 +65,7 @@
         } else {
             cmlResponse.code = RESPONSE_CODE_SUCCEED;
             cmlResponse.desc = @"读取成功";
-            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItemCategory sortItemCategories:itemCategories], @"items", nil];
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItemCategory sortItemCategories:itemCategories], @"categories", nil];
         }
         
         //回调

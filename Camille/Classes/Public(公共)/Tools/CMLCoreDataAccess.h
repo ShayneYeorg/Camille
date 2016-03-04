@@ -14,10 +14,8 @@
 
 @interface CMLCoreDataAccess : NSObject
 
-
-
 /**
- *  取出所有记账科目(并排序)
+ *  取出所有记账科目(分组并排序)
  *
  *  @param callBack             回调
  */
@@ -45,7 +43,7 @@
  *  @param ItemCategoryName     科目名称
  *  @param callBack             回调
  */
-+ (void)addItemCategory:(NSString *)itemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
+//+ (void)addItemCategory:(NSString *)itemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增二级记账科目
@@ -54,7 +52,7 @@
  *  @param categoryID           一级科目ID
  *  @param callBack             回调
  */
-+ (void)addItem:(NSString *)itemName categoryID:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
+//+ (void)addItem:(NSString *)itemName categoryID:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录

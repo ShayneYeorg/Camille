@@ -23,13 +23,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    //手动添加一级记账科目
-    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
-        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+    //手动添加完整记账项目
+    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            CMLLog(@"%@", response.responseDic[@"itemID"]);
         }
     }];
+
+    //手动添加一级记账科目
+//    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
+//        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
+//        }
+//    }];
     
     //手动添加二级记账科目
 //    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"1" callBack:^(CMLResponse *response) {

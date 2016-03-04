@@ -8,7 +8,6 @@
 
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
-#import "CMLCoreDataAccess.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
 
@@ -24,11 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //手动添加完整记账项目
-    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
-        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            CMLLog(@"%@", response.responseDic[@"itemID"]);
-        }
-    }];
+//    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
+//        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            CMLLog(@"%@", response.responseDic[@"itemID"]);
+//        }
+//    }];
 
     //手动添加一级记账科目
 //    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
@@ -68,12 +67,11 @@
 //        }
 //    }];
     
-    //暂时注释
-//    self.view.backgroundColor = kAppViewColor;
-//    [self configViewDetails];
-//    [self configTitle];
-//    [self configBarBtns];
-//    [self configTableView];
+    self.view.backgroundColor = kAppViewColor;
+    [self configViewDetails];
+    [self configTitle];
+    [self configBarBtns];
+    [self configTableView];
 }
 
 - (void)didReceiveMemoryWarning {

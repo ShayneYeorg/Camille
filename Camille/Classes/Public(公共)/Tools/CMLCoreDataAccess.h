@@ -15,6 +15,11 @@
 @interface CMLCoreDataAccess : NSObject
 
 /**
+ *  检查“未分类 —— 新增”这个科目是否存在，不存在则新建
+ */
++ (void)checkInitialItem;
+
+/**
  *  取出所有记账科目(分组并排序)
  *
  *  @param callBack             回调
@@ -36,23 +41,6 @@
  *  @param callBack             回调
  */
 + (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName callBack:(void(^)(CMLResponse *response))callBack;
-
-/**
- *  新增一级记账科目
- *
- *  @param ItemCategoryName     科目名称
- *  @param callBack             回调
- */
-//+ (void)addItemCategory:(NSString *)itemCategoryName callBack:(void(^)(CMLResponse *response))callBack;
-
-/**
- *  新增二级记账科目
- *
- *  @param ItemCategoryName     科目名称
- *  @param categoryID           一级科目ID
- *  @param callBack             回调
- */
-//+ (void)addItem:(NSString *)itemName categoryID:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录

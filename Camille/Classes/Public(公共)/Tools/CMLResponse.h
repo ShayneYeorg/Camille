@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define RESPONSE_CODE_SUCCEED         @"000"//查询成功
+#define RESPONSE_CODE_FAILD           @"111"//查询失败
+
 @interface CMLResponse : NSObject
 
 @property (nonatomic, strong) NSString *desc; //查询结果描述

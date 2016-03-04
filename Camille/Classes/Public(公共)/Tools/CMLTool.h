@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CMLCoreDataAccess.h"
 
 @interface CMLTool : NSObject
 

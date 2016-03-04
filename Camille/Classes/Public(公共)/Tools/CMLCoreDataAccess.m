@@ -10,6 +10,33 @@
 
 @implementation CMLCoreDataAccess
 
+#pragma mark - 初始化检查
+
++ (void)checkInitialItem {
+    //不新开线程了
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //设置查询条件
+    NSString *str = @"categoryID == '1' AND itemName == '新增'";
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (items == nil) {
+        //查询过程中出错
+        CMLLog(@"错误:%@,%@",error,[error userInfo]);
+        
+    } else if (!items.count) {
+        //itemName不存在则新建并返回对应itemID
+        [CMLCoreDataAccess addItem:@"新增" inCategory:@"未分类" callBack:^(CMLResponse *response) {}];
+    }
+}
+
 #pragma mark - 查询所有一级记账科目（排序）
 
 //取出所有一级记账科目(并排序)

@@ -22,7 +22,7 @@
 
 //App
 #define kAppCoclor RGB(252,202,28)
-#define kAppViewColor RGB(255,250,230)
+#define kAppViewColor RGB(255,255,245)
 #define kAppTextCoclor RGB(45,25,0)
 #define kItemLeftTableViewColor  RGB(191,226,151)
 #define kItemRightTableViewColor RGB(252,212,108)
@@ -38,10 +38,6 @@
 #define kContent_Width ([UIScreen mainScreen].applicationFrame.size.width)
 #define kContent_CenterX kContent_Width/2
 #define kContent_CenterY kContent_Height/2
-
-//CMLResponse
-#define RESPONSE_CODE_SUCCEED         @"000"//查询成功
-#define RESPONSE_CODE_FAILD           @"111"//查询失败
 
 
 

@@ -94,31 +94,95 @@
 //新增完整记账科目
 + (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName callBack:(void(^)(CMLResponse *response))callBack {
     //根据categoryName获得categoryID
+    NSString *categoryID = [CMLCoreDataAccess getCategoryIDByCategoryName:categoryName];
     
-    //在相应categoryID下保存itemName
-    
-    //回调
+    if (categoryID) {
+        //在相应categoryID下保存itemName
+        [CMLCoreDataAccess saveItem:itemName inCategory:categoryID callBack:callBack];
+        
+    } else {
+        callBack(nil);
+    }
 }
 
 //根据categoryName获得categoryID
 + (NSString *)getCategoryIDByCategoryName:(NSString *)categoryName {
     //判断categoryName是否存在
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
     
-    //categoryName存在则直接返回对应categoryID
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"categoryName == '%@'", categoryName];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
     
-    //categoryName不存在则新建并返回对应categoryID
-    
-    return nil;
+    //查询
+    NSError *error = nil;
+    NSMutableArray *itemCategoris = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (itemCategoris == nil) {
+        //查询过程中出错
+        CMLLog(@"查询categoryName是否存在时发生错误:%@,%@",error,[error userInfo]);
+        return nil;
+        
+    } else if (itemCategoris.count) {
+        //categoryName存在则直接返回对应categoryID
+        CMLItemCategory *ic = itemCategoris[0];
+        return ic.categoryID;
+        
+    } else {
+        //categoryName不存在则新建并返回对应categoryID
+        __block NSString *returnStr = nil;
+        [CMLCoreDataAccess addItemCategory:categoryName callBack:^(CMLResponse *response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                returnStr = response.responseDic[@"itemCategoryID"];
+                CMLLog(@"returnStr赋值");
+            }
+        }];
+        CMLLog(@"returnStr返回");
+        return returnStr;
+    }
 }
 
 //在相应categoryID下保存itemName
 + (void)saveItem:(NSString *)itemName inCategory:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack {
     //判断在categoryID下itemName是否存在
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
     
-    //itemName存在则直接返回对应itemID
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '%@'", categoryID, itemName];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
     
-    //itemName不存在则新建并返回对应itemID
+    //Response
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    cmlResponse.code = RESPONSE_CODE_FAILD;
+    cmlResponse.desc = @"在相应categoryID下保存itemName出错";
+    cmlResponse.responseDic = nil;
     
+    //查询
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (items == nil) {
+        //查询过程中出错
+        CMLLog(@"错误:%@,%@",error,[error userInfo]);
+        callBack(cmlResponse);
+        
+    } else if (items.count) {
+        //itemName存在则直接返回对应itemID
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = @"存在itemName";
+        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:((CMLItem *)items[0]).itemID, @"itemID", nil];
+        callBack(cmlResponse);
+        
+    } else {
+        //itemName不存在则新建并返回对应itemID
+        [CMLCoreDataAccess addItem:itemName categoryID:categoryID callBack:callBack];
+    }
 }
 
 #pragma mark - 新增二级记账科目相关方法

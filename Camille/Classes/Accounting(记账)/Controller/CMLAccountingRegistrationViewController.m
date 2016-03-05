@@ -13,9 +13,9 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
-//@property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
-//@property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
-@property (nonatomic, strong) CMLAccountingItemCell *accountingItemCell; //第一个cell
+@property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
+@property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
+//@property (nonatomic, strong) CMLAccountingItemCell *accountingItemCell; //第一个cell
 
 @end
 
@@ -90,7 +90,7 @@
 #pragma mark - Private
 
 - (void)configViewDetails {
-    self.isItemCellExpand = NO;
+    self.isItemCellExpand = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
@@ -142,14 +142,28 @@
 
 #pragma mark - Getter
 
-- (CMLAccountingItemCell *)accountingItemCell {
-    if (_accountingItemCell == nil) {
-        _accountingItemCell = [CMLAccountingItemCell loadFromNib];
-        _accountingItemCell.delegate = self;
-        _accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        _accountingItemCell.backgroundColor = kCellBackgroundColor;
+//- (CMLAccountingItemCell *)accountingItemCell {
+//    if (_accountingItemCell == nil) {
+//        _accountingItemCell = [CMLAccountingItemCell loadFromNib];
+////        _accountingItemCell.delegate = self;
+////        _accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
+////        _accountingItemCell.backgroundColor = kCellBackgroundColor;
+//    }
+//    return _accountingItemCell;
+//}
+
+- (NSArray *)categoryModels {
+    if (_categoryModels == nil) {
+        _categoryModels = [NSArray array];
     }
-    return _accountingItemCell;
+    return _categoryModels;
+}
+
+- (NSDictionary *)itemsDic {
+    if (_itemsDic == nil) {
+        _itemsDic = [NSDictionary dictionary];
+    }
+    return _itemsDic;
 }
 
 #pragma mark - AsyncFetchData
@@ -159,14 +173,18 @@
     [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
-            [weakSelf.accountingItemCell refreshLeftTableView:dic[@"categories"]];
+            weakSelf.categoryModels = dic[@"categories"];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
     
     [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
-            [weakSelf.accountingItemCell refreshRightTableView:dic[@"items"]];
+            weakSelf.itemsDic = dic[@"items"];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
 }
@@ -199,8 +217,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [self.accountingItemCell refreshWithExpand:self.isItemCellExpand];
-        return self.accountingItemCell;
+        static NSString *ID = @"AccountingItemCell";
+        CMLAccountingItemCell *accountingItemCell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!accountingItemCell) {
+            accountingItemCell = [CMLAccountingItemCell loadFromNib];
+            accountingItemCell.delegate = self;
+            accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            accountingItemCell.backgroundColor = kCellBackgroundColor;
+        }
+        [accountingItemCell refreshWithExpand:self.isItemCellExpand];
+        [accountingItemCell refreshLeftTableView:self.categoryModels];
+        [accountingItemCell refreshRightTableView:self.itemsDic];
+        return accountingItemCell;
         
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc]init];

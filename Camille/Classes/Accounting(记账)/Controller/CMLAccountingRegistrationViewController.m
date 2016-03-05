@@ -15,7 +15,6 @@
 @property (nonatomic, assign) BOOL isItemCellExpand;
 @property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
 @property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
-//@property (nonatomic, strong) CMLAccountingItemCell *accountingItemCell; //第一个cell
 
 @end
 
@@ -34,6 +33,10 @@
     
     //一进来就请求数据
     [self fetchItemsData];
+}
+
+- (void)dealloc {
+    CMLLog(@"dealloc");
 }
 
 - (void)tempBackUp {
@@ -142,16 +145,6 @@
 
 #pragma mark - Getter
 
-//- (CMLAccountingItemCell *)accountingItemCell {
-//    if (_accountingItemCell == nil) {
-//        _accountingItemCell = [CMLAccountingItemCell loadFromNib];
-////        _accountingItemCell.delegate = self;
-////        _accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
-////        _accountingItemCell.backgroundColor = kCellBackgroundColor;
-//    }
-//    return _accountingItemCell;
-//}
-
 - (NSArray *)categoryModels {
     if (_categoryModels == nil) {
         _categoryModels = [NSArray array];
@@ -170,23 +163,36 @@
 
 - (void)fetchItemsData {
     __weak typeof(self) weakSelf = self;
-    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
-        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            NSDictionary *dic = response.responseDic;
-            weakSelf.categoryModels = dic[@"categories"];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }];
+    __block BOOL isItemsFetchFinish = NO;
+    __block BOOL isCategoriesFetchFinish = NO;
     
     [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.itemsDic = dic[@"items"];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            isItemsFetchFinish = YES;
+            if (isItemsFetchFinish && isCategoriesFetchFinish) {
+                [weakSelf reloadDataItemsCell];
+            }
         }
     }];
+    
+    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            weakSelf.categoryModels = dic[@"categories"];
+            isCategoriesFetchFinish = YES;
+            if (isItemsFetchFinish && isCategoriesFetchFinish) {
+                [weakSelf reloadDataItemsCell];
+            }
+        }
+    }];
+}
+
+- (void)reloadDataItemsCell {
+    CMLLog(@"reloadDataItemsCell");
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - CMLAccountingItemCellDelegate
@@ -225,9 +231,7 @@
             accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
             accountingItemCell.backgroundColor = kCellBackgroundColor;
         }
-        [accountingItemCell refreshWithExpand:self.isItemCellExpand];
-        [accountingItemCell refreshLeftTableView:self.categoryModels];
-        [accountingItemCell refreshRightTableView:self.itemsDic];
+        [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand];
         return accountingItemCell;
         
     } else {

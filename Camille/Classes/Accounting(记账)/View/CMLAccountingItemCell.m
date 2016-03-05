@@ -50,24 +50,20 @@
     }
 }
 
-- (void)refreshWithExpand:(BOOL)isExpand {
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand {
     if (isExpand) {
         self.bottomView.hidden = NO;
+        
+        self.categoryModels = categoryModels;
+        [self.leftTableView reloadData];
+        self.itemsDic = itemsDic;
+        
+        self.itemsModel = self.itemsDic[@"1"];
+        [self.rightTableView reloadData];
         
     } else {
         self.bottomView.hidden = YES;
     }
-}
-
-- (void)refreshLeftTableView:(NSArray *)categoryModels {
-    self.categoryModels = categoryModels;
-    [self.leftTableView reloadData];
-}
-
-- (void)refreshRightTableView:(NSDictionary *)itemsDic {
-    self.itemsDic = itemsDic;
-    self.itemsModel = self.itemsDic[@"1"];
-    [self.rightTableView reloadData];
 }
 
 #pragma mark - Private

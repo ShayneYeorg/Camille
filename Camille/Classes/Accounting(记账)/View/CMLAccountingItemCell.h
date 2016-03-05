@@ -6,7 +6,6 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
-//#define kCellBackgroundColor RGB(193,229,158)
 #define kCellBackgroundColor kAppViewColor
 
 #import <UIKit/UIKit.h>
@@ -25,8 +24,6 @@
 
 + (instancetype)loadFromNib;
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand;
-- (void)refreshWithExpand:(BOOL)isExpand;
-- (void)refreshLeftTableView:(NSArray *)categoryModels;
-- (void)refreshRightTableView:(NSDictionary *)itemsDic;
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand;
 
 @end

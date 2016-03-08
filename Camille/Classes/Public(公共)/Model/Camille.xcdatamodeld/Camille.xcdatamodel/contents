@@ -5,21 +5,24 @@
         <attribute name="createTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="happenTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CMLItem" representedClassName="CMLItem" syncable="YES">
         <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextItemID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CMLItemCategory" representedClassName="CMLItemCategory" syncable="YES">
         <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="categoryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextCategoryID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="90"/>
-        <element name="CMLItem" positionX="-27" positionY="54" width="128" height="105"/>
+        <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="CMLItem" positionX="-27" positionY="54" width="128" height="120"/>
+        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="105"/>
     </elements>
 </model>

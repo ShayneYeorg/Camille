@@ -166,7 +166,7 @@
     __block BOOL isItemsFetchFinish = NO;
     __block BOOL isCategoriesFetchFinish = NO;
     
-    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
+    [CMLCoreDataAccess fetchAllItems:Item_Type_Cost callBack:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.itemsDic = dic[@"items"];
@@ -177,7 +177,7 @@
         }
     }];
     
-    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
+    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Cost callBack:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.categoryModels = dic[@"categories"];

@@ -15,23 +15,23 @@
 @interface CMLCoreDataAccess : NSObject
 
 /**
- *  检查“未分类 —— 新增”这个科目是否存在，不存在则新建
+ *  检查两类记账科目中，“未分类 —— 新增”这个科目是否存在，不存在则新建
  */
-+ (void)checkInitialItem;
-
-/**
- *  取出所有记账科目(分组并排序)
- *
- *  @param callBack             回调
- */
-+ (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
++ (void)checkInitialItem:(NSString *)type;
 
 /**
  *  取出所有一级记账科目(并排序)
  *
  *  @param callBack             回调
  */
-+ (void)fetchAllItemCategories:(void(^)(CMLResponse *response))callBack;
++ (void)fetchAllItemCategories:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  取出所有二级记账科目(分组并排序)
+ *
+ *  @param callBack             回调
+ */
++ (void)fetchAllItems:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增记账科目
@@ -40,7 +40,7 @@
  *  @param ItemCategoryName     一级科目名称
  *  @param callBack             回调
  */
-+ (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName callBack:(void(^)(CMLResponse *response))callBack;
++ (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录
@@ -50,6 +50,6 @@
  *  @param happenTime           发生时间
  *  @param callBack             回调
  */
-+ (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
++ (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount type:(NSString *)type happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
 
 @end

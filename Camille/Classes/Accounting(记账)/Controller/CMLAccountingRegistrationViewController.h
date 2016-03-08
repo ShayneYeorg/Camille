@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef enum _AccountingType {
-    Accounting_Type_Income = 0,
-    Accounting_Type_Cost
+    Accounting_Type_Cost = 0,
+    Accounting_Type_Income
 } AccountingType;
 
 @interface CMLAccountingRegistrationViewController : UIViewController

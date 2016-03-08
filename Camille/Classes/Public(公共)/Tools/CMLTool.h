@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "CMLCoreDataAccess.h"
 
+//账务类型
+#define Item_Type_Cost    @"1"
+#define Item_Type_Income  @"2"
+
 @interface CMLTool : NSObject
 
 @end

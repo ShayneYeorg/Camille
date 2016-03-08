@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *itemName; //二级科目名称
 @property (nullable, nonatomic, retain) NSString *itemID; //二级科目ID
+@property (nullable, nonatomic, retain) NSString *itemType; //二级科目类型
 @property (nullable, nonatomic, retain) NSString *nextItemID; //下一个二级科目
 @property (nullable, nonatomic, retain) NSString *categoryID; //所属一级科目
 

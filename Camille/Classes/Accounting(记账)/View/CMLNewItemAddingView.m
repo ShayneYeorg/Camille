@@ -7,6 +7,7 @@
 //
 
 #import "CMLNewItemAddingView.h"
+#import "SVProgressHUD.h"
 
 #define kNewItemAddingViewWidth   250
 #define kNewItemAddingViewHeight  180
@@ -66,10 +67,10 @@
 
 - (IBAction)confirmBtnClick:(id)sender {
     if (!self.itemInputField.text.length) {
-        CMLLog(@"itemInputField为空");
+        [SVProgressHUD showErrorWithStatus:@"请输入科目名称"];
         
     } else if (!self.categoryInputField.text.length) {
-        CMLLog(@"categoryInputField为空");
+        [SVProgressHUD showErrorWithStatus:@"请输入所属分类"];
         
     } else if (self.clickHandler) {
         self.clickHandler(self.itemInputField.text, self.categoryInputField.text);

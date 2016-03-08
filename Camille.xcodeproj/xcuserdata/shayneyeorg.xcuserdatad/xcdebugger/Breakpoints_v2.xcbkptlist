@@ -10,22 +10,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
-            timestampString = "479108607.060766"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "+checkInitialItem:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
             timestampString = "479108633.832241"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -106,7 +90,7 @@
                   moduleName = "Camille"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
-                  timestampString = "479109860.215532"
+                  timestampString = "479111532.962497"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "174"
@@ -121,7 +105,7 @@
                   moduleName = "Camille"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
-                  timestampString = "479109860.216053"
+                  timestampString = "479111532.962683"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "174"
@@ -426,7 +410,7 @@
                   moduleName = "Camille"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
-                  timestampString = "479109860.120854"
+                  timestampString = "479111532.976122"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -441,7 +425,7 @@
                   moduleName = "Camille"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
-                  timestampString = "479109860.121704"
+                  timestampString = "479111532.976463"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"

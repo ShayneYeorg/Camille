@@ -14,6 +14,7 @@
 #import "CMLAccountingItemCell.h"
 #import "CMLAccountingItemLeftCell.h"
 #import "CMLAccountingItemRightCell.h"
+#import "CMLNewItemAddingView.h"
 
 @interface CMLAccountingItemCell () <UITableViewDelegate, UITableViewDataSource>
 
@@ -115,7 +116,22 @@
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];
         self.itemsModel = self.itemsDic[selectedCategory.categoryID];
         [self.rightTableView reloadData];
+        
+    } else {
+#warning 此处判断逻辑记得要改
+        if (self.leftTableViewSelectedIndexPath.row == 0 && indexPath.row == 0) {
+            //这是新增按钮
+            __weak typeof(self) weakSelf = self;
+            CMLNewItemAddingView *newItemAddingView = [CMLNewItemAddingView loadFromNib];
+            [newItemAddingView showWithClickHandler:^(NSString *itemName, NSString *categoryName) {
+                [weakSelf refreshAfterAddingNewItem];
+            }];
+        }
     }
+}
+
+- (void)refreshAfterAddingNewItem {
+    
 }
 
 #pragma mark - TableViewDataSource

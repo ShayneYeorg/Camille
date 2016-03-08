@@ -15,4 +15,6 @@
 
 @interface CMLTool : NSObject
 
++ (UIWindow *)getWindow;
+
 @end

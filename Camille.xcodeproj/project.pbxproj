@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3405792F1C8EA70C00C79F9D /* CMLNewItemAddingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405792E1C8EA70C00C79F9D /* CMLNewItemAddingView.m */; };
+		340579311C8EA72000C79F9D /* CMLNewItemAddingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 340579301C8EA72000C79F9D /* CMLNewItemAddingView.xib */; };
 		3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3441D0AD1C7C098A00D6FE0C /* CMLAccountingItemCell.m */; };
 		3441D0B01C7C098A00D6FE0C /* CMLAccountingItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441D0AE1C7C098A00D6FE0C /* CMLAccountingItemCell.xib */; };
 		3441D0B41C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3441D0B21C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m */; };
@@ -39,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3405792D1C8EA70C00C79F9D /* CMLNewItemAddingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLNewItemAddingView.h; sourceTree = "<group>"; };
+		3405792E1C8EA70C00C79F9D /* CMLNewItemAddingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLNewItemAddingView.m; sourceTree = "<group>"; };
+		340579301C8EA72000C79F9D /* CMLNewItemAddingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLNewItemAddingView.xib; sourceTree = "<group>"; };
 		3441D0AC1C7C098A00D6FE0C /* CMLAccountingItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingItemCell.h; sourceTree = "<group>"; };
 		3441D0AD1C7C098A00D6FE0C /* CMLAccountingItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingItemCell.m; sourceTree = "<group>"; };
 		3441D0AE1C7C098A00D6FE0C /* CMLAccountingItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingItemCell.xib; sourceTree = "<group>"; };
@@ -203,6 +208,9 @@
 				3441D0B61C7C919200D6FE0C /* CMLAccountingItemRightCell.h */,
 				3441D0B71C7C919200D6FE0C /* CMLAccountingItemRightCell.m */,
 				3441D0B81C7C919200D6FE0C /* CMLAccountingItemRightCell.xib */,
+				3405792D1C8EA70C00C79F9D /* CMLNewItemAddingView.h */,
+				3405792E1C8EA70C00C79F9D /* CMLNewItemAddingView.m */,
+				340579301C8EA72000C79F9D /* CMLNewItemAddingView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340579311C8EA72000C79F9D /* CMLNewItemAddingView.xib in Resources */,
 				344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */,
 				344A00481C75E0D8008281BB /* Assets.xcassets in Resources */,
 				3441D0BA1C7C919200D6FE0C /* CMLAccountingItemRightCell.xib in Resources */,
@@ -402,6 +411,7 @@
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
+				3405792F1C8EA70C00C79F9D /* CMLNewItemAddingView.m in Sources */,
 				3499BE191C84144D004EE4BD /* CMLItem+CoreDataProperties.m in Sources */,
 				3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */,
 				3499BE181C84144D004EE4BD /* CMLItemCategory.m in Sources */,

@@ -67,9 +67,11 @@
 
 - (IBAction)confirmBtnClick:(id)sender {
     if (!self.itemInputField.text.length) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         [SVProgressHUD showErrorWithStatus:@"请输入科目名称"];
         
     } else if (!self.categoryInputField.text.length) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         [SVProgressHUD showErrorWithStatus:@"请输入所属分类"];
         
     } else if (self.clickHandler) {

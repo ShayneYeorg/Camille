@@ -26,13 +26,13 @@
 
 - (IBAction)incomeBtnClick:(id)sender {
     CMLAccountingRegistrationViewController *accountingRegistrationViewController = [[CMLAccountingRegistrationViewController alloc]init];
-    accountingRegistrationViewController.type = Accounting_Type_Income;
+    accountingRegistrationViewController.type = Item_Type_Income;
     [self.navigationController pushViewController:accountingRegistrationViewController animated:YES];
 }
 
 - (IBAction)costBtnClick:(id)sender {
     CMLAccountingRegistrationViewController *accountingRegistrationViewController = [[CMLAccountingRegistrationViewController alloc]init];
-    accountingRegistrationViewController.type = Accounting_Type_Cost;
+    accountingRegistrationViewController.type = Item_Type_Cost;
     [self.navigationController pushViewController:accountingRegistrationViewController animated:YES];
 }
 

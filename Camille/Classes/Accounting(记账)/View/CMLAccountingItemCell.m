@@ -124,14 +124,12 @@
             __weak typeof(self) weakSelf = self;
             CMLNewItemAddingView *newItemAddingView = [CMLNewItemAddingView loadFromNib];
             [newItemAddingView showWithClickHandler:^(NSString *itemName, NSString *categoryName) {
-                [weakSelf refreshAfterAddingNewItem];
+                if (weakSelf.delegate) {
+                    [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];
+                }
             }];
         }
     }
-}
-
-- (void)refreshAfterAddingNewItem {
-    
 }
 
 #pragma mark - TableViewDataSource

@@ -8,6 +8,7 @@
 
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
+#import "SVProgressHUD.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
 
@@ -99,7 +100,7 @@
 
 - (void)configTitle {
     self.title = @"收入";
-    if (self.type == Accounting_Type_Cost) {
+    if ([self.type isEqualToString:Item_Type_Cost]) {
         self.title = @"支出";
     }
 }
@@ -166,7 +167,7 @@
     __block BOOL isItemsFetchFinish = NO;
     __block BOOL isCategoriesFetchFinish = NO;
     
-    [CMLCoreDataAccess fetchAllItems:Item_Type_Cost callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess fetchAllItems:self.type callBack:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.itemsDic = dic[@"items"];
@@ -177,7 +178,7 @@
         }
     }];
     
-    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Cost callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess fetchAllItemCategories:self.type callBack:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.categoryModels = dic[@"categories"];
@@ -189,8 +190,24 @@
     }];
 }
 
+- (void)addItem:(NSString *)itemName inCategory:(NSString *)catogoryName {
+    __weak typeof(self) weakSelf = self;
+    [CMLCoreDataAccess addItem:itemName inCategory:catogoryName type:self.type callBack:^(CMLResponse *response) {
+        if (response) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [SVProgressHUD showSuccessWithStatus:response.desc];
+                [weakSelf fetchItemsData];
+                
+            } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+                
+            }
+        }
+    }];
+}
+
 - (void)reloadDataItemsCell {
-    CMLLog(@"reloadDataItemsCell");
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -201,6 +218,10 @@
     self.isItemCellExpand = !self.isItemCellExpand;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:accountingItemCell];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
+    [self addItem:itemName inCategory:categoryName];
 }
 
 #pragma mark - UITableViewDelegate
@@ -227,6 +248,7 @@
         CMLAccountingItemCell *accountingItemCell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (!accountingItemCell) {
             accountingItemCell = [CMLAccountingItemCell loadFromNib];
+            accountingItemCell.type = self.type;
             accountingItemCell.delegate = self;
             accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
             accountingItemCell.backgroundColor = kCellBackgroundColor;

@@ -8,8 +8,6 @@
 
 #define kTopViewHeight       50
 #define kBottomViewHeight    250
-#define kLeftTableViewColor  RGB(191,226,151)
-#define kRightTableViewColor RGB(252,212,108)
 
 #import "CMLAccountingItemCell.h"
 #import "CMLAccountingItemLeftCell.h"
@@ -148,16 +146,16 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView == self.leftTableView) {
         if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
-            cell.backgroundColor = kRightTableViewColor;
+            cell.backgroundColor = kItemRightTableViewColor;
             
         } else {
-            cell.backgroundColor = kLeftTableViewColor;
+            cell.backgroundColor = kItemLeftTableViewColor;
         }
         CMLItemCategory *category = self.categoryModels[indexPath.row];
         cell.textLabel.text = category.categoryName;
         
     } else {
-        cell.backgroundColor = kRightTableViewColor;
+        cell.backgroundColor = kItemRightTableViewColor;
         CMLItem *item = self.itemsModel[indexPath.row];
         cell.textLabel.text = item.itemName;
     }

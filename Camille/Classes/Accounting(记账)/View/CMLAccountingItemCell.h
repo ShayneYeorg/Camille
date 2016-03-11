@@ -6,7 +6,8 @@
 //  Copyright © 2016年 shayneyeorg. All rights reserved.
 //
 
-#define kCellBackgroundColor kAppViewColor
+#define kCellBackgroundColor  kAppViewColor
+#define kNewItemAddingViewTag 201603112147
 
 #import <UIKit/UIKit.h>
 

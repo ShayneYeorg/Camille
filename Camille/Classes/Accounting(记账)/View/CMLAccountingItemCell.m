@@ -121,6 +121,7 @@
             //这是新增按钮
             __weak typeof(self) weakSelf = self;
             CMLNewItemAddingView *newItemAddingView = [CMLNewItemAddingView loadFromNib];
+            newItemAddingView.tag = kNewItemAddingViewTag;
             [newItemAddingView showWithClickHandler:^(NSString *itemName, NSString *categoryName) {
                 if (weakSelf.delegate) {
                     [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];

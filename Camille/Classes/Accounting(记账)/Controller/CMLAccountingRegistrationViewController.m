@@ -198,6 +198,7 @@
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 [SVProgressHUD showSuccessWithStatus:response.desc];
                 [weakSelf fetchItemsData];
+                [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
             } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
                 [SVProgressHUD showErrorWithStatus:response.desc];

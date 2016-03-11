@@ -14,28 +14,26 @@
 
 + (void)checkInitialItem:(NSString *)type {
     //不新开线程了
-    @synchronized(self) {
-        //request和entity
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
-        [request setEntity:entity];
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新增' AND itemType == '%@'", type];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (items == nil) {
+        //查询过程中出错
+        CMLLog(@"错误:%@,%@",error,[error userInfo]);
         
-        //设置查询条件
-        NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新增' AND itemType == '%@'", type];
-        NSPredicate *pre = [NSPredicate predicateWithFormat:str];
-        [request setPredicate:pre];
-        
-        //查询
-        NSError *error = nil;
-        NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-        if (items == nil) {
-            //查询过程中出错
-            CMLLog(@"错误:%@,%@",error,[error userInfo]);
-            
-        } else if (!items.count) {
-            //itemName不存在则新建并返回对应itemID
-            [CMLCoreDataAccess addItem:@"新增" inCategory:@"未分类" type:type callBack:^(CMLResponse *response) {}];
-        }
+    } else if (!items.count) {
+        //itemName不存在则新建并返回对应itemID
+        [CMLCoreDataAccess addItem:@"新增" inCategory:@"未分类" type:type callBack:^(CMLResponse *response) {}];
     }
 }
 
@@ -132,21 +130,16 @@
 
 //新增完整记账科目
 + (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
+    //根据categoryName获得categoryID
+    NSString *categoryID = [CMLCoreDataAccess getCategoryIDByCategoryName:categoryName type:type];
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //根据categoryName获得categoryID
-        NSString *categoryID = [CMLCoreDataAccess getCategoryIDByCategoryName:categoryName type:type];
+    if (categoryID) {
+        //在相应categoryID下保存itemName
+        [CMLCoreDataAccess saveItem:itemName inCategory:categoryID type:type callBack:callBack];
         
-        if (categoryID) {
-            //在相应categoryID下保存itemName
-            [CMLCoreDataAccess saveItem:itemName inCategory:categoryID type:type callBack:callBack];
-            
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                callBack(nil);
-            });
-        }
-//    });
+    } else {
+        callBack(nil);
+    }
 }
 
 //根据categoryName获得categoryID
@@ -214,18 +207,14 @@
     if (items == nil) {
         //查询过程中出错
         CMLLog(@"错误:%@,%@",error,[error userInfo]);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            callBack(cmlResponse);
-        });
+        callBack(cmlResponse);
         
     } else if (items.count) {
         //itemName存在则直接返回对应itemID
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"科目已存在";
         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:((CMLItem *)items[0]).itemID, @"itemID", nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            callBack(cmlResponse);
-        });
+        callBack(cmlResponse);
         
     } else {
         //itemName不存在则新建并返回对应itemID
@@ -287,9 +276,7 @@
     }
     
     //回调
-    dispatch_async(dispatch_get_main_queue(), ^{
-        callBack(cmlResponse);
-    });
+    callBack(cmlResponse);
 }
 
 + (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type{

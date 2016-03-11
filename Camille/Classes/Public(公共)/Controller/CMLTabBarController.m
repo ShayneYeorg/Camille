@@ -23,6 +23,8 @@
 #pragma mark - Private
 
 - (void)detailsOfViewDidLoad{
+//    [[UITabBar appearance] setBarTintColor:kAppColor]; 不好看
+    
     //初始化子控制器，这里指定了程序会有几个页面
     CMLAccountingViewController *accountingViewController = [[CMLAccountingViewController alloc] init];
     [self addChildVc:accountingViewController navTitle:@"Camille" tabbarTitle:@"记账" image:@"accounting_icon" selectedImage:@"accounting_icon_selected"];
@@ -43,9 +45,9 @@
     
     //设置tabBar文字的样式
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
-    textAttrs[NSForegroundColorAttributeName] = kAppTextCoclor;
+    textAttrs[NSForegroundColorAttributeName] = kAppTextColor;
     NSMutableDictionary *selectTextAttrs = [NSMutableDictionary dictionary];
-    selectTextAttrs[NSForegroundColorAttributeName] = kAppTextCoclor;
+    selectTextAttrs[NSForegroundColorAttributeName] = kAppTextColor;
     [childVc.tabBarItem setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
     [childVc.tabBarItem setTitleTextAttributes:selectTextAttrs forState:UIControlStateSelected];
     

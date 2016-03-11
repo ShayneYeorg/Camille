@@ -21,9 +21,9 @@
 #define RGB(r, g, b) [UIColor colorWithRed:((r) / 255.0) green:((g) / 255.0) blue:((b) / 255.0) alpha:1.0]
 
 //App
-#define kAppCoclor RGB(252,202,28)
+#define kAppColor RGB(252,202,28)
 #define kAppViewColor RGB(255,255,245)
-#define kAppTextCoclor RGB(45,25,0)
+#define kAppTextColor RGB(45,25,0)
 #define kItemLeftTableViewColor  RGB(191,226,151)
 #define kItemRightTableViewColor RGB(252,212,108)
 #define kApp ((AppDelegate *)[UIApplication sharedApplication].delegate)

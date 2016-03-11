@@ -26,6 +26,7 @@
 #define kAppTextColor RGB(45,25,0)
 #define kItemLeftTableViewColor  RGB(245,191,1)
 #define kItemRightTableViewColor RGB(253,218,98)
+#define kItemRightTableViewSepLineColor RGB(81,45,1)
 #define kApp ((AppDelegate *)[UIApplication sharedApplication].delegate)
 #define kManagedObjectContext (((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext)
 

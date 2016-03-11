@@ -10,6 +10,11 @@
 
 @implementation CMLAccountingItemRightCell
 
++ (instancetype)loadFromNib {
+    CMLAccountingItemRightCell *cell = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingItemRightCell" owner:self options:nil][0];
+    return cell;
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }

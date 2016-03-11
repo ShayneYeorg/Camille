@@ -83,6 +83,7 @@
     self.leftTableView.tableFooterView = [UIView new];
     
     self.rightTableView.backgroundColor = kItemRightTableViewColor;
+    self.rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
@@ -143,9 +144,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc]init];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView == self.leftTableView) {
+        UITableViewCell *cell = [[UITableViewCell alloc]init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
             cell.backgroundColor = kItemRightTableViewColor;
             
@@ -154,14 +155,16 @@
         }
         CMLItemCategory *category = self.categoryModels[indexPath.row];
         cell.textLabel.text = category.categoryName;
+        return cell;
         
     } else {
+        CMLAccountingItemRightCell *cell = [CMLAccountingItemRightCell loadFromNib];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = kItemRightTableViewColor;
         CMLItem *item = self.itemsModel[indexPath.row];
-        cell.textLabel.text = item.itemName;
+        cell.cellText.text = item.itemName;
+        return cell;
     }
-    
-    return cell;
 }
 
 @end

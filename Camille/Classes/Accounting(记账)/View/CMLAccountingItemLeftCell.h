@@ -10,4 +10,6 @@
 
 @interface CMLAccountingItemLeftCell : UITableViewCell
 
++ (instancetype)loadFromNib;
+
 @end

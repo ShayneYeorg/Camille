@@ -10,4 +10,8 @@
 
 @interface CMLAccountingItemRightCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *cellText;
+
++ (instancetype)loadFromNib;
+
 @end

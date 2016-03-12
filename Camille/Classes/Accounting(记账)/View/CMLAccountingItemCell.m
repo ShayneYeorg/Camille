@@ -78,12 +78,15 @@
     self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     self.leftTableView.backgroundColor = kItemLeftTableViewColor;
+    self.leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.leftTableView.showsVerticalScrollIndicator = NO;
     self.leftTableView.delegate = self;
     self.leftTableView.dataSource = self;
     self.leftTableView.tableFooterView = [UIView new];
     
     self.rightTableView.backgroundColor = kItemRightTableViewColor;
     self.rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.rightTableView.showsVerticalScrollIndicator = NO;
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
@@ -111,6 +114,8 @@
     if (tableView == self.leftTableView) {
         self.leftTableViewSelectedIndexPath = indexPath;
         [self.leftTableView reloadData];
+//        CMLAccountingItemLeftCell *selectedLeftCell = (CMLAccountingItemLeftCell *)[self tableView:self.leftTableView cellForRowAtIndexPath:self.leftTableViewSelectedIndexPath];
+//        [selectedLeftCell setCellSelected:YES];
         
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];
         self.itemsModel = self.itemsDic[selectedCategory.categoryID];
@@ -145,22 +150,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.leftTableView) {
-        UITableViewCell *cell = [[UITableViewCell alloc]init];
+        CMLAccountingItemLeftCell *cell = [CMLAccountingItemLeftCell loadFromNib];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        CMLItemCategory *category = self.categoryModels[indexPath.row];
+        cell.cellText.text = category.categoryName;
         if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
             cell.backgroundColor = kItemRightTableViewColor;
-            
-        } else {
-            cell.backgroundColor = kItemLeftTableViewColor;
+//            [cell setCellSelected:YES];
         }
-        CMLItemCategory *category = self.categoryModels[indexPath.row];
-        cell.textLabel.text = category.categoryName;
         return cell;
         
     } else {
         CMLAccountingItemRightCell *cell = [CMLAccountingItemRightCell loadFromNib];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = kItemRightTableViewColor;
         CMLItem *item = self.itemsModel[indexPath.row];
         cell.cellText.text = item.itemName;
         return cell;

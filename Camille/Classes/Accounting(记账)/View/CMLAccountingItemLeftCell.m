@@ -8,6 +8,10 @@
 
 #import "CMLAccountingItemLeftCell.h"
 
+@interface CMLAccountingItemLeftCell ()
+
+@end
+
 @implementation CMLAccountingItemLeftCell
 
 #pragma mark - Public
@@ -17,6 +21,15 @@
     cell.backgroundColor = kItemLeftTableViewColor;
     
     return cell;
+}
+
+- (void)setCellSelected:(BOOL)selected {
+    if (selected) {
+        self.backgroundColor = kItemRightTableViewColor;
+        
+    } else {
+        self.backgroundColor = kItemLeftTableViewColor;
+    }
 }
 
 @end

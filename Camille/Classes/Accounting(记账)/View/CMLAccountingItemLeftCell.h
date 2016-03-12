@@ -10,6 +10,9 @@
 
 @interface CMLAccountingItemLeftCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *cellText;
+
 + (instancetype)loadFromNib;
+- (void)setCellSelected:(BOOL)selected;
 
 @end

@@ -22,10 +22,9 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJz-jQ-ikX">
-                        <rect key="frame" x="19" y="14" width="281" height="21"/>
+                        <rect key="frame" x="19" y="13" width="281" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Xtw-0v-GEk"/>
-                            <constraint firstAttribute="width" constant="281" id="ao2-M5-0A0"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.23529411764705882" green="0.12941176470588234" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -34,10 +33,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="5Qx-nR-eBs" secondAttribute="bottom" id="2GP-EI-LkM"/>
+                    <constraint firstItem="GJz-jQ-ikX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="1.75" id="3ug-kP-tMD"/>
                     <constraint firstAttribute="trailing" secondItem="5Qx-nR-eBs" secondAttribute="trailing" id="99l-cM-7P9"/>
-                    <constraint firstItem="GJz-jQ-ikX" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Iuz-rl-EAo"/>
+                    <constraint firstAttribute="trailing" secondItem="GJz-jQ-ikX" secondAttribute="trailing" constant="20" id="CJM-3R-Pn6"/>
+                    <constraint firstItem="GJz-jQ-ikX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="19" id="HpE-g5-9VF"/>
                     <constraint firstItem="5Qx-nR-eBs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Vuf-qK-dkO"/>
-                    <constraint firstItem="GJz-jQ-ikX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2.75" id="ecU-mM-IGB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

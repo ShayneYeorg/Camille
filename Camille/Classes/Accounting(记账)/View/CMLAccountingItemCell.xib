@@ -95,7 +95,7 @@
                 <outlet property="topViewBottomSepLine" destination="jxT-gP-wbQ" id="oBl-Em-GGC"/>
                 <outlet property="topViewText" destination="XeI-Oh-xul" id="7wR-DA-JOl"/>
             </connections>
-            <point key="canvasLocation" x="62" y="285.25"/>
+            <point key="canvasLocation" x="-146" y="292.25"/>
         </tableViewCell>
         <tapGestureRecognizer id="sgE-N4-vNl">
             <connections>

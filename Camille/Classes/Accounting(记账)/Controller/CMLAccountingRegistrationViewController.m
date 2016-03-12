@@ -8,6 +8,7 @@
 
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
+#import "CMLAccountingAmountCell.h"
 #import "SVProgressHUD.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
@@ -264,15 +265,16 @@
         [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand selectedItem:self.selectedItem];
         return accountingItemCell;
         
+    } else if (indexPath.row == 1) {
+        CMLAccountingAmountCell *accountingAmountCell = [CMLAccountingAmountCell loadFromNib];
+        accountingAmountCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        accountingAmountCell.backgroundColor = kCellBackgroundColor;
+        return accountingAmountCell;
+        
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 3) {
-            cell.backgroundColor = kAppViewColor;
-            
-        } else {
-            cell.backgroundColor = kCellBackgroundColor;
-        }
+        cell.backgroundColor = kCellBackgroundColor;
         return cell;
     }
 }

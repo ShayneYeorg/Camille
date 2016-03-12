@@ -10,6 +10,8 @@
 
 @interface CMLAccountingItemLeftCell ()
 
+@property (weak, nonatomic) IBOutlet UIView *rightSepLine; //右分割线
+
 @end
 
 @implementation CMLAccountingItemLeftCell
@@ -26,9 +28,11 @@
 - (void)setCellSelected:(BOOL)selected {
     if (selected) {
         self.backgroundColor = kItemRightTableViewColor;
+        self.rightSepLine.hidden = YES;
         
     } else {
         self.backgroundColor = kItemLeftTableViewColor;
+        self.rightSepLine.hidden = NO;
     }
 }
 

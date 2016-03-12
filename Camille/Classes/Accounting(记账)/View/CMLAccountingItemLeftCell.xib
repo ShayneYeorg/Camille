@@ -23,15 +23,36 @@
                         <color key="textColor" red="0.23529411764705882" green="0.12941176470588234" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9b-Ql-Foh">
+                        <rect key="frame" x="0.0" y="43" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.7803921568627451" green="0.6705882352941176" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="2sS-e6-G5x"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyz-zh-taP">
+                        <rect key="frame" x="319" y="0.0" width="0.5" height="43.5"/>
+                        <color key="backgroundColor" red="0.78039215689999997" green="0.6705882353" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="0.5" id="KLU-D7-CW1"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="c9b-Ql-Foh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0sG-W9-wil"/>
+                    <constraint firstAttribute="bottom" secondItem="c9b-Ql-Foh" secondAttribute="bottom" id="8Hh-PM-8Lg"/>
+                    <constraint firstAttribute="trailing" secondItem="c9b-Ql-Foh" secondAttribute="trailing" id="8SH-NV-nXW"/>
+                    <constraint firstAttribute="bottom" secondItem="Fyz-zh-taP" secondAttribute="bottom" id="aM8-vu-Sdp"/>
+                    <constraint firstAttribute="trailing" secondItem="Fyz-zh-taP" secondAttribute="trailing" id="gkW-d3-SgD"/>
                     <constraint firstAttribute="trailing" secondItem="yZA-cU-aN3" secondAttribute="trailing" constant="8" id="kfx-g5-0KT"/>
                     <constraint firstItem="yZA-cU-aN3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="lYp-SD-7yO"/>
+                    <constraint firstItem="Fyz-zh-taP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nwI-Ki-ZxK"/>
                     <constraint firstItem="yZA-cU-aN3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2.75" id="rfx-KE-3np"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="cellText" destination="yZA-cU-aN3" id="vCZ-eO-OBI"/>
+                <outlet property="rightSepLine" destination="Fyz-zh-taP" id="nhS-Ix-LXn"/>
             </connections>
             <point key="canvasLocation" x="246" y="284"/>
         </tableViewCell>

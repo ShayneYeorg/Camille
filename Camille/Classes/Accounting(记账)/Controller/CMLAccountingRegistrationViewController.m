@@ -223,6 +223,7 @@
     self.isItemCellExpand = !self.isItemCellExpand;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:accountingItemCell];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.view endEditing:YES];
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
@@ -243,6 +244,10 @@
         return 250;
     }
     return 50;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.view endEditing:YES];
 }
 
 #pragma mark - UITableViewDataSource

@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *leftTableView;
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTableViewWidthContraint;//左菜单的宽度约束
+@property (weak, nonatomic) IBOutlet UIView *topViewBottomSepLine; //顶部区域的下分割线
 
 @property (nonatomic, strong) NSIndexPath *leftTableViewSelectedIndexPath;//左菜单选中项
 @property (nonatomic, strong) NSIndexPath *leftTableViewLastSelectedIndexPath;//左菜单上一次选中项
@@ -53,6 +54,7 @@
 - (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand {
     if (isExpand) {
         self.bottomView.hidden = NO;
+        self.topViewBottomSepLine.hidden = YES;
         
         self.categoryModels = categoryModels;
         [self.leftTableView reloadData];
@@ -63,6 +65,7 @@
         
     } else {
         self.bottomView.hidden = YES;
+        self.topViewBottomSepLine.hidden = NO;
     }
 }
 

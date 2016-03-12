@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTableViewWidthContraint;//左菜单的宽度约束
 
 @property (nonatomic, strong) NSIndexPath *leftTableViewSelectedIndexPath;//左菜单选中项
+@property (nonatomic, strong) NSIndexPath *leftTableViewLastSelectedIndexPath;//左菜单上一次选中项
 @property (nonatomic, strong) NSArray *categoryModels; //左菜单的模型
 @property (nonatomic, strong) NSDictionary *itemsDic; //右菜单的模型
 @property (nonatomic, strong) NSArray *itemsModel; //当前所显示右菜单的模型
@@ -76,6 +77,7 @@
 - (void)awakeFromNib {
     self.leftTableViewWidthContraint.constant = kContent_Width * 0.35;
     self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     self.leftTableView.backgroundColor = kItemLeftTableViewColor;
     self.leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -112,11 +114,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.leftTableView) {
-        self.leftTableViewSelectedIndexPath = indexPath;
-        [self.leftTableView reloadData];
-//        CMLAccountingItemLeftCell *selectedLeftCell = (CMLAccountingItemLeftCell *)[self tableView:self.leftTableView cellForRowAtIndexPath:self.leftTableViewSelectedIndexPath];
-//        [selectedLeftCell setCellSelected:YES];
+        //重复选同一个
+        if (indexPath == self.leftTableViewLastSelectedIndexPath) return;
         
+        //将上一个选中的设为未选中
+        CMLAccountingItemLeftCell *lastSelectedLeftCell = (CMLAccountingItemLeftCell *)[self.leftTableView cellForRowAtIndexPath:self.leftTableViewLastSelectedIndexPath];
+        [lastSelectedLeftCell setCellSelected:NO];
+        self.leftTableViewLastSelectedIndexPath = indexPath;
+        
+        //将此次选中的设为选中
+        self.leftTableViewSelectedIndexPath = indexPath;
+        CMLAccountingItemLeftCell *selectedLeftCell = (CMLAccountingItemLeftCell *)[self.leftTableView cellForRowAtIndexPath:self.leftTableViewSelectedIndexPath];
+        [selectedLeftCell setCellSelected:YES];
+        
+        //刷新二级科目表
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];
         self.itemsModel = self.itemsDic[selectedCategory.categoryID];
         [self.rightTableView reloadData];
@@ -155,8 +166,7 @@
         CMLItemCategory *category = self.categoryModels[indexPath.row];
         cell.cellText.text = category.categoryName;
         if (indexPath.row == self.leftTableViewSelectedIndexPath.row) {
-            cell.backgroundColor = kItemRightTableViewColor;
-//            [cell setCellSelected:YES];
+            [cell setCellSelected:YES];
         }
         return cell;
         

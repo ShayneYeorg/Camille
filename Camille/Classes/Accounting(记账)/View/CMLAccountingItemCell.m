@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTableViewWidthContraint;//左菜单的宽度约束
 @property (weak, nonatomic) IBOutlet UIView *topViewBottomSepLine; //顶部区域的下分割线
+@property (weak, nonatomic) IBOutlet UILabel *topViewText; //topView的文字
 
 @property (nonatomic, strong) NSIndexPath *leftTableViewSelectedIndexPath;//左菜单选中项
 @property (nonatomic, strong) NSIndexPath *leftTableViewLastSelectedIndexPath;//左菜单上一次选中项
@@ -51,7 +52,7 @@
     }
 }
 
-- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand {
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item {
     if (isExpand) {
         self.bottomView.hidden = NO;
         self.topViewBottomSepLine.hidden = YES;
@@ -66,6 +67,12 @@
     } else {
         self.bottomView.hidden = YES;
         self.topViewBottomSepLine.hidden = NO;
+    }
+    
+    if (item) {
+        self.topViewText.text = item.itemName;
+    } else {
+        self.topViewText.text = @"科目";
     }
 }
 
@@ -147,6 +154,14 @@
                     [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];
                 }
             }];
+            
+        } else {
+            //正常科目按钮
+            CMLItem *selectedItem = (CMLItem *)self.itemsModel[indexPath.row];
+            if ([self.delegate respondsToSelector:@selector(accountingItemCell:didSelectItem:)]) {
+                [self.delegate accountingItemCell:self didSelectItem:selectedItem];
+                [self expandTap:nil];
+            }
         }
     }
 }

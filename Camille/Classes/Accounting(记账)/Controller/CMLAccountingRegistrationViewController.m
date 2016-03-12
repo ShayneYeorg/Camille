@@ -17,6 +17,10 @@
 @property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
 @property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
 
+@property (nonatomic, strong) CMLItem *selectedItem; //选中的item
+@property (nonatomic, assign) CGFloat amount; //金额
+@property (nonatomic, strong) NSDate *happenDate; //账务发生时间
+
 @end
 
 @implementation CMLAccountingRegistrationViewController
@@ -220,6 +224,10 @@
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
+    self.selectedItem = item;
+}
+
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
     [self addItem:itemName inCategory:categoryName];
 }
@@ -253,7 +261,7 @@
             accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
             accountingItemCell.backgroundColor = kCellBackgroundColor;
         }
-        [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand];
+        [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand selectedItem:self.selectedItem];
         return accountingItemCell;
         
     } else {

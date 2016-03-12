@@ -93,6 +93,7 @@
                 <outlet property="rightTableView" destination="UjV-iO-6hj" id="8qu-ti-RuR"/>
                 <outlet property="topView" destination="5jr-6Q-wL9" id="k8m-rC-eal"/>
                 <outlet property="topViewBottomSepLine" destination="jxT-gP-wbQ" id="oBl-Em-GGC"/>
+                <outlet property="topViewText" destination="XeI-Oh-xul" id="7wR-DA-JOl"/>
             </connections>
             <point key="canvasLocation" x="62" y="285.25"/>
         </tableViewCell>

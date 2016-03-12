@@ -16,6 +16,7 @@
 @protocol CMLAccountingItemCellDelegate <NSObject>
 
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell;
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item;
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName;
 
 @end
@@ -27,6 +28,6 @@
 
 + (instancetype)loadFromNib;
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand;
-- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand;
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item;
 
 @end

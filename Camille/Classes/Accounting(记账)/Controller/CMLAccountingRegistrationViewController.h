@@ -8,14 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-//typedef enum _AccountingType {
-//    Accounting_Type_Cost = 0,
-//    Accounting_Type_Income
-//} AccountingType;
-
 @interface CMLAccountingRegistrationViewController : UIViewController
 
-//@property (nonatomic, assign) AccountingType type;
 @property (nonatomic, copy) NSString *type;
 
 @end

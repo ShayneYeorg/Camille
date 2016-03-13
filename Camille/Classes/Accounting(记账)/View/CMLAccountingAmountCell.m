@@ -8,26 +8,33 @@
 
 #import "CMLAccountingAmountCell.h"
 
-@interface CMLAccountingAmountCell ()
+@interface CMLAccountingAmountCell () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *amountTextField; //金额
 
 @end
 
 @implementation CMLAccountingAmountCell
 
+#pragma mark - Public
+
 + (instancetype)loadFromNib {
     CMLAccountingAmountCell *cell = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingAmountCell" owner:self options:nil][0];
     cell.amountTextField.text = @"金额";
+    cell.amountTextField.delegate = cell;
     return cell;
 }
 
-- (void)awakeFromNib {
-    // Initialization code
-}
+#pragma mark - UITextFieldDelegate
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (!self.amountTextField.text.length) {
+        self.amountTextField.text = @"金额";
+    }
 }
 
 @end
+
+
+
+

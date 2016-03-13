@@ -9,6 +9,7 @@
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLAccountingItemCell.h"
 #import "CMLAccountingAmountCell.h"
+#import "CMLAccountingDateCell.h"
 #import "SVProgressHUD.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
@@ -280,6 +281,12 @@
         accountingAmountCell.selectionStyle = UITableViewCellSelectionStyleNone;
         accountingAmountCell.backgroundColor = kCellBackgroundColor;
         return accountingAmountCell;
+        
+    } else if (indexPath.row == 2) {
+        CMLAccountingDateCell *accountingDateCell = [CMLAccountingDateCell loadFromNib];
+        accountingDateCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        accountingDateCell.backgroundColor = kCellBackgroundColor;
+        return accountingDateCell;
         
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc]init];

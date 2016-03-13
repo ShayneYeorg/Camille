@@ -10,6 +10,8 @@
 
 @interface CMLAccountingAmountCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UITextField *amountTextField; //金额
+
 + (instancetype)loadFromNib;
 
 @end

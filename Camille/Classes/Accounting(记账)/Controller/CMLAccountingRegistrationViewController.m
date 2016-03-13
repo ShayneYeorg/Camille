@@ -228,6 +228,11 @@
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
     self.selectedItem = item;
+    
+    //金额cell
+    NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:1 inSection:0];
+    CMLAccountingAmountCell *accountingAmountCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
+    [accountingAmountCell.amountTextField becomeFirstResponder];
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {

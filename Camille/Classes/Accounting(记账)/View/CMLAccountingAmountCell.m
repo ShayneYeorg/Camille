@@ -10,8 +10,6 @@
 
 @interface CMLAccountingAmountCell () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *amountTextField; //金额
-
 @end
 
 @implementation CMLAccountingAmountCell

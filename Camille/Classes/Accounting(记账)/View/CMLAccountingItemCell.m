@@ -159,8 +159,8 @@
             //正常科目按钮
             CMLItem *selectedItem = (CMLItem *)self.itemsModel[indexPath.row];
             if ([self.delegate respondsToSelector:@selector(accountingItemCell:didSelectItem:)]) {
-                [self.delegate accountingItemCell:self didSelectItem:selectedItem];
                 [self expandTap:nil];
+                [self.delegate accountingItemCell:self didSelectItem:selectedItem];
             }
         }
     }

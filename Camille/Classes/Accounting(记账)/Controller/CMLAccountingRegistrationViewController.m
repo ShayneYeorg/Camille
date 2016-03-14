@@ -10,6 +10,7 @@
 #import "CMLAccountingItemCell.h"
 #import "CMLAccountingAmountCell.h"
 #import "CMLAccountingDateCell.h"
+#import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
@@ -18,6 +19,7 @@
 @property (nonatomic, assign) BOOL isItemCellExpand;
 @property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
 @property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
+@property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView; //日期选择view
 
 @property (nonatomic, strong) CMLItem *selectedItem; //选中的item
 @property (nonatomic, assign) CGFloat amount; //金额
@@ -166,6 +168,14 @@
     return _itemsDic;
 }
 
+- (CMLAccountingDatePickerView *)datePickerView {
+    if (_datePickerView == nil) {
+        _datePickerView = [CMLAccountingDatePickerView loadFromNib];
+        [self.view addSubview:_datePickerView];
+    }
+    return _datePickerView;
+}
+
 #pragma mark - AsyncFetchData
 
 - (void)fetchItemsData {
@@ -256,6 +266,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view endEditing:YES];
+    if (indexPath.row == 2) {
+        //日期选择cell
+        [self.datePickerView show];
+    }
 }
 
 #pragma mark - UITableViewDataSource

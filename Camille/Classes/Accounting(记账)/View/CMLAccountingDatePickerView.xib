@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CMLAccountingDatePickerView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="296"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ukM-Ct-6iO">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                    <color key="backgroundColor" red="0.99215686274509807" green="0.85490196078431369" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
+                    <date key="date" timeIntervalSinceReferenceDate="479631427.51735097">
+                        <!--2016-03-14 06:57:07 +0000-->
+                    </date>
+                    <date key="minimumDate" timeIntervalSinceReferenceDate="-978267600">
+                        <!--1970-01-01 11:00:00 +0000-->
+                    </date>
+                    <locale key="locale" localeIdentifier="zh_CN"/>
+                </datePicker>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hiq-Lz-r9Y">
+                    <rect key="frame" x="60" y="236" width="200" height="40"/>
+                    <color key="backgroundColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="Tg7-09-Dr3"/>
+                        <constraint firstAttribute="height" constant="40" id="osM-cu-FA5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="确定">
+                        <color key="titleColor" red="0.98823529409999999" green="0.79215686269999996" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.99215686270000003" green="0.85490196080000003" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Hiq-Lz-r9Y" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5ym-tk-zWJ"/>
+                <constraint firstItem="ukM-Ct-6iO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9vV-Gk-OrR"/>
+                <constraint firstAttribute="bottom" secondItem="Hiq-Lz-r9Y" secondAttribute="bottom" constant="20" id="Nyj-q0-M0U"/>
+                <constraint firstItem="Hiq-Lz-r9Y" firstAttribute="top" secondItem="ukM-Ct-6iO" secondAttribute="bottom" constant="20" id="Yc9-t2-PAz"/>
+                <constraint firstItem="ukM-Ct-6iO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="a5O-Zm-UTL"/>
+                <constraint firstAttribute="trailing" secondItem="ukM-Ct-6iO" secondAttribute="trailing" id="jyA-2z-FK8"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="datePicker" destination="ukM-Ct-6iO" id="clV-04-JOh"/>
+            </connections>
+            <point key="canvasLocation" x="300" y="207"/>
+        </view>
+    </objects>
+</document>

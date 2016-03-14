@@ -46,6 +46,8 @@
 		34FA38971C944A0300A049E8 /* CMLAccountingAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */; };
 		34FA389B1C95358500A049E8 /* CMLAccountingDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA38991C95358500A049E8 /* CMLAccountingDateCell.m */; };
 		34FA389C1C95358500A049E8 /* CMLAccountingDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34FA389A1C95358500A049E8 /* CMLAccountingDateCell.xib */; };
+		34FA389F1C96980C00A049E8 /* CMLAccountingDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA389E1C96980C00A049E8 /* CMLAccountingDatePickerView.m */; };
+		34FA38A11C96981B00A049E8 /* CMLAccountingDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34FA38A01C96981B00A049E8 /* CMLAccountingDatePickerView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +120,9 @@
 		34FA38981C95358500A049E8 /* CMLAccountingDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingDateCell.h; sourceTree = "<group>"; };
 		34FA38991C95358500A049E8 /* CMLAccountingDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingDateCell.m; sourceTree = "<group>"; };
 		34FA389A1C95358500A049E8 /* CMLAccountingDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingDateCell.xib; sourceTree = "<group>"; };
+		34FA389D1C96980C00A049E8 /* CMLAccountingDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingDatePickerView.h; sourceTree = "<group>"; };
+		34FA389E1C96980C00A049E8 /* CMLAccountingDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingDatePickerView.m; sourceTree = "<group>"; };
+		34FA38A01C96981B00A049E8 /* CMLAccountingDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingDatePickerView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +265,9 @@
 				34FA38981C95358500A049E8 /* CMLAccountingDateCell.h */,
 				34FA38991C95358500A049E8 /* CMLAccountingDateCell.m */,
 				34FA389A1C95358500A049E8 /* CMLAccountingDateCell.xib */,
+				34FA389D1C96980C00A049E8 /* CMLAccountingDatePickerView.h */,
+				34FA389E1C96980C00A049E8 /* CMLAccountingDatePickerView.m */,
+				34FA38A01C96981B00A049E8 /* CMLAccountingDatePickerView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -450,6 +458,7 @@
 				3441D0B51C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib in Resources */,
 				34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */,
 				34FA389C1C95358500A049E8 /* CMLAccountingDateCell.xib in Resources */,
+				34FA38A11C96981B00A049E8 /* CMLAccountingDatePickerView.xib in Resources */,
 				344A00431C75E0D8008281BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +474,7 @@
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
+				34FA389F1C96980C00A049E8 /* CMLAccountingDatePickerView.m in Sources */,
 				3405792F1C8EA70C00C79F9D /* CMLNewItemAddingView.m in Sources */,
 				3499BE191C84144D004EE4BD /* CMLItem+CoreDataProperties.m in Sources */,
 				3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */,

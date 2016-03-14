@@ -227,10 +227,12 @@
     [self.view endEditing:YES];
 }
 
-- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell shouldSelectItem:(CMLItem *)item {
     self.selectedItem = item;
-    
-    //金额cell
+}
+
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
+    //金额cell becomeFirstResponder
     NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:1 inSection:0];
     CMLAccountingAmountCell *accountingAmountCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
     [accountingAmountCell.amountTextField becomeFirstResponder];

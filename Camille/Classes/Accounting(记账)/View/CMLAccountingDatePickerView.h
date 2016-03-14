@@ -10,13 +10,15 @@
 
 @class CMLAccountingDatePickerView;
 
-@protocol CMLAccountingDatePickerView <NSObject>
+@protocol CMLAccountingDatePickerViewDelegate <NSObject>
 
 - (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate;
 
 @end
 
 @interface CMLAccountingDatePickerView : UIView
+
+@property (nonatomic, weak) id <CMLAccountingDatePickerViewDelegate> delegate;
 
 + (instancetype)loadFromNib;
 - (void)show;

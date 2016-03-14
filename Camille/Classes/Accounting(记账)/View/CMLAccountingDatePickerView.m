@@ -39,4 +39,14 @@
     }];
 }
 
+#pragma mark - Private
+
+- (IBAction)confirmBtnClick:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(accountingDatePickerView:didClickConfirmBtn:)]) {
+        [self.delegate accountingDatePickerView:self didClickConfirmBtn:self.datePicker.date];
+        [self dismiss];
+    }
+}
+
+
 @end

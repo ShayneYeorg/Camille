@@ -38,6 +38,9 @@
                             <integer key="value" value="3"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="confirmBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Zxh-ef-tJa"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.99215686270000003" green="0.85490196080000003" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>

@@ -13,7 +13,7 @@
 #import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
-@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate>
+@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingDatePickerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
@@ -171,6 +171,7 @@
 - (CMLAccountingDatePickerView *)datePickerView {
     if (_datePickerView == nil) {
         _datePickerView = [CMLAccountingDatePickerView loadFromNib];
+        _datePickerView.delegate = self;
         [self.view addSubview:_datePickerView];
     }
     return _datePickerView;
@@ -250,6 +251,12 @@
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
     [self addItem:itemName inCategory:categoryName];
+}
+
+#pragma mark - CMLAccountingDatePickerViewDelegate
+
+- (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
+    CMLLog(@"%@", selectedDate);
 }
 
 #pragma mark - UITableViewDelegate

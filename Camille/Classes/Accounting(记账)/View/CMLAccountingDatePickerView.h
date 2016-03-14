@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kPickerViewHeight 250
+
 @class CMLAccountingDatePickerView;
 
 @protocol CMLAccountingDatePickerViewDelegate <NSObject>

@@ -8,8 +8,6 @@
 
 #import "CMLAccountingDatePickerView.h"
 
-#define kPickerViewHeight 250
-
 @interface CMLAccountingDatePickerView ()
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker; //日期选择器

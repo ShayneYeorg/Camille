@@ -13,6 +13,8 @@
 #import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
+#define kDatePickerBGViewTag 201603141611
+
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingDatePickerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -152,6 +154,24 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)addDatePickerBGView {
+    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height - kPickerViewHeight)];
+    datePickerBGView.backgroundColor = [UIColor clearColor];
+    datePickerBGView.tag = kDatePickerBGViewTag;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(datePickerBGViewTap)];
+    [datePickerBGView addGestureRecognizer:tap];
+    
+    UIWindow *window = [CMLTool getWindow];
+    [window addSubview:datePickerBGView];
+}
+
+- (void)datePickerBGViewTap {
+    UIWindow *window = [CMLTool getWindow];
+    [self.datePickerView dismiss];
+    [[window viewWithTag:kDatePickerBGViewTag] removeFromSuperview];
+}
+
 #pragma mark - Getter
 
 - (NSArray *)categoryModels {
@@ -256,6 +276,7 @@
 #pragma mark - CMLAccountingDatePickerViewDelegate
 
 - (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
+    self.happenDate = selectedDate;
     CMLLog(@"%@", selectedDate);
 }
 
@@ -276,6 +297,7 @@
     if (indexPath.row == 2) {
         //日期选择cell
         [self.datePickerView show];
+        [self addDatePickerBGView];
     }
 }
 

@@ -10,7 +10,7 @@
 
 @interface CMLAccountingDateCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *dateBtn; //选择日期的按钮
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end
 

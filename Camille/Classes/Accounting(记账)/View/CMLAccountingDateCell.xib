@@ -21,30 +21,29 @@
                             <constraint firstAttribute="height" constant="0.5" id="1T9-UH-M93"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR0-rE-HP9">
-                        <rect key="frame" x="70" y="14" width="180" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-03-14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6h-ks-cs6">
+                        <rect key="frame" x="70" y="19" width="180" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="NEP-MF-VWI"/>
+                            <constraint firstAttribute="height" constant="21" id="okX-M4-8wo"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <state key="normal" title="Date">
-                            <color key="titleColor" red="0.1764705882352941" green="0.098039215686274508" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                    </button>
+                        <color key="textColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="AR0-rE-HP9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="Adx-tL-fWp"/>
+                    <constraint firstItem="R6h-ks-cs6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="4.75" id="4iD-yf-vbK"/>
+                    <constraint firstAttribute="trailing" secondItem="R6h-ks-cs6" secondAttribute="trailing" constant="70" id="H9a-vF-xO9"/>
                     <constraint firstAttribute="bottom" secondItem="qCy-zm-PtJ" secondAttribute="bottom" id="Szd-BQ-Udz"/>
                     <constraint firstItem="qCy-zm-PtJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="T64-ES-Rzt"/>
                     <constraint firstAttribute="trailing" secondItem="qCy-zm-PtJ" secondAttribute="trailing" constant="70" id="fxu-ER-Mli"/>
-                    <constraint firstAttribute="trailing" secondItem="AR0-rE-HP9" secondAttribute="trailing" constant="70" id="oPf-4d-IuD"/>
-                    <constraint firstItem="AR0-rE-HP9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="4.25" id="wsE-x6-USz"/>
+                    <constraint firstItem="R6h-ks-cs6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="qCa-wu-r6k"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="dateBtn" destination="AR0-rE-HP9" id="g54-O2-LNj"/>
+                <outlet property="dateLabel" destination="R6h-ks-cs6" id="bpq-4A-5Ab"/>
             </connections>
-            <point key="canvasLocation" x="233" y="201"/>
+            <point key="canvasLocation" x="115" y="156"/>
         </tableViewCell>
     </objects>
 </document>

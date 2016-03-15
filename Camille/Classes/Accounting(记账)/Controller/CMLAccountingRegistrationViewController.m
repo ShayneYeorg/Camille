@@ -165,9 +165,16 @@
 
 #pragma mark - Private
 
-- (void)reloadDataItemsCell {
+//只刷新数据，不更改状态（展开或收起）
+- (void)reloadItemCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+//刷新数据并更改状态（展开或收起）
+- (void)reloadItemCellWithExpandAction {
+    self.isItemCellExpand = !self.isItemCellExpand;
+    [self reloadItemCell];
 }
 
 - (void)cancle {
@@ -197,6 +204,12 @@
 }
 
 - (void)addAmountCellEditingBGView {
+    //如果科目cell展开着，就收起它
+    if(self.isItemCellExpand) {
+        [self reloadItemCellWithExpandAction];
+    }
+    
+    //添加amountCellEditingBGView
     UIView *amountCellEditingBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 64)];
     amountCellEditingBGView.backgroundColor = [UIColor clearColor];
     amountCellEditingBGView.tag = kAmountCellEditingBGViewTag;
@@ -255,7 +268,7 @@
             weakSelf.itemsDic = dic[@"items"];
             isItemsFetchFinish = YES;
             if (isItemsFetchFinish && isCategoriesFetchFinish) {
-                [weakSelf reloadDataItemsCell];
+                [weakSelf reloadItemCell];
             }
         }
     }];
@@ -266,7 +279,7 @@
             weakSelf.categoryModels = dic[@"categories"];
             isCategoriesFetchFinish = YES;
             if (isItemsFetchFinish && isCategoriesFetchFinish) {
-                [weakSelf reloadDataItemsCell];
+                [weakSelf reloadItemCell];
             }
         }
     }];
@@ -292,9 +305,7 @@
 #pragma mark - CMLAccountingItemCellDelegate
 
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell {
-    self.isItemCellExpand = !self.isItemCellExpand;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:accountingItemCell];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self reloadItemCellWithExpandAction];
     [self.view endEditing:YES];
 }
 
@@ -338,9 +349,7 @@
     if (indexPath.row == 2) {
         //如果科目cell展开着，就收起它
         if(self.isItemCellExpand) {
-            self.isItemCellExpand = !self.isItemCellExpand;
-            NSIndexPath *itemCellIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView reloadRowsAtIndexPaths:@[itemCellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self reloadItemCellWithExpandAction];
         }
         
         //出现上拉框

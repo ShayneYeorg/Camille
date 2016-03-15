@@ -37,7 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kAppViewColor;
     [self configViewDetails];
     [self configTitle];
     [self configBarBtns];
@@ -113,6 +112,7 @@
 }
 
 - (void)configViewDetails {
+    self.view.backgroundColor = kAppViewColor;
     self.isItemCellExpand = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
@@ -165,24 +165,24 @@
 
 #pragma mark - Private
 
-//只刷新数据，不更改状态（展开或收起）
+//只刷新科目cell的数据，不更改状态（展开或收起）
 - (void)reloadItemCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-//刷新数据并更改状态（展开或收起）
+//刷新科目cell的数据并更改状态（展开或收起）
 - (void)reloadItemCellWithExpandAction {
     self.isItemCellExpand = !self.isItemCellExpand;
     [self reloadItemCell];
 }
 
-- (void)cancle {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)save {
-    
+//根据参数date刷新日期cell的数据
+- (void)refreshDateCellWithDate:(NSDate *)date {
+    self.happenDate = date;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    CMLAccountingDateCell *accountingDateCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [accountingDateCell refreshDateLabelWithDate:self.happenDate];
 }
 
 - (void)addDatePickerBGView {
@@ -228,6 +228,14 @@
 - (void)removeAmountCellEditingBGView {
     UIWindow *window = [CMLTool getWindow];
     [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
+}
+
+- (void)cancle {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)save {
+    
 }
 
 #pragma mark - Getter
@@ -327,7 +335,7 @@
 #pragma mark - CMLAccountingDatePickerViewDelegate
 
 - (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
-    self.happenDate = selectedDate;
+    [self refreshDateCellWithDate:selectedDate];
     [self datePickerBGViewTap];
 }
 
@@ -388,6 +396,8 @@
         CMLAccountingDateCell *accountingDateCell = [CMLAccountingDateCell loadFromNib];
         accountingDateCell.selectionStyle = UITableViewCellSelectionStyleNone;
         accountingDateCell.backgroundColor = kCellBackgroundColor;
+        self.happenDate = [NSDate date];
+        [accountingDateCell refreshDateLabelWithDate:self.happenDate];
         return accountingDateCell;
         
     } else {

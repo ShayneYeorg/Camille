@@ -11,5 +11,6 @@
 @interface CMLAccountingDateCell : UITableViewCell
 
 + (instancetype)loadFromNib;
+- (void)refreshDateLabelWithDate:(NSDate *)date;
 
 @end

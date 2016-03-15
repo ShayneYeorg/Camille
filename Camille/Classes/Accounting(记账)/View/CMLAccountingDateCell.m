@@ -16,19 +16,16 @@
 
 @implementation CMLAccountingDateCell
 
+#pragma mark - Public
+
 + (instancetype)loadFromNib {
     CMLAccountingDateCell *cell = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingDateCell" owner:self options:nil][0];
     return cell;
 }
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)refreshDateLabelWithDate:(NSDate *)date {
+    NSString *dateStr = [CMLTool transDateToString:date];
+    self.dateLabel.text = dateStr;
 }
 
 @end

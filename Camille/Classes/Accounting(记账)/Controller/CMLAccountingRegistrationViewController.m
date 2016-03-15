@@ -13,7 +13,8 @@
 #import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
-#define kDatePickerBGViewTag 201603141611
+#define kDatePickerBGViewTag        201603141611
+#define kAmountCellEditingBGViewTag 201603151414
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingDatePickerViewDelegate>
 
@@ -41,13 +42,14 @@
     [self configTitle];
     [self configBarBtns];
     [self configTableView];
-    
     //一进来就请求数据
     [self fetchItemsData];
+    [self addKeyboardNotifications];
 }
 
 - (void)dealloc {
     CMLLog(@"dealloc");
+    [self removeKeyboardNotifications];
 }
 
 - (void)tempBackUp {
@@ -99,6 +101,21 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Notification
+
+- (void)addKeyboardNotifications {
+    //主要是为了金额cell
+    //UIKeyboardWillShowNotification键盘出现
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAmountCellEditingBGView) name:UIKeyboardWillShowNotification object:nil];
+    //UIKeyboardWillHideNotification 键盘隐藏
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAmountCellEditingBGView) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)removeKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - Private
@@ -170,6 +187,27 @@
     UIWindow *window = [CMLTool getWindow];
     [self.datePickerView dismiss];
     [[window viewWithTag:kDatePickerBGViewTag] removeFromSuperview];
+}
+
+- (void)addAmountCellEditingBGView {
+    UIView *amountCellEditingBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 64)];
+    amountCellEditingBGView.backgroundColor = [UIColor clearColor];
+    amountCellEditingBGView.tag = kAmountCellEditingBGViewTag;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(amountCellEditingBGViewTap)];
+    [amountCellEditingBGView addGestureRecognizer:tap];
+    
+    UIWindow *window = [CMLTool getWindow];
+    [window addSubview:amountCellEditingBGView];
+}
+
+- (void)amountCellEditingBGViewTap {
+    [self.view endEditing:YES];
+}
+
+- (void)removeAmountCellEditingBGView {
+    UIWindow *window = [CMLTool getWindow];
+    [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
 }
 
 #pragma mark - Getter

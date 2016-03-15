@@ -103,33 +103,18 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Notification
-
-- (void)addKeyboardNotifications {
-    //主要是为了金额cell
-    //UIKeyboardWillShowNotification键盘出现
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAmountCellEditingBGView) name:UIKeyboardWillShowNotification object:nil];
-    //UIKeyboardWillHideNotification 键盘隐藏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAmountCellEditingBGView) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)removeKeyboardNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-#pragma mark - Private
-
-- (void)configViewDetails {
-    self.isItemCellExpand = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-}
+#pragma mark - UI Configuration
 
 - (void)configTitle {
     self.title = @"收入";
     if ([self.type isEqualToString:Item_Type_Cost]) {
         self.title = @"支出";
     }
+}
+
+- (void)configViewDetails {
+    self.isItemCellExpand = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)configBarBtns {
@@ -152,14 +137,6 @@
     self.navigationItem.rightBarButtonItem = saveItem;
 }
 
-- (void)cancle {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)save {
-    
-}
-
 - (void)configTableView {
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height - 64)];
     self.tableView.backgroundColor = kAppViewColor;
@@ -169,6 +146,36 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+}
+
+#pragma mark - Notification
+
+- (void)addKeyboardNotifications {
+    //主要是为了金额cell
+    //UIKeyboardWillShowNotification键盘出现
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAmountCellEditingBGView) name:UIKeyboardWillShowNotification object:nil];
+    //UIKeyboardWillHideNotification 键盘隐藏
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAmountCellEditingBGView) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)removeKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark - Private
+
+- (void)reloadDataItemsCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)cancle {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)save {
+    
 }
 
 - (void)addDatePickerBGView {
@@ -235,7 +242,7 @@
     return _datePickerView;
 }
 
-#pragma mark - AsyncFetchData
+#pragma mark - Async Fetch Data
 
 - (void)fetchItemsData {
     __weak typeof(self) weakSelf = self;
@@ -280,11 +287,6 @@
             }
         }
     }];
-}
-
-- (void)reloadDataItemsCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - CMLAccountingItemCellDelegate
@@ -332,8 +334,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view endEditing:YES];
+    //日期选择cell
     if (indexPath.row == 2) {
-        //日期选择cell
+        //如果科目cell展开着，就收起它
+        if(self.isItemCellExpand) {
+            self.isItemCellExpand = !self.isItemCellExpand;
+            NSIndexPath *itemCellIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView reloadRowsAtIndexPaths:@[itemCellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+        
+        //出现上拉框
         [self.datePickerView show];
         [self addDatePickerBGView];
     }
@@ -380,8 +390,5 @@
 }
 
 @end
-
-
-
 
 

@@ -277,7 +277,7 @@
 
 - (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
     self.happenDate = selectedDate;
-    CMLLog(@"%@", selectedDate);
+    [self datePickerBGViewTap];
 }
 
 #pragma mark - UITableViewDelegate

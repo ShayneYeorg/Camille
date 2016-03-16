@@ -8,6 +8,10 @@
 
 #import "CMLNavigationController.h"
 
+@interface CMLNavigationController () <UIGestureRecognizerDelegate>
+
+@end
+
 @implementation CMLNavigationController
 
 #pragma mark - Life Cycle
@@ -15,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configDetails];
+    [self resetPopGestureDelegate];
 }
 
 #pragma mark - Private
@@ -27,6 +32,14 @@
     NSMutableDictionary *navTitleAttrs = [NSMutableDictionary dictionary];
     navTitleAttrs[NSForegroundColorAttributeName] = kAppTextColor;
     [self.navigationBar setTitleTextAttributes:navTitleAttrs];
+}
+
+- (void)resetPopGestureDelegate {
+    //由于在navigation bar上使用自定义返回按钮，这里需要重新设置delegate，左划才能生效
+    __weak typeof(self) weakSelf = self;
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.delegate = weakSelf;
+    }
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

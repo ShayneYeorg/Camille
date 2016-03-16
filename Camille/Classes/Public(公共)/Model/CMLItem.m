@@ -83,21 +83,4 @@
     return returnArr;
 }
 
-#pragma mark - Overwrite
-
-- (BOOL)isEqual:(id)object {
-    if (![object isKindOfClass:[CMLItem class]]) {
-        CMLLog(@"不同类型无法比较");
-        return NO;
-    }
-    
-    CMLItem *obj = (CMLItem *)object;
-    if (self.itemID == obj.itemID && self.itemType == obj.itemType && self.categoryID == obj.categoryID) {
-        return YES;
-        
-    } else {
-        return NO;
-    }
-}
-
 @end

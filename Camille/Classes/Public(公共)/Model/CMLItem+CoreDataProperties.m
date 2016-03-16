@@ -15,6 +15,7 @@
 
 @dynamic itemName;
 @dynamic itemID;
+@dynamic itemType;
 @dynamic nextItemID;
 @dynamic categoryID;
 

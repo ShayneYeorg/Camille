@@ -10,6 +10,8 @@
 
 @implementation CMLItemCategory
 
+#pragma mark - Public
+
 + (NSMutableArray *)sortItemCategories:(NSMutableArray *)itemCategories {
     //传空值的滚蛋
     if (!itemCategories.count) return itemCategories;

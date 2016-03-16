@@ -17,5 +17,6 @@
 @dynamic createTime;
 @dynamic happenTime;
 @dynamic itemID;
+@dynamic type;
 
 @end

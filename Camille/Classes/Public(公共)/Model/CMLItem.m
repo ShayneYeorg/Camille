@@ -10,6 +10,8 @@
 
 @implementation CMLItem
 
+#pragma mark - Public
+
 + (NSMutableDictionary *)sortItems:(NSMutableArray *)items {
     //返回categoryID为key的字典，value是数组，数组内的items排好了序
     
@@ -53,6 +55,8 @@
     
 }
 
+#pragma mark - Private
+
 + (NSMutableArray *)sortItemsInACategory:(NSMutableArray *)items {
     NSMutableArray *returnArr = [NSMutableArray array];
     
@@ -77,6 +81,23 @@
     }
     
     return returnArr;
+}
+
+#pragma mark - Overwrite
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[CMLItem class]]) {
+        CMLLog(@"不同类型无法比较");
+        return NO;
+    }
+    
+    CMLItem *obj = (CMLItem *)object;
+    if (self.itemID == obj.itemID && self.itemType == obj.itemType && self.categoryID == obj.categoryID) {
+        return YES;
+        
+    } else {
+        return NO;
+    }
 }
 
 @end

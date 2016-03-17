@@ -25,6 +25,7 @@
 @property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView; //日期选择view
 
 @property (nonatomic, strong) CMLItem *selectedItem; //选中的item
+@property (nonatomic, strong) CMLItem *lastSelectedItem; //上一次选中的item
 @property (nonatomic, assign) CGFloat amount; //金额
 @property (nonatomic, strong) NSDate *happenDate; //账务发生时间
 
@@ -49,53 +50,6 @@
 - (void)dealloc {
     CMLLog(@"dealloc");
     [self removeKeyboardNotifications];
-}
-
-- (void)tempBackUp {
-    //手动添加完整记账项目
-    //    [CMLCoreDataAccess addItem:@"鞋子" inCategory:@"衣物" callBack:^(CMLResponse *response) {
-    //        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-    //            CMLLog(@"%@", response.responseDic[@"itemID"]);
-    //        }
-    //    }];
-    
-    //手动添加一级记账科目
-    //    [CMLCoreDataAccess addItemCategory:@"房租" callBack:^(CMLResponse *response) {
-    //        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-    //            CMLLog(@"%@", response.responseDic[@"itemCategoryID"]);
-    //        }
-    //    }];
-    
-    //手动添加二级记账科目
-    //    [CMLCoreDataAccess addItem:@"weyg" categoryID:@"1" callBack:^(CMLResponse *response) {
-    //        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-    //            CMLLog(@"%@", response.responseDic[@"itemID"]);
-    //        }
-    //    }];
-    
-    //取出二级记账科目（已排序）
-    //    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
-    //        NSDictionary *dic = response.responseDic;
-    //        NSDictionary *itemsDic = dic[@"items"];
-    //        NSArray *dicAllKeys = itemsDic.allKeys;
-    //        for (int i = 0; i < dicAllKeys.count; i++) {
-    //            NSString *cid = dicAllKeys[i];
-    //            CMLLog(@"分类：%@", cid);
-    //            NSArray *a = (NSArray *)itemsDic[cid];
-    //            for (CMLItem *i in a) {
-    //                CMLLog(@"%@", i.itemID);
-    //            }
-    //        }
-    //    }];
-    
-    //取出一级记账科目（已排序）
-    //    [CMLCoreDataAccess fetchAllItemCategories:^(CMLResponse *response) {
-    //        NSDictionary *dic = response.responseDic;
-    //        NSArray *arr = dic[@"items"];
-    //        for (int i = 0; i < arr.count; i++) {
-    //            CMLLog(@"%@", ((CMLItemCategory *)arr[i]).categoryID);
-    //        }
-    //    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -235,7 +189,36 @@
 }
 
 - (void)save {
+    //是否已选择账务
     
+    //是否已有金额
+    
+    //已保存过账务
+    if (self.lastSelectedItem) {
+        //判断是否重复保存
+        if (self.selectedItem.objectID == self.lastSelectedItem.objectID) {
+            //可能是重复保存，提示是否确定保存
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"您刚才已经记过一笔%@的帐了，确定还要保存吗？",self.selectedItem.itemName] preferredStyle:UIAlertControllerStyleAlert];
+            
+            __weak typeof(self) weakSelf = self;
+            UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"还要保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                CMLLog(@"还要保存");
+                [weakSelf addAccounting];
+            }];
+            [alertController addAction:saveAction];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"不保存了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                CMLLog(@"不保存了");
+            }];
+            [alertController addAction:cancelAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        
+    } else {
+        //没保存过账务
+        [self addAccounting];
+    }
 }
 
 #pragma mark - Getter
@@ -263,7 +246,7 @@
     return _datePickerView;
 }
 
-#pragma mark - Async Fetch Data
+#pragma mark - Core Data
 
 - (void)fetchItemsData {
     __weak typeof(self) weakSelf = self;
@@ -308,6 +291,11 @@
             }
         }
     }];
+}
+
+- (void)addAccounting {
+    CMLLog(@"添加账务");
+    self.lastSelectedItem = self.selectedItem;
 }
 
 #pragma mark - CMLAccountingItemCellDelegate

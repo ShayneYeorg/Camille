@@ -119,6 +119,8 @@
 
 #pragma mark - Private
 
+#pragma mark -- 科目cell
+
 //只刷新科目cell的数据，不更改状态（展开或收起）
 - (void)reloadItemCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -131,32 +133,9 @@
     [self reloadItemCell];
 }
 
-//根据参数date刷新日期cell的数据
-- (void)refreshDateCellWithDate:(NSDate *)date {
-    self.happenDate = date;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
-    CMLAccountingDateCell *accountingDateCell = [self.tableView cellForRowAtIndexPath:indexPath];
-    [accountingDateCell refreshDateLabelWithDate:self.happenDate];
-}
+#pragma mark -- 金额cell
 
-- (void)addDatePickerBGView {
-    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height - kPickerViewHeight)];
-    datePickerBGView.backgroundColor = [UIColor clearColor];
-    datePickerBGView.tag = kDatePickerBGViewTag;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(datePickerBGViewTap)];
-    [datePickerBGView addGestureRecognizer:tap];
-    
-    UIWindow *window = [CMLTool getWindow];
-    [window addSubview:datePickerBGView];
-}
-
-- (void)datePickerBGViewTap {
-    UIWindow *window = [CMLTool getWindow];
-    [self.datePickerView dismiss];
-    [[window viewWithTag:kDatePickerBGViewTag] removeFromSuperview];
-}
-
+//这块蒙板只挡住NavigationBar
 - (void)addAmountCellEditingBGView {
     //如果科目cell展开着，就收起它
     if(self.isItemCellExpand) {
@@ -184,14 +163,62 @@
     [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
 }
 
-- (void)cancle {
-    [self.navigationController popViewControllerAnimated:YES];
+//获取金额cell
+- (CMLAccountingAmountCell *)getAmountCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    CMLAccountingAmountCell *amountCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    return amountCell;
 }
+
+#pragma mark -- 日期cell
+
+//根据参数date刷新日期cell的数据
+- (void)refreshDateCellWithDate:(NSDate *)date {
+    self.happenDate = date;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    CMLAccountingDateCell *accountingDateCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [accountingDateCell refreshDateLabelWithDate:self.happenDate];
+}
+
+- (void)addDatePickerBGView {
+    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height - kPickerViewHeight)];
+    datePickerBGView.backgroundColor = [UIColor clearColor];
+    datePickerBGView.tag = kDatePickerBGViewTag;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(datePickerBGViewTap)];
+    [datePickerBGView addGestureRecognizer:tap];
+    
+    UIWindow *window = [CMLTool getWindow];
+    [window addSubview:datePickerBGView];
+}
+
+- (void)datePickerBGViewTap {
+    UIWindow *window = [CMLTool getWindow];
+    [self.datePickerView dismiss];
+    [[window viewWithTag:kDatePickerBGViewTag] removeFromSuperview];
+}
+
+#pragma mark -- NavigationBar上的按钮
 
 - (void)save {
     //是否已选择账务
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    if (!self.selectedItem) {
+        [SVProgressHUD showErrorWithStatus:@"请先选择科目"];
+        return;
+    }
     
     //是否已有金额
+    CMLAccountingAmountCell *accountCell = [self getAmountCell];
+    if (!accountCell) {
+        CMLLog(@"获取金额cell出错");
+        return;
+        
+    } else if (![accountCell isAmountAvailable]) {
+        //输入金额格式有误
+        [SVProgressHUD showErrorWithStatus:@"请输入金额"];
+        return;
+    }
     
     //已保存过账务
     if (self.lastSelectedItem) {
@@ -206,7 +233,6 @@
                 [weakSelf addAccounting];
             }];
             [alertController addAction:saveAction];
-            
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"不保存了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 CMLLog(@"不保存了");
             }];
@@ -219,6 +245,10 @@
         //没保存过账务
         [self addAccounting];
     }
+}
+
+- (void)cancle {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Getter

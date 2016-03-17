@@ -23,6 +23,21 @@
     return cell;
 }
 
+- (BOOL)isAmountAvailable {
+    NSString *searchText = self.amountTextField.text;
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+([.]{0,1}[0-9]+){0,1}$" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSTextCheckingResult *result = [regex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+    if (result) {
+        CMLLog(@"金额格式正确");
+        return YES;
+        
+    } else {
+        CMLLog(@"金额格式错误");
+        return NO;
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

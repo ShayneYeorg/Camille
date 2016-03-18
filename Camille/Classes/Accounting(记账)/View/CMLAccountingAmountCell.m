@@ -52,10 +52,32 @@
         NSTextCheckingResult *result = [pointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
         if (result) {
             //有小数点
-            //看看是否需要补位数
-            NSError *afterPointError = NULL;
-            NSRegularExpression *pointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.][0-9]{2,}" options:NSRegularExpressionCaseInsensitive error:&afterPointError];
-            NSTextCheckingResult *result = [pointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+            //小数点前有数字没？没有就补上0
+            NSError *zeroBeforePointError = NULL;
+            NSRegularExpression *zeroBeforePointRegex = [NSRegularExpression regularExpressionWithPattern:@"[0-9][.]" options:NSRegularExpressionCaseInsensitive error:&zeroBeforePointError];
+            NSTextCheckingResult *zeroBeforePointResult = [zeroBeforePointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+            if (!zeroBeforePointResult) {
+                //小数点前没数字，补上个0
+                textField.text = [NSString stringWithFormat:@"0%@", textField.text];
+            }
+            
+            //小数点后有数字没？没有就补上00
+            NSError *zeroAfterPointError = NULL;
+            NSRegularExpression *zeroAfterPointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.][0-9]" options:NSRegularExpressionCaseInsensitive error:&zeroAfterPointError];
+            NSTextCheckingResult *zeroAfterPointResult = [zeroAfterPointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+            if (!zeroAfterPointResult) {
+                //小数点后没数字，补上00
+                textField.text = [NSString stringWithFormat:@"%@00", textField.text];
+            }
+            
+            //小数点只有一个数字？补上0
+            NSError *oneNumAfterPointError = NULL;
+            NSRegularExpression *oneNumAfterPointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.][0-9]$" options:NSRegularExpressionCaseInsensitive error:&oneNumAfterPointError];
+            NSTextCheckingResult *oneNumAfterPointResult = [oneNumAfterPointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+            if (oneNumAfterPointResult) {
+                //小数点只有一个数字，补上0
+                textField.text = [NSString stringWithFormat:@"%@0", textField.text];
+            }
             
         } else {
             //无小数点，补上小数点和后两位

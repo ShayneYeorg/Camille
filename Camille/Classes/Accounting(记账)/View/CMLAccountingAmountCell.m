@@ -40,6 +40,18 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //检测输入内容是否合法
+    for (NSUInteger i = 0; i < [string length]; i++) {
+        unichar character = [string characterAtIndex:i];
+        if ((character < '0' || character > '9') && character != '.') {
+            CMLLog(@"输入了非法字符");
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (!self.amountTextField.text.length) {
         self.amountTextField.text = @"金额";

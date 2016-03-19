@@ -25,10 +25,7 @@
 
 - (BOOL)isAmountAvailable {
     NSString *searchText = self.amountTextField.text;
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+([.]{0,1}[0-9]+){0,1}$" options:NSRegularExpressionCaseInsensitive error:&error];
-    NSTextCheckingResult *result = [regex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
-    if (result) {
+    if (![searchText isEqualToString:@"金额"]) {
         CMLLog(@"金额格式正确");
         return YES;
         
@@ -94,6 +91,11 @@
         } else {
             //无小数点，补上小数点和后两位
             textField.text = [NSString stringWithFormat:@"%@.00", textField.text];
+        }
+        
+        //传最终的金额给delegate
+        if ([self.delegate respondsToSelector:@selector(accountingAmountCell:DidEndEditing:)]) {
+            [self.delegate accountingAmountCell:nil DidEndEditing:textField.text.floatValue];
         }
     }
 }

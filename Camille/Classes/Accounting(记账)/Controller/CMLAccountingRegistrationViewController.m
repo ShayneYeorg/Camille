@@ -16,7 +16,7 @@
 #define kDatePickerBGViewTag        201603141611
 #define kAmountCellEditingBGViewTag 201603151414
 
-@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingDatePickerViewDelegate>
+@interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingAmountCellDelegate, CMLAccountingDatePickerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
@@ -325,7 +325,9 @@
 
 - (void)addAccounting {
     CMLLog(@"添加账务");
-    self.lastSelectedItem = self.selectedItem;
+    [CMLCoreDataAccess addAccountingWithItem:self.selectedItem.itemID amount:[NSNumber numberWithFloat:self.amount] type:self.type happneTime:self.happenDate callBack:^(CMLResponse *response) {
+        self.lastSelectedItem = self.selectedItem;
+    }];
 }
 
 #pragma mark - CMLAccountingItemCellDelegate
@@ -348,6 +350,12 @@
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
     [self addItem:itemName inCategory:categoryName];
+}
+
+#pragma mark - CMLAccountingAmountCellDelegate
+
+- (void)accountingAmountCell:(CMLAccountingAmountCell *)accountingAmountCell DidEndEditing:(CGFloat)amount {
+    self.amount = amount;
 }
 
 #pragma mark - CMLAccountingDatePickerViewDelegate
@@ -406,6 +414,7 @@
         
     } else if (indexPath.row == 1) {
         CMLAccountingAmountCell *accountingAmountCell = [CMLAccountingAmountCell loadFromNib];
+        accountingAmountCell.delegate = self;
         accountingAmountCell.selectionStyle = UITableViewCellSelectionStyleNone;
         accountingAmountCell.backgroundColor = kCellBackgroundColor;
         return accountingAmountCell;

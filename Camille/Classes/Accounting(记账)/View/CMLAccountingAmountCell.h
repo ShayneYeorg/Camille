@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class CMLAccountingAmountCell;
+
+@protocol CMLAccountingAmountCellDelegate <NSObject>
+
+- (void)accountingAmountCell:(CMLAccountingAmountCell *)accountingAmountCell DidEndEditing:(CGFloat)amount;
+
+@end
+
 @interface CMLAccountingAmountCell : UITableViewCell
 
+@property (weak, nonatomic) id <CMLAccountingAmountCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField; //金额
 
 + (instancetype)loadFromNib;

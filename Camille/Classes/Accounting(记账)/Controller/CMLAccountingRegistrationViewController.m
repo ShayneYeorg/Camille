@@ -324,9 +324,20 @@
 }
 
 - (void)addAccounting {
-    CMLLog(@"添加账务");
     [CMLCoreDataAccess addAccountingWithItem:self.selectedItem.itemID amount:[NSNumber numberWithFloat:self.amount] type:self.type happneTime:self.happenDate callBack:^(CMLResponse *response) {
-        self.lastSelectedItem = self.selectedItem;
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        if (response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [SVProgressHUD showSuccessWithStatus:response.desc];
+                self.lastSelectedItem = self.selectedItem;
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"保存出错，请重新保存！"];
+        }
     }];
 }
 

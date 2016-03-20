@@ -611,29 +611,29 @@
     accounting.createTime = [NSDate date];
     
     //异步保存数据
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //Response
-        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
         
         //保存
         NSError *error = nil;
-        if ([kManagedObjectContext save:&error]) {
-            if (error) CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
-            cmlResponse.code = RESPONSE_CODE_FAILD;
-            cmlResponse.desc = @"保存失败";
-            cmlResponse.responseDic = nil;
-            
-        } else {
-            cmlResponse.code = RESPONSE_CODE_SUCCEED;
-            cmlResponse.desc = @"保存成功";
-            cmlResponse.responseDic = nil;
-        }
+    if ([kManagedObjectContext save:&error]) {
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = @"保存成功";
+        cmlResponse.responseDic = nil;
         
+    } else {
+        CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
+        cmlResponse.code = RESPONSE_CODE_FAILD;
+        cmlResponse.desc = @"保存失败";
+        cmlResponse.responseDic = nil;
+    }
+    
         //回调
-        dispatch_async(dispatch_get_main_queue(), ^{
-            callBack(cmlResponse);
-        });
-    });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    callBack(cmlResponse);
+//        });
+//    });
 }
 
 @end

@@ -10,12 +10,14 @@
 #import "CMLRecordDetailHeaderView.h"
 #import "CMLRecordDetailSectionHeaderView.h"
 #import "CMLRecordDetailCell.h"
+#import "CMLRecordDetailDatePickerView.h"
 
-@interface CMLRecordMonthDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate>
+@interface CMLRecordMonthDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate, CMLRecordDetailDatePickerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) CMLRecordDetailHeaderView *tableHeaderView;
 @property (nonatomic, strong) NSDate *fetchDate;
+@property (nonatomic, strong) CMLRecordDetailDatePickerView *recordDetailDatePickerView;
 
 @end
 
@@ -78,6 +80,17 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - Getter
+
+- (CMLRecordDetailDatePickerView *)recordDetailDatePickerView {
+    if (_recordDetailDatePickerView == nil) {
+        _recordDetailDatePickerView = [CMLRecordDetailDatePickerView loadFromNib];
+        _recordDetailDatePickerView.delegate = self;
+        [self.view addSubview:_recordDetailDatePickerView];
+    }
+    return _recordDetailDatePickerView;
+}
+
 #pragma mark - Core Data
 
 - (void)fetchData {
@@ -88,6 +101,13 @@
 
 - (void)recordDetailHeaderViewDidTap:(CMLRecordDetailHeaderView *)recordDetailHeaderView {
     CMLLog(@"tap");
+    [self.recordDetailDatePickerView show];
+}
+
+#pragma mark - CMLRecordDetailDatePickerViewDelegate
+
+- (void)recordDetailDatePickerView:(CMLRecordDetailDatePickerView *)recordDetailDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
+    CMLLog(@"click");
 }
 
 #pragma mark - UITableViewDelegate

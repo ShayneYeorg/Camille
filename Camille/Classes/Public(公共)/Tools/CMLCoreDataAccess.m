@@ -636,4 +636,10 @@
 //    });
 }
 
+#pragma mark - 查询账务记录
+
++ (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
+    
+}
+
 @end

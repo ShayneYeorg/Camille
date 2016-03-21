@@ -26,4 +26,16 @@
     return view;
 }
 
+- (void)refreshDate:(NSDate *)date {
+    
+}
+
+- (void)refreshIncome:(NSString *)income {
+    self.incomeLabel.text = income;
+}
+
+- (void)refreshCost:(NSString *)cost {
+    self.costLabel.text = cost;
+}
+
 @end

@@ -9,6 +9,7 @@
 #import "CMLRecordMonthDetailViewController.h"
 #import "CMLRecordDetailHeaderView.h"
 #import "CMLRecordDetailSectionHeaderView.h"
+#import "CMLRecordDetailCell.h"
 
 @interface CMLRecordMonthDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate>
 
@@ -119,7 +120,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [UITableViewCell new];
+    CMLRecordDetailCell *cell = [CMLRecordDetailCell loadFromNib];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = kAppViewColor;
     return cell;

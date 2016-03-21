@@ -82,7 +82,7 @@
                 <outlet property="dateLabel" destination="Yql-ol-Cpx" id="HvL-nl-zwb"/>
                 <outlet property="incomeLabel" destination="XGp-FC-1bg" id="Meg-LC-mK1"/>
             </connections>
-            <point key="canvasLocation" x="355" y="256"/>
+            <point key="canvasLocation" x="497" y="261"/>
         </view>
     </objects>
 </document>

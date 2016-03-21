@@ -39,19 +39,14 @@
     self.tableViewDataArr = @[
                               @[
                                   @{
-                                      @"icon": @"",
-                                      @"title": @"零零"
-                                      },
-                                  @{
-                                      @"icon": @"",
-                                      @"title": @"零一"
+                                      @"icon": @"record_icon_selected",
+                                      @"title": @"收支明细（月份）"
                                       }
                                   ],
-                              
                               @[
                                   @{
-                                      @"icon": @"",
-                                      @"title": @"一零"
+                                      @"icon": @"record_icon_selected",
+                                      @"title": @"科目设置"
                                       }
                                   ]
                               ];
@@ -66,6 +61,15 @@
     [self.view addSubview:self.tableView];
 }
 
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 25;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.1;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -78,8 +82,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *currentSectionArr = self.tableViewDataArr[indexPath.section];
-    NSDictionary *currentCellDic = currentSectionArr[indexPath.row];
+    NSDictionary *currentCellDic = self.tableViewDataArr[indexPath.section][indexPath.row];
     CMLRecordCellModel *model = [CMLRecordCellModel mj_objectWithKeyValues:currentCellDic];
     
     CMLRecordCell *cell = [CMLRecordCell loadFromNib];

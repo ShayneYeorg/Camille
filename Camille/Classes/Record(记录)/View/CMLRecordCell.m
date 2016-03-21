@@ -8,6 +8,13 @@
 
 #import "CMLRecordCell.h"
 
+@interface CMLRecordCell ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
+@property (weak, nonatomic) IBOutlet UILabel *title;
+
+@end
+
 @implementation CMLRecordCell
 
 #pragma mark - Public
@@ -22,7 +29,8 @@
 - (void)setModel:(CMLRecordCellModel *)model {
     _model = model;
     
-    
+    [self.icon setImage:[UIImage imageNamed:_model.icon]];
+    self.title.text = _model.title;
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "CMLRecordViewController.h"
 #import "CMLRecordCell.h"
 #import "CMLRecordCellModel.h"
+#import "CMLRecordMonthDetailViewController.h"
 
 @interface CMLRecordViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -63,9 +64,23 @@
 
 #pragma mark - UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *currentCellDic = self.tableViewDataArr[indexPath.section][indexPath.row];
+    NSString *currentTitle = currentCellDic[@"title"];
+    if ([currentTitle isEqualToString:@"收支明细（月份）"]) {
+        CMLRecordMonthDetailViewController *recordMonthDetailViewController = [CMLRecordMonthDetailViewController new];
+        [self.navigationController pushViewController:recordMonthDetailViewController animated:YES];
+        
+    } else if ([currentTitle isEqualToString:@"科目设置"]) {
+        
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 25;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
 }

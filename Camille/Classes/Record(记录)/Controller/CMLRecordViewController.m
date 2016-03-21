@@ -13,7 +13,7 @@
 @interface CMLRecordViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *recordCellModels;
+@property (nonatomic, strong) NSArray *tableViewDataArr;
 
 @end
 
@@ -25,6 +25,7 @@
     [super viewDidLoad];
     
     [self configDetails];
+    [self configTableViewData];
     [self configTableView];
 }
 
@@ -32,6 +33,28 @@
 
 - (void)configDetails {
     self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)configTableViewData {
+    self.tableViewDataArr = @[
+                              @[
+                                  @{
+                                      @"icon": @"",
+                                      @"title": @"零零"
+                                      },
+                                  @{
+                                      @"icon": @"",
+                                      @"title": @"零一"
+                                      }
+                                  ],
+                              
+                              @[
+                                  @{
+                                      @"icon": @"",
+                                      @"title": @"一零"
+                                      }
+                                  ]
+                              ];
 }
 
 - (void)configTableView {
@@ -43,35 +66,24 @@
     [self.view addSubview:self.tableView];
 }
 
-#pragma mark - Getter
-
-- (NSArray *)recordCellModels {
-    if (_recordCellModels == nil) {
-        CMLRecordCellModel *cellModel1 = nil;
-        CMLRecordCellModel *cellModel2 = nil;
-        CMLRecordCellModel *cellModel3 = nil;
-        _recordCellModels = [NSArray arrayWithObjects:cellModel1, cellModel2, cellModel3, nil];
-    }
-    return _recordCellModels;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.tableViewDataArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 2;
-        
-    } else {
-        return 1;
-    }
+    NSArray *currentSectionArr = self.tableViewDataArr[section];
+    return currentSectionArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [UITableViewCell new];
+    NSArray *currentSectionArr = self.tableViewDataArr[indexPath.section];
+    NSDictionary *currentCellDic = currentSectionArr[indexPath.row];
+    CMLRecordCellModel *model = [CMLRecordCellModel mj_objectWithKeyValues:currentCellDic];
+    
+    CMLRecordCell *cell = [CMLRecordCell loadFromNib];
+    cell.model = model;
     cell.backgroundColor = kAppViewColor;
     return cell;
 }

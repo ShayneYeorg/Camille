@@ -8,6 +8,7 @@
 
 #import "CMLRecordMonthDetailViewController.h"
 #import "CMLRecordDetailHeaderView.h"
+#import "CMLRecordDetailSectionHeaderView.h"
 
 @interface CMLRecordMonthDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate>
 
@@ -25,7 +26,10 @@
     [super viewDidLoad];
     
     [self configDetails];
+    [self configBarBtn];
     [self configTableView];
+    
+    [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,8 +39,20 @@
 #pragma mark - UI Configuration
 
 - (void)configDetails {
+    self.title = @"收支明细（月份）";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)configBarBtn {
+    UIButton *cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancleBtn.frame = CGRectMake(0, 0, 44, 44);
+    [cancleBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancleBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    cancleBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    [cancleBtn addTarget:self action:@selector(cancle) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:cancleBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)configTableView {
@@ -55,6 +71,12 @@
     self.tableView.tableHeaderView = self.tableHeaderView;
 }
 
+#pragma mark - Private
+
+- (void)cancle {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Core Data
 
 - (void)fetchData {
@@ -69,12 +91,21 @@
 
 #pragma mark - UITableViewDelegate
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CMLRecordDetailSectionHeaderView *sectionHeaderView = [CMLRecordDetailSectionHeaderView loadFromNib];
+    return sectionHeaderView;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    return 50;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 35;
 }
 
 #pragma mark - UITableViewDataSource
@@ -88,7 +119,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [UITableViewCell new];
+    UITableViewCell *cell = [UITableViewCell new];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = kAppViewColor;
+    return cell;
 }
 
 @end

@@ -8,6 +8,14 @@
 
 #import "CMLRecordDetailSectionHeaderView.h"
 
+@interface CMLRecordDetailSectionHeaderView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel; //日期
+@property (weak, nonatomic) IBOutlet UILabel *incomeLabel; //收入
+@property (weak, nonatomic) IBOutlet UILabel *costLabel; //支出
+
+@end
+
 @implementation CMLRecordDetailSectionHeaderView
 
 #pragma mark - Public

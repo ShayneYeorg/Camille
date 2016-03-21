@@ -8,6 +8,7 @@
 
 #import "CMLRecordViewController.h"
 #import "CMLRecordCell.h"
+#import "CMLRecordCellModel.h"
 
 @interface CMLRecordViewController () <UITableViewDelegate, UITableViewDataSource>
 

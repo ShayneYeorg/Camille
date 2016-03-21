@@ -25,6 +25,16 @@
 		345E0B641C9EE45100A52488 /* CMLRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B621C9EE45100A52488 /* CMLRecordCell.m */; };
 		345E0B651C9EE45100A52488 /* CMLRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 345E0B631C9EE45100A52488 /* CMLRecordCell.xib */; };
 		345E0B681C9EE4C300A52488 /* CMLRecordCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B671C9EE4C300A52488 /* CMLRecordCellModel.m */; };
+		345E0B9F1C9F90F600A52488 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B8C1C9F90F600A52488 /* MJExtensionConst.m */; };
+		345E0BA01C9F90F600A52488 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B8E1C9F90F600A52488 /* MJFoundation.m */; };
+		345E0BA11C9F90F600A52488 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B901C9F90F600A52488 /* MJProperty.m */; };
+		345E0BA21C9F90F600A52488 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B921C9F90F600A52488 /* MJPropertyKey.m */; };
+		345E0BA31C9F90F600A52488 /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B941C9F90F600A52488 /* MJPropertyType.m */; };
+		345E0BA41C9F90F600A52488 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B961C9F90F600A52488 /* NSObject+MJClass.m */; };
+		345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B981C9F90F600A52488 /* NSObject+MJCoding.m */; };
+		345E0BA61C9F90F600A52488 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9A1C9F90F600A52488 /* NSObject+MJKeyValue.m */; };
+		345E0BA71C9F90F600A52488 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9C1C9F90F600A52488 /* NSObject+MJProperty.m */; };
+		345E0BA81C9F90F600A52488 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */; };
 		3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */; };
 		3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC21C82D60C004EE4BD /* CMLCoreDataAccess.m */; };
 		3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC51C82D8F2004EE4BD /* CMLResponse.m */; };
@@ -83,6 +93,27 @@
 		345E0B631C9EE45100A52488 /* CMLRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLRecordCell.xib; sourceTree = "<group>"; };
 		345E0B661C9EE4C300A52488 /* CMLRecordCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordCellModel.h; sourceTree = "<group>"; };
 		345E0B671C9EE4C300A52488 /* CMLRecordCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordCellModel.m; sourceTree = "<group>"; };
+		345E0B8A1C9F90F600A52488 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		345E0B8B1C9F90F600A52488 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
+		345E0B8C1C9F90F600A52488 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
+		345E0B8D1C9F90F600A52488 /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		345E0B8E1C9F90F600A52488 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		345E0B8F1C9F90F600A52488 /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
+		345E0B901C9F90F600A52488 /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
+		345E0B911C9F90F600A52488 /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
+		345E0B921C9F90F600A52488 /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
+		345E0B931C9F90F600A52488 /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
+		345E0B941C9F90F600A52488 /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
+		345E0B951C9F90F600A52488 /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
+		345E0B961C9F90F600A52488 /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
+		345E0B971C9F90F600A52488 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		345E0B981C9F90F600A52488 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		345E0B991C9F90F600A52488 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		345E0B9A1C9F90F600A52488 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		345E0B9B1C9F90F600A52488 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
+		345E0B9C1C9F90F600A52488 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
+		345E0B9D1C9F90F600A52488 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
+		345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		3490A2E91C798D0900DEC138 /* CMLAccountingRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingRegistrationViewController.h; sourceTree = "<group>"; };
 		3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingRegistrationViewController.m; sourceTree = "<group>"; };
 		3499BDC11C82D60C004EE4BD /* CMLCoreDataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLCoreDataAccess.h; sourceTree = "<group>"; };
@@ -148,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				340579331C8EB4E700C79F9D /* SVProgressHUD */,
+				345E0B891C9F90F600A52488 /* MJExtension */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -201,6 +233,34 @@
 				34D21C501C776EF4004264C2 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		345E0B891C9F90F600A52488 /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				345E0B8A1C9F90F600A52488 /* MJExtension.h */,
+				345E0B8B1C9F90F600A52488 /* MJExtensionConst.h */,
+				345E0B8C1C9F90F600A52488 /* MJExtensionConst.m */,
+				345E0B8D1C9F90F600A52488 /* MJFoundation.h */,
+				345E0B8E1C9F90F600A52488 /* MJFoundation.m */,
+				345E0B8F1C9F90F600A52488 /* MJProperty.h */,
+				345E0B901C9F90F600A52488 /* MJProperty.m */,
+				345E0B911C9F90F600A52488 /* MJPropertyKey.h */,
+				345E0B921C9F90F600A52488 /* MJPropertyKey.m */,
+				345E0B931C9F90F600A52488 /* MJPropertyType.h */,
+				345E0B941C9F90F600A52488 /* MJPropertyType.m */,
+				345E0B951C9F90F600A52488 /* NSObject+MJClass.h */,
+				345E0B961C9F90F600A52488 /* NSObject+MJClass.m */,
+				345E0B971C9F90F600A52488 /* NSObject+MJCoding.h */,
+				345E0B981C9F90F600A52488 /* NSObject+MJCoding.m */,
+				345E0B991C9F90F600A52488 /* NSObject+MJKeyValue.h */,
+				345E0B9A1C9F90F600A52488 /* NSObject+MJKeyValue.m */,
+				345E0B9B1C9F90F600A52488 /* NSObject+MJProperty.h */,
+				345E0B9C1C9F90F600A52488 /* NSObject+MJProperty.m */,
+				345E0B9D1C9F90F600A52488 /* NSString+MJExtension.h */,
+				345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */,
+			);
+			path = MJExtension;
 			sourceTree = "<group>";
 		};
 		34D21C2D1C776CC8004264C2 /* Classes */ = {
@@ -488,13 +548,20 @@
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
+				345E0BA81C9F90F600A52488 /* NSString+MJExtension.m in Sources */,
 				34FA389F1C96980C00A049E8 /* CMLAccountingDatePickerView.m in Sources */,
 				345E0B641C9EE45100A52488 /* CMLRecordCell.m in Sources */,
 				3405792F1C8EA70C00C79F9D /* CMLNewItemAddingView.m in Sources */,
+				345E0BA71C9F90F600A52488 /* NSObject+MJProperty.m in Sources */,
+				345E0BA11C9F90F600A52488 /* MJProperty.m in Sources */,
 				3499BE191C84144D004EE4BD /* CMLItem+CoreDataProperties.m in Sources */,
+				345E0BA31C9F90F600A52488 /* MJPropertyType.m in Sources */,
+				345E0B9F1C9F90F600A52488 /* MJExtensionConst.m in Sources */,
 				3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */,
 				3499BE181C84144D004EE4BD /* CMLItemCategory.m in Sources */,
+				345E0BA41C9F90F600A52488 /* NSObject+MJClass.m in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
+				345E0BA01C9F90F600A52488 /* MJFoundation.m in Sources */,
 				3405793E1C8EB4E700C79F9D /* SVRadialGradientLayer.m in Sources */,
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
@@ -503,15 +570,18 @@
 				34FA38961C944A0300A049E8 /* CMLAccountingAmountCell.m in Sources */,
 				34FA389B1C95358500A049E8 /* CMLAccountingDateCell.m in Sources */,
 				3441D0B41C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m in Sources */,
+				345E0BA21C9F90F600A52488 /* MJPropertyKey.m in Sources */,
 				3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */,
 				34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */,
 				34D21CA41C788948004264C2 /* UIView+Extension.m in Sources */,
+				345E0BA61C9F90F600A52488 /* NSObject+MJKeyValue.m in Sources */,
 				345E0B681C9EE4C300A52488 /* CMLRecordCellModel.m in Sources */,
 				3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */,
 				34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */,
 				3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */,
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				3499BE1B1C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */,
+				345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */,
 				3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,
 				3499BE1A1C84144D004EE4BD /* CMLItem.m in Sources */,

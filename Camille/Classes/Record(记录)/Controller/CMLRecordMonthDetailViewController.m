@@ -107,7 +107,7 @@
 #pragma mark - CMLRecordDetailDatePickerViewDelegate
 
 - (void)recordDetailDatePickerView:(CMLRecordDetailDatePickerView *)recordDetailDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
-    CMLLog(@"click");
+    CMLLog(@"%@", selectedDate);
 }
 
 #pragma mark - UITableViewDelegate

@@ -64,6 +64,7 @@
 		34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CAB1C789085004264C2 /* CMLTabBarController.m */; };
 		34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21CAE1C7890AE004264C2 /* CMLNavigationController.m */; };
 		34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */; };
+		34E384691CA115B1004A5A8C /* CDatePickerViewEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E384681CA115B1004A5A8C /* CDatePickerViewEx.m */; };
 		34FA38961C944A0300A049E8 /* CMLAccountingAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA38941C944A0300A049E8 /* CMLAccountingAmountCell.m */; };
 		34FA38971C944A0300A049E8 /* CMLAccountingAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */; };
 		34FA389B1C95358500A049E8 /* CMLAccountingDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA38991C95358500A049E8 /* CMLAccountingDateCell.m */; };
@@ -176,6 +177,8 @@
 		34D21CAD1C7890AE004264C2 /* CMLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLNavigationController.h; sourceTree = "<group>"; };
 		34D21CAE1C7890AE004264C2 /* CMLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLNavigationController.m; sourceTree = "<group>"; };
 		34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingViewController.xib; sourceTree = "<group>"; };
+		34E384671CA115B1004A5A8C /* CDatePickerViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDatePickerViewEx.h; sourceTree = "<group>"; };
+		34E384681CA115B1004A5A8C /* CDatePickerViewEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDatePickerViewEx.m; sourceTree = "<group>"; };
 		34FA38931C944A0300A049E8 /* CMLAccountingAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingAmountCell.h; sourceTree = "<group>"; };
 		34FA38941C944A0300A049E8 /* CMLAccountingAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingAmountCell.m; sourceTree = "<group>"; };
 		34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingAmountCell.xib; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 		340579321C8EB4E700C79F9D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				34E384661CA115B1004A5A8C /* CDatePickerViewEx */,
 				340579331C8EB4E700C79F9D /* SVProgressHUD */,
 				345E0B891C9F90F600A52488 /* MJExtension */,
 			);
@@ -500,6 +504,15 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		34E384661CA115B1004A5A8C /* CDatePickerViewEx */ = {
+			isa = PBXGroup;
+			children = (
+				34E384671CA115B1004A5A8C /* CDatePickerViewEx.h */,
+				34E384681CA115B1004A5A8C /* CDatePickerViewEx.m */,
+			);
+			path = CDatePickerViewEx;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -620,6 +633,7 @@
 				34D21CA41C788948004264C2 /* UIView+Extension.m in Sources */,
 				345E0BA61C9F90F600A52488 /* NSObject+MJKeyValue.m in Sources */,
 				345E0B681C9EE4C300A52488 /* CMLRecordCellModel.m in Sources */,
+				34E384691CA115B1004A5A8C /* CDatePickerViewEx.m in Sources */,
 				3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */,
 				34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */,
 				34340AED1C9FDD1D00FECAD7 /* CMLRecordDetailSectionHeaderView.m in Sources */,

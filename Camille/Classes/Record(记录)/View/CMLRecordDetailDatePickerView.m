@@ -7,10 +7,11 @@
 //
 
 #import "CMLRecordDetailDatePickerView.h"
+#import "CDatePickerViewEx.h"
 
 @interface CMLRecordDetailDatePickerView ()
 
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker; //日期选择器
+@property (weak, nonatomic) IBOutlet CDatePickerViewEx *monthPicker;
 
 @end
 
@@ -21,6 +22,7 @@
 + (instancetype)loadFromNib {
     CMLRecordDetailDatePickerView *view = [[NSBundle mainBundle]loadNibNamed:@"CMLRecordDetailDatePickerView" owner:self options:nil][0];
     [view setFrame:CGRectMake(0, kScreen_Height, kScreen_Width, kRecordDetailDatePickerViewHeight)];
+    [view.monthPicker selectToday];
     
     return view;
 }
@@ -41,9 +43,8 @@
 
 - (IBAction)confirmBtnClick:(id)sender {
     if ([self.delegate respondsToSelector:@selector(recordDetailDatePickerView:didClickConfirmBtn:)]) {
-        [self.delegate recordDetailDatePickerView:nil didClickConfirmBtn:self.datePicker.date];
+        [self.delegate recordDetailDatePickerView:nil didClickConfirmBtn:self.monthPicker.date];
     }
 }
-
 
 @end

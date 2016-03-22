@@ -7,6 +7,7 @@
 //
 
 #import "CMLRecordDetailHeaderView.h"
+#import "CMLTool+NSDate.h"
 
 @interface CMLRecordDetailHeaderView ()
 

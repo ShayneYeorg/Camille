@@ -18,5 +18,6 @@
 + (UIWindow *)getWindow;
 
 + (NSString *)transDateToString:(NSDate *)date;
++ (NSString *)transDateToYMString:(NSDate *)date;
 
 @end

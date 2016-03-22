@@ -27,7 +27,7 @@
 }
 
 - (void)refreshPickDate:(NSDate *)date {
-    
+    self.pickDate.text = [CMLTool transDateToYMString:date];
 }
 
 - (void)refreshTotalIncome:(NSString *)totalIncome {

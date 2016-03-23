@@ -12,5 +12,7 @@
 
 + (NSString *)transDateToString:(NSDate *)date;
 + (NSString *)transDateToYMString:(NSDate *)date;
++ (NSDate *)getFirstDateInMonth:(NSDate *)date;
++ (NSDate *)getLastDateInMonth:(NSDate *)date;
 
 @end

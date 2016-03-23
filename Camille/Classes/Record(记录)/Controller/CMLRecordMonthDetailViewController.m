@@ -45,6 +45,8 @@
     self.title = @"收支明细（月份）";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.fetchDate = [NSDate date];
+    [self.tableHeaderView refreshPickDate:self.fetchDate];
 }
 
 - (void)configBarBtn {
@@ -94,20 +96,23 @@
 #pragma mark - Core Data
 
 - (void)fetchData {
-    
+    [CMLCoreDataAccess fetchAccountingDetailsOnMonth:self.fetchDate callBack:^(CMLResponse *response) {
+        
+    }];
 }
 
 #pragma mark - CMLRecordDetailHeaderViewDelegate
 
 - (void)recordDetailHeaderViewDidTap:(CMLRecordDetailHeaderView *)recordDetailHeaderView {
-    CMLLog(@"tap");
     [self.recordDetailDatePickerView show];
 }
 
 #pragma mark - CMLRecordDetailDatePickerViewDelegate
 
 - (void)recordDetailDatePickerView:(CMLRecordDetailDatePickerView *)recordDetailDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
-    [self.tableHeaderView refreshPickDate:selectedDate];
+    self.fetchDate = selectedDate;
+    [self.tableHeaderView refreshPickDate:self.fetchDate];
+    [self fetchData];
 }
 
 #pragma mark - UITableViewDelegate

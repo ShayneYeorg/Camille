@@ -48,4 +48,24 @@
     return fmt;
 }
 
+//获取当月开始时间
++ (NSDate *)getFirstDateInMonth:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    [cmp setDay:1];
+    NSDate *firstDate = [calendar dateFromComponents:cmp];
+    
+    return firstDate;
+}
+
+//获取当月结束时间
++ (NSDate *)getLastDateInMonth:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    [cmp setMonth:[cmp month] + 1];
+    NSDate *nextMonFirstDate = [calendar dateFromComponents:cmp];
+    
+    return nextMonFirstDate;
+}
+
 @end

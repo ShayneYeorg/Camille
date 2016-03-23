@@ -7,6 +7,7 @@
 //
 
 #import "CMLCoreDataAccess.h"
+#import "CMLTool+NSDate.h"
 
 @implementation CMLCoreDataAccess
 
@@ -639,7 +640,17 @@
 #pragma mark - 查询账务记录
 
 + (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
+        NSDate *endDate = [CMLTool getLastDateInMonth:date];
+        CMLLog(@"%@   %@", beginDate, endDate);
+        
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callBack(cmlResponse);
+        });
+    });
 }
 
 @end

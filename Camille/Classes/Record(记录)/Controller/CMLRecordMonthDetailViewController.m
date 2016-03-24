@@ -12,6 +12,8 @@
 #import "CMLRecordDetailCell.h"
 #import "CMLRecordDetailDatePickerView.h"
 
+#define kRecordDetailDatePickerBGViewTag 201603242144
+
 @interface CMLRecordMonthDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate, CMLRecordDetailDatePickerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -82,6 +84,24 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)addDatePickerBGView {
+    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height - kRecordDetailDatePickerViewHeight)];
+    datePickerBGView.backgroundColor = [UIColor clearColor];
+    datePickerBGView.tag = kRecordDetailDatePickerBGViewTag;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(datePickerBGViewTap)];
+    [datePickerBGView addGestureRecognizer:tap];
+    
+    UIWindow *window = [CMLTool getWindow];
+    [window addSubview:datePickerBGView];
+}
+
+- (void)datePickerBGViewTap {
+    UIWindow *window = [CMLTool getWindow];
+    [self.recordDetailDatePickerView dismiss];
+    [[window viewWithTag:kRecordDetailDatePickerBGViewTag] removeFromSuperview];
+}
+
 #pragma mark - Getter
 
 - (CMLRecordDetailDatePickerView *)recordDetailDatePickerView {
@@ -105,6 +125,7 @@
 
 - (void)recordDetailHeaderViewDidTap:(CMLRecordDetailHeaderView *)recordDetailHeaderView {
     [self.recordDetailDatePickerView show];
+    [self addDatePickerBGView];
 }
 
 #pragma mark - CMLRecordDetailDatePickerViewDelegate

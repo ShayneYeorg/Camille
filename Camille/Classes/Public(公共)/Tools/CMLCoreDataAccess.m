@@ -640,12 +640,39 @@
 #pragma mark - 查询账务记录
 
 + (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLAccounting" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //异步取数据
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //Response
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        
+        //设置查询条件
         NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
         NSDate *endDate = [CMLTool getLastDateInMonth:date];
-        CMLLog(@"%@   %@", beginDate, endDate);
+//        NSString *str = [NSString stringWithFormat:@"happenTime >= '%@' AND happenTime < '%@'", beginDate, endDate];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime < %@", beginDate, endDate];
+        [request setPredicate:pre];
         
-        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        //查询
+        NSError *error = nil;
+        NSMutableArray *accountings = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        //取数据
+        if (accountings == nil) {
+            CMLLog(@"查询账务时发生错误:%@,%@",error,[error userInfo]);
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"读取失败";
+            cmlResponse.responseDic = nil;
+            
+        } else {
+            cmlResponse.code = RESPONSE_CODE_SUCCEED;
+            cmlResponse.desc = @"读取成功";
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:accountings, @"accountings", nil];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             callBack(cmlResponse);

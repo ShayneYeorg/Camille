@@ -117,7 +117,9 @@
 
 - (void)fetchData {
     [CMLCoreDataAccess fetchAccountingDetailsOnMonth:self.fetchDate callBack:^(CMLResponse *response) {
-        
+        if (response) {
+            
+        }
     }];
 }
 

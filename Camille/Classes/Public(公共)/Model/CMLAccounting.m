@@ -10,6 +10,20 @@
 
 @implementation CMLAccounting
 
-// Insert code here to add functionality to your managed object subclass
+#pragma mark - Public
+
++ (NSDictionary *)sortAccountingsByDay:(NSArray *)accountings {
+    //获取整个月的账务数据，进行排序处理
+    
+    //传空值的滚蛋
+    if (!accountings) {
+        return nil;
+    }
+    
+    
+    
+    NSDictionary *retDic = [NSDictionary dictionary];
+    return retDic;
+}
 
 @end

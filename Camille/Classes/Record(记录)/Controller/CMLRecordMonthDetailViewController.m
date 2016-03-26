@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) CMLRecordDetailHeaderView *tableHeaderView;
-@property (nonatomic, strong) NSDate *fetchDate;
+@property (nonatomic, strong) NSDate *fetchDate; //查询条件
 @property (nonatomic, strong) CMLRecordDetailDatePickerView *recordDetailDatePickerView;
 
 @end

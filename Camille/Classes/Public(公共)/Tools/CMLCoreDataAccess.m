@@ -653,15 +653,14 @@
         //设置查询条件
         NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
         NSDate *endDate = [CMLTool getLastDateInMonth:date];
-//        NSString *str = [NSString stringWithFormat:@"happenTime >= '%@' AND happenTime < '%@'", beginDate, endDate];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime < %@", beginDate, endDate];
         [request setPredicate:pre];
         
         //查询
         NSError *error = nil;
-        NSMutableArray *accountings = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        NSArray *accountings = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
         
-        //取数据
+        //返回数据
         if (accountings == nil) {
             CMLLog(@"查询账务时发生错误:%@,%@",error,[error userInfo]);
             cmlResponse.code = RESPONSE_CODE_FAILD;
@@ -671,7 +670,7 @@
         } else {
             cmlResponse.code = RESPONSE_CODE_SUCCEED;
             cmlResponse.desc = @"读取成功";
-            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:accountings, @"accountings", nil];
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLAccounting sortAccountingsByDay:accountings], @"accountings", nil];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{

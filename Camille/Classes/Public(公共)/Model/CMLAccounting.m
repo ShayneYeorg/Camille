@@ -20,7 +20,9 @@
         return nil;
     }
     
-    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"happenTime < %@", [NSDate date]];
+    NSArray *filteredArr = [accountings filteredArrayUsingPredicate:predicate];
+    CMLLog(@"%@", filteredArr);
     
     NSDictionary *retDic = [NSDictionary dictionary];
     return retDic;

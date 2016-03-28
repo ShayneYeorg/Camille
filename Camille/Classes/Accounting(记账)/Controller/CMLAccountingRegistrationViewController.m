@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
+//@property (nonatomic, assign) BOOL isItemAddingViewShowing;
 @property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
 @property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
 @property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView; //日期选择view
@@ -137,6 +138,12 @@
 
 //这块蒙板只挡住NavigationBar
 - (void)addAmountCellEditingBGView {
+    //不是金额cell就不处理
+    CMLAccountingAmountCell *amountCell = [self getAmountCell];
+    if (![amountCell.amountTextField isFirstResponder]) {
+        return;
+    }
+    
     //如果科目cell展开着，就收起它
     if(self.isItemCellExpand) {
         [self reloadItemCellWithExpandAction];

@@ -20,7 +20,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL isItemCellExpand;
-//@property (nonatomic, assign) BOOL isItemAddingViewShowing;
 @property (nonatomic, strong) NSDictionary *itemsDic; //第一个cell右菜单使用的数据
 @property (nonatomic, strong) NSArray *categoryModels; //第一个cell左菜单的模型
 @property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView; //日期选择view

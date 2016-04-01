@@ -66,6 +66,7 @@
 		34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D21CB21C789991004264C2 /* CMLAccountingViewController.xib */; };
 		34E384691CA115B1004A5A8C /* CDatePickerViewEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E384681CA115B1004A5A8C /* CDatePickerViewEx.m */; };
 		34E3846C1CA12576004A5A8C /* CMLTool+NSDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3846B1CA12576004A5A8C /* CMLTool+NSDate.m */; };
+		34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EA4B091CAEA63F0075B09E /* CMLRecordMonthDetailModel.m */; };
 		34FA38961C944A0300A049E8 /* CMLAccountingAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA38941C944A0300A049E8 /* CMLAccountingAmountCell.m */; };
 		34FA38971C944A0300A049E8 /* CMLAccountingAmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */; };
 		34FA389B1C95358500A049E8 /* CMLAccountingDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FA38991C95358500A049E8 /* CMLAccountingDateCell.m */; };
@@ -182,6 +183,8 @@
 		34E384681CA115B1004A5A8C /* CDatePickerViewEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDatePickerViewEx.m; sourceTree = "<group>"; };
 		34E3846A1CA12576004A5A8C /* CMLTool+NSDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CMLTool+NSDate.h"; sourceTree = "<group>"; };
 		34E3846B1CA12576004A5A8C /* CMLTool+NSDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLTool+NSDate.m"; sourceTree = "<group>"; };
+		34EA4B081CAEA63F0075B09E /* CMLRecordMonthDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordMonthDetailModel.h; sourceTree = "<group>"; };
+		34EA4B091CAEA63F0075B09E /* CMLRecordMonthDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordMonthDetailModel.m; sourceTree = "<group>"; };
 		34FA38931C944A0300A049E8 /* CMLAccountingAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingAmountCell.h; sourceTree = "<group>"; };
 		34FA38941C944A0300A049E8 /* CMLAccountingAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingAmountCell.m; sourceTree = "<group>"; };
 		34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingAmountCell.xib; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 			children = (
 				345E0B661C9EE4C300A52488 /* CMLRecordCellModel.h */,
 				345E0B671C9EE4C300A52488 /* CMLRecordCellModel.m */,
+				34EA4B081CAEA63F0075B09E /* CMLRecordMonthDetailModel.h */,
+				34EA4B091CAEA63F0075B09E /* CMLRecordMonthDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -604,6 +609,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
+				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,

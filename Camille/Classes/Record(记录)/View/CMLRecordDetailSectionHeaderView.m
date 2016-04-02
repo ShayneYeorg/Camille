@@ -26,8 +26,8 @@
     return view;
 }
 
-- (void)refreshDate:(NSDate *)date {
-    
+- (void)refreshDate:(NSString *)date {
+    self.dateLabel.text = date;
 }
 
 - (void)refreshIncome:(NSString *)income {

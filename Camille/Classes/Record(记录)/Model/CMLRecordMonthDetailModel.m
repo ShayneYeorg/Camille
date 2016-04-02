@@ -15,7 +15,7 @@
 @implementation CMLRecordMonthDetailSectionModel
 
 + (void)load {
-    [CMLRecordMonthDetailCellModel mj_setupObjectClassInArray:^NSDictionary *{
+    [CMLRecordMonthDetailSectionModel mj_setupObjectClassInArray:^NSDictionary *{
         return @{@"detailCells": @"CMLRecordMonthDetailCellModel"};
     }];
 }
@@ -25,7 +25,7 @@
 @implementation CMLRecordMonthDetailModel
 
 + (void)load {
-    [CMLRecordMonthDetailCellModel mj_setupObjectClassInArray:^NSDictionary *{
+    [CMLRecordMonthDetailModel mj_setupObjectClassInArray:^NSDictionary *{
         return @{@"detailSections": @"CMLRecordMonthDetailSectionModel"};
     }];
 }

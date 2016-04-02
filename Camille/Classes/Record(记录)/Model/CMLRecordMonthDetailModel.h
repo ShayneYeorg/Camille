@@ -69,7 +69,7 @@
 /**
  *  账务数组
  */
-@property (nonatomic, strong) NSString *detailSections;
+@property (nonatomic, strong) NSMutableArray *detailSections;
 
 @end
 

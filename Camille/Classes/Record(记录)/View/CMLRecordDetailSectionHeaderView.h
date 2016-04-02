@@ -11,7 +11,7 @@
 @interface CMLRecordDetailSectionHeaderView : UIView
 
 + (instancetype)loadFromNib;
-- (void)refreshDate:(NSDate *)date;
+- (void)refreshDate:(NSString *)date;
 - (void)refreshIncome:(NSString *)income;
 - (void)refreshCost:(NSString *)cost;
 

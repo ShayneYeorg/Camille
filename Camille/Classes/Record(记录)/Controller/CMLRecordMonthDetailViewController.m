@@ -12,6 +12,7 @@
 #import "CMLRecordDetailCell.h"
 #import "CMLRecordDetailDatePickerView.h"
 #import "CMLRecordMonthDetailModel.h"
+#import "SVProgressHUD.h"
 
 #define kRecordDetailDatePickerBGViewTag 201603242144
 
@@ -80,6 +81,15 @@
     self.tableView.tableHeaderView = self.tableHeaderView;
 }
 
+- (void)refreshView {
+    NSString *totalCost = [NSString stringWithFormat:@"%.2f", self.monthModel.totalCost];
+    NSString *totalIncome = [NSString stringWithFormat:@"%.2f", self.monthModel.totalIncome];
+    [self.tableHeaderView refreshTotalCost:totalCost];
+    [self.tableHeaderView refreshTotalIncome:totalIncome];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - Private
 
 - (void)cancle {
@@ -118,9 +128,20 @@
 #pragma mark - Core Data
 
 - (void)fetchData {
+    __weak typeof(self) weakSelf = self;
     [CMLCoreDataAccess fetchAccountingDetailsOnMonth:self.fetchDate callBack:^(CMLResponse *response) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                weakSelf.monthModel = [CMLRecordMonthDetailModel mj_objectWithKeyValues:response.responseDic];
+                [weakSelf refreshView];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+            }
             
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"查询账务出错！"];
         }
     }];
 }
@@ -144,6 +165,10 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     CMLRecordDetailSectionHeaderView *sectionHeaderView = [CMLRecordDetailSectionHeaderView loadFromNib];
+    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
+    [sectionHeaderView refreshDate:[NSString stringWithFormat:@"%@号", currentSection.day]];
+    [sectionHeaderView refreshCost:[NSString stringWithFormat:@"%.2f", currentSection.cost]];
+    [sectionHeaderView refreshIncome:[NSString stringWithFormat:@"%.2f", currentSection.income]];
     return sectionHeaderView;
 }
 
@@ -162,17 +187,24 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return self.monthModel.detailSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
+    return currentSection.detailCells.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CMLRecordDetailCell *cell = [CMLRecordDetailCell loadFromNib];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = kAppViewColor;
+    
+    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
+    CMLRecordMonthDetailCellModel *cellModel = currentSection.detailCells[indexPath.row];
+    [cell refreshItemName:cellModel.itemName];
+    [cell refreshAmount:[NSString stringWithFormat:@"%.2f", cellModel.amount]];
+    
     return cell;
 }
 

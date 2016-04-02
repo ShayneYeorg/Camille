@@ -11,6 +11,7 @@
 #import "CMLRecordDetailSectionHeaderView.h"
 #import "CMLRecordDetailCell.h"
 #import "CMLRecordDetailDatePickerView.h"
+#import "CMLRecordMonthDetailModel.h"
 
 #define kRecordDetailDatePickerBGViewTag 201603242144
 
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) CMLRecordDetailHeaderView *tableHeaderView;
 @property (nonatomic, strong) NSDate *fetchDate; //查询条件
 @property (nonatomic, strong) CMLRecordDetailDatePickerView *recordDetailDatePickerView;
+@property (nonatomic, strong) CMLRecordMonthDetailModel *monthModel; //数据模型
 
 @end
 

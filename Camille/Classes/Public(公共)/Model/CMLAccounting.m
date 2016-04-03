@@ -16,9 +16,7 @@
     //获取整个月的账务数据，进行排序处理
     
     //传空值的滚蛋
-    if (!accountings) {
-        return nil;
-    }
+    if (!accountings) return nil;
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"happenTime < %@", [NSDate date]];
     NSArray *filteredArr = [accountings filteredArrayUsingPredicate:predicate];

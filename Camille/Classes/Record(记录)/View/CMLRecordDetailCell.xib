@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thp-T0-BkZ">
-                        <rect key="frame" x="190" y="7" width="100" height="21"/>
+                        <rect key="frame" x="202" y="7" width="100" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="Wq3-nI-qIN"/>
                             <constraint firstAttribute="height" constant="21" id="bg0-Je-SUg"/>
@@ -36,7 +36,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="thp-T0-BkZ" secondAttribute="trailing" constant="30" id="bup-xe-8qm"/>
+                    <constraint firstAttribute="trailing" secondItem="thp-T0-BkZ" secondAttribute="trailing" constant="18" id="A0O-TN-g5a"/>
                     <constraint firstItem="thp-T0-BkZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fYF-lZ-C3q"/>
                     <constraint firstItem="95m-0F-oLE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="gSm-EL-Onv"/>
                     <constraint firstItem="95m-0F-oLE" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hEw-aS-9p2"/>

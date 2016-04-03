@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CMLRecordMonthDetailModel.h"
 
 @interface CMLRecordDetailCell : UITableViewCell
 
+@property (nonatomic, strong) CMLRecordMonthDetailCellModel *model;
+
 + (instancetype)loadFromNib;
-- (void)refreshItemName:(NSString *)itemName;
-- (void)refreshAmount:(NSString *)amount;
 
 @end

@@ -24,6 +24,21 @@
     return cell;
 }
 
+#pragma mark - Setter
+
+- (void)setModel:(CMLRecordMonthDetailCellModel *)model {
+    _model = model;
+    
+    NSString *symbol = @"-";
+    if ([_model.itemType isEqualToString:@"2"]) {
+        symbol = @"+";
+    }
+    [self refreshItemName:_model.itemName];
+    [self refreshAmount:[NSString stringWithFormat:@"%@%.2f", symbol, _model.amount]];
+}
+
+#pragma mark -Private
+
 - (void)refreshItemName:(NSString *)itemName {
     self.itemNameLabel.text = itemName;
 }

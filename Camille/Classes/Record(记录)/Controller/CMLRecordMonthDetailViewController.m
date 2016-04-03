@@ -201,9 +201,7 @@
     cell.backgroundColor = kAppViewColor;
     
     CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
-    CMLRecordMonthDetailCellModel *cellModel = currentSection.detailCells[indexPath.row];
-    [cell refreshItemName:cellModel.itemName];
-    [cell refreshAmount:[NSString stringWithFormat:@"%.2f", cellModel.amount]];
+    cell.model = currentSection.detailCells[indexPath.row];
     
     return cell;
 }

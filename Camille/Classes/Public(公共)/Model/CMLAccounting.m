@@ -18,6 +18,12 @@
     //传空值的滚蛋
     if (!accountings) return nil;
     
+    //将所有账务按照日期分组
+    
+    //统计每组的收支总额
+    
+    //统计所有账务的收支总额
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"happenTime < %@", [NSDate date]];
     NSArray *filteredArr = [accountings filteredArrayUsingPredicate:predicate];
     CMLLog(@"%@", filteredArr);

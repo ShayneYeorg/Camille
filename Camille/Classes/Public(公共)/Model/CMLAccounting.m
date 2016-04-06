@@ -19,6 +19,9 @@
     if (!accountings) return nil;
     
     //将所有账务按照日期分组
+    for (int n = 0; n < accountings.count; n++) {
+        CMLAccounting *account = (CMLAccounting *)accountings[n];
+    }
     
     //统计每组的收支总额
     

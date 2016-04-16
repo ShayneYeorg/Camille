@@ -245,6 +245,10 @@
             [alertController addAction:cancelAction];
             
             [self presentViewController:alertController animated:YES completion:nil];
+            
+        } else {
+            //不是重复保存
+            [self addAccounting];
         }
         
     } else {

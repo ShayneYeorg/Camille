@@ -68,4 +68,12 @@
     return nextMonFirstDate;
 }
 
+//取出一个NSDate里的day
++ (NSString *)getDayFromADate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSString *day = [NSString stringWithFormat:@"%zd", cmp.day];
+    return day;
+}
+
 @end

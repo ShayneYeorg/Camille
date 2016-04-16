@@ -14,5 +14,6 @@
 + (NSString *)transDateToYMString:(NSDate *)date;
 + (NSDate *)getFirstDateInMonth:(NSDate *)date;
 + (NSDate *)getLastDateInMonth:(NSDate *)date;
++ (NSString *)getDayFromADate:(NSDate *)date;
 
 @end

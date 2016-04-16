@@ -16,6 +16,7 @@
 @dynamic amount;
 @dynamic createTime;
 @dynamic happenTime;
+@dynamic happenDay;
 @dynamic itemID;
 @dynamic type;
 

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *amount; //金额
 @property (nullable, nonatomic, retain) NSDate *createTime; //创建时间
 @property (nullable, nonatomic, retain) NSDate *happenTime;  //发生时间
+@property (nullable, nonatomic, retain) NSString *happenDay; //发生时间的day
 @property (nullable, nonatomic, retain) NSString *itemID; //科目ID
 @property (nullable, nonatomic, retain) NSString *type; //科目类型
 

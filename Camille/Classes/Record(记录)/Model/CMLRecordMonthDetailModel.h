@@ -9,24 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "MJExtension.h"
 
-@interface CMLRecordMonthDetailCellModel : NSObject
-
-/**
- *  科目名称
- */
-@property (nonatomic, strong) NSString *itemName;
-
-/**
- *  收支属性（1为支出，2为收入）
- */
-@property (nonatomic, strong) NSString *itemType;
-
-/**
- *  金额
- */
-@property (nonatomic, assign) CGFloat amount;
-
-@end
+//@interface CMLRecordMonthDetailCellModel : NSObject
+//
+///**
+// *  科目名称
+// */
+//@property (nonatomic, strong) NSString *itemName;
+//
+///**
+// *  收支属性（1为支出，2为收入）
+// */
+//@property (nonatomic, strong) NSString *itemType;
+//
+///**
+// *  金额
+// */
+//@property (nonatomic, assign) CGFloat amount;
+//
+//@end
 
 
 @interface CMLRecordMonthDetailSectionModel : NSObject

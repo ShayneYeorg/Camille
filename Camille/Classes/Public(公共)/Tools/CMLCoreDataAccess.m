@@ -671,7 +671,7 @@
         } else {
             cmlResponse.code = RESPONSE_CODE_SUCCEED;
             cmlResponse.desc = @"读取成功";
-            cmlResponse.responseDic = [CMLAccounting sortAccountingsByDay:accountings];
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLAccounting sortAccountingsByDay:accountings], @"monthModel", nil];
         }
         
         

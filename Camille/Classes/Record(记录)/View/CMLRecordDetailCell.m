@@ -26,15 +26,15 @@
 
 #pragma mark - Setter
 
-- (void)setModel:(CMLRecordMonthDetailCellModel *)model {
+- (void)setModel:(CMLAccounting *)model {
     _model = model;
     
     NSString *symbol = @"-";
-    if ([_model.itemType isEqualToString:@"2"]) {
+    if ([_model.type isEqualToString:@"2"]) {
         symbol = @"+";
     }
-    [self refreshItemName:_model.itemName];
-    [self refreshAmount:[NSString stringWithFormat:@"%@%.2f", symbol, _model.amount]];
+    [self refreshItemName:_model.itemID];
+    [self refreshAmount:[NSString stringWithFormat:@"%@%.2f", symbol, [_model.amount floatValue]]];
 }
 
 #pragma mark -Private

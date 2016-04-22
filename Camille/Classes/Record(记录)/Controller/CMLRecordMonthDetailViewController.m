@@ -133,7 +133,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                weakSelf.monthModel = [CMLRecordMonthDetailModel mj_objectWithKeyValues:response.responseDic];
+                weakSelf.monthModel = response.responseDic[@"monthModel"];
                 [weakSelf refreshView];
                 
             } else {

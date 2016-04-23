@@ -166,7 +166,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     CMLRecordDetailSectionHeaderView *sectionHeaderView = [CMLRecordDetailSectionHeaderView loadFromNib];
     CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
-    [sectionHeaderView refreshDate:[NSString stringWithFormat:@"%@号", currentSection.day]];
+    [sectionHeaderView refreshDate:[NSString stringWithFormat:@"%@号", currentSection.setionDay]];
     [sectionHeaderView refreshCost:[NSString stringWithFormat:@"%.2f", currentSection.cost]];
     [sectionHeaderView refreshIncome:[NSString stringWithFormat:@"%.2f", currentSection.income]];
     return sectionHeaderView;

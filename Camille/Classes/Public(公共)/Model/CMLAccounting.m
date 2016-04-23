@@ -29,7 +29,7 @@
         CMLAccounting *account = (CMLAccounting *)accountings[n];
         if (![sectionDetailDic.allKeys containsObject:account.happenDay]) {
             CMLRecordMonthDetailSectionModel *recordMonthDetailSectionModel = [CMLRecordMonthDetailSectionModel new];
-            recordMonthDetailSectionModel.day = account.happenDay;
+            recordMonthDetailSectionModel.setionDay = account.happenDay;
             if ([account.type isEqualToString:Item_Type_Cost]) {
                 recordMonthDetailSectionModel.cost += [account.amount floatValue];
                 recordMonthDetailSectionModel.income = 0;
@@ -59,6 +59,10 @@
         recordMonthDetailModel.totalIncome += recordMonthDetailSectionModel.income;
         recordMonthDetailModel.totalCost += recordMonthDetailSectionModel.cost;
     }
+    
+    [recordMonthDetailModel.detailSections sortUsingComparator:^NSComparisonResult(CMLRecordMonthDetailSectionModel *m1, CMLRecordMonthDetailSectionModel *m2) {
+        return [@([m1.setionDay integerValue])compare:@([m2.setionDay integerValue])];
+    }];
     
     return recordMonthDetailModel;
 }

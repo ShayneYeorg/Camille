@@ -34,7 +34,7 @@
 /**
  *  当日日期
  */
-@property (nonatomic, strong) NSString *day;
+@property (nonatomic, strong) NSString *setionDay;
 
 /**
  *  总收入

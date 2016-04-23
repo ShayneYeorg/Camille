@@ -216,15 +216,23 @@
     
     //是否已有金额
     CMLAccountingAmountCell *accountCell = [self getAmountCell];
+    //判断金额cell
     if (!accountCell) {
         CMLLog(@"获取金额cell出错");
         return;
         
-    } else if (![accountCell isAmountAvailable]) {
-        //输入金额格式有误
-        [SVProgressHUD showErrorWithStatus:@"请输入金额"];
-        return;
+    } else {
+        //金额cell有可能还没有end edting
+        if ([accountCell.amountTextField isFirstResponder]) {
+            [accountCell.amountTextField endEditing:YES];
+        }
+        if (![accountCell isAmountAvailable]) {
+            //输入金额格式有误
+            [SVProgressHUD showErrorWithStatus:@"请输入金额"];
+            return;
+        }
     }
+    
     
     //已保存过账务
     if (self.lastSelectedItem) {

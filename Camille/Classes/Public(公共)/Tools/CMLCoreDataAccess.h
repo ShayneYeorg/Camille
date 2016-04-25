@@ -57,4 +57,10 @@
  */
 + (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack;
 
+/**
+ *  根据CMLAccount对象获取
+ */
++ (NSString *)getAccountingName:(CMLAccounting *)accounting;
+
+
 @end

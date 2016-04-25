@@ -746,4 +746,40 @@
     });
 }
 
++ (NSString *)getAccountingName:(CMLAccounting *)accounting {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //Response
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"itemType == '%@'", accounting.type];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    //取数据
+    if (items == nil) {
+        CMLLog(@"查询所有数据时发生错误:%@,%@",error,[error userInfo]);
+        cmlResponse.code = RESPONSE_CODE_FAILD;
+        cmlResponse.desc = @"读取失败";
+        cmlResponse.responseDic = nil;
+        
+    } else {
+        CMLLog(@"已取出所有记账科目...");
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = @"读取成功";
+        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItem sortItems:items], @"items", nil];
+    }
+    
+    //回调
+    callBack(cmlResponse);
+}
+
 @end

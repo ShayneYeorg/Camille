@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *itemID; //科目ID
 @property (nullable, nonatomic, retain) NSString *type; //科目类型
 
+//不存进数据库
+@property (nullable, nonatomic, retain) NSString *name; //科目名称
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,5 +19,6 @@
 @dynamic happenDay;
 @dynamic itemID;
 @dynamic type;
+@dynamic name;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "CMLAccountingViewController.h"
 #import "CMLAccountingRegistrationViewController.h"
+#import "CMLCoreDataAccess.h"
 
 @implementation CMLAccountingViewController
 
@@ -16,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kAppViewColor;
+    
+    [CMLCoreDataAccess getANewItemID];
 }
 
 - (void)didReceiveMemoryWarning {

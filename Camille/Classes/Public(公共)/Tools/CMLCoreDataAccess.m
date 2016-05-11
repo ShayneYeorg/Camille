@@ -234,7 +234,7 @@
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
     
     //分配新ID
-    NSString *newID = [CMLCoreDataAccess getANewItemIDInCategory:categoryID type:type];
+    NSString *newID = [CMLCoreDataAccess getANewItemID];
     if (newID == nil) {
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"分配新的二级科目ID出错";
@@ -280,10 +280,45 @@
     callBack(cmlResponse);
 }
 
-+ (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type{
+//使用当前日期为二级记账科目分配一个科目ID
++ (NSString *)createANewItemID {
+    NSDate *now = [NSDate date];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
+    [fmt setDateFormat:@"YYYYMMddHHmmss"];
+    fmt.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"en_US"];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    [fmt setTimeZone:timeZone];
+    NSString *newID = [fmt stringFromDate:now];
+    return newID;
+}
+
++ (BOOL)verifyItemID:(NSString *)newID {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    NSString *str = [NSString stringWithFormat:@"itemID == '%@'", newID];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (!error && !items.count) {
+        return YES;
+        
+    } else {
+        return NO;
+    }
+}
+
++ (NSString *)getANewItemID {
     //为二级记账科目分配一个ID（使用当前时间的年月日时分秒组成）
+    NSString *newID;
     
     //检查新分配ID在当前一级科目下是否有重名，有则重新分配，直到没有重名为止
+    do {
+        newID = [CMLCoreDataAccess createANewItemID];
+    } while (![CMLCoreDataAccess verifyItemID:newID]);
     
     //检查到没有重名，则检查当前一级科目下是否还没有二级科目
     
@@ -291,58 +326,58 @@
     
     //返回新分配的二级科目ID
     
+    return nil;
     
     
-    
-    //先获取最大ID，再加1
-    CMLLog(@"新分配一个二级记账科目的ID所在的线程是：%@", [NSThread currentThread]);
-    
-    //request和entity
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
-    [request setEntity:entity];
-    
-    //设置排序规则
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"itemID" ascending:NO  selector:@selector(localizedStandardCompare:)];//像Mac Finder中的排序方式一般
-    NSArray *sortDescriptors = @[sort];
-    [request setSortDescriptors:sortDescriptors];
-    
-    //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
-    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
-    [request setPredicate:pre];
-    
-    //设置数据条数
-    [request setFetchLimit:1];
-    [request setFetchOffset:0];
-    
-    //查询
-    NSError *error = nil;
-    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (items == nil) {
-        //查询过程中出错
-        CMLLog(@"查询二级科目最大ID时发生错误:%@,%@",error,[error userInfo]);
-        return nil;
-        
-    } else if (items.count) {
-        //正常
-        CMLItem *ic = items[0];
-        NSInteger newID = ic.itemID.integerValue + 1;
-        CMLLog(@"新分配的二级科目ID是：%zd", newID);
-        return [NSString stringWithFormat:@"%zd", newID];
-        
-    } else {
-        //还没有任何二级科目
-        //建立二级科目链表头
-        if ([CMLCoreDataAccess createItemListHeadInCategory:categoryID type:type]) {
-            //成功则返回当前分类第一个二级科目ID
-            return @"1";
-            
-        } else {
-            //建立链表头失败
-            return nil;
-        }
-    }
+//    //先获取最大ID，再加1
+//    CMLLog(@"新分配一个二级记账科目的ID所在的线程是：%@", [NSThread currentThread]);
+//    
+//    //request和entity
+//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+//    [request setEntity:entity];
+//    
+//    //设置排序规则
+//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"itemID" ascending:NO  selector:@selector(localizedStandardCompare:)];//像Mac Finder中的排序方式一般
+//    NSArray *sortDescriptors = @[sort];
+//    [request setSortDescriptors:sortDescriptors];
+//    
+//    //设置查询条件
+//    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
+//    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+//    [request setPredicate:pre];
+//    
+//    //设置数据条数
+//    [request setFetchLimit:1];
+//    [request setFetchOffset:0];
+//    
+//    //查询
+//    NSError *error = nil;
+//    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+//    if (items == nil) {
+//        //查询过程中出错
+//        CMLLog(@"查询二级科目最大ID时发生错误:%@,%@",error,[error userInfo]);
+//        return nil;
+//        
+//    } else if (items.count) {
+//        //正常
+//        CMLItem *ic = items[0];
+//        NSInteger newID = ic.itemID.integerValue + 1;
+//        CMLLog(@"新分配的二级科目ID是：%zd", newID);
+//        return [NSString stringWithFormat:@"%zd", newID];
+//        
+//    } else {
+//        //还没有任何二级科目
+//        //建立二级科目链表头
+//        if ([CMLCoreDataAccess createItemListHeadInCategory:categoryID type:type]) {
+//            //成功则返回当前分类第一个二级科目ID
+//            return @"1";
+//            
+//        } else {
+//            //建立链表头失败
+//            return nil;
+//        }
+//    }
 }
 
 //建立二级科目链表头

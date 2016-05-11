@@ -281,10 +281,15 @@
 }
 
 + (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type{
+    //为二级记账科目分配一个ID（使用当前时间的年月日时分秒组成）
     
+    //检查新分配ID在当前一级科目下是否有重名，有则重新分配，直到没有重名为止
     
+    //检查到没有重名，则检查当前一级科目下是否还没有二级科目
     
+    //没有二级科目则新建链表头
     
+    //返回新分配的二级科目ID
     
     
     

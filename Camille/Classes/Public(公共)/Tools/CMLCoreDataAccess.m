@@ -281,6 +281,14 @@
 }
 
 + (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type{
+    
+    
+    
+    
+    
+    
+    
+    
     //先获取最大ID，再加1
     CMLLog(@"新分配一个二级记账科目的ID所在的线程是：%@", [NSThread currentThread]);
     
@@ -779,7 +787,8 @@
     }
     
     //回调
-    callBack(cmlResponse);
+//    callBack(cmlResponse);
+    return nil;
 }
 
 @end

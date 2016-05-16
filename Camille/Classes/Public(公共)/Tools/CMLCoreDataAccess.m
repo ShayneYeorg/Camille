@@ -127,6 +127,45 @@
     });
 }
 
+
++ (void)fetchAllItems:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //异步取数据
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CMLLog(@"开始取出所有二级记账科目...");
+        //Response
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        
+        //查询
+        NSError *error = nil;
+        NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        //取数据
+        if (items == nil) {
+            CMLLog(@"查询所有数据时发生错误:%@,%@",error,[error userInfo]);
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"读取失败";
+            cmlResponse.responseDic = nil;
+            
+        } else {
+            CMLLog(@"已取出所有二级记账科目...");
+            cmlResponse.code = RESPONSE_CODE_SUCCEED;
+            cmlResponse.desc = @"读取成功";
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItem buildItemsContrastDic:items], @"items", nil];
+        }
+        
+        //回调
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CMLLog(@"返回所有二级记账科目...");
+            callBack(cmlResponse);
+        });
+    });
+}
+
 #pragma mark - 新增完整记账科目相关方法
 
 //新增完整记账科目

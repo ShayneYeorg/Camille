@@ -14,5 +14,6 @@
 @property (nonatomic, strong) CMLAccounting *model;
 
 + (instancetype)loadFromNib;
+- (void)refreshItemName:(NSString *)itemName;
 
 @end

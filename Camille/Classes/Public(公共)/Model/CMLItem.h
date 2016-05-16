@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CMLItem : NSManagedObject
 
 + (NSMutableDictionary *)sortItems:(NSMutableArray *)items;
++ (NSDictionary *)buildItemsContrastDic:(NSMutableArray *)items;
 
 @end
 

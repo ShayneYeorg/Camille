@@ -29,9 +29,17 @@
 /**
  *  取出所有二级记账科目(分组并排序)
  *
+ *  @param type                 类型
  *  @param callBack             回调
  */
 + (void)fetchAllItems:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  取出所有二级记账科目(消费结算全要)
+ *
+ *  @param callBack             回调
+ */
++ (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增记账科目
@@ -62,6 +70,6 @@
  */
 + (NSString *)getAccountingName:(CMLAccounting *)accounting;
 
-+ (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type;
+
 
 @end

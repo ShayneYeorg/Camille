@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSDate *fetchDate; //查询条件
 @property (nonatomic, strong) CMLRecordDetailDatePickerView *recordDetailDatePickerView;
 @property (nonatomic, strong) CMLRecordMonthDetailModel *monthModel; //数据模型
+@property (nonatomic, strong) NSDictionary *itemsContrastDic; //存放所有itemID和item的对应关系
+@property (nonatomic, assign) BOOL isItemsContrastDicReady; //所有itemID和item的对应关系已取出
 
 @end
 
@@ -37,6 +39,7 @@
     [self configBarBtn];
     [self configTableView];
     
+    [self fetchAllItems];
     [self fetchData];
 }
 
@@ -50,6 +53,7 @@
     self.title = @"收支明细（月份）";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.isItemsContrastDicReady = NO;
     self.fetchDate = [NSDate date];
     [self.tableHeaderView refreshPickDate:self.fetchDate];
 }
@@ -82,12 +86,14 @@
 }
 
 - (void)refreshView {
-    NSString *totalCost = [NSString stringWithFormat:@"%.2f", self.monthModel.totalCost];
-    NSString *totalIncome = [NSString stringWithFormat:@"%.2f", self.monthModel.totalIncome];
-    [self.tableHeaderView refreshTotalCost:totalCost];
-    [self.tableHeaderView refreshTotalIncome:totalIncome];
-    
-    [self.tableView reloadData];
+    if (self.isItemsContrastDicReady) {
+        NSString *totalCost = [NSString stringWithFormat:@"%.2f", self.monthModel.totalCost];
+        NSString *totalIncome = [NSString stringWithFormat:@"%.2f", self.monthModel.totalIncome];
+        [self.tableHeaderView refreshTotalCost:totalCost];
+        [self.tableHeaderView refreshTotalIncome:totalIncome];
+        
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Private
@@ -125,7 +131,34 @@
     return _recordDetailDatePickerView;
 }
 
+- (NSDictionary *)itemsContrastDic {
+    if (!_itemsContrastDic) {
+        _itemsContrastDic = [NSDictionary dictionary];
+    }
+    return _itemsContrastDic;
+}
+
 #pragma mark - Core Data
+
+- (void)fetchAllItems {
+    __weak typeof(self) weakSelf = self;
+    [CMLCoreDataAccess fetchAllItems:^(CMLResponse *response) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        if (response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                weakSelf.itemsContrastDic = response.responseDic[@"items"];
+                weakSelf.isItemsContrastDicReady = YES;
+                [weakSelf refreshView];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"查询二级记账科目名称出错！"];
+        }
+    }];
+}
 
 - (void)fetchData {
     __weak typeof(self) weakSelf = self;
@@ -202,6 +235,11 @@
     
     CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
     cell.model = currentSection.detailCells[indexPath.row];
+    if ([self.itemsContrastDic.allKeys containsObject:cell.model.itemID]) {
+        [cell refreshItemName:self.itemsContrastDic[cell.model.itemID]];
+    } else {
+        [cell refreshItemName:@"获取科目出错"];
+    }
     
     return cell;
 }

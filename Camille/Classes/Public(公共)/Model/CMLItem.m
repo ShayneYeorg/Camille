@@ -55,6 +55,15 @@
     
 }
 
++ (NSDictionary *)buildItemsContrastDic:(NSMutableArray *)items {
+    NSMutableDictionary *returnDic = [NSMutableDictionary dictionary];
+    for (int i = 0; i < items.count; i++) {
+        CMLItem *item = items[i];
+        [returnDic setValue:item.itemName forKey:item.itemID];
+    }
+    return (NSDictionary *)returnDic;
+}
+
 #pragma mark - Private
 
 + (NSMutableArray *)sortItemsInACategory:(NSMutableArray *)items {

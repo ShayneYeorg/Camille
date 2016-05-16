@@ -33,7 +33,6 @@
     if ([_model.type isEqualToString:@"2"]) {
         symbol = @"+";
     }
-    [self refreshItemName:_model.itemID];
     [self refreshAmount:[NSString stringWithFormat:@"%@%.2f", symbol, [_model.amount floatValue]]];
 }
 

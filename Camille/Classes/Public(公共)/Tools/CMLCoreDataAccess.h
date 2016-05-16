@@ -62,6 +62,6 @@
  */
 + (NSString *)getAccountingName:(CMLAccounting *)accounting;
 
-+ (NSString *)getANewItemID;
++ (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type;
 
 @end

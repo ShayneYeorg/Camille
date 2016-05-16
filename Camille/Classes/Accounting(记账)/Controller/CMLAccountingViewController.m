@@ -18,7 +18,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = kAppViewColor;
     
-    [CMLCoreDataAccess getANewItemID];
+    [CMLCoreDataAccess getANewItemIDInCategory:@"4" type:@"0"];
 }
 
 - (void)didReceiveMemoryWarning {

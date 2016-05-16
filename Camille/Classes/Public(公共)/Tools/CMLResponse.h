@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #define RESPONSE_CODE_SUCCEED         @"000"//查询成功
+#define RESPONSE_CODE_ERROR           @"001"//查询出错
 #define RESPONSE_CODE_FAILD           @"111"//查询失败
+#define RESPONSE_CODE_NO_RECORD       @"011"//查询无记录
 
 @interface CMLResponse : NSObject
 

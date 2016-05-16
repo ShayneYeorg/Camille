@@ -234,7 +234,7 @@
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
     
     //分配新ID
-    NSString *newID = [CMLCoreDataAccess getANewItemID];
+    NSString *newID = [CMLCoreDataAccess getANewItemIDInCategory:categoryID type:type];
     if (newID == nil) {
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"分配新的二级科目ID出错";
@@ -311,7 +311,32 @@
     }
 }
 
-+ (NSString *)getANewItemID {
++ (NSString *)isItemExistInCategory:(NSString *)categoryID type:(NSString *)type {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    if (items == nil) {
+        //查询过程中出错
+        CMLLog(@"查询类别%@是否存在item时发生错误:%@,%@",categoryID, error,[error userInfo]);
+        return RESPONSE_CODE_ERROR;
+        
+    } else if (items.count) {
+        //已有item
+        return RESPONSE_CODE_SUCCEED;
+        
+    } else {
+        //未有item
+        return RESPONSE_CODE_NO_RECORD;
+    }
+}
+
++ (NSString *)getANewItemIDInCategory:(NSString *)categoryID type:(NSString *)type {
     //为二级记账科目分配一个ID（使用当前时间的年月日时分秒组成）
     NSString *newID;
     
@@ -321,63 +346,22 @@
     } while (![CMLCoreDataAccess verifyItemID:newID]);
     
     //检查到没有重名，则检查当前一级科目下是否还没有二级科目
+    NSString *isItemExist = [CMLCoreDataAccess isItemExistInCategory:categoryID type:type];
+    //查询失败
+    if ([isItemExist isEqualToString:RESPONSE_CODE_ERROR]) {
+        return nil;
+    }
     
-    //没有二级科目则新建链表头
+    if ([isItemExist isEqualToString:RESPONSE_CODE_NO_RECORD]) {
+        //没有二级科目则新建链表头
+        if (![CMLCoreDataAccess createItemListHeadInCategory:categoryID type:type]) {
+            //建立失败
+            return nil;
+        }
+    }
     
     //返回新分配的二级科目ID
-    
-    return nil;
-    
-    
-//    //先获取最大ID，再加1
-//    CMLLog(@"新分配一个二级记账科目的ID所在的线程是：%@", [NSThread currentThread]);
-//    
-//    //request和entity
-//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
-//    [request setEntity:entity];
-//    
-//    //设置排序规则
-//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"itemID" ascending:NO  selector:@selector(localizedStandardCompare:)];//像Mac Finder中的排序方式一般
-//    NSArray *sortDescriptors = @[sort];
-//    [request setSortDescriptors:sortDescriptors];
-//    
-//    //设置查询条件
-//    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
-//    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
-//    [request setPredicate:pre];
-//    
-//    //设置数据条数
-//    [request setFetchLimit:1];
-//    [request setFetchOffset:0];
-//    
-//    //查询
-//    NSError *error = nil;
-//    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-//    if (items == nil) {
-//        //查询过程中出错
-//        CMLLog(@"查询二级科目最大ID时发生错误:%@,%@",error,[error userInfo]);
-//        return nil;
-//        
-//    } else if (items.count) {
-//        //正常
-//        CMLItem *ic = items[0];
-//        NSInteger newID = ic.itemID.integerValue + 1;
-//        CMLLog(@"新分配的二级科目ID是：%zd", newID);
-//        return [NSString stringWithFormat:@"%zd", newID];
-//        
-//    } else {
-//        //还没有任何二级科目
-//        //建立二级科目链表头
-//        if ([CMLCoreDataAccess createItemListHeadInCategory:categoryID type:type]) {
-//            //成功则返回当前分类第一个二级科目ID
-//            return @"1";
-//            
-//        } else {
-//            //建立链表头失败
-//            return nil;
-//        }
-//    }
+    return newID;
 }
 
 //建立二级科目链表头

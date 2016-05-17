@@ -10,6 +10,7 @@
 #import "CMLRecordCell.h"
 #import "CMLRecordCellModel.h"
 #import "CMLRecordMonthDetailViewController.h"
+#import "CMLRecordItemDetailViewController.h"
 
 @interface CMLRecordViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -42,7 +43,11 @@
                               @[
                                   @{
                                       @"icon": @"record_icon_selected",
-                                      @"title": @"收支明细（月份）"
+                                      @"title": @"每日收支明细"
+                                      },
+                                  @{
+                                      @"icon": @"record_icon_selected",
+                                      @"title": @"科目收支明细"
                                       }
                                   ],
                               @[
@@ -69,9 +74,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *currentCellDic = self.tableViewDataArr[indexPath.section][indexPath.row];
     NSString *currentTitle = currentCellDic[@"title"];
-    if ([currentTitle isEqualToString:@"收支明细（月份）"]) {
+    if ([currentTitle isEqualToString:@"每日收支明细"]) {
         CMLRecordMonthDetailViewController *recordMonthDetailViewController = [CMLRecordMonthDetailViewController new];
         [self.navigationController pushViewController:recordMonthDetailViewController animated:YES];
+        
+    } else if ([currentTitle isEqualToString:@"科目收支明细"]) {
+        CMLRecordItemDetailViewController *recordItemDetailViewController = [CMLRecordItemDetailViewController new];
+        [self.navigationController pushViewController:recordItemDetailViewController animated:YES];
         
     } else if ([currentTitle isEqualToString:@"科目设置"]) {
         

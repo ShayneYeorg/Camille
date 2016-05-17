@@ -28,6 +28,7 @@
 		3441D0B51C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441D0B31C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib */; };
 		3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3441D0B71C7C919200D6FE0C /* CMLAccountingItemRightCell.m */; };
 		3441D0BA1C7C919200D6FE0C /* CMLAccountingItemRightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441D0B81C7C919200D6FE0C /* CMLAccountingItemRightCell.xib */; };
+		34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */; };
 		344A00431C75E0D8008281BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00411C75E0D8008281BB /* Main.storyboard */; };
 		344A00481C75E0D8008281BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344A00471C75E0D8008281BB /* Assets.xcassets */; };
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
@@ -109,6 +110,8 @@
 		3441D0B61C7C919200D6FE0C /* CMLAccountingItemRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingItemRightCell.h; sourceTree = "<group>"; };
 		3441D0B71C7C919200D6FE0C /* CMLAccountingItemRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingItemRightCell.m; sourceTree = "<group>"; };
 		3441D0B81C7C919200D6FE0C /* CMLAccountingItemRightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingItemRightCell.xib; sourceTree = "<group>"; };
+		34431E261CEB48E0001E4A54 /* CMLRecordItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordItemDetailViewController.h; sourceTree = "<group>"; };
+		34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordItemDetailViewController.m; sourceTree = "<group>"; };
 		344A00351C75E0D8008281BB /* Camille.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camille.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344A00421C75E0D8008281BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		344A00471C75E0D8008281BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -380,6 +383,8 @@
 				34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */,
 				34340AE31C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.h */,
 				34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */,
+				34431E261CEB48E0001E4A54 /* CMLRecordItemDetailViewController.h */,
+				34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
+				34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
 				345E0BA81C9F90F600A52488 /* NSString+MJExtension.m in Sources */,
 				34FA389F1C96980C00A049E8 /* CMLAccountingDatePickerView.m in Sources */,

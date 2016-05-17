@@ -50,7 +50,7 @@
 #pragma mark - UI Configuration
 
 - (void)configDetails {
-    self.title = @"收支明细（月份）";
+    self.title = @"日收支明细";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.isItemsContrastDicReady = NO;

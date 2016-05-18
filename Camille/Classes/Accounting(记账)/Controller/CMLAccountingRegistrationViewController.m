@@ -14,7 +14,7 @@
 #import "SVProgressHUD.h"
 
 #define kDatePickerBGViewTag        201603141611
-#define kAmountCellEditingBGViewTag 201603151414
+//#define kAmountCellEditingBGViewTag 201603151414
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingAmountCellDelegate, CMLAccountingDatePickerViewDelegate>
 
@@ -208,6 +208,8 @@
 #pragma mark -- NavigationBar上的按钮
 
 - (void)save {
+    [self endAllEditingStatus];
+    
     //是否已选择账务
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     if (!self.selectedItem) {
@@ -268,6 +270,12 @@
 
 - (void)cancle {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)endAllEditingStatus {
+    if (self.isItemCellExpand) [self reloadItemCellWithExpandAction];
+    [self.view endEditing:YES];
+    if ([self.datePickerView isShow]) [self.datePickerView dismiss];
 }
 
 #pragma mark - Getter

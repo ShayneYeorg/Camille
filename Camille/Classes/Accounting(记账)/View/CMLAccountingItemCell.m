@@ -72,7 +72,7 @@
     if (item) {
         self.topViewText.text = item.itemName;
     } else {
-        self.topViewText.text = @"科目";
+        self.topViewText.text = @"选择科目";
     }
 }
 

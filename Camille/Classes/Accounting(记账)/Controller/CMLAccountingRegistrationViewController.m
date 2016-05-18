@@ -42,6 +42,7 @@
     [self configTitle];
     [self configBarBtns];
     [self configTableView];
+    
     //一进来就请求数据
     [self fetchItemsData];
     [self addKeyboardNotifications];
@@ -149,15 +150,15 @@
     }
     
     //添加amountCellEditingBGView
-    UIView *amountCellEditingBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 64)];
-    amountCellEditingBGView.backgroundColor = [UIColor clearColor];
-    amountCellEditingBGView.tag = kAmountCellEditingBGViewTag;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(amountCellEditingBGViewTap)];
-    [amountCellEditingBGView addGestureRecognizer:tap];
-    
-    UIWindow *window = [CMLTool getWindow];
-    [window addSubview:amountCellEditingBGView];
+//    UIView *amountCellEditingBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 64)];
+//    amountCellEditingBGView.backgroundColor = [UIColor clearColor];
+//    amountCellEditingBGView.tag = kAmountCellEditingBGViewTag;
+//    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(amountCellEditingBGViewTap)];
+//    [amountCellEditingBGView addGestureRecognizer:tap];
+//    
+//    UIWindow *window = [CMLTool getWindow];
+//    [window addSubview:amountCellEditingBGView];
 }
 
 - (void)amountCellEditingBGViewTap {
@@ -165,8 +166,8 @@
 }
 
 - (void)removeAmountCellEditingBGView {
-    UIWindow *window = [CMLTool getWindow];
-    [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
+//    UIWindow *window = [CMLTool getWindow];
+//    [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
 }
 
 //获取金额cell

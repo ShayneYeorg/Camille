@@ -18,14 +18,14 @@
 
 + (instancetype)loadFromNib {
     CMLAccountingAmountCell *cell = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingAmountCell" owner:self options:nil][0];
-    cell.amountTextField.text = @"金额";
+    cell.amountTextField.text = @"输入金额";
     cell.amountTextField.delegate = cell;
     return cell;
 }
 
 - (BOOL)isAmountAvailable {
     NSString *searchText = self.amountTextField.text;
-    if (![searchText isEqualToString:@"金额"]) {
+    if (![searchText isEqualToString:@"输入金额"]) {
         CMLLog(@"金额格式正确");
         return YES;
         
@@ -51,7 +51,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (!self.amountTextField.text.length) {
-        self.amountTextField.text = @"金额";
+        self.amountTextField.text = @"输入金额";
         
     } else {
         //是否有小数点？

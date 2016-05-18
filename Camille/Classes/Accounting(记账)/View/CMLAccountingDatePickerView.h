@@ -21,6 +21,7 @@
 @interface CMLAccountingDatePickerView : UIView
 
 @property (nonatomic, weak) id <CMLAccountingDatePickerViewDelegate> delegate;
+@property (nonatomic, assign) BOOL isShow; //是否处在弹出展示状态
 
 + (instancetype)loadFromNib;
 - (void)show;

@@ -21,17 +21,20 @@
 + (instancetype)loadFromNib {
     CMLAccountingDatePickerView *view = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingDatePickerView" owner:self options:nil][0];
     [view setFrame:CGRectMake(0, kScreen_Height, kScreen_Width, kPickerViewHeight)];
+    view.isShow = NO;
     
     return view;
 }
 
 - (void)show {
+    self.isShow = YES;
     [UIView animateWithDuration:0.3 animations:^{
         self.y = kScreen_Height - kPickerViewHeight;
     }];
 }
 
 - (void)dismiss {
+    self.isShow = NO;
     [UIView animateWithDuration:0.3 animations:^{
         self.y = kScreen_Height;
     }];
@@ -41,6 +44,7 @@
 
 - (IBAction)confirmBtnClick:(id)sender {
     if ([self.delegate respondsToSelector:@selector(accountingDatePickerView:didClickConfirmBtn:)]) {
+        [self dismiss];
         [self.delegate accountingDatePickerView:nil didClickConfirmBtn:self.datePicker.date];
     }
 }

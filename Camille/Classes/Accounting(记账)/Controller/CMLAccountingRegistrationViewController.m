@@ -188,7 +188,7 @@
 }
 
 - (void)addDatePickerBGView {
-    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height - kPickerViewHeight)];
+    UIView *datePickerBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height - 64 - kPickerViewHeight)];
     datePickerBGView.backgroundColor = [UIColor clearColor];
     datePickerBGView.tag = kDatePickerBGViewTag;
     
@@ -275,7 +275,7 @@
 - (void)endAllEditingStatus {
     if (self.isItemCellExpand) [self reloadItemCellWithExpandAction];
     [self.view endEditing:YES];
-    if ([self.datePickerView isShow]) [self.datePickerView dismiss];
+    if ([self.datePickerView isShow]) [self datePickerBGViewTap];
 }
 
 #pragma mark - Getter

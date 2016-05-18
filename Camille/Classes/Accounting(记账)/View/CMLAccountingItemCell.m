@@ -59,9 +59,15 @@
         
         self.categoryModels = categoryModels;
         [self.leftTableView reloadData];
-        self.itemsDic = itemsDic;
         
+        self.itemsDic = itemsDic;
         self.itemsModel = self.itemsDic[@"1"];
+        if (self.categoryModels.count > 1) {
+            CMLAccountingItemLeftCell *secondLeftCell = [self.leftTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [secondLeftCell setCellSelected:YES];
+            CMLItemCategory *secondCategory = self.categoryModels[1];
+            self.itemsModel = self.itemsDic[secondCategory.categoryID];
+        }
         [self.rightTableView reloadData];
         
     } else {

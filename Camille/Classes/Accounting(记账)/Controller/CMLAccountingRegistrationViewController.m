@@ -109,13 +109,10 @@
     //主要是为了金额cell
     //UIKeyboardWillShowNotification键盘出现
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAmountCellEditingBGView) name:UIKeyboardWillShowNotification object:nil];
-    //UIKeyboardWillHideNotification 键盘隐藏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAmountCellEditingBGView) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)removeKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - Private
@@ -148,26 +145,10 @@
     if(self.isItemCellExpand) {
         [self reloadItemCellWithExpandAction];
     }
-    
-    //添加amountCellEditingBGView
-//    UIView *amountCellEditingBGView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 64)];
-//    amountCellEditingBGView.backgroundColor = [UIColor clearColor];
-//    amountCellEditingBGView.tag = kAmountCellEditingBGViewTag;
-//    
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(amountCellEditingBGViewTap)];
-//    [amountCellEditingBGView addGestureRecognizer:tap];
-//    
-//    UIWindow *window = [CMLTool getWindow];
-//    [window addSubview:amountCellEditingBGView];
 }
 
 - (void)amountCellEditingBGViewTap {
     [self.view endEditing:YES];
-}
-
-- (void)removeAmountCellEditingBGView {
-//    UIWindow *window = [CMLTool getWindow];
-//    [[window viewWithTag:kAmountCellEditingBGViewTag] removeFromSuperview];
 }
 
 //获取金额cell
@@ -208,6 +189,7 @@
 #pragma mark -- NavigationBar上的按钮
 
 - (void)save {
+    //结束所有的编辑状态
     [self endAllEditingStatus];
     
     //是否已选择账务
@@ -235,7 +217,6 @@
             return;
         }
     }
-    
     
     //已保存过账务
     if (self.lastSelectedItem) {

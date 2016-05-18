@@ -104,6 +104,11 @@
     self.rightTableView.tableFooterView = [UIView new];
 }
 
+//如果已有科目，做好选择item的状态
+- (void)getReadyToSelectItem {
+    
+}
+
 #pragma mark - Getter
 
 - (NSArray *)itemsModel {

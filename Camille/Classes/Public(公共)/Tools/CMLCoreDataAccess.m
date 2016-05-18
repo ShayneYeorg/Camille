@@ -745,71 +745,45 @@
             cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLAccounting sortAccountingsByDay:accountings], @"monthModel", nil];
         }
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callBack(cmlResponse);
+        });
+    });
+}
+
++ (void)fetchAccountingDetailsOnItems:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLAccounting" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //异步取数据
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //Response
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
         
-//        cmlResponse.code = RESPONSE_CODE_SUCCEED;
-//        cmlResponse.desc = @"读取成功";
-//        cmlResponse.responseDic = @{
-//                                    @"totalCost": @"360",
-//                                    @"totalIncome": @"2000",
-//                                    @"detailSections": @[
-//                                            @{
-//                                                @"day": @"1",
-//                                                @"income": @"0",
-//                                                @"cost": @"200",
-//                                                @"detailCells": @[
-//                                                        @{
-//                                                            @"itemName":@"鞋子",
-//                                                            @"itemType":@"1",
-//                                                            @"amount":@"150"
-//                                                            },
-//                                                        @{
-//                                                            @"itemName":@"买菜",
-//                                                            @"itemType":@"1",
-//                                                            @"amount":@"50"
-//                                                            }
-//                                                        ]
-//                                                },
-//                                            @{
-//                                                @"day": @"2",
-//                                                @"income": @"2000",
-//                                                @"cost": @"10",
-//                                                @"detailCells": @[
-//                                                        @{
-//                                                            @"itemName":@"工资",
-//                                                            @"itemType":@"2",
-//                                                            @"amount":@"2000"
-//                                                            },
-//                                                        @{
-//                                                            @"itemName":@"买菜",
-//                                                            @"itemType":@"1",
-//                                                            @"amount":@"10"
-//                                                            }
-//                                                        ]
-//                                                },
-//                                            @{
-//                                                @"day": @"3",
-//                                                @"income": @"50",
-//                                                @"cost": @"150",
-//                                                @"detailCells": @[
-//                                                        @{
-//                                                            @"itemName":@"公交卡",
-//                                                            @"itemType":@"1",
-//                                                            @"amount":@"100"
-//                                                            },
-//                                                        @{
-//                                                            @"itemName":@"报销",
-//                                                            @"itemType":@"2",
-//                                                            @"amount":@"50"
-//                                                            },
-//                                                        @{
-//                                                            @"itemName":@"买菜",
-//                                                            @"itemType":@"1",
-//                                                            @"amount":@"50"
-//                                                            }
-//                                                        ]
-//                                                }
-//                                            ]
-//                                    };
+        //设置查询条件
+        NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
+        NSDate *endDate = [CMLTool getLastDateInMonth:date];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime < %@", beginDate, endDate];
+        [request setPredicate:pre];
+        
+        //查询
+        NSError *error = nil;
+        NSArray *accountings = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        //返回数据
+        if (accountings == nil) {
+            CMLLog(@"查询账务时发生错误:%@,%@",error,[error userInfo]);
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"读取失败";
+            cmlResponse.responseDic = nil;
+            
+        } else {
+            cmlResponse.code = RESPONSE_CODE_SUCCEED;
+            cmlResponse.desc = @"读取成功";
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLAccounting sortAccountingsByItem:accountings], @"itemModel", nil];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             callBack(cmlResponse);

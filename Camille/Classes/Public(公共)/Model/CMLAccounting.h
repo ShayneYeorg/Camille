@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "CMLRecordMonthDetailModel.h"
+#import "CMLRecordItemDetailModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CMLAccounting : NSManagedObject
 
 + (CMLRecordMonthDetailModel *)sortAccountingsByDay:(NSArray *)accountings;
++ (CMLRecordItemDetailModel *)sortAccountingsByItem:(NSArray *)accountings;
 
 @end
 

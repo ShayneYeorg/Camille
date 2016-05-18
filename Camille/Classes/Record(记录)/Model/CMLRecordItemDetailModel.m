@@ -8,6 +8,24 @@
 
 #import "CMLRecordItemDetailModel.h"
 
+@implementation CMLRecordItemDetailSectionModel
+
+- (NSMutableArray *)detailCells {
+    if (!_detailCells) {
+        _detailCells = [NSMutableArray array];
+    }
+    return _detailCells;
+}
+
+@end
+
 @implementation CMLRecordItemDetailModel
+
+- (NSMutableArray *)detailSections {
+    if (!_detailSections) {
+        _detailSections = [NSMutableArray array];
+    }
+    return _detailSections;
+}
 
 @end

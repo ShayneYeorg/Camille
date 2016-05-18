@@ -7,7 +7,9 @@
 //
 
 #import "CMLRecordItemDetailViewController.h"
+#import "CMLRecordItemDetailModel.h"
 #import "CMLRecordDetailHeaderView.h"
+#import "CMLRecordItemDetailSectionHeaderView.h"
 #import "CMLRecordDetailCell.h"
 #import "CMLRecordDetailDatePickerView.h"
 #import "SVProgressHUD.h"
@@ -20,6 +22,7 @@
 @property (nonatomic, strong) CMLRecordDetailHeaderView *tableHeaderView;
 @property (nonatomic, strong) NSDate *fetchDate; //查询条件
 @property (nonatomic, strong) CMLRecordDetailDatePickerView *recordDetailDatePickerView;
+@property (nonatomic, strong) CMLRecordItemDetailModel *itemModel; //数据模型
 @property (nonatomic, strong) NSDictionary *itemsContrastDic; //存放所有itemID和item的对应关系
 @property (nonatomic, assign) BOOL isItemsContrastDicReady; //所有itemID和item的对应关系已取出
 
@@ -162,14 +165,14 @@
 
 #pragma mark - UITableViewDelegate
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    CMLRecordDetailSectionHeaderView *sectionHeaderView = [CMLRecordDetailSectionHeaderView loadFromNib];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CMLRecordItemDetailSectionHeaderView *sectionHeaderView = [CMLRecordItemDetailSectionHeaderView loadFromNib];
 //    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
 //    [sectionHeaderView refreshDate:[NSString stringWithFormat:@"%@号", currentSection.setionDay]];
 //    [sectionHeaderView refreshCost:[NSString stringWithFormat:@"%.2f", currentSection.cost]];
 //    [sectionHeaderView refreshIncome:[NSString stringWithFormat:@"%.2f", currentSection.income]];
-//    return sectionHeaderView;
-//}
+    return sectionHeaderView;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 50;

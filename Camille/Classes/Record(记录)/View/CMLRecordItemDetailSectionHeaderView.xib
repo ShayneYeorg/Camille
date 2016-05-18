@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="dQP-SN-fFI" customClass="CMLRecordItemDetailSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="科目名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sex-Uu-NNd">
+                    <rect key="frame" x="30" y="18" width="158" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="lJi-XB-2sA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.1764705882352941" green="0.098039215686274508" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4H-Et-k9s">
+                    <rect key="frame" x="235" y="18" width="75" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="BxO-Ak-cTs"/>
+                        <constraint firstAttribute="width" constant="75" id="Rmf-zl-BaM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收入:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0e-07-coo">
+                    <rect key="frame" x="190" y="18" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="42" id="P9C-OR-Ona"/>
+                        <constraint firstAttribute="height" constant="21" id="nPf-dM-dD9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.99215686274509807" green="0.85490196078431369" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="X0e-07-coo" firstAttribute="leading" secondItem="Sex-Uu-NNd" secondAttribute="trailing" constant="2" id="FI8-6l-yRV"/>
+                <constraint firstAttribute="trailing" secondItem="r4H-Et-k9s" secondAttribute="trailing" constant="10" id="MaM-JI-ebN"/>
+                <constraint firstItem="r4H-Et-k9s" firstAttribute="leading" secondItem="X0e-07-coo" secondAttribute="trailing" constant="3" id="Ppd-AK-alm"/>
+                <constraint firstItem="Sex-Uu-NNd" firstAttribute="leading" secondItem="dQP-SN-fFI" secondAttribute="leading" constant="30" id="WqE-jS-wy0"/>
+                <constraint firstItem="r4H-Et-k9s" firstAttribute="centerY" secondItem="dQP-SN-fFI" secondAttribute="centerY" id="XG2-as-O3W"/>
+                <constraint firstItem="Sex-Uu-NNd" firstAttribute="centerY" secondItem="dQP-SN-fFI" secondAttribute="centerY" id="m12-wo-EpC"/>
+                <constraint firstItem="X0e-07-coo" firstAttribute="centerY" secondItem="dQP-SN-fFI" secondAttribute="centerY" id="wpH-7m-qRc"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="amountLabel" destination="r4H-Et-k9s" id="87E-lf-ZKP"/>
+                <outlet property="itemNameLabel" destination="Sex-Uu-NNd" id="Ql5-lf-wb5"/>
+                <outlet property="typeLabel" destination="X0e-07-coo" id="jAD-Ha-a9l"/>
+            </connections>
+            <point key="canvasLocation" x="432" y="278"/>
+        </view>
+    </objects>
+</document>

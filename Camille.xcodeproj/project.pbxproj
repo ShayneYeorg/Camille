@@ -29,6 +29,9 @@
 		3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3441D0B71C7C919200D6FE0C /* CMLAccountingItemRightCell.m */; };
 		3441D0BA1C7C919200D6FE0C /* CMLAccountingItemRightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441D0B81C7C919200D6FE0C /* CMLAccountingItemRightCell.xib */; };
 		34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */; };
+		34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E2A1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m */; };
+		34431E2D1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34431E2C1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib */; };
+		34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E2F1CEC511D001E4A54 /* CMLRecordItemDetailModel.m */; };
 		344A00431C75E0D8008281BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00411C75E0D8008281BB /* Main.storyboard */; };
 		344A00481C75E0D8008281BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344A00471C75E0D8008281BB /* Assets.xcassets */; };
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
@@ -112,6 +115,11 @@
 		3441D0B81C7C919200D6FE0C /* CMLAccountingItemRightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLAccountingItemRightCell.xib; sourceTree = "<group>"; };
 		34431E261CEB48E0001E4A54 /* CMLRecordItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordItemDetailViewController.h; sourceTree = "<group>"; };
 		34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordItemDetailViewController.m; sourceTree = "<group>"; };
+		34431E291CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordItemDetailSectionHeaderView.h; sourceTree = "<group>"; };
+		34431E2A1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordItemDetailSectionHeaderView.m; sourceTree = "<group>"; };
+		34431E2C1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLRecordItemDetailSectionHeaderView.xib; sourceTree = "<group>"; };
+		34431E2E1CEC511D001E4A54 /* CMLRecordItemDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordItemDetailModel.h; sourceTree = "<group>"; };
+		34431E2F1CEC511D001E4A54 /* CMLRecordItemDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordItemDetailModel.m; sourceTree = "<group>"; };
 		344A00351C75E0D8008281BB /* Camille.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camille.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344A00421C75E0D8008281BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		344A00471C75E0D8008281BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -396,6 +404,8 @@
 				345E0B671C9EE4C300A52488 /* CMLRecordCellModel.m */,
 				34EA4B081CAEA63F0075B09E /* CMLRecordMonthDetailModel.h */,
 				34EA4B091CAEA63F0075B09E /* CMLRecordMonthDetailModel.m */,
+				34431E2E1CEC511D001E4A54 /* CMLRecordItemDetailModel.h */,
+				34431E2F1CEC511D001E4A54 /* CMLRecordItemDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -412,6 +422,9 @@
 				34340AEB1C9FDD1D00FECAD7 /* CMLRecordDetailSectionHeaderView.h */,
 				34340AEC1C9FDD1D00FECAD7 /* CMLRecordDetailSectionHeaderView.m */,
 				34340AEE1C9FDD2600FECAD7 /* CMLRecordDetailSectionHeaderView.xib */,
+				34431E291CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.h */,
+				34431E2A1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m */,
+				34431E2C1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib */,
 				34340AF01C9FEE3500FECAD7 /* CMLRecordDetailCell.h */,
 				34340AF11C9FEE3500FECAD7 /* CMLRecordDetailCell.m */,
 				34340AF21C9FEE3500FECAD7 /* CMLRecordDetailCell.xib */,
@@ -595,6 +608,7 @@
 				34340AF41C9FEE3500FECAD7 /* CMLRecordDetailCell.xib in Resources */,
 				34340AF91C9FF57E00FECAD7 /* CMLRecordDetailDatePickerView.xib in Resources */,
 				3441D0B01C7C098A00D6FE0C /* CMLAccountingItemCell.xib in Resources */,
+				34431E2D1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib in Resources */,
 				345E0B651C9EE45100A52488 /* CMLRecordCell.xib in Resources */,
 				3441D0B51C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib in Resources */,
 				34340AEF1C9FDD2600FECAD7 /* CMLRecordDetailSectionHeaderView.xib in Resources */,
@@ -616,6 +630,7 @@
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
 				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
+				34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */,
 				3499BE171C84144D004EE4BD /* CMLItemCategory+CoreDataProperties.m in Sources */,
@@ -639,6 +654,7 @@
 				3405793E1C8EB4E700C79F9D /* SVRadialGradientLayer.m in Sources */,
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
+				34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */,
 				3405793B1C8EB4E700C79F9D /* SVIndefiniteAnimatedView.m in Sources */,
 				3405793D1C8EB4E700C79F9D /* SVProgressHUD.m in Sources */,
 				34FA38961C944A0300A049E8 /* CMLAccountingAmountCell.m in Sources */,

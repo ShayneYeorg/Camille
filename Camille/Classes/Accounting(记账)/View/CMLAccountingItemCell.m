@@ -58,16 +58,17 @@
         self.topViewBottomSepLine.hidden = YES;
         
         self.categoryModels = categoryModels;
-        [self.leftTableView reloadData];
-        
         self.itemsDic = itemsDic;
         self.itemsModel = self.itemsDic[@"1"];
         if (self.categoryModels.count > 1) {
-            CMLAccountingItemLeftCell *secondLeftCell = [self.leftTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-            [secondLeftCell setCellSelected:YES];
+            self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+            self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+            
             CMLItemCategory *secondCategory = self.categoryModels[1];
             self.itemsModel = self.itemsDic[secondCategory.categoryID];
         }
+        
+        [self.leftTableView reloadData];
         [self.rightTableView reloadData];
         
     } else {
@@ -108,11 +109,6 @@
     self.rightTableView.delegate = self;
     self.rightTableView.dataSource = self;
     self.rightTableView.tableFooterView = [UIView new];
-}
-
-//如果已有科目，做好选择item的状态
-- (void)getReadyToSelectItem {
-    
 }
 
 #pragma mark - Getter

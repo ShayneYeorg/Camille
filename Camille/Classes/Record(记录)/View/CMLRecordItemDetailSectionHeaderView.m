@@ -30,12 +30,15 @@
     self.itemNameLabel.text = itemName;
 }
 
-- (void)refreshType:(NSString *)type {
-    self.typeLabel.text = type;
-}
-
-- (void)refreshAmount:(NSString *)amount {
-    self.amountLabel.text = amount;
+- (void)refreshAmount:(NSString *)amount type:(NSString *)type {
+    if ([type isEqualToString:Item_Type_Cost]) {
+        self.typeLabel.text = @"支出:";
+        self.amountLabel.text = [NSString stringWithFormat:@"-%@", amount];
+        
+    } else {
+        self.typeLabel.text = @"收入:";
+        self.amountLabel.text = [NSString stringWithFormat:@"+%@", amount];
+    }
 }
 
 @end

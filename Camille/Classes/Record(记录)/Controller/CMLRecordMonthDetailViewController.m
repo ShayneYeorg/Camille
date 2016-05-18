@@ -87,6 +87,7 @@
 
 - (void)refreshView {
     if (self.isItemsContrastDicReady) {
+        [self.tableHeaderView refreshPickDate:self.fetchDate];
         NSString *totalCost = [NSString stringWithFormat:@"%.2f", self.monthModel.totalCost];
         NSString *totalIncome = [NSString stringWithFormat:@"%.2f", self.monthModel.totalIncome];
         [self.tableHeaderView refreshTotalCost:totalCost];
@@ -190,8 +191,8 @@
 
 - (void)recordDetailDatePickerView:(CMLRecordDetailDatePickerView *)recordDetailDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
     self.fetchDate = selectedDate;
-    [self.tableHeaderView refreshPickDate:self.fetchDate];
     [self fetchData];
+    [self datePickerBGViewTap];
 }
 
 #pragma mark - UITableViewDelegate

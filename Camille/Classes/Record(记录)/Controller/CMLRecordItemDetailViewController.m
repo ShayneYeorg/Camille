@@ -40,6 +40,7 @@
     [self configTableView];
     
     [self fetchAllItems];
+    [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +83,18 @@
     self.tableHeaderView = [CMLRecordDetailHeaderView loadFromNib];
     self.tableHeaderView.delegate = self;
     self.tableView.tableHeaderView = self.tableHeaderView;
+}
+
+- (void)refreshView {
+    if (self.isItemsContrastDicReady) {
+        [self.tableHeaderView refreshPickDate:self.fetchDate];
+        NSString *totalCost = [NSString stringWithFormat:@"%.2f", self.itemModel.totalCost];
+        NSString *totalIncome = [NSString stringWithFormat:@"%.2f", self.itemModel.totalIncome];
+        [self.tableHeaderView refreshTotalCost:totalCost];
+        [self.tableHeaderView refreshTotalIncome:totalIncome];
+        
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Private
@@ -136,7 +149,7 @@
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 weakSelf.itemsContrastDic = response.responseDic[@"items"];
                 weakSelf.isItemsContrastDicReady = YES;
-//                [weakSelf refreshView];
+                [weakSelf refreshView];
                 
             } else {
                 [SVProgressHUD showErrorWithStatus:response.desc];
@@ -144,6 +157,25 @@
             
         } else {
             [SVProgressHUD showErrorWithStatus:@"查询二级记账科目名称出错！"];
+        }
+    }];
+}
+
+- (void)fetchData {
+    __weak typeof(self) weakSelf = self;
+    [CMLCoreDataAccess fetchAccountingDetailsOnItems:self.fetchDate callBack:^(CMLResponse *response) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        if (response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                weakSelf.itemModel = response.responseDic[@"itemModel"];
+                [weakSelf refreshView];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"查询账务出错！"];
         }
     }];
 }
@@ -159,18 +191,22 @@
 
 - (void)recordDetailDatePickerView:(CMLRecordDetailDatePickerView *)recordDetailDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
     self.fetchDate = selectedDate;
-    [self.tableHeaderView refreshPickDate:self.fetchDate];
-//    [self fetchData];
+    [self fetchData];
+    [self datePickerBGViewTap];
 }
 
 #pragma mark - UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     CMLRecordItemDetailSectionHeaderView *sectionHeaderView = [CMLRecordItemDetailSectionHeaderView loadFromNib];
-//    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
-//    [sectionHeaderView refreshDate:[NSString stringWithFormat:@"%@号", currentSection.setionDay]];
-//    [sectionHeaderView refreshCost:[NSString stringWithFormat:@"%.2f", currentSection.cost]];
-//    [sectionHeaderView refreshIncome:[NSString stringWithFormat:@"%.2f", currentSection.income]];
+    CMLRecordItemDetailSectionModel *currentSection = self.itemModel.detailSections[section];
+    
+    if ([self.itemsContrastDic.allKeys containsObject:currentSection.setionItemID]) {
+        [sectionHeaderView refreshItemName:self.itemsContrastDic[currentSection.setionItemID]];
+    } else {
+        [sectionHeaderView refreshItemName:@"获取科目出错"];
+    }
+    [sectionHeaderView refreshAmount:[NSString stringWithFormat:@"%.2f", currentSection.amount] type:currentSection.type];
     return sectionHeaderView;
 }
 
@@ -189,14 +225,12 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return self.monthModel.detailSections.count;
-    return 5;
+    return self.itemModel.detailSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[section];
-//    return currentSection.detailCells.count;
-    return 5;
+    CMLRecordItemDetailSectionModel *currentSection = self.itemModel.detailSections[section];
+    return currentSection.detailCells.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -204,13 +238,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = kAppViewColor;
     
-//    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
-//    cell.model = currentSection.detailCells[indexPath.row];
-//    if ([self.itemsContrastDic.allKeys containsObject:cell.model.itemID]) {
-//        [cell refreshItemName:self.itemsContrastDic[cell.model.itemID]];
-//    } else {
-//        [cell refreshItemName:@"获取科目出错"];
-//    }
+    CMLRecordItemDetailSectionModel *currentSection = self.itemModel.detailSections[indexPath.section];
+    cell.model = currentSection.detailCells[indexPath.row];
+    [cell refreshItemName:[NSString stringWithFormat:@"%@号", cell.model.happenDay]];
     
     return cell;
 }

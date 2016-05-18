@@ -12,7 +12,6 @@
 
 + (instancetype)loadFromNib;
 - (void)refreshItemName:(NSString *)itemName;
-- (void)refreshType:(NSString *)type;
-- (void)refreshAmount:(NSString *)amount;
+- (void)refreshAmount:(NSString *)amount type:(NSString *)type;
 
 @end

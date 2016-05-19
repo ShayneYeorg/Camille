@@ -99,6 +99,9 @@
     
     for (NSString *key in sectionDetailDic.allKeys) {
         CMLRecordItemDetailSectionModel *recordItemDetailSectionModel = sectionDetailDic[key];
+        [recordItemDetailSectionModel.detailCells sortUsingComparator:^NSComparisonResult(CMLAccounting *a1, CMLAccounting *a2) {
+            return [@([a1.happenDay integerValue])compare:@([a2.happenDay integerValue])];
+        }];
         [recordItemDetailModel.detailSections addObject:recordItemDetailSectionModel];
         if ([recordItemDetailSectionModel.type isEqualToString:Item_Type_Cost]) {
             recordItemDetailModel.totalCost += recordItemDetailSectionModel.amount;

@@ -21,7 +21,7 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新增' AND itemType == '%@'", type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新增分类' AND itemType == '%@'", type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -34,7 +34,7 @@
         
     } else if (!items.count) {
         //itemName不存在则新建并返回对应itemID
-        [CMLCoreDataAccess addItem:@"新增" inCategory:@"未分类" type:type callBack:^(CMLResponse *response) {}];
+        [CMLCoreDataAccess addItem:@"新增分类" inCategory:@"设置" type:type callBack:^(CMLResponse *response) {}];
     }
 }
 

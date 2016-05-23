@@ -157,9 +157,9 @@
             __weak typeof(self) weakSelf = self;
             CMLNewItemAddingView2 *newItemAddingView = [CMLNewItemAddingView2 loadFromNib];
             newItemAddingView.tag = kNewItemAddingViewTag;
-            [newItemAddingView showWithClickHandler:^(NSString *itemName, NSString *categoryName) {
+            [newItemAddingView showWithClickHandler:^(NSString *categoryName) {
                 if (weakSelf.delegate) {
-                    [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];
+//                    [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];
                 }
             }];
             

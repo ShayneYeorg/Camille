@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^NewItemAddingClickHandler2)(NSString *itemName, NSString *categoryName);
+typedef void (^NewItemAddingClickHandler2)(NSString *categoryName);
 
 @interface CMLNewItemAddingView2 : UIView
 

@@ -17,7 +17,6 @@
 
 @property (nonatomic, strong) NewItemAddingClickHandler2 clickHandler;
 
-@property (weak, nonatomic) IBOutlet UITextField *itemInputField; //请输入科目名称
 @property (weak, nonatomic) IBOutlet UITextField *categoryInputField; //所属分类
 
 @end
@@ -48,15 +47,14 @@
     [backgroundView addGestureRecognizer:tap];
     
     [window addSubview:self];
-    self.itemInputField.delegate = self;
     self.categoryInputField.delegate = self;
 }
 
 #pragma mark - Private
 
 - (void)backgroundViewTap {
-    if ([self.itemInputField isFirstResponder] || [self.categoryInputField isFirstResponder]) {
-        [self endEditing:YES];
+    if ([self.categoryInputField isFirstResponder]) {
+        [self.categoryInputField endEditing:YES];
         
     } else {
         UIWindow *window = [CMLTool getWindow];
@@ -66,16 +64,12 @@
 }
 
 - (IBAction)confirmBtnClick:(id)sender {
-    if (!self.itemInputField.text.length) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD showErrorWithStatus:@"请输入科目名称"];
-        
-    } else if (!self.categoryInputField.text.length) {
+    if (!self.categoryInputField.text.length) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         [SVProgressHUD showErrorWithStatus:@"请输入所属分类"];
         
     } else if (self.clickHandler) {
-        self.clickHandler(self.itemInputField.text, self.categoryInputField.text);
+        self.clickHandler(self.categoryInputField.text);
         [self backgroundViewTap];
     }
 }
@@ -83,12 +77,7 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.itemInputField) {
-        [self.categoryInputField becomeFirstResponder];
-        
-    } else {
-        [self.categoryInputField resignFirstResponder];
-    }
+    [self.categoryInputField resignFirstResponder];
     return YES;
 }
 

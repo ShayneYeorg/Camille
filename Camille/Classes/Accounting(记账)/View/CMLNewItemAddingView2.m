@@ -54,7 +54,7 @@
 
 - (void)backgroundViewTap {
     if ([self.categoryInputField isFirstResponder]) {
-        [self.categoryInputField endEditing:YES];
+        [self.categoryInputField resignFirstResponder];
         
     } else {
         UIWindow *window = [CMLTool getWindow];
@@ -66,10 +66,11 @@
 - (IBAction)confirmBtnClick:(id)sender {
     if (!self.categoryInputField.text.length) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD showErrorWithStatus:@"请输入所属分类"];
+        [SVProgressHUD showErrorWithStatus:@"请输入新增分类名称"];
         
     } else if (self.clickHandler) {
         self.clickHandler(self.categoryInputField.text);
+        if ([self.categoryInputField isFirstResponder]) [self.categoryInputField resignFirstResponder];
         [self backgroundViewTap];
     }
 }
@@ -77,7 +78,7 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.categoryInputField resignFirstResponder];
+    [self confirmBtnClick:nil];
     return YES;
 }
 

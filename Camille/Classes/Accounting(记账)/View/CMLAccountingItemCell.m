@@ -159,7 +159,7 @@
             newItemAddingView.tag = kNewItemAddingViewTag;
             [newItemAddingView showWithClickHandler:^(NSString *categoryName) {
                 if (weakSelf.delegate) {
-//                    [weakSelf.delegate accountingItemCell:weakSelf didAddItem:itemName inCaterogy:categoryName];
+                    [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:categoryName];
                 }
             }];
             

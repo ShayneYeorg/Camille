@@ -12,7 +12,8 @@
 #import "CMLAccountingItemCell.h"
 #import "CMLAccountingItemLeftCell.h"
 #import "CMLAccountingItemRightCell.h"
-#import "CMLNewItemAddingView.h"
+//#import "CMLNewItemAddingView.h"
+#import "CMLNewItemAddingView2.h"
 
 @interface CMLAccountingItemCell () <UITableViewDelegate, UITableViewDataSource>
 
@@ -154,7 +155,7 @@
         if (self.leftTableViewSelectedIndexPath.row == 0 && indexPath.row == 0) {
             //这是新增按钮
             __weak typeof(self) weakSelf = self;
-            CMLNewItemAddingView *newItemAddingView = [CMLNewItemAddingView loadFromNib];
+            CMLNewItemAddingView2 *newItemAddingView = [CMLNewItemAddingView2 loadFromNib];
             newItemAddingView.tag = kNewItemAddingViewTag;
             [newItemAddingView showWithClickHandler:^(NSString *itemName, NSString *categoryName) {
                 if (weakSelf.delegate) {

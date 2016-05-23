@@ -32,6 +32,8 @@
 		34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E2A1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m */; };
 		34431E2D1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34431E2C1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib */; };
 		34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E2F1CEC511D001E4A54 /* CMLRecordItemDetailModel.m */; };
+		34431E371CF333AB001E4A54 /* CMLNewItemAddingView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 34431E351CF333AB001E4A54 /* CMLNewItemAddingView2.m */; };
+		34431E381CF333AB001E4A54 /* CMLNewItemAddingView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34431E361CF333AB001E4A54 /* CMLNewItemAddingView2.xib */; };
 		344A00431C75E0D8008281BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00411C75E0D8008281BB /* Main.storyboard */; };
 		344A00481C75E0D8008281BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344A00471C75E0D8008281BB /* Assets.xcassets */; };
 		344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344A00491C75E0D8008281BB /* LaunchScreen.storyboard */; };
@@ -120,6 +122,9 @@
 		34431E2C1CEC4D88001E4A54 /* CMLRecordItemDetailSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLRecordItemDetailSectionHeaderView.xib; sourceTree = "<group>"; };
 		34431E2E1CEC511D001E4A54 /* CMLRecordItemDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordItemDetailModel.h; sourceTree = "<group>"; };
 		34431E2F1CEC511D001E4A54 /* CMLRecordItemDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordItemDetailModel.m; sourceTree = "<group>"; };
+		34431E341CF333AB001E4A54 /* CMLNewItemAddingView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLNewItemAddingView2.h; sourceTree = "<group>"; };
+		34431E351CF333AB001E4A54 /* CMLNewItemAddingView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLNewItemAddingView2.m; sourceTree = "<group>"; };
+		34431E361CF333AB001E4A54 /* CMLNewItemAddingView2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLNewItemAddingView2.xib; sourceTree = "<group>"; };
 		344A00351C75E0D8008281BB /* Camille.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camille.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344A00421C75E0D8008281BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		344A00471C75E0D8008281BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -371,6 +376,9 @@
 				3405792D1C8EA70C00C79F9D /* CMLNewItemAddingView.h */,
 				3405792E1C8EA70C00C79F9D /* CMLNewItemAddingView.m */,
 				340579301C8EA72000C79F9D /* CMLNewItemAddingView.xib */,
+				34431E341CF333AB001E4A54 /* CMLNewItemAddingView2.h */,
+				34431E351CF333AB001E4A54 /* CMLNewItemAddingView2.m */,
+				34431E361CF333AB001E4A54 /* CMLNewItemAddingView2.xib */,
 				34FA38931C944A0300A049E8 /* CMLAccountingAmountCell.h */,
 				34FA38941C944A0300A049E8 /* CMLAccountingAmountCell.m */,
 				34FA38951C944A0300A049E8 /* CMLAccountingAmountCell.xib */,
@@ -613,6 +621,7 @@
 				3441D0B51C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib in Resources */,
 				34340AEF1C9FDD2600FECAD7 /* CMLRecordDetailSectionHeaderView.xib in Resources */,
 				34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */,
+				34431E381CF333AB001E4A54 /* CMLNewItemAddingView2.xib in Resources */,
 				34340AEA1C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib in Resources */,
 				34FA389C1C95358500A049E8 /* CMLAccountingDateCell.xib in Resources */,
 				34FA38A11C96981B00A049E8 /* CMLAccountingDatePickerView.xib in Resources */,
@@ -648,6 +657,7 @@
 				3441D0B91C7C919200D6FE0C /* CMLAccountingItemRightCell.m in Sources */,
 				3499BE181C84144D004EE4BD /* CMLItemCategory.m in Sources */,
 				345E0BA41C9F90F600A52488 /* NSObject+MJClass.m in Sources */,
+				34431E371CF333AB001E4A54 /* CMLNewItemAddingView2.m in Sources */,
 				34340AF81C9FF57E00FECAD7 /* CMLRecordDetailDatePickerView.m in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
 				345E0BA01C9F90F600A52488 /* MJFoundation.m in Sources */,

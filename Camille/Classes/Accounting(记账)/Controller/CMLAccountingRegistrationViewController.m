@@ -336,6 +336,9 @@
         if (response) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                NSString *categoryID = response.responseDic[@"itemCategoryID"];
+                [weakSelf addItem:@"新增" inCategory:categoryID];
+                
                 [SVProgressHUD showSuccessWithStatus:response.desc];
                 [weakSelf fetchItemsData];
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
@@ -344,6 +347,13 @@
                 [SVProgressHUD showErrorWithStatus:response.desc];
             }
         }
+    }];
+}
+
+- (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryID {
+    __weak typeof(self) weakSelf = self;
+    [CMLCoreDataAccess saveItem:itemName inCategory:categoryID type:self.type callBack:^(CMLResponse *response) {
+        
     }];
 }
 

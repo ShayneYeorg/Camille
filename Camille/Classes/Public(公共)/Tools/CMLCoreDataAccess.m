@@ -21,7 +21,7 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新增分类' AND itemType == '%@'", type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '1' AND itemName == '新建分类' AND itemType == '%@'", type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -34,7 +34,7 @@
         
     } else if (!items.count) {
         //itemName不存在则新建并返回对应itemID
-        [CMLCoreDataAccess addItem:@"新增分类" inCategory:@"设置" type:type callBack:^(CMLResponse *response) {}];
+        [CMLCoreDataAccess addItem:@"新建分类" inCategory:@"设置" type:type callBack:^(CMLResponse *response) {}];
     }
 }
 
@@ -509,7 +509,7 @@
                 CMLLog(@"保存新建立的一级科目失败...");
                 CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
                 cmlResponse.code = RESPONSE_CODE_FAILD;
-                cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立出错", itemCategoryName];
+                cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立出错", itemCategoryName];
                 cmlResponse.responseDic = nil;
                 
             } else {
@@ -518,14 +518,14 @@
                 if ([CMLCoreDataAccess setLastItemCategoryNextID:newID type:type] && [CMLCoreDataAccess createItemListHeadInCategory:newID type:type]) {
                     CMLLog(@"保存一级科目成功...");
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
-                    cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立成功", itemCategoryName];
+                    cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立成功", itemCategoryName];
                     cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
                     
                 } else {
                     CMLLog(@"保存一级科目失败...");
                     CMLLog(@"错误:%@,%@",error,[error userInfo]);
                     cmlResponse.code = RESPONSE_CODE_FAILD;
-                    cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立失败", itemCategoryName];
+                    cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立失败", itemCategoryName];
                     cmlResponse.responseDic = nil;
                 }
             }

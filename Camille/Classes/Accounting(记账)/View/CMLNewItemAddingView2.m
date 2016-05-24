@@ -66,7 +66,7 @@
 - (IBAction)confirmBtnClick:(id)sender {
     if (!self.categoryInputField.text.length) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD showErrorWithStatus:@"请输入新增分类名称"];
+        [SVProgressHUD showErrorWithStatus:@"请输入名称"];
         
     } else if (self.clickHandler) {
         self.clickHandler(self.categoryInputField.text);

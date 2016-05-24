@@ -15,7 +15,7 @@
 @interface CMLCoreDataAccess : NSObject
 
 /**
- *  检查两类记账科目中，“未分类 —— 新增”这个科目是否存在，不存在则新建
+ *  检查两类记账科目中，“设置 —— 新建分类”这个科目是否存在，不存在则新建
  */
 + (void)checkInitialItem:(NSString *)type;
 
@@ -59,6 +59,16 @@
  *  @param callBack             回调
  */
 + (void)addItemCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  在一级科目下下新增二级科目
+ *
+ *  @param ItemName             二级科目名称
+ *  @param categoryID           一级科目ID
+ *  @param type                 账务类型
+ *  @param callBack             回调
+ */
++ (void)saveItem:(NSString *)itemName inCategory:(NSString *)categoryID type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录

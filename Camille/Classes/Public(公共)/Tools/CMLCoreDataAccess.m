@@ -509,7 +509,7 @@
                 CMLLog(@"保存新建立的一级科目失败...");
                 CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
                 cmlResponse.code = RESPONSE_CODE_FAILD;
-                cmlResponse.desc = @"保存一级科目出错";
+                cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立出错", itemCategoryName];
                 cmlResponse.responseDic = nil;
                 
             } else {
@@ -518,14 +518,14 @@
                 if ([CMLCoreDataAccess setLastItemCategoryNextID:newID type:type] && [CMLCoreDataAccess createItemListHeadInCategory:newID type:type]) {
                     CMLLog(@"保存一级科目成功...");
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
-                    cmlResponse.desc = [NSString stringWithFormat:@"保存一级科目成功:%@ %@",newID, itemCategoryName];
+                    cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立成功", itemCategoryName];
                     cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
                     
                 } else {
                     CMLLog(@"保存一级科目失败...");
                     CMLLog(@"错误:%@,%@",error,[error userInfo]);
                     cmlResponse.code = RESPONSE_CODE_FAILD;
-                    cmlResponse.desc = @"保存一级科目出错";
+                    cmlResponse.desc = [NSString stringWithFormat:@"分类%@建立失败", itemCategoryName];
                     cmlResponse.responseDic = nil;
                 }
             }

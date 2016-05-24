@@ -42,13 +42,23 @@
 + (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
 
 /**
- *  新增记账科目
+ *  新增完整记账科目
  *
  *  @param ItemName             二级科目名称
  *  @param ItemCategoryName     一级科目名称
+ *  @param type                 账务类型
  *  @param callBack             回调
  */
 + (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  新增一级记账科目
+ *
+ *  @param ItemCategoryName     一级科目名称
+ *  @param type                 账务类型
+ *  @param callBack             回调
+ */
++ (void)addItemCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增账务记录

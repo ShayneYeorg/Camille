@@ -313,9 +313,26 @@
     }];
 }
 
-- (void)addItem:(NSString *)itemName inCategory:(NSString *)catogoryName {
+//- (void)addItem:(NSString *)itemName inCategory:(NSString *)catogoryName {
+//    __weak typeof(self) weakSelf = self;
+//    [CMLCoreDataAccess addItem:itemName inCategory:catogoryName type:self.type callBack:^(CMLResponse *response) {
+//        if (response) {
+//            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+//            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//                [SVProgressHUD showSuccessWithStatus:response.desc];
+//                [weakSelf fetchItemsData];
+//                [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
+//                
+//            } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+//                [SVProgressHUD showErrorWithStatus:response.desc];
+//            }
+//        }
+//    }];
+//}
+
+- (void)addCategory:(NSString *)categoryName {
     __weak typeof(self) weakSelf = self;
-    [CMLCoreDataAccess addItem:itemName inCategory:catogoryName type:self.type callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess addItemCategory:categoryName type:self.type callBack:^(CMLResponse *response) {
         if (response) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
@@ -371,7 +388,7 @@
 //}
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddCaterogy:(NSString *)categoryName {
-    
+    [self addCategory:categoryName];
 }
 
 #pragma mark - CMLAccountingAmountCellDelegate

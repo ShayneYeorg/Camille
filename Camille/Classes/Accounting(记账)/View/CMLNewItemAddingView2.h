@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^NewItemAddingClickHandler2)(NSString *categoryName);
+typedef void (^NewItemAddingClickHandler2)(NSString *addingName);
+typedef enum _AddingViewType {
+    Adding_View_Type_Category = 0,
+    Adding_View_Type_Item
+} AddingViewType;
 
 @interface CMLNewItemAddingView2 : UIView
+
+@property (nonatomic, assign) AddingViewType addingViewType;
 
 + (instancetype)loadFromNib;
 - (void)showWithClickHandler:(NewItemAddingClickHandler2)clickHandler;

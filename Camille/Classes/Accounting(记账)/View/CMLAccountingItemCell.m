@@ -151,17 +151,29 @@
         [self.rightTableView reloadData];
         
     } else {
-#warning 此处判断逻辑记得要改
-        if (self.leftTableViewSelectedIndexPath.row == 0 && indexPath.row == 0) {
-            //这是新增按钮
+        if (indexPath.row == 0) {
+            //这些都是新增按钮
             __weak typeof(self) weakSelf = self;
-            CMLNewItemAddingView2 *newItemAddingView = [CMLNewItemAddingView2 loadFromNib];
-            newItemAddingView.tag = kNewItemAddingViewTag;
-            [newItemAddingView showWithClickHandler:^(NSString *categoryName) {
-                if (weakSelf.delegate) {
-                    [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:categoryName];
-                }
-            }];
+            if (self.leftTableViewSelectedIndexPath.row == 0) {
+                CMLNewItemAddingView2 *newItemAddingView = [CMLNewItemAddingView2 loadFromNib];
+                newItemAddingView.tag = kNewItemAddingViewTag;
+                newItemAddingView.addingViewType = Adding_View_Type_Category;
+                [newItemAddingView showWithClickHandler:^(NSString *addingName) {
+                    if (weakSelf.delegate) {
+                        [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
+                    }
+                }];
+                
+            } else {
+                CMLNewItemAddingView2 *newItemAddingView = [CMLNewItemAddingView2 loadFromNib];
+                newItemAddingView.tag = kNewItemAddingViewTag;
+                newItemAddingView.addingViewType = Adding_View_Type_Item;
+                [newItemAddingView showWithClickHandler:^(NSString *addingName) {
+                    if (weakSelf.delegate) {
+                        [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
+                    }
+                }];
+            }
             
         } else {
             //正常科目按钮

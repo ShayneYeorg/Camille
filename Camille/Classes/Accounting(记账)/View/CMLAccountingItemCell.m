@@ -159,7 +159,7 @@
                 newItemAddingView.tag = kNewItemAddingViewTag;
                 newItemAddingView.addingViewType = Adding_View_Type_Category;
                 [newItemAddingView showWithClickHandler:^(NSString *addingName) {
-                    if (weakSelf.delegate) {
+                    if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(accountingItemCell:didAddCaterogy:)]) {
                         [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
                     }
                 }];
@@ -169,8 +169,9 @@
                 newItemAddingView.tag = kNewItemAddingViewTag;
                 newItemAddingView.addingViewType = Adding_View_Type_Item;
                 [newItemAddingView showWithClickHandler:^(NSString *addingName) {
-                    if (weakSelf.delegate) {
-//                        [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
+                    if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(accountingItemCell:didAddItem:inCaterogy:)]) {
+                        CMLItemCategory *category = weakSelf.categoryModels[self.leftTableViewSelectedIndexPath.row];
+                        [weakSelf.delegate accountingItemCell:weakSelf didAddItem:addingName inCaterogy:category.categoryID];
                     }
                 }];
             }

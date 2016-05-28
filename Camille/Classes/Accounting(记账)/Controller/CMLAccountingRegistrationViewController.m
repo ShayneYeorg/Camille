@@ -393,6 +393,10 @@
     [accountingAmountCell.amountTextField becomeFirstResponder];
 }
 
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
+    [self addItem:itemName inCategory:categoryName];
+}
+
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddCaterogy:(NSString *)categoryName {
     [self addCategory:categoryName];
 }

@@ -16,7 +16,7 @@
 @interface CMLNewItemAddingView2 () <UITextFieldDelegate>
 
 @property (nonatomic, strong) NewItemAddingClickHandler2 clickHandler;
-
+@property (weak, nonatomic) IBOutlet UILabel *statement; //说明文字
 @property (weak, nonatomic) IBOutlet UITextField *categoryInputField; //所属分类
 
 @end
@@ -72,6 +72,21 @@
         self.clickHandler(self.categoryInputField.text);
         if ([self.categoryInputField isFirstResponder]) [self.categoryInputField resignFirstResponder];
         [self backgroundViewTap];
+    }
+}
+
+#pragma mark _ Setter
+
+- (void)setAddingViewType:(AddingViewType)addingViewType {
+    _addingViewType = addingViewType;
+    
+    if (_addingViewType == Adding_View_Type_Category) {
+        self.statement.text = @"请输入分类名称";
+        self.categoryInputField.placeholder = @"分类名称";
+        
+    } else {
+        self.statement.text = @"请输入科目名称";
+        self.categoryInputField.placeholder = @"科目名称";
     }
 }
 

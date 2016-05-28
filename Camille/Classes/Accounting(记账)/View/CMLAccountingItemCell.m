@@ -170,7 +170,7 @@
                 newItemAddingView.addingViewType = Adding_View_Type_Item;
                 [newItemAddingView showWithClickHandler:^(NSString *addingName) {
                     if (weakSelf.delegate) {
-                        [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
+//                        [weakSelf.delegate accountingItemCell:weakSelf didAddCaterogy:addingName];
                     }
                 }];
             }

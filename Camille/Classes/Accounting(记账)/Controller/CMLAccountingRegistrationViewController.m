@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) CMLItem *selectedItem; //选中的item
 @property (nonatomic, strong) CMLItem *lastSelectedItem; //上一次选中的item
-@property (nonatomic, assign) NSInteger selectedCategoryIndex; //本次选中的分类
+//@property (nonatomic, assign) NSInteger selectedCategoryIndex; //本次选中的分类
 @property (nonatomic, assign) CGFloat amount; //金额
 @property (nonatomic, strong) NSDate *happenDate; //账务发生时间
 
@@ -61,7 +61,7 @@
     self.view.backgroundColor = kAppViewColor;
     self.isItemCellExpand = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.selectedCategoryIndex = 0;
+//    self.selectedCategoryIndex = 0;
     [self configTitle];
     [self configBarBtns];
 }
@@ -341,7 +341,8 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                [weakSelf fetchItemsData];
+                [weakSelf reloadItemCellWithExpandAction];
+                weakSelf.selectedItem = response.responseDic[@"item"];
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
             } else {
@@ -380,10 +381,10 @@
     [self.view endEditing:YES];
 }
 
-- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectCategoryAtIndexPath:(NSIndexPath *)indexPath {
-    self.selectedCategoryIndex = indexPath.row;
-    CMLLog(@"选中了第%zd个分类", self.selectedCategoryIndex);
-}
+//- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectCategoryAtIndexPath:(NSIndexPath *)indexPath {
+//    self.selectedCategoryIndex = indexPath.row;
+//    CMLLog(@"选中了第%zd个分类", self.selectedCategoryIndex);
+//}
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell shouldSelectItem:(CMLItem *)item {
     self.selectedItem = item;

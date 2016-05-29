@@ -75,9 +75,9 @@
         [self.rightTableView reloadData];
         
         //delegate
-        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
-            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:self.leftTableViewSelectedIndexPath];
-        }
+//        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
+//            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:self.leftTableViewSelectedIndexPath];
+//        }
         
     } else {
         self.bottomView.hidden = YES;
@@ -153,9 +153,9 @@
         [selectedLeftCell setCellSelected:YES];
         
         //delegate
-        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
-            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:indexPath];
-        }
+//        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
+//            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:indexPath];
+//        }
         
         //刷新二级科目表
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];

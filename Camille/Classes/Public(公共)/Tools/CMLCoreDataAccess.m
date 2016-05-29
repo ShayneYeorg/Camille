@@ -303,7 +303,7 @@
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
                     cmlResponse.desc = @"新增科目成功";
                     CMLLog(@"%@", cmlResponse.desc);
-                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemID", nil];
+                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:item, @"item", nil];
                     
                 } else {
                     CMLLog(@"将二级科目链表最后一个科目的nextItemID置为newID时发生错误:%@,%@",error,[error userInfo]);

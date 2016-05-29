@@ -30,7 +30,7 @@
 
 + (instancetype)loadFromNib;
 + (CGFloat)heightForCellByExpand:(BOOL)isExpand;
-- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item;
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item isAfterAddingCategory:(BOOL)isAfterAddingCategory;
 - (void)refreshTopViewText:(NSString *)itemName;
 
 @end

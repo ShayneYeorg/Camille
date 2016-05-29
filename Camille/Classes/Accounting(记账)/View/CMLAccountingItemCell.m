@@ -53,7 +53,7 @@
     }
 }
 
-- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item {
+- (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item isAfterAddingCategory:(BOOL)isAfterAddingCategory {
     if (item) {
         self.topViewText.text = item.itemName;
     } else {
@@ -66,19 +66,32 @@
         self.categoryModels = categoryModels;
         self.itemsDic = itemsDic;
         
-        self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        self.itemsModel = self.itemsDic[@"1"];
-        if (self.categoryModels.count > 1) {
-            self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-            self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        if (isAfterAddingCategory) {
+            self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:self.categoryModels.count-1 inSection:0];
+            self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:self.categoryModels.count-1 inSection:0];
+            CMLItemCategory *lastCategory = self.categoryModels.lastObject;
+            self.itemsModel = self.itemsDic[lastCategory.categoryID];
             
-            CMLItemCategory *secondCategory = self.categoryModels[1];
-            self.itemsModel = self.itemsDic[secondCategory.categoryID];
+        } else {
+            if (self.categoryModels.count > 1) {
+                self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                CMLItemCategory *secondCategory = self.categoryModels[1];
+                self.itemsModel = self.itemsDic[secondCategory.categoryID];
+                
+            } else {
+                self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                self.itemsModel = self.itemsDic[@"1"];
+            }
         }
         
         [self.leftTableView reloadData];
         [self.rightTableView reloadData];
+        
+        if (isAfterAddingCategory) {
+            [self.leftTableView setContentOffset:CGPointMake(CGFLOAT_MAX, CGFLOAT_MAX) animated:YES];
+        }
         
     } else {
         self.bottomView.hidden = YES;

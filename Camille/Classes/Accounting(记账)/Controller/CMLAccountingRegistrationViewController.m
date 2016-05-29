@@ -28,6 +28,8 @@
 @property (nonatomic, assign) CGFloat amount; //金额
 @property (nonatomic, strong) NSDate *happenDate; //账务发生时间
 
+@property (nonatomic, assign) BOOL isAfterAddingCategory; //科目cell缩展时使用
+
 @end
 
 @implementation CMLAccountingRegistrationViewController
@@ -59,6 +61,7 @@
 - (void)configViewDetails {
     self.view.backgroundColor = kAppViewColor;
     self.isItemCellExpand = YES;
+    self.isAfterAddingCategory = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self configTitle];
     [self configBarBtns];
@@ -166,6 +169,7 @@
     
     //如果科目cell展开着，就收起它
     if(self.isItemCellExpand) {
+        self.isAfterAddingCategory = NO;
         [self reloadItemCellWithExpandAction];
     }
 }
@@ -270,6 +274,7 @@
 }
 
 - (void)endAllEditingStatus {
+    self.isAfterAddingCategory = NO;
     if (self.isItemCellExpand) [self reloadItemCellWithExpandAction];
     [self.view endEditing:YES];
     if ([self.datePickerView isShow]) [self datePickerBGViewTap];
@@ -340,6 +345,7 @@
                 [weakSelf addItem:@"新增" inCategory:categoryID selectItemAfterAdd:NO];
                 
                 [SVProgressHUD showSuccessWithStatus:response.desc];
+                weakSelf.isAfterAddingCategory = YES;
                 [weakSelf fetchItemsData];
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
@@ -356,6 +362,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                weakSelf.isAfterAddingCategory = NO;
                 [weakSelf fetchItemsData];
                 if (selectItemAfterAdd) {
                     [weakSelf reloadItemCellWithExpandAction];
@@ -398,6 +405,7 @@
 #pragma mark - CMLAccountingItemCellDelegate
 
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell {
+    self.isAfterAddingCategory = NO;
     [self reloadItemCellWithExpandAction];
     [self.view endEditing:YES];
 }
@@ -450,6 +458,7 @@
     if (indexPath.row == 2) {
         //如果科目cell展开着，就收起它
         if(self.isItemCellExpand) {
+            self.isAfterAddingCategory = NO;
             [self reloadItemCellWithExpandAction];
         }
         
@@ -476,7 +485,7 @@
             accountingItemCell.selectionStyle = UITableViewCellSelectionStyleNone;
             accountingItemCell.backgroundColor = kCellBackgroundColor;
         }
-        [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand selectedItem:self.selectedItem];
+        [accountingItemCell refreshWithCatogoryModels:self.categoryModels itemsDic:self.itemsDic isExpand:self.isItemCellExpand selectedItem:self.selectedItem isAfterAddingCategory:self.isAfterAddingCategory];
         return accountingItemCell;
         
     } else if (indexPath.row == 1) {

@@ -11,6 +11,7 @@
 #import "CMLRecordCellModel.h"
 #import "CMLRecordMonthDetailViewController.h"
 #import "CMLRecordItemDetailViewController.h"
+#import "CMLCategorySettingViewController.h"
 
 @interface CMLRecordViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -83,7 +84,8 @@
         [self.navigationController pushViewController:recordItemDetailViewController animated:YES];
         
     } else if ([currentTitle isEqualToString:@"科目设置"]) {
-        
+        CMLCategorySettingViewController *categorySettingViewController = [CMLCategorySettingViewController new];
+        [self.navigationController pushViewController:categorySettingViewController animated:YES];
     }
 }
 

@@ -13,6 +13,8 @@
 		3405793C1C8EB4E700C79F9D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 340579361C8EB4E700C79F9D /* SVProgressHUD.bundle */; };
 		3405793D1C8EB4E700C79F9D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 340579381C8EB4E700C79F9D /* SVProgressHUD.m */; };
 		3405793E1C8EB4E700C79F9D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405793A1C8EB4E700C79F9D /* SVRadialGradientLayer.m */; };
+		3410219D1CFAF72D00DD7561 /* CMLItemSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3410219C1CFAF72D00DD7561 /* CMLItemSettingViewController.m */; };
+		341021A01CFAFDD800DD7561 /* CMLCategorySettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3410219F1CFAFDD800DD7561 /* CMLCategorySettingViewController.m */; };
 		34340AE51C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */; };
 		34340AE81C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE71C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m */; };
 		34340AEA1C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34340AE91C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib */; };
@@ -92,6 +94,10 @@
 		340579381C8EB4E700C79F9D /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		340579391C8EB4E700C79F9D /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		3405793A1C8EB4E700C79F9D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		3410219B1CFAF72D00DD7561 /* CMLItemSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemSettingViewController.h; sourceTree = "<group>"; };
+		3410219C1CFAF72D00DD7561 /* CMLItemSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemSettingViewController.m; sourceTree = "<group>"; };
+		3410219E1CFAFDD800DD7561 /* CMLCategorySettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLCategorySettingViewController.h; sourceTree = "<group>"; };
+		3410219F1CFAFDD800DD7561 /* CMLCategorySettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLCategorySettingViewController.m; sourceTree = "<group>"; };
 		34340AE31C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordMonthDetailViewController.h; sourceTree = "<group>"; };
 		34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordMonthDetailViewController.m; sourceTree = "<group>"; };
 		34340AE61C9FD02300FECAD7 /* CMLRecordDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordDetailHeaderView.h; sourceTree = "<group>"; };
@@ -401,6 +407,10 @@
 				34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */,
 				34431E261CEB48E0001E4A54 /* CMLRecordItemDetailViewController.h */,
 				34431E271CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m */,
+				3410219E1CFAFDD800DD7561 /* CMLCategorySettingViewController.h */,
+				3410219F1CFAFDD800DD7561 /* CMLCategorySettingViewController.m */,
+				3410219B1CFAF72D00DD7561 /* CMLItemSettingViewController.h */,
+				3410219C1CFAF72D00DD7561 /* CMLItemSettingViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -659,8 +669,10 @@
 				345E0BA41C9F90F600A52488 /* NSObject+MJClass.m in Sources */,
 				34431E371CF333AB001E4A54 /* CMLNewItemAddingView2.m in Sources */,
 				34340AF81C9FF57E00FECAD7 /* CMLRecordDetailDatePickerView.m in Sources */,
+				341021A01CFAFDD800DD7561 /* CMLCategorySettingViewController.m in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
 				345E0BA01C9F90F600A52488 /* MJFoundation.m in Sources */,
+				3410219D1CFAF72D00DD7561 /* CMLItemSettingViewController.m in Sources */,
 				3405793E1C8EB4E700C79F9D /* SVRadialGradientLayer.m in Sources */,
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,

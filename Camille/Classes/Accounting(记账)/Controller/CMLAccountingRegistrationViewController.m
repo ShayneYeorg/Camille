@@ -313,23 +313,6 @@
     }];
 }
 
-//- (void)addItem:(NSString *)itemName inCategory:(NSString *)catogoryName {
-//    __weak typeof(self) weakSelf = self;
-//    [CMLCoreDataAccess addItem:itemName inCategory:catogoryName type:self.type callBack:^(CMLResponse *response) {
-//        if (response) {
-//            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-//                [SVProgressHUD showSuccessWithStatus:response.desc];
-//                [weakSelf fetchItemsData];
-//                [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
-//                
-//            } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
-//                [SVProgressHUD showErrorWithStatus:response.desc];
-//            }
-//        }
-//    }];
-//}
-
 - (void)addCategory:(NSString *)categoryName {
     __weak typeof(self) weakSelf = self;
     [CMLCoreDataAccess addItemCategory:categoryName type:self.type callBack:^(CMLResponse *response) {
@@ -353,17 +336,30 @@
 - (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryID {
     __weak typeof(self) weakSelf = self;
     [CMLCoreDataAccess saveItem:itemName inCategory:categoryID type:self.type callBack:^(CMLResponse *response) {
-        
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        if (response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [weakSelf fetchItemsData];
+                [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:response.desc];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"保存出错，请重新保存！"];
+        }
     }];
 }
 
 - (void)addAccounting {
+    __weak typeof(self) weakSelf = self;
     [CMLCoreDataAccess addAccountingWithItem:self.selectedItem.itemID amount:[NSNumber numberWithFloat:self.amount] type:self.type happneTime:self.happenDate callBack:^(CMLResponse *response) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 [SVProgressHUD showSuccessWithStatus:response.desc];
-                self.lastSelectedItem = self.selectedItem;
+                weakSelf.lastSelectedItem = weakSelf.selectedItem;
                 
             } else {
                 [SVProgressHUD showErrorWithStatus:response.desc];

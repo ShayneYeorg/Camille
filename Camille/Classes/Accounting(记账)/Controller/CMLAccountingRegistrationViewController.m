@@ -25,7 +25,6 @@
 
 @property (nonatomic, strong) CMLItem *selectedItem; //选中的item
 @property (nonatomic, strong) CMLItem *lastSelectedItem; //上一次选中的item
-//@property (nonatomic, assign) NSInteger selectedCategoryIndex; //本次选中的分类
 @property (nonatomic, assign) CGFloat amount; //金额
 @property (nonatomic, strong) NSDate *happenDate; //账务发生时间
 
@@ -61,7 +60,6 @@
     self.view.backgroundColor = kAppViewColor;
     self.isItemCellExpand = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
-//    self.selectedCategoryIndex = 0;
     [self configTitle];
     [self configBarBtns];
 }
@@ -339,7 +337,7 @@
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 NSString *categoryID = response.responseDic[@"itemCategoryID"];
-                [weakSelf addItem:@"新增" inCategory:categoryID];
+                [weakSelf addItem:@"新增" inCategory:categoryID selectItemAfterAdd:NO];
                 
                 [SVProgressHUD showSuccessWithStatus:response.desc];
                 [weakSelf fetchItemsData];
@@ -352,19 +350,19 @@
     }];
 }
 
-- (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryID {
+- (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryID selectItemAfterAdd:(BOOL)selectItemAfterAdd {
     __weak typeof(self) weakSelf = self;
     [CMLCoreDataAccess saveItem:itemName inCategory:categoryID type:self.type callBack:^(CMLResponse *response) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 [weakSelf fetchItemsData];
-                [weakSelf reloadItemCellWithExpandAction];
-                
-                weakSelf.selectedItem = response.responseDic[@"item"];
-                [weakSelf refreshItemCellTopViewText:itemName];
-                [weakSelf setAmountCellBecomeFirstResponder];
-                
+                if (selectItemAfterAdd) {
+                    [weakSelf reloadItemCellWithExpandAction];
+                    weakSelf.selectedItem = response.responseDic[@"item"];
+                    [weakSelf refreshItemCellTopViewText:itemName];
+                    [weakSelf setAmountCellBecomeFirstResponder];
+                }
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
             } else {
@@ -414,7 +412,7 @@
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
-    [self addItem:itemName inCategory:categoryName];
+    [self addItem:itemName inCategory:categoryName selectItemAfterAdd:YES];
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddCaterogy:(NSString *)categoryName {

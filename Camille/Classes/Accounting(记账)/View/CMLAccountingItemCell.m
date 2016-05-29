@@ -54,6 +54,12 @@
 }
 
 - (void)refreshWithCatogoryModels:(NSArray *)categoryModels itemsDic:(NSDictionary *)itemsDic isExpand:(BOOL)isExpand selectedItem:(CMLItem *)item {
+    if (item) {
+        self.topViewText.text = item.itemName;
+    } else {
+        self.topViewText.text = @"选择科目";
+    }
+    
     if (isExpand) {
         self.bottomView.hidden = NO;
         self.topViewBottomSepLine.hidden = YES;
@@ -77,12 +83,6 @@
     } else {
         self.bottomView.hidden = YES;
         self.topViewBottomSepLine.hidden = NO;
-    }
-    
-    if (item) {
-        self.topViewText.text = item.itemName;
-    } else {
-        self.topViewText.text = @"选择科目";
     }
 }
 

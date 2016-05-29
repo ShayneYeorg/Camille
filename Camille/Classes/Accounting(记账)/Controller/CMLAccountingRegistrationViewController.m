@@ -120,6 +120,13 @@
 
 #pragma mark -- 科目cell
 
+//获取科目cell
+- (CMLAccountingItemCell *)getAccountingItemCell {
+    NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    CMLAccountingItemCell *accountingItemCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
+    return accountingItemCell;
+}
+
 //只刷新科目cell的数据，不更改状态（展开或收起）
 - (void)reloadItemCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -134,10 +141,17 @@
 
 #pragma mark -- 金额cell
 
+//获取金额cell
+- (CMLAccountingAmountCell *)getAccountingAmountCell {
+    NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:1 inSection:0];
+    CMLAccountingAmountCell *accountingAmountCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
+    return accountingAmountCell;
+}
+
 //这块蒙板只挡住NavigationBar
 - (void)addAmountCellEditingBGView {
     //不是金额cell就不处理
-    CMLAccountingAmountCell *amountCell = [self getAmountCell];
+    CMLAccountingAmountCell *amountCell = [self getAccountingAmountCell];
     if (![amountCell.amountTextField isFirstResponder]) {
         return;
     }
@@ -150,13 +164,6 @@
 
 - (void)amountCellEditingBGViewTap {
     [self.view endEditing:YES];
-}
-
-//获取金额cell
-- (CMLAccountingAmountCell *)getAmountCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-    CMLAccountingAmountCell *amountCell = [self.tableView cellForRowAtIndexPath:indexPath];
-    return amountCell;
 }
 
 #pragma mark -- 日期cell
@@ -201,7 +208,7 @@
     }
     
     //是否已有金额
-    CMLAccountingAmountCell *accountCell = [self getAmountCell];
+    CMLAccountingAmountCell *accountCell = [self getAccountingAmountCell];
     //判断金额cell
     if (!accountCell) {
         CMLLog(@"获取金额cell出错");
@@ -343,6 +350,8 @@
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 [weakSelf reloadItemCellWithExpandAction];
                 weakSelf.selectedItem = response.responseDic[@"item"];
+                CMLAccountingItemCell *itemCell = [weakSelf getAccountingItemCell];
+                [itemCell refreshTopViewText:itemName];
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
             } else {
@@ -364,6 +373,7 @@
                 [SVProgressHUD showSuccessWithStatus:response.desc];
                 weakSelf.lastSelectedItem = weakSelf.selectedItem;
                 
+                
             } else {
                 [SVProgressHUD showErrorWithStatus:response.desc];
             }
@@ -381,19 +391,13 @@
     [self.view endEditing:YES];
 }
 
-//- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectCategoryAtIndexPath:(NSIndexPath *)indexPath {
-//    self.selectedCategoryIndex = indexPath.row;
-//    CMLLog(@"选中了第%zd个分类", self.selectedCategoryIndex);
-//}
-
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell shouldSelectItem:(CMLItem *)item {
     self.selectedItem = item;
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
     //金额cell becomeFirstResponder
-    NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:1 inSection:0];
-    CMLAccountingAmountCell *accountingAmountCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
+    CMLAccountingAmountCell *accountingAmountCell = [self getAccountingAmountCell];
     [accountingAmountCell.amountTextField becomeFirstResponder];
 }
 

@@ -74,11 +74,6 @@
         [self.leftTableView reloadData];
         [self.rightTableView reloadData];
         
-        //delegate
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
-//            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:self.leftTableViewSelectedIndexPath];
-//        }
-        
     } else {
         self.bottomView.hidden = YES;
         self.topViewBottomSepLine.hidden = NO;
@@ -89,6 +84,10 @@
     } else {
         self.topViewText.text = @"选择科目";
     }
+}
+
+- (void)refreshTopViewText:(NSString *)itemName {
+    self.topViewText.text = itemName;
 }
 
 #pragma mark - Private
@@ -151,11 +150,6 @@
         self.leftTableViewSelectedIndexPath = indexPath;
         CMLAccountingItemLeftCell *selectedLeftCell = (CMLAccountingItemLeftCell *)[self.leftTableView cellForRowAtIndexPath:self.leftTableViewSelectedIndexPath];
         [selectedLeftCell setCellSelected:YES];
-        
-        //delegate
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
-//            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:indexPath];
-//        }
         
         //刷新二级科目表
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];

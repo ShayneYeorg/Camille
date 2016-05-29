@@ -127,6 +127,11 @@
     return accountingItemCell;
 }
 
+- (void)refreshItemCellTopViewText:(NSString *)refreshText {
+    CMLAccountingItemCell *itemCell = [self getAccountingItemCell];
+    [itemCell refreshTopViewText:refreshText];
+}
+
 //只刷新科目cell的数据，不更改状态（展开或收起）
 - (void)reloadItemCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -146,6 +151,11 @@
     NSIndexPath *amountCellIndex = [NSIndexPath indexPathForRow:1 inSection:0];
     CMLAccountingAmountCell *accountingAmountCell = [self.tableView cellForRowAtIndexPath:amountCellIndex];
     return accountingAmountCell;
+}
+
+- (void)setAmountCellBecomeFirstResponder {
+    CMLAccountingAmountCell *accountingAmountCell = [self getAccountingAmountCell];
+    [accountingAmountCell.amountTextField becomeFirstResponder];
 }
 
 //这块蒙板只挡住NavigationBar
@@ -348,10 +358,13 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         if (response) {
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [weakSelf fetchItemsData];
                 [weakSelf reloadItemCellWithExpandAction];
+                
                 weakSelf.selectedItem = response.responseDic[@"item"];
-                CMLAccountingItemCell *itemCell = [weakSelf getAccountingItemCell];
-                [itemCell refreshTopViewText:itemName];
+                [weakSelf refreshItemCellTopViewText:itemName];
+                [weakSelf setAmountCellBecomeFirstResponder];
+                
                 [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 
             } else {
@@ -397,8 +410,7 @@
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item {
     //金额cell becomeFirstResponder
-    CMLAccountingAmountCell *accountingAmountCell = [self getAccountingAmountCell];
-    [accountingAmountCell.amountTextField becomeFirstResponder];
+    [self setAmountCellBecomeFirstResponder];
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {

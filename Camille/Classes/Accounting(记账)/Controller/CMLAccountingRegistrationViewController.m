@@ -13,7 +13,7 @@
 #import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
-#define kDatePickerBGViewTag        201603141611
+#define kDatePickerBGViewTag  201603141611
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingAmountCellDelegate, CMLAccountingDatePickerViewDelegate>
 
@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) CMLItem *selectedItem; //选中的item
 @property (nonatomic, strong) CMLItem *lastSelectedItem; //上一次选中的item
+@property (nonatomic, assign) NSInteger selectedCategoryIndex; //本次选中的分类
 @property (nonatomic, assign) CGFloat amount; //金额
 @property (nonatomic, strong) NSDate *happenDate; //账务发生时间
 
@@ -38,8 +39,6 @@
     [super viewDidLoad];
     
     [self configViewDetails];
-    [self configTitle];
-    [self configBarBtns];
     [self configTableView];
     
     //一进来就请求数据
@@ -58,17 +57,20 @@
 
 #pragma mark - UI Configuration
 
+- (void)configViewDetails {
+    self.view.backgroundColor = kAppViewColor;
+    self.isItemCellExpand = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.selectedCategoryIndex = 0;
+    [self configTitle];
+    [self configBarBtns];
+}
+
 - (void)configTitle {
     self.title = @"收入";
     if ([self.type isEqualToString:Item_Type_Cost]) {
         self.title = @"支出";
     }
-}
-
-- (void)configViewDetails {
-    self.view.backgroundColor = kAppViewColor;
-    self.isItemCellExpand = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)configBarBtns {
@@ -376,6 +378,11 @@
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell {
     [self reloadItemCellWithExpandAction];
     [self.view endEditing:YES];
+}
+
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectCategoryAtIndexPath:(NSIndexPath *)indexPath {
+    self.selectedCategoryIndex = indexPath.row;
+    CMLLog(@"选中了第%zd个分类", self.selectedCategoryIndex);
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell shouldSelectItem:(CMLItem *)item {

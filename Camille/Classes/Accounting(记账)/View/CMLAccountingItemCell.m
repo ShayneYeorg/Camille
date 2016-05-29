@@ -57,9 +57,11 @@
     if (isExpand) {
         self.bottomView.hidden = NO;
         self.topViewBottomSepLine.hidden = YES;
-        
         self.categoryModels = categoryModels;
         self.itemsDic = itemsDic;
+        
+        self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        self.leftTableViewLastSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         self.itemsModel = self.itemsDic[@"1"];
         if (self.categoryModels.count > 1) {
             self.leftTableViewSelectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
@@ -71,6 +73,11 @@
         
         [self.leftTableView reloadData];
         [self.rightTableView reloadData];
+        
+        //delegate
+        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
+            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:self.leftTableViewSelectedIndexPath];
+        }
         
     } else {
         self.bottomView.hidden = YES;
@@ -144,6 +151,11 @@
         self.leftTableViewSelectedIndexPath = indexPath;
         CMLAccountingItemLeftCell *selectedLeftCell = (CMLAccountingItemLeftCell *)[self.leftTableView cellForRowAtIndexPath:self.leftTableViewSelectedIndexPath];
         [selectedLeftCell setCellSelected:YES];
+        
+        //delegate
+        if (self.delegate && [self.delegate respondsToSelector:@selector(accountingItemCell:didSelectCategoryAtIndexPath:)]) {
+            [self.delegate accountingItemCell:self didSelectCategoryAtIndexPath:indexPath];
+        }
         
         //刷新二级科目表
         CMLItemCategory *selectedCategory = self.categoryModels[self.leftTableViewSelectedIndexPath.row];

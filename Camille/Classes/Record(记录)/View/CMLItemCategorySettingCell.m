@@ -18,6 +18,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:ID owner:nil options:nil] lastObject];
     }
+    cell.backgroundColor = kAppViewColor;
     return cell;
 }
 

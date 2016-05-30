@@ -13,8 +13,39 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="dRf-a8-5j5">
+                        <rect key="frame" x="288" y="11" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="K1S-G3-dgD"/>
+                            <constraint firstAttribute="width" constant="22" id="gNA-Vb-pT9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="科目名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WJ-3r-G2j">
+                        <rect key="frame" x="10" y="12" width="253" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="21Z-rD-TVR"/>
+                            <constraint firstAttribute="width" constant="253" id="fbN-6O-ovG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.1764705882" green="0.098039215690000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9WJ-3r-G2j" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9Of-Xp-7bc"/>
+                    <constraint firstAttribute="trailing" secondItem="dRf-a8-5j5" secondAttribute="trailing" constant="10" id="AG7-f4-vhy"/>
+                    <constraint firstItem="dRf-a8-5j5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="P5E-AP-aqO"/>
+                    <constraint firstItem="9WJ-3r-G2j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="doJ-mQ-cCw"/>
+                </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="212" y="294"/>
+            <connections>
+                <outlet property="cellText" destination="9WJ-3r-G2j" id="Fab-3Z-7z5"/>
+            </connections>
+            <point key="canvasLocation" x="123" y="311"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="right_arrow" width="22" height="22"/>
+    </resources>
 </document>

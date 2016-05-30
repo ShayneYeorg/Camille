@@ -10,6 +10,8 @@
 
 @interface CMLItemCategorySettingCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *cellText; //标题
+
 + (instancetype)loadFromNibWithTableView:(UITableView *)tableView;
 
 @end

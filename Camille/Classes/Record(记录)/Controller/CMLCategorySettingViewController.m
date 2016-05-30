@@ -122,6 +122,14 @@ static NSString *cellID = @"categoryCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CMLItemCategorySettingCell *cell = [CMLItemCategorySettingCell loadFromNibWithTableView:tableView];
+    if (indexPath.section == 0) {
+        CMLItemCategory *category = self.costCategoryModels[indexPath.row];
+        cell.cellText.text = category.categoryName;
+        
+    } else {
+        CMLItemCategory *category = self.incomeCategoryModels[indexPath.row];
+        cell.cellText.text = category.categoryName;
+    }
     return cell;
 }
 

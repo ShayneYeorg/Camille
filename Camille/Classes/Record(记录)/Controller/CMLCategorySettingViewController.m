@@ -61,6 +61,7 @@ static NSString *cellID = @"categoryCellID";
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.costCategoryModels = dic[@"categories"];
+            [weakSelf.costCategoryModels removeObjectAtIndex:0]; //去掉“设置”
             isCostCategoriesFetchFinish = YES;
             if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
                 [weakSelf.tableView reloadData];
@@ -72,6 +73,7 @@ static NSString *cellID = @"categoryCellID";
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.incomeCategoryModels = dic[@"categories"];
+            [weakSelf.incomeCategoryModels removeObjectAtIndex:0];
             isIncomeCategoriesFetchFinish = YES;
             if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
                 [weakSelf.tableView reloadData];

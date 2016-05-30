@@ -8,6 +8,7 @@
 
 #import "CMLCategorySettingViewController.h"
 #import "CMLItemSettingViewController.h"
+#import "CMLItemCategorySettingCell.h"
 
 @interface CMLCategorySettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -46,7 +47,6 @@ static NSString *cellID = @"categoryCellID";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
     [self.view addSubview:self.tableView];
 }
 
@@ -121,8 +121,7 @@ static NSString *cellID = @"categoryCellID";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    
+    CMLItemCategorySettingCell *cell = [CMLItemCategorySettingCell loadFromNibWithTableView:tableView];
     return cell;
 }
 

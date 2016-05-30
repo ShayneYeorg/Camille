@@ -7,7 +7,7 @@
 //
 
 #define kCellBackgroundColor  kAppViewColor
-#define kNewItemAddingViewTag 201603112147
+#define kNewItemAddingViewTag 2016031182
 
 #import <UIKit/UIKit.h>
 

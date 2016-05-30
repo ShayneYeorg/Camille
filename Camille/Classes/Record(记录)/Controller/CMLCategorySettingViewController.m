@@ -31,6 +31,10 @@ static NSString *cellID = @"categoryCellID";
     [self fetchCatogories];
 }
 
+- (void)dealloc {
+    CMLLog(@"dealloc");
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

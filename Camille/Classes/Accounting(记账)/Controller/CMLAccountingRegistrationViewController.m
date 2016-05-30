@@ -13,7 +13,7 @@
 #import "CMLAccountingDatePickerView.h"
 #import "SVProgressHUD.h"
 
-#define kDatePickerBGViewTag  201603141611
+#define kDatePickerBGViewTag  2016031498
 
 @interface CMLAccountingRegistrationViewController () <UITableViewDelegate, UITableViewDataSource, CMLAccountingItemCellDelegate, CMLAccountingAmountCellDelegate, CMLAccountingDatePickerViewDelegate>
 

@@ -14,7 +14,7 @@
 #import "CMLRecordDetailDatePickerView.h"
 #import "SVProgressHUD.h"
 
-#define kRecordDetailDatePickerBGViewTag 20160517210127
+#define kRecordDetailDatePickerBGViewTag 2016051749
 
 @interface CMLRecordItemDetailViewController () <UITableViewDelegate, UITableViewDataSource, CMLRecordDetailHeaderViewDelegate, CMLRecordDetailDatePickerViewDelegate>
 

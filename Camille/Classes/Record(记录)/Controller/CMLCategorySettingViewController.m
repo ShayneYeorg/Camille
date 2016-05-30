@@ -9,7 +9,11 @@
 #import "CMLCategorySettingViewController.h"
 #import "CMLItemSettingViewController.h"
 
-@interface CMLCategorySettingViewController ()
+@interface CMLCategorySettingViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *costCategoryModels;
+@property (nonatomic, strong) NSMutableArray *incomeCategoryModels;
 
 @end
 
@@ -20,7 +24,9 @@ static NSString *cellID = @"categoryCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configDetails];
     [self configTableView];
+    [self fetchCatogories];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,10 +35,49 @@ static NSString *cellID = @"categoryCellID";
 
 #pragma mark - UI Configuration
 
+- (void)configDetails {
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
 - (void)configTableView {
-    [self.tableView setTableFooterView:[UIView new]];
-    
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height - 64) style:UITableViewStylePlain];
+    self.tableView.backgroundColor = RGB(245, 245, 240);
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
+    [self.view addSubview:self.tableView];
+}
+
+#pragma mark - Core Data
+
+- (void)fetchCatogories {
+    __weak typeof(self) weakSelf = self;
+    __block BOOL isCostCategoriesFetchFinish = NO;
+    __block BOOL isIncomeCategoriesFetchFinish = NO;
+    
+    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Cost callBack:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            weakSelf.costCategoryModels = dic[@"categories"];
+            isCostCategoriesFetchFinish = YES;
+            if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
+                [weakSelf.tableView reloadData];
+            }
+        }
+    }];
+    
+    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Income callBack:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            weakSelf.incomeCategoryModels = dic[@"categories"];
+            isIncomeCategoriesFetchFinish = YES;
+            if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
+                [weakSelf.tableView reloadData];
+            }
+        }
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -42,10 +87,37 @@ static NSString *cellID = @"categoryCellID";
     [self.navigationController pushViewController:itemSettingViewController animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 10)];
+    if (section == 0) {
+        view.backgroundColor = [UIColor redColor];
+    } else {
+        view.backgroundColor = [UIColor yellowColor];
+    }
+    return view;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
+}
+
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    if (section == 0) {
+        return self.costCategoryModels.count;
+    } else {
+        return self.incomeCategoryModels.count;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

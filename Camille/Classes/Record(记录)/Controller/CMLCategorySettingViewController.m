@@ -8,6 +8,7 @@
 
 #import "CMLCategorySettingViewController.h"
 #import "CMLItemSettingViewController.h"
+#import "CMLItemCategorySettingHeaderView.h"
 #import "CMLItemCategorySettingCell.h"
 
 @interface CMLCategorySettingViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -57,24 +58,24 @@ static NSString *cellID = @"categoryCellID";
     __block BOOL isCostCategoriesFetchFinish = NO;
     __block BOOL isIncomeCategoriesFetchFinish = NO;
     
-    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Cost callBack:^(CMLResponse *response) {
-        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            NSDictionary *dic = response.responseDic;
-            weakSelf.costCategoryModels = dic[@"categories"];
-            [weakSelf.costCategoryModels removeObjectAtIndex:0]; //去掉“设置”
-            isCostCategoriesFetchFinish = YES;
-            if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
-                [weakSelf.tableView reloadData];
-            }
-        }
-    }];
-    
     [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Income callBack:^(CMLResponse *response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.incomeCategoryModels = dic[@"categories"];
             [weakSelf.incomeCategoryModels removeObjectAtIndex:0];
             isIncomeCategoriesFetchFinish = YES;
+            if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
+                [weakSelf.tableView reloadData];
+            }
+        }
+    }];
+    
+    [CMLCoreDataAccess fetchAllItemCategories:Item_Type_Cost callBack:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            NSDictionary *dic = response.responseDic;
+            weakSelf.costCategoryModels = dic[@"categories"];
+            [weakSelf.costCategoryModels removeObjectAtIndex:0]; //去掉“设置”
+            isCostCategoriesFetchFinish = YES;
             if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
                 [weakSelf.tableView reloadData];
             }
@@ -94,13 +95,13 @@ static NSString *cellID = @"categoryCellID";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 10)];
+    CMLItemCategorySettingHeaderView *itemCategorySettingHeaderView = [CMLItemCategorySettingHeaderView loadFromNib];
     if (section == 0) {
-        view.backgroundColor = [UIColor redColor];
+        itemCategorySettingHeaderView.titleText.text = @"收入";
     } else {
-        view.backgroundColor = [UIColor yellowColor];
+        itemCategorySettingHeaderView.titleText.text = @"支出";
     }
-    return view;
+    return itemCategorySettingHeaderView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -115,21 +116,20 @@ static NSString *cellID = @"categoryCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.costCategoryModels.count;
-    } else {
         return self.incomeCategoryModels.count;
+    } else {
+        return self.costCategoryModels.count;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CMLItemCategorySettingCell *cell = [CMLItemCategorySettingCell loadFromNibWithTableView:tableView];
     if (indexPath.section == 0) {
-        CMLItemCategory *category = self.costCategoryModels[indexPath.row];
+        CMLItemCategory *category = self.incomeCategoryModels[indexPath.row];
         cell.cellText.text = category.categoryName;
         
     } else {
-        CMLItemCategory *category = self.incomeCategoryModels[indexPath.row];
+        CMLItemCategory *category = self.costCategoryModels[indexPath.row];
         cell.cellText.text = category.categoryName;
     }
     return cell;

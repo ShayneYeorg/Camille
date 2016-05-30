@@ -63,6 +63,8 @@
 		3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE161C84144D004EE4BD /* CMLAccounting.m */; };
 		34D03C481CFC364300422D9D /* CMLItemCategorySettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */; };
 		34D03C491CFC364300422D9D /* CMLItemCategorySettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */; };
+		34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C4B1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m */; };
+		34D03C4E1CFC40D700422D9D /* CMLItemCategorySettingHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D03C4D1CFC40D700422D9D /* CMLItemCategorySettingHeaderView.xib */; };
 		34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C741C78149E004264C2 /* CMLAccountingViewController.m */; };
 		34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C7A1C7814CC004264C2 /* CMLRecordViewController.m */; };
 		34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D21C841C7814F3004264C2 /* AppDelegate.m */; };
@@ -185,6 +187,9 @@
 		34D03C451CFC364300422D9D /* CMLItemCategorySettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemCategorySettingCell.h; sourceTree = "<group>"; };
 		34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemCategorySettingCell.m; sourceTree = "<group>"; };
 		34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLItemCategorySettingCell.xib; sourceTree = "<group>"; };
+		34D03C4A1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemCategorySettingHeaderView.h; sourceTree = "<group>"; };
+		34D03C4B1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemCategorySettingHeaderView.m; sourceTree = "<group>"; };
+		34D03C4D1CFC40D700422D9D /* CMLItemCategorySettingHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLItemCategorySettingHeaderView.xib; sourceTree = "<group>"; };
 		34D21C501C776EF4004264C2 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		34D21C731C78149E004264C2 /* CMLAccountingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingViewController.h; sourceTree = "<group>"; };
 		34D21C741C78149E004264C2 /* CMLAccountingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingViewController.m; sourceTree = "<group>"; };
@@ -442,6 +447,9 @@
 				34D03C451CFC364300422D9D /* CMLItemCategorySettingCell.h */,
 				34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */,
 				34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */,
+				34D03C4A1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.h */,
+				34D03C4B1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m */,
+				34D03C4D1CFC40D700422D9D /* CMLItemCategorySettingHeaderView.xib */,
 				34340AE61C9FD02300FECAD7 /* CMLRecordDetailHeaderView.h */,
 				34340AE71C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m */,
 				34340AE91C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib */,
@@ -626,6 +634,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				340579311C8EA72000C79F9D /* CMLNewItemAddingView.xib in Resources */,
+				34D03C4E1CFC40D700422D9D /* CMLItemCategorySettingHeaderView.xib in Resources */,
 				34FA38971C944A0300A049E8 /* CMLAccountingAmountCell.xib in Resources */,
 				3405793C1C8EB4E700C79F9D /* SVProgressHUD.bundle in Resources */,
 				344A004B1C75E0D8008281BB /* LaunchScreen.storyboard in Resources */,
@@ -706,6 +715,7 @@
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				3499BE1B1C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */,
 				34340AF31C9FEE3500FECAD7 /* CMLRecordDetailCell.m in Sources */,
+				34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */,
 				345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */,
 				3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,

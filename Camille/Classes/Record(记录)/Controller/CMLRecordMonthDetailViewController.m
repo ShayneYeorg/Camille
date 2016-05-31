@@ -222,7 +222,11 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
         [currentSection.detailCells removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        if (currentSection.detailCells.count == 0) {
+            [self.monthModel.detailSections removeObjectAtIndex:indexPath.section];
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
+        }
     }
 }
 

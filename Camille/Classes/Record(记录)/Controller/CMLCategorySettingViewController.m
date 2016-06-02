@@ -109,8 +109,15 @@ static NSString *cellID = @"categoryCellID";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CMLItemSettingViewController *itemSettingViewController = [CMLItemSettingViewController new];
+    CMLItemCategory *category;
+    if (indexPath.section == 0) {
+        category = self.incomeCategoryModels[indexPath.row];
+    } else {
+        category = self.costCategoryModels[indexPath.row];
+    }
+    CMLItemSettingViewController *itemSettingViewController = [[CMLItemSettingViewController alloc]initWithTitle:category.categoryName];
     [self.navigationController pushViewController:itemSettingViewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

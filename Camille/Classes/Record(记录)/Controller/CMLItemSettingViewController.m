@@ -16,9 +16,20 @@
 
 static NSString *cellID = @"ItemSettingCell";
 
+#pragma mark - Life Cycle
+
+- (instancetype)initWithTitle:(NSString *)title {
+    if ([self init]) {
+        self.title = title;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configDetails];
+    [self configBarBtn];
     [self configTableView];
 }
 
@@ -28,10 +39,30 @@ static NSString *cellID = @"ItemSettingCell";
 
 #pragma mark - UI Configuration
 
+- (void)configDetails {
+}
+
+- (void)configBarBtn {
+    UIButton *cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancleBtn.frame = CGRectMake(0, 0, 44, 44);
+    [cancleBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancleBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    cancleBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    [cancleBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:cancleBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
+}
+
 - (void)configTableView {
     [self.tableView setTableFooterView:[UIView new]];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
+}
+
+#pragma mark - Private
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDataSource

@@ -27,6 +27,7 @@ static NSString *cellID = @"categoryCellID";
     [super viewDidLoad];
     
     [self configDetails];
+    [self configBarBtn];
     [self configTableView];
     [self fetchCatogories];
 }
@@ -42,8 +43,20 @@ static NSString *cellID = @"categoryCellID";
 #pragma mark - UI Configuration
 
 - (void)configDetails {
+    self.title = @"科目设置";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)configBarBtn {
+    UIButton *cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancleBtn.frame = CGRectMake(0, 0, 44, 44);
+    [cancleBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancleBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    cancleBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    [cancleBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:cancleBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)configTableView {
@@ -53,6 +66,12 @@ static NSString *cellID = @"categoryCellID";
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
+}
+
+#pragma mark - Private
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Core Data

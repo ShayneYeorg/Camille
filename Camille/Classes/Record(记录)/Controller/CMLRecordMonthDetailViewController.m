@@ -220,13 +220,27 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
-        [currentSection.detailCells removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-        if (currentSection.detailCells.count == 0) {
-            [self.monthModel.detailSections removeObjectAtIndex:indexPath.section];
-            [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
-        }
+        [self deleteCellInTableView:tableView indexPath:indexPath];
+    }
+}
+
+- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
+    CMLAccounting *currentAccounting = currentSection.detailCells[indexPath.row];
+    
+    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
+        currentSection.cost -= [currentAccounting.amount floatValue];
+    } else {
+        currentSection.income -= [currentAccounting.amount floatValue];
+    }
+    [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
+    
+    [currentSection.detailCells removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    
+    if (currentSection.detailCells.count == 0) {
+        [self.monthModel.detailSections removeObjectAtIndex:indexPath.section];
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationTop];
     }
 }
 

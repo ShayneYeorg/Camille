@@ -125,8 +125,14 @@
     CMLRecordItemDetailSectionModel *currentSection = self.itemModel.detailSections[indexPath.section];
     CMLAccounting *currentAccounting = currentSection.detailCells[indexPath.row];
     
-//    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
     currentSection.amount -= [currentAccounting.amount floatValue];
+    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
+        self.itemModel.totalCost -= [currentAccounting.amount floatValue];
+        [self.tableHeaderView refreshTotalCost:[NSString stringWithFormat:@"%.2f", self.itemModel.totalCost]];
+    } else {
+        self.itemModel.totalIncome -= [currentAccounting.amount floatValue];
+        [self.tableHeaderView refreshTotalIncome:[NSString stringWithFormat:@"%.2f", self.itemModel.totalIncome]];
+    }
     
     [currentSection.detailCells removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];

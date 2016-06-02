@@ -127,8 +127,13 @@
     
     if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
         currentSection.cost -= [currentAccounting.amount floatValue];
+        self.monthModel.totalCost -= [currentAccounting.amount floatValue];
+        [self.tableHeaderView refreshTotalCost:[NSString stringWithFormat:@"%.2f", self.monthModel.totalCost]];
+        
     } else {
         currentSection.income -= [currentAccounting.amount floatValue];
+        self.monthModel.totalIncome -= [currentAccounting.amount floatValue];
+        [self.tableHeaderView refreshTotalIncome:[NSString stringWithFormat:@"%.2f", self.monthModel.totalIncome]];
     }
     
     [currentSection.detailCells removeObjectAtIndex:indexPath.row];

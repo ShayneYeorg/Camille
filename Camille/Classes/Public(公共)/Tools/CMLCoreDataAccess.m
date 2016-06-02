@@ -709,6 +709,25 @@
 //    });
 }
 
++ (void)deleteAccounting:(CMLAccounting *)accounting callBack:(void(^)(CMLResponse *response))callBack {
+    [kManagedObjectContext deleteObject:accounting];
+    
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    NSError *error = nil;
+    if([kManagedObjectContext save:&error]) {
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = @"删除成功";
+        cmlResponse.responseDic = nil;
+        
+    } else {
+        CMLLog(@"删除失败");
+        cmlResponse.code = RESPONSE_CODE_FAILD;
+        cmlResponse.desc = @"删除失败";
+        cmlResponse.responseDic = nil;
+    }
+    callBack(cmlResponse);
+}
+
 #pragma mark - 查询账务记录
 
 + (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {

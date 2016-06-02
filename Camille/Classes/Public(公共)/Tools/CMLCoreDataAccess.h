@@ -81,6 +81,14 @@
 + (void)addAccountingWithItem:(NSString *)itemID amount:(NSNumber *)amount type:(NSString *)type happneTime:(NSDate *)happenTime callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
+ *  删除账务记录
+ *
+ *  @param item                 账务
+ *  @param callBack             回调
+ */
++ (void)deleteAccounting:(CMLAccounting *)accounting callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  按日期分类查询某一月份的收支明细
  */
 + (void)fetchAccountingDetailsOnMonth:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack;

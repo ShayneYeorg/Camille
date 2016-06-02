@@ -121,6 +121,32 @@
     [[window viewWithTag:kRecordDetailDatePickerBGViewTag] removeFromSuperview];
 }
 
+- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    CMLRecordItemDetailSectionModel *currentSection = self.itemModel.detailSections[indexPath.section];
+    CMLAccounting *currentAccounting = currentSection.detailCells[indexPath.row];
+    
+//    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
+    currentSection.amount -= [currentAccounting.amount floatValue];
+    
+    [currentSection.detailCells removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    if (currentSection.detailCells.count == 0) {
+        [self.itemModel.detailSections removeObjectAtIndex:indexPath.section];
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
+        
+    } else {
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    [CMLCoreDataAccess deleteAccounting:currentAccounting callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showErrorWithStatus:response.desc];
+        }
+    }];
+}
+
 #pragma mark - Getter
 
 - (CMLRecordDetailDatePickerView *)recordDetailDatePickerView {
@@ -220,6 +246,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 35;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self deleteCellInTableView:tableView indexPath:indexPath];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
 }
 
 #pragma mark - UITableViewDataSource

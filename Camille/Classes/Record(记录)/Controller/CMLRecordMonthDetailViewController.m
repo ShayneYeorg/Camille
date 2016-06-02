@@ -121,6 +121,35 @@
     [[window viewWithTag:kRecordDetailDatePickerBGViewTag] removeFromSuperview];
 }
 
+- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
+    CMLAccounting *currentAccounting = currentSection.detailCells[indexPath.row];
+    
+    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
+        currentSection.cost -= [currentAccounting.amount floatValue];
+    } else {
+        currentSection.income -= [currentAccounting.amount floatValue];
+    }
+    
+    [currentSection.detailCells removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    if (currentSection.detailCells.count == 0) {
+        [self.monthModel.detailSections removeObjectAtIndex:indexPath.section];
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
+        
+    } else {
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    [CMLCoreDataAccess deleteAccounting:currentAccounting callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showErrorWithStatus:response.desc];
+        }
+    }];
+}
+
 #pragma mark - Getter
 
 - (CMLRecordDetailDatePickerView *)recordDetailDatePickerView {
@@ -222,35 +251,6 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self deleteCellInTableView:tableView indexPath:indexPath];
     }
-}
-
-- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
-    CMLRecordMonthDetailSectionModel *currentSection = self.monthModel.detailSections[indexPath.section];
-    CMLAccounting *currentAccounting = currentSection.detailCells[indexPath.row];
-    
-    if ([currentAccounting.type isEqualToString:Item_Type_Cost]) {
-        currentSection.cost -= [currentAccounting.amount floatValue];
-    } else {
-        currentSection.income -= [currentAccounting.amount floatValue];
-    }
-    
-    [currentSection.detailCells removeObjectAtIndex:indexPath.row];
-    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-    
-    if (currentSection.detailCells.count == 0) {
-        [self.monthModel.detailSections removeObjectAtIndex:indexPath.section];
-        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
-        
-    } else {
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
-    }
-    
-    [CMLCoreDataAccess deleteAccounting:currentAccounting callBack:^(CMLResponse *response) {
-        if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-            [SVProgressHUD showErrorWithStatus:response.desc];
-        }
-    }];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {

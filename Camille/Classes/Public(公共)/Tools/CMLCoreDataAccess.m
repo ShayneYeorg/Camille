@@ -209,13 +209,16 @@
     });
 }
 
-+ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category callBack:(void(^)(CMLResponse *response))callBack {
++ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category isAvailable:(NSString *)isAvailable callBack:(void(^)(CMLResponse *response))callBack {
     if (itemName) {
         item.itemName = itemName;
     }
     if (category) {
         item.categoryID = category.categoryID;
         item.itemType = category.categoryType;
+    }
+    if (isAvailable) {
+        item.isAvailable = isAvailable;
     }
     
     CMLResponse *response = [[CMLResponse alloc]init];
@@ -323,8 +326,16 @@
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"科目已存在";
         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:((CMLItem *)items[0]).itemID, @"itemID", nil];
-        callBack(cmlResponse);
         
+        CMLItem *theExistItem = items[0];
+        if ([theExistItem.isAvailable isEqualToString:Record_Available]) {
+            callBack(cmlResponse);
+            
+        } else {
+            [CMLCoreDataAccess alterItem:theExistItem intoItemName:nil category:nil isAvailable:Record_Available callBack:^(CMLResponse *response) {
+                callBack(cmlResponse);
+            }];
+        }
         
     } else {
         //itemName不存在则新建并返回对应itemID
@@ -357,7 +368,7 @@
         item.itemType = type;
         item.categoryID = categoryID;
         item.nextItemID = nil;
-        item.isAvailable = @"1";
+        item.isAvailable = Record_Available;
         
         //保存
         NSError *error = nil;
@@ -485,7 +496,7 @@
     item.itemType = type;
     item.categoryID = categoryID;
     item.nextItemID = nil;
-    item.isAvailable = @"1";
+    item.isAvailable = Record_Available;
     
     //保存
     NSError *error = nil;

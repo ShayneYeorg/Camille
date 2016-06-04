@@ -58,7 +58,7 @@
  *  @param category             修改后所属的分类
  *  @param callBack             回调
  */
-+ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category callBack:(void(^)(CMLResponse *response))callBack;
++ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category isAvailable:(NSString *)isAvailable callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  删除某个二级记账科目

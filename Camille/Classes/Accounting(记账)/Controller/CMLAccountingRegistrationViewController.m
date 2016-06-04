@@ -419,8 +419,8 @@
     [self setAmountCellBecomeFirstResponder];
 }
 
-- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName {
-    [self addItem:itemName inCategory:categoryName selectItemAfterAdd:YES];
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryID {
+    [self addItem:itemName inCategory:categoryID selectItemAfterAdd:YES];
 }
 
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddCaterogy:(NSString *)categoryName {

@@ -18,7 +18,7 @@
 - (void)accountingItemCellDidTapExpandArea:(CMLAccountingItemCell *)accountingItemCell;
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell shouldSelectItem:(CMLItem *)item;
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didSelectItem:(CMLItem *)item;
-- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryName;
+- (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddItem:(NSString *)itemName inCaterogy:(NSString *)categoryID;
 - (void)accountingItemCell:(CMLAccountingItemCell *)accountingItemCell didAddCaterogy:(NSString *)categoryName;
 
 @end

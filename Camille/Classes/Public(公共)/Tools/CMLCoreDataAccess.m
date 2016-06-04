@@ -324,7 +324,7 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '%@' AND itemType == '%@' AND isAvailable = '1'", categoryID, itemName, type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '%@' AND itemType == '%@'", categoryID, itemName, type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -343,17 +343,22 @@
         callBack(cmlResponse);
         
     } else if (items.count) {
-        //itemName存在则直接返回对应itemID
-        cmlResponse.code = RESPONSE_CODE_FAILD;
-        cmlResponse.desc = @"科目已存在";
-        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:((CMLItem *)items[0]).itemID, @"itemID", nil];
-        
         CMLItem *theExistItem = items[0];
+        
+        //itemName存在则直接返回对应itemID
+        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, @"itemID", theExistItem, @"item",  nil];
+        
         if ([theExistItem.isAvailable isEqualToString:Record_Available]) {
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"科目已存在";
             callBack(cmlResponse);
             
         } else {
             [CMLCoreDataAccess alterItem:theExistItem intoItemName:nil category:nil isAvailable:Record_Available callBack:^(CMLResponse *response) {
+                [CMLCoreDataAccess setLastItemNextID:theExistItem.itemID inCategory:categoryID type:type];
+                [CMLCoreDataAccess setItem:theExistItem nextItemID:nil];
+                cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                cmlResponse.desc = @"科目已复原";
                 callBack(cmlResponse);
             }];
         }

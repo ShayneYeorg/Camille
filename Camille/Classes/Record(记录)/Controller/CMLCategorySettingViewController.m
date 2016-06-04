@@ -115,7 +115,7 @@ static NSString *cellID = @"categoryCellID";
     } else {
         category = self.costCategoryModels[indexPath.row];
     }
-    CMLItemSettingViewController *itemSettingViewController = [[CMLItemSettingViewController alloc]initWithTitle:category.categoryName];
+    CMLItemSettingViewController *itemSettingViewController = [[CMLItemSettingViewController alloc]initWithCategory:category];
     [self.navigationController pushViewController:itemSettingViewController animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

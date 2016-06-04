@@ -64,8 +64,6 @@
     return (NSDictionary *)returnDic;
 }
 
-#pragma mark - Private
-
 + (NSMutableArray *)sortItemsInACategory:(NSMutableArray *)items {
     NSMutableArray *returnArr = [NSMutableArray array];
     

@@ -10,6 +10,8 @@
 
 @interface CMLItemSettingViewController ()
 
+@property (nonatomic, strong) NSMutableArray *items;
+
 @end
 
 @implementation CMLItemSettingViewController
@@ -18,9 +20,9 @@ static NSString *cellID = @"ItemSettingCell";
 
 #pragma mark - Life Cycle
 
-- (instancetype)initWithTitle:(NSString *)title {
+- (instancetype)initWithCategory:(CMLItemCategory *)category {
     if ([self init]) {
-        self.title = title;
+        self.title = category.categoryName;
     }
     return self;
 }
@@ -31,6 +33,7 @@ static NSString *cellID = @"ItemSettingCell";
     [self configDetails];
     [self configBarBtn];
     [self configTableView];
+    [self fetchItems];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +66,12 @@ static NSString *cellID = @"ItemSettingCell";
 
 - (void)back {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Core Data
+
+- (void)fetchItems {
+    
 }
 
 #pragma mark - UITableViewDataSource

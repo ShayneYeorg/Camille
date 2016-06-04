@@ -42,6 +42,13 @@
 + (void)fetchAllItems:(void(^)(CMLResponse *response))callBack;
 
 /**
+ *  取出某个分类下的所有二级记账科目
+ *
+ *  @param callBack             回调
+ */
++ (void)fetchAllItemsInCategory:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  新增完整记账科目
  *
  *  @param ItemName             二级科目名称

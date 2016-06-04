@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSMutableDictionary *)sortItems:(NSMutableArray *)items;
 + (NSDictionary *)buildItemsContrastDic:(NSMutableArray *)items;
++ (NSMutableArray *)sortItemsInACategory:(NSMutableArray *)items;
 
 @end
 

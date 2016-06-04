@@ -10,6 +10,6 @@
 
 @interface CMLItemSettingViewController : UITableViewController
 
-- (instancetype)initWithTitle:(NSString *)title;
+- (instancetype)initWithCategory:(CMLItemCategory *)category;
 
 @end

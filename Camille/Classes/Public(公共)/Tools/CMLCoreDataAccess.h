@@ -44,9 +44,18 @@
 /**
  *  取出某个分类下的所有二级记账科目
  *
+ *  @param categoryID           一级科目ID
+ *  @param type                 类型
  *  @param callBack             回调
  */
-+ (void)fetchAllItemsInCategory:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack;
++ (void)fetchAllItemsInCategory:(NSString *)categoryID type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  删除某个二级记账科目
+ *
+ *  @param callBack             回调
+ */
++ (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
  *  新增完整记账科目
@@ -68,7 +77,7 @@
 + (void)addItemCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
- *  在一级科目下下新增二级科目
+ *  在一级科目下新增二级科目
  *
  *  @param ItemName             二级科目名称
  *  @param categoryID           一级科目ID
@@ -109,7 +118,5 @@
  *  根据CMLAccount对象获取账务名称
  */
 + (NSString *)getAccountingName:(CMLAccounting *)accounting;
-
-
 
 @end

@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) CMLItemCategory *category;
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) CMLItem *listHeadItem; //链表头科目
 
 @end
 
@@ -74,17 +75,56 @@ static NSString *cellID = @"ItemSettingCell";
 }
 
 - (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    CMLItem *lastItem;
+    CMLItem *currentItem = self.items[indexPath.row];
+    CMLItem *nextItem;
     
+    if (indexPath.row == 0) {
+        lastItem = self.listHeadItem;
+        if (self.items.count == 1) {
+            nextItem = nil;
+        } else {
+            nextItem = self.items[indexPath.row+1];
+        }
+    
+    } else if (indexPath.row == self.items.count-1) {
+        nextItem = nil;
+        if (self.items.count == 1) {
+            lastItem = self.listHeadItem;
+        } else {
+            lastItem = self.items[indexPath.row-1];
+        }
+        
+    } else {
+        lastItem = self.items[indexPath.row-1];
+        nextItem = self.items[indexPath.row+1];
+    }
+    
+    CMLLog(@"lastItemName: %@", lastItem.itemName);
+    CMLLog(@"itemName: %@", currentItem.itemName);
+    CMLLog(@"nextItemName: %@", nextItem.itemName);
+    
+    [self.items removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+//    [CMLCoreDataAccess deleteAccounting:currentAccounting callBack:^(CMLResponse *response) {
+//        if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+//            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+//            [SVProgressHUD showErrorWithStatus:response.desc];
+//        }
+//    }];
 }
 
 #pragma mark - Core Data
 
 - (void)fetchItems {
-    [CMLCoreDataAccess fetchAllItemsInCategory:self.category.categoryID callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess fetchAllItemsInCategory:self.category.categoryID type:self.category.categoryType callBack:^(CMLResponse *response) {
+        __weak typeof(self) weakSelf = self;
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            self.items = response.responseDic[@"items"];
-            [self.items removeObjectAtIndex:0];
-            [self.tableView reloadData];
+            weakSelf.items = response.responseDic[@"items"];
+            weakSelf.listHeadItem = weakSelf.items[0];
+            [weakSelf.items removeObjectAtIndex:0];
+            [weakSelf.tableView reloadData];
         }
     }];
 }

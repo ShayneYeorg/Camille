@@ -166,14 +166,14 @@
     });
 }
 
-+ (void)fetchAllItemsInCategory:(NSString *)categoryID callBack:(void(^)(CMLResponse *response))callBack {
++ (void)fetchAllItemsInCategory:(NSString *)categoryID type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@'", categoryID];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -207,6 +207,10 @@
             callBack(cmlResponse);
         });
     });
+}
+
++ (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack {
+    
 }
 
 #pragma mark - 新增完整记账科目相关方法

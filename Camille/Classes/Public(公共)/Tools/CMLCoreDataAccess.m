@@ -326,7 +326,6 @@
         callBack(cmlResponse);
         
         
-        
     } else {
         //itemName不存在则新建并返回对应itemID
         [CMLCoreDataAccess addItem:itemName categoryID:categoryID type:type callBack:callBack];
@@ -486,6 +485,7 @@
     item.itemType = type;
     item.categoryID = categoryID;
     item.nextItemID = nil;
+    item.isAvailable = @"1";
     
     //保存
     NSError *error = nil;

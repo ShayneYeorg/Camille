@@ -10,6 +10,8 @@
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLCoreDataAccess.h"
 
+#import "CMLItem.h"
+
 @implementation CMLAccountingViewController
 
 #pragma mark - Life Cycle

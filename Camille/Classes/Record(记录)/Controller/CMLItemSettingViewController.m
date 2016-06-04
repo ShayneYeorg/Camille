@@ -107,12 +107,9 @@ static NSString *cellID = @"ItemSettingCell";
     [self.items removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
-//    [CMLCoreDataAccess deleteAccounting:currentAccounting callBack:^(CMLResponse *response) {
-//        if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
-//            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//            [SVProgressHUD showErrorWithStatus:response.desc];
-//        }
-//    }];
+    [CMLCoreDataAccess deleteItem:currentItem lastItem:lastItem nextItem:nextItem callBack:^(CMLResponse *response) {
+        
+    }];
 }
 
 #pragma mark - Core Data

@@ -18,5 +18,6 @@
 @dynamic itemType;
 @dynamic nextItemID;
 @dynamic categoryID;
+@dynamic isAvailable;
 
 @end

@@ -127,9 +127,4 @@
  */
 + (void)fetchAccountingDetailsOnItems:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack;
 
-/**
- *  根据CMLAccount对象获取账务名称
- */
-+ (NSString *)getAccountingName:(CMLAccounting *)accounting;
-
 @end

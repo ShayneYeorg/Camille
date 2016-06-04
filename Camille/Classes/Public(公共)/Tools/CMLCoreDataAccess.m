@@ -97,7 +97,7 @@
         CMLResponse *cmlResponse = [[CMLResponse alloc]init];
         
         //设置查询条件
-        NSString *str = [NSString stringWithFormat:@"itemType == '%@'", type];
+        NSString *str = [NSString stringWithFormat:@"itemType == '%@' AND isAvailable = '1'", type];
         NSPredicate *pre = [NSPredicate predicateWithFormat:str];
         [request setPredicate:pre];
         
@@ -173,7 +173,7 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@'", categoryID, type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@' AND isAvailable = '1'", categoryID, type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -236,6 +236,27 @@
 }
 
 + (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack {
+    [CMLCoreDataAccess alterItem:item intoItemName:nil category:nil isAvailable:Record_Unavailable callBack:^(CMLResponse *response) {
+        if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            if (nextItem) {
+                [CMLCoreDataAccess setItem:lastItem nextItemID:nextItem.itemID];
+            } else {
+                [CMLCoreDataAccess setItem:lastItem nextItemID:nil];
+            }
+        }
+    }];
+}
+
++ (void)setItem:(CMLItem *)item nextItemID:(NSString *)nextItemID {
+    item.nextItemID = nextItemID;
+    
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改nextItemID成功");
+        
+    } else {
+        CMLLog(@"修改nextItemID失败");
+    }
 }
 
 #pragma mark - 新增完整记账科目相关方法
@@ -891,43 +912,6 @@
             callBack(cmlResponse);
         });
     });
-}
-
-+ (NSString *)getAccountingName:(CMLAccounting *)accounting {
-    //request和entity
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
-    [request setEntity:entity];
-    
-    //Response
-    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
-    
-    //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"itemType == '%@'", accounting.type];
-    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
-    [request setPredicate:pre];
-    
-    //查询
-    NSError *error = nil;
-    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    
-    //取数据
-    if (items == nil) {
-        CMLLog(@"查询所有数据时发生错误:%@,%@",error,[error userInfo]);
-        cmlResponse.code = RESPONSE_CODE_FAILD;
-        cmlResponse.desc = @"读取失败";
-        cmlResponse.responseDic = nil;
-        
-    } else {
-        CMLLog(@"已取出所有记账科目...");
-        cmlResponse.code = RESPONSE_CODE_SUCCEED;
-        cmlResponse.desc = @"读取成功";
-        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:[CMLItem sortItems:items], @"items", nil];
-    }
-    
-    //回调
-//    callBack(cmlResponse);
-    return nil;
 }
 
 @end

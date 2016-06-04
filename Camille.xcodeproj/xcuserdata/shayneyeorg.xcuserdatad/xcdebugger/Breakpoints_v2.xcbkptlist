@@ -2,4 +2,102 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
+            timestampString = "486758857.814757"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "+deleteItem:lastItem:nextItem:callBack:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
+            timestampString = "486758859.962248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "+deleteItem:lastItem:nextItem:callBack:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[CMLCoreDataAccess deleteItem:lastItem:nextItem:callBack:]"
+                  moduleName = "Camille"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
+                  timestampString = "486758859.963576"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__59+[CMLCoreDataAccess deleteItem:lastItem:nextItem:callBack:]_block_invoke"
+                  moduleName = "Camille"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shayneyeorg/Documents/PersonalProjectSpace/Camille/Camille/Classes/Public(%E5%85%AC%E5%85%B1)/Tools/CMLCoreDataAccess.m"
+                  timestampString = "486758859.96373"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
+            timestampString = "486758974.414298"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "+deleteItem:lastItem:nextItem:callBack:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Camille/Classes/Public(&#x516c;&#x5171;)/Tools/CMLCoreDataAccess.m"
+            timestampString = "486758975.424019"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "+deleteItem:lastItem:nextItem:callBack:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

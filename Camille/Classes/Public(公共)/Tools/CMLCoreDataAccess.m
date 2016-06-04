@@ -209,8 +209,30 @@
     });
 }
 
-+ (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack {
++ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category callBack:(void(^)(CMLResponse *response))callBack {
+    if (itemName) {
+        item.itemName = itemName;
+    }
+    if (category) {
+        item.categoryID = category.categoryID;
+        item.itemType = category.categoryType;
+    }
     
+    CMLResponse *response = [[CMLResponse alloc]init];
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改成功");
+        response.code = RESPONSE_CODE_SUCCEED;
+        callBack(response);
+        
+    } else {
+        CMLLog(@"修改失败");
+        response.code = RESPONSE_CODE_FAILD;
+        callBack(response);
+    }
+}
+
++ (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack {
 }
 
 #pragma mark - 新增完整记账科目相关方法
@@ -278,7 +300,7 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '%@' AND itemType == '%@'", categoryID, itemName, type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '%@' AND itemType == '%@' AND isAvailable = '1'", categoryID, itemName, type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -302,6 +324,8 @@
         cmlResponse.desc = @"科目已存在";
         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:((CMLItem *)items[0]).itemID, @"itemID", nil];
         callBack(cmlResponse);
+        
+        
         
     } else {
         //itemName不存在则新建并返回对应itemID
@@ -334,6 +358,7 @@
         item.itemType = type;
         item.categoryID = categoryID;
         item.nextItemID = nil;
+        item.isAvailable = @"1";
         
         //保存
         NSError *error = nil;

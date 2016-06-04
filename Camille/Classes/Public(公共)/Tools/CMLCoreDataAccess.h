@@ -51,8 +51,21 @@
 + (void)fetchAllItemsInCategory:(NSString *)categoryID type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
+ *  修改某个二级记账科目
+ *
+ *  @param item                 修改科目
+ *  @param itemName             修改后的科目名称
+ *  @param category             修改后所属的分类
+ *  @param callBack             回调
+ */
++ (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  删除某个二级记账科目
  *
+ *  @param item                 删除科目
+ *  @param lastItem             上一科目
+ *  @param nextItem             下一科目
  *  @param callBack             回调
  */
 + (void)deleteItem:(CMLItem *)item lastItem:(CMLItem *)lastItem nextItem:(CMLItem *)nextItem callBack:(void(^)(CMLResponse *response))callBack;

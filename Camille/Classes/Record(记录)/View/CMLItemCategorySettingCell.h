@@ -11,6 +11,7 @@
 @interface CMLItemCategorySettingCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *cellText; //标题
+@property (weak, nonatomic) IBOutlet UIImageView *arrow; //箭头
 
 + (instancetype)loadFromNibWithTableView:(UITableView *)tableView;
 

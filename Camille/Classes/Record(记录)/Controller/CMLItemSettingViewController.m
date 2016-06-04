@@ -7,9 +7,11 @@
 //
 
 #import "CMLItemSettingViewController.h"
+#import "CMLItemCategorySettingCell.h"
 
 @interface CMLItemSettingViewController ()
 
+@property (nonatomic, strong) CMLItemCategory *category;
 @property (nonatomic, strong) NSMutableArray *items;
 
 @end
@@ -22,6 +24,7 @@ static NSString *cellID = @"ItemSettingCell";
 
 - (instancetype)initWithCategory:(CMLItemCategory *)category {
     if ([self init]) {
+        self.category = category;
         self.title = category.categoryName;
     }
     return self;
@@ -43,6 +46,8 @@ static NSString *cellID = @"ItemSettingCell";
 #pragma mark - UI Configuration
 
 - (void)configDetails {
+    self.tableView.backgroundColor = RGB(245, 245, 240);
+    self.tableView.allowsSelection = NO;
 }
 
 - (void)configBarBtn {
@@ -68,20 +73,49 @@ static NSString *cellID = @"ItemSettingCell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+    
+}
+
 #pragma mark - Core Data
 
 - (void)fetchItems {
-    
+    [CMLCoreDataAccess fetchAllItemsInCategory:self.category.categoryID callBack:^(CMLResponse *response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            self.items = response.responseDic[@"items"];
+            [self.items removeObjectAtIndex:0];
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self deleteCellInTableView:tableView indexPath:indexPath];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
+    CMLItemCategorySettingCell *cell = [CMLItemCategorySettingCell loadFromNibWithTableView:tableView];
+    CMLItem *item = self.items[indexPath.row];
+    cell.cellText.text = item.itemName;
+    cell.arrow.hidden = YES;
     
     return cell;
 }

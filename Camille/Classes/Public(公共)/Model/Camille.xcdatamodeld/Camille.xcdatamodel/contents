@@ -20,11 +20,12 @@
         <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="categoryName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="categoryType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAvailable" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextCategoryID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="CMLItem" positionX="-27" positionY="54" width="128" height="135"/>
-        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="105"/>
+        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="120"/>
     </elements>
 </model>

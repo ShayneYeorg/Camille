@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *categoryID; //一级科目ID
 @property (nullable, nonatomic, retain) NSString *categoryType; //一级科目类型
 @property (nullable, nonatomic, retain) NSString *nextCategoryID; //下一个科目的ID
+@property (nullable, nonatomic, retain) NSString *isAvailable; //科目是否有效
 
 @end
 

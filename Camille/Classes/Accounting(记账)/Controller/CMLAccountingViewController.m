@@ -10,7 +10,7 @@
 #import "CMLAccountingRegistrationViewController.h"
 #import "CMLCoreDataAccess.h"
 
-#import "CMLItem.h"
+#import "CMLItemCategory.h"
 
 @implementation CMLAccountingViewController
 

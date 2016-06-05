@@ -17,5 +17,6 @@
 @dynamic categoryID;
 @dynamic categoryType;
 @dynamic nextCategoryID;
+@dynamic isAvailable;
 
 @end

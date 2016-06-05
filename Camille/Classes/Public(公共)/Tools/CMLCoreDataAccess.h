@@ -56,6 +56,7 @@
  *  @param item                 修改科目
  *  @param itemName             修改后的科目名称
  *  @param category             修改后所属的分类
+ *  @param isAvailable          是否有效
  *  @param callBack             回调
  */
 + (void)alterItem:(CMLItem *)item intoItemName:(NSString *)itemName category:(CMLItemCategory *)category isAvailable:(NSString *)isAvailable callBack:(void(^)(CMLResponse *response))callBack;
@@ -88,6 +89,16 @@
  *  @param callBack             回调
  */
 + (void)addItemCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
+ *  修改一级记账科目
+ *
+ *  @param category             一级科目
+ *  @param categoryName         一级科目名称
+ *  @param type                 账务类型
+ *  @param isAvailable          是否有效
+ */
++ (BOOL)alterCategory:(CMLItemCategory *)category intoCategoryName:(NSString *)categoryName categoryType:(NSString *)type isAvailable:(NSString *)isAvailable;
 
 /**
  *  在一级科目下新增二级科目

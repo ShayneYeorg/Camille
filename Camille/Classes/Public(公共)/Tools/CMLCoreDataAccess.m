@@ -299,6 +299,12 @@
     } else if (itemCategoris.count) {
         //categoryName存在则直接返回对应categoryID
         CMLItemCategory *ic = itemCategoris[0];
+        if ([ic.isAvailable isEqualToString:Record_Unavailable]) {
+            BOOL isAlterSuccess = [CMLCoreDataAccess alterCategory:ic intoCategoryName:nil categoryType:nil isAvailable:Record_Available];
+            if (!isAlterSuccess) {
+                return nil;
+            }
+        }
         return ic.categoryID;
         
     } else {
@@ -312,6 +318,28 @@
         }];
         CMLLog(@"returnStr返回");
         return returnStr;
+    }
+}
+
++ (BOOL)alterCategory:(CMLItemCategory *)category intoCategoryName:(NSString *)categoryName categoryType:(NSString *)type isAvailable:(NSString *)isAvailable {
+    if (categoryName) {
+        category.categoryName = categoryName;
+    }
+    if (type) {
+        category.categoryType = type;
+    }
+    if (isAvailable) {
+        category.isAvailable = isAvailable;
+    }
+    
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改成功");
+        return YES;
+        
+    } else {
+        CMLLog(@"修改失败");
+        return NO;
     }
 }
 

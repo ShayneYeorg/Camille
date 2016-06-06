@@ -584,7 +584,7 @@
     [request setSortDescriptors:sortDescriptors];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType = '%@' AND nextItemID == NULL", categoryID, type];
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType = '%@' AND nextItemID == NULL AND isAvailable == '1'", categoryID, type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     
@@ -637,6 +637,7 @@
         itemCategory.categoryID = newID;
         itemCategory.categoryType = type;
         itemCategory.nextCategoryID = nil;
+        itemCategory.isAvailable = Record_Available;
         
         //保存
         CMLLog(@"开始保存新建立的一级科目...");
@@ -741,6 +742,7 @@
     itemCategory.categoryID = @"0";
     itemCategory.categoryType = type;
     itemCategory.nextCategoryID = nil;
+    itemCategory.isAvailable = Record_Available;
     
     //保存
     NSError *error = nil;
@@ -775,7 +777,7 @@
     [request setSortDescriptors:sortDescriptors];
     
     //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"categoryType == '%@' AND nextCategoryID == NULL", type];
+    NSString *str = [NSString stringWithFormat:@"categoryType == '%@' AND nextCategoryID == NULL AND isAvailable == '1'", type];
     NSPredicate *pre = [NSPredicate predicateWithFormat:str];
     [request setPredicate:pre];
     

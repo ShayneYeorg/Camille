@@ -74,6 +74,44 @@ static NSString *cellID = @"categoryCellID";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+//    CMLItem *lastItem;
+//    CMLItem *currentItem = self.items[indexPath.row];
+//    CMLItem *nextItem;
+//    
+//    if (indexPath.row == 0) {
+//        lastItem = self.listHeadItem;
+//        if (self.items.count == 1) {
+//            nextItem = nil;
+//        } else {
+//            nextItem = self.items[indexPath.row+1];
+//        }
+//        
+//    } else if (indexPath.row == self.items.count-1) {
+//        nextItem = nil;
+//        if (self.items.count == 1) {
+//            lastItem = self.listHeadItem;
+//        } else {
+//            lastItem = self.items[indexPath.row-1];
+//        }
+//        
+//    } else {
+//        lastItem = self.items[indexPath.row-1];
+//        nextItem = self.items[indexPath.row+1];
+//    }
+//    
+//    CMLLog(@"lastItemName: %@", lastItem.itemName);
+//    CMLLog(@"itemName: %@", currentItem.itemName);
+//    CMLLog(@"nextItemName: %@", nextItem.itemName);
+//    
+//    [self.items removeObjectAtIndex:indexPath.row];
+//    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//    
+//    [CMLCoreDataAccess deleteItem:currentItem lastItem:lastItem nextItem:nextItem callBack:^(CMLResponse *response) {
+//        
+//    }];
+}
+
 #pragma mark - Core Data
 
 - (void)fetchCatogories {
@@ -136,6 +174,16 @@ static NSString *cellID = @"categoryCellID";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self deleteCellInTableView:tableView indexPath:indexPath];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
 }
 
 #pragma mark - UITableViewDataSource

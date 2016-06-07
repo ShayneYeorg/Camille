@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *costCategoryModels;
 @property (nonatomic, strong) NSMutableArray *incomeCategoryModels;
+@property (nonatomic, strong) CMLItemCategory *costListHeadCategory;
+@property (nonatomic, strong) CMLItemCategory *incomeListHeadCategory;
 
 @end
 
@@ -75,38 +77,45 @@ static NSString *cellID = @"categoryCellID";
 }
 
 - (void)deleteCellInTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
-//    CMLItem *lastItem;
-//    CMLItem *currentItem = self.items[indexPath.row];
-//    CMLItem *nextItem;
-//    
-//    if (indexPath.row == 0) {
-//        lastItem = self.listHeadItem;
-//        if (self.items.count == 1) {
-//            nextItem = nil;
-//        } else {
-//            nextItem = self.items[indexPath.row+1];
-//        }
-//        
-//    } else if (indexPath.row == self.items.count-1) {
-//        nextItem = nil;
-//        if (self.items.count == 1) {
-//            lastItem = self.listHeadItem;
-//        } else {
-//            lastItem = self.items[indexPath.row-1];
-//        }
-//        
-//    } else {
-//        lastItem = self.items[indexPath.row-1];
-//        nextItem = self.items[indexPath.row+1];
-//    }
-//    
-//    CMLLog(@"lastItemName: %@", lastItem.itemName);
-//    CMLLog(@"itemName: %@", currentItem.itemName);
-//    CMLLog(@"nextItemName: %@", nextItem.itemName);
-//    
-//    [self.items removeObjectAtIndex:indexPath.row];
-//    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-//    
+    NSMutableArray *categorys;
+    CMLItemCategory *categoryListHead;
+    if (indexPath.section == 0) {
+        categorys = self.incomeCategoryModels;
+        categoryListHead = self.incomeListHeadCategory;
+        
+    } else {
+        categorys = self.costCategoryModels;
+        categoryListHead = self.costListHeadCategory;
+    }
+    
+    CMLItemCategory *lastCategory;
+    CMLItemCategory *currentCategory = categorys[indexPath.row];
+    CMLItemCategory *nextCategory;
+    
+    if (indexPath.row == 0) {
+        lastCategory = categoryListHead;
+        if (categorys.count == 1) {
+            nextCategory = nil;
+        } else {
+            nextCategory = categorys[indexPath.row+1];
+        }
+        
+    } else if (indexPath.row == categorys.count-1) {
+        nextCategory = nil;
+        lastCategory = categorys[indexPath.row-1];
+        
+    } else {
+        lastCategory = categorys[indexPath.row-1];
+        nextCategory = categorys[indexPath.row+1];
+    }
+    
+    CMLLog(@"lastCategoryName: %@", lastCategory.categoryName);
+    CMLLog(@"CategoryName: %@", currentCategory.categoryName);
+    CMLLog(@"nextCategoryName: %@", nextCategory.categoryName);
+    
+    [categorys removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+
 //    [CMLCoreDataAccess deleteItem:currentItem lastItem:lastItem nextItem:nextItem callBack:^(CMLResponse *response) {
 //        
 //    }];
@@ -123,6 +132,7 @@ static NSString *cellID = @"categoryCellID";
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.incomeCategoryModels = dic[@"categories"];
+            weakSelf.incomeListHeadCategory = weakSelf.incomeCategoryModels[0];
             [weakSelf.incomeCategoryModels removeObjectAtIndex:0];
             isIncomeCategoriesFetchFinish = YES;
             if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {
@@ -135,6 +145,7 @@ static NSString *cellID = @"categoryCellID";
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             NSDictionary *dic = response.responseDic;
             weakSelf.costCategoryModels = dic[@"categories"];
+            weakSelf.costListHeadCategory = weakSelf.costCategoryModels[0];
             [weakSelf.costCategoryModels removeObjectAtIndex:0]; //去掉“设置”
             isCostCategoriesFetchFinish = YES;
             if (isCostCategoriesFetchFinish && isIncomeCategoriesFetchFinish) {

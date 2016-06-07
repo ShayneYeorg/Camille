@@ -10,6 +10,7 @@
 #import "CMLItemSettingViewController.h"
 #import "CMLItemCategorySettingHeaderView.h"
 #import "CMLItemCategorySettingCell.h"
+#import "SVProgressHUD.h"
 
 @interface CMLCategorySettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -116,9 +117,12 @@ static NSString *cellID = @"categoryCellID";
     [categorys removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 
-//    [CMLCoreDataAccess deleteItem:currentItem lastItem:lastItem nextItem:nextItem callBack:^(CMLResponse *response) {
-//        
-//    }];
+    [CMLCoreDataAccess deleteCategory:currentCategory lastCategory:lastCategory nextCategory:nextCategory callBack:^(CMLResponse *response) {
+        if (!response || [response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showErrorWithStatus:response.desc];
+        }
+    }];
 }
 
 #pragma mark - Core Data

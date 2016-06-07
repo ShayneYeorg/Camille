@@ -343,6 +343,11 @@
     }
 }
 
+
++ (void)deleteCategory:(CMLItemCategory *)category lastCategory:(CMLItemCategory *)lastCategory nextCategory:(CMLItemCategory *)nextCategory callBack:(void(^)(CMLResponse *response))callBack {
+    
+}
+
 //在相应categoryID下保存itemName
 + (void)saveItem:(NSString *)itemName inCategory:(NSString *)categoryID type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
     //判断在categoryID下itemName是否存在

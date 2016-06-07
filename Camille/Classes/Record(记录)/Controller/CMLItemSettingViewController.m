@@ -8,6 +8,7 @@
 
 #import "CMLItemSettingViewController.h"
 #import "CMLItemCategorySettingCell.h"
+#import "SVProgressHUD.h"
 
 @interface CMLItemSettingViewController ()
 
@@ -108,7 +109,10 @@ static NSString *cellID = @"ItemSettingCell";
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     [CMLCoreDataAccess deleteItem:currentItem lastItem:lastItem nextItem:nextItem callBack:^(CMLResponse *response) {
-        
+        if (!response || [response.code isEqualToString:RESPONSE_CODE_FAILD]) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showErrorWithStatus:response.desc];
+        }
     }];
 }
 

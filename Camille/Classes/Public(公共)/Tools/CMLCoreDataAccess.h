@@ -101,6 +101,16 @@
 + (BOOL)alterCategory:(CMLItemCategory *)category intoCategoryName:(NSString *)categoryName categoryType:(NSString *)type isAvailable:(NSString *)isAvailable;
 
 /**
+ *  删除某个一级记账科目
+ *
+ *  @param category             删除科目
+ *  @param lastCategory         上一科目
+ *  @param nextCategory         下一科目
+ *  @param callBack             回调
+ */
++ (void)deleteCategory:(CMLItemCategory *)category lastCategory:(CMLItemCategory *)lastCategory nextCategory:(CMLItemCategory *)nextCategory callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  在一级科目下新增二级科目
  *
  *  @param ItemName             二级科目名称

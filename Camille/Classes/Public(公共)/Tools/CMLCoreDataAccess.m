@@ -53,7 +53,7 @@
         CMLResponse *cmlResponse = [[CMLResponse alloc]init];
         
         //设置查询条件
-        NSString *str = [NSString stringWithFormat:@"categoryType == '%@'", type];
+        NSString *str = [NSString stringWithFormat:@"categoryType == '%@' AND isAvailable == '1'", type];
         NSPredicate *pre = [NSPredicate predicateWithFormat:str];
         [request setPredicate:pre];
         
@@ -343,9 +343,11 @@
     }
 }
 
-
 + (void)deleteCategory:(CMLItemCategory *)category lastCategory:(CMLItemCategory *)lastCategory nextCategory:(CMLItemCategory *)nextCategory callBack:(void(^)(CMLResponse *response))callBack {
-    
+    BOOL isDelete = [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Unavailable];
+    if (isDelete) {
+        CMLLog(@"delete");
+    }
 }
 
 //在相应categoryID下保存itemName

@@ -82,6 +82,12 @@
         //如果有数据，依次添加
         CMLItem *cursor = firstItem;
         while (cursor.nextItemID && cursor.nextItemID.length != 0) {
+            if (!cursor.nextItemID) {
+                break;
+            }
+            if (!itemsDic[cursor.nextItemID]) {
+                break;
+            }
             [returnArr addObject:itemsDic[cursor.nextItemID]];
             cursor = itemsDic[cursor.nextItemID];
         }

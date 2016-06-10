@@ -34,9 +34,6 @@
         //如果有数据，依次添加
         CMLItemCategory *cursor = firstCategory;
         while (cursor.nextCategoryID && cursor.nextCategoryID.length != 0) {
-            if (!cursor.nextCategoryID) {
-                break;
-            }
             if (!categoriesDic[cursor.nextCategoryID]) {
                 break;
             }

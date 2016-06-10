@@ -346,8 +346,97 @@
 + (void)deleteCategory:(CMLItemCategory *)category lastCategory:(CMLItemCategory *)lastCategory nextCategory:(CMLItemCategory *)nextCategory callBack:(void(^)(CMLResponse *response))callBack {
     BOOL isDelete = [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Unavailable];
     if (isDelete) {
-        CMLLog(@"delete");
+        if (nextCategory) {
+            [CMLCoreDataAccess setCategory:lastCategory nextCategoryID:nextCategory.categoryID];
+        } else {
+            [CMLCoreDataAccess setCategory:lastCategory nextCategoryID:nil];
+        }
+        [CMLCoreDataAccess deleteAllItemsInCategory:category callBack:callBack];
     }
+}
+
++ (void)setCategory:(CMLItemCategory *)category nextCategoryID:(NSString *)nextCategoryID {
+    category.nextCategoryID = nextCategoryID;
+    
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改nextItemID成功");
+        
+    } else {
+        CMLLog(@"修改nextItemID失败");
+    }
+}
+
++ (void)deleteAllItemsInCategory:(CMLItemCategory *)category  callBack:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"categoryID == '%@' AND itemType == '%@' AND isAvailable = '1'", category.categoryID, category.categoryType];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
+    
+    //异步取数据
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //查询
+        CMLLog(@"开始取出%@下的所有二级记账科目...", category.categoryName);
+        NSError *error = nil;
+        NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        CMLResponse *response = [[CMLResponse alloc]init];
+        //取数据
+        if (items == nil) {
+            CMLLog(@"发生错误:%@,%@",error,[error userInfo]);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                response.code = RESPONSE_CODE_FAILD;
+                callBack(nil);
+            });
+            
+        } else {
+            CMLLog(@"已取出%@下的所有二级记账科目...", category.categoryName);
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemID == '0'"];
+            NSArray *filteredItems = [items filteredArrayUsingPredicate:predicate];
+            CMLItem *firstItem;
+            if (filteredItems.count) { //正常情况下肯定有值
+                firstItem = filteredItems[0];
+            }
+            
+            if (firstItem) {
+                NSMutableDictionary *itemsDic = [NSMutableDictionary dictionary];
+                for (CMLItem *i in items) {
+                    [itemsDic setValue:i forKey:i.itemID];
+                }
+                
+                CMLItem *cursor = firstItem;
+                while (cursor.nextItemID && cursor.nextItemID.length != 0) {
+                    if (!itemsDic[cursor.nextItemID]) {
+                        break;
+                    }
+                    cursor = itemsDic[cursor.nextItemID];
+                    cursor.isAvailable = Record_Unavailable;
+                }
+                
+                firstItem.nextItemID = nil;
+                NSError *error = nil;
+                if ([kManagedObjectContext save:&error]) {
+                    CMLLog(@"修改成功");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        response.code = RESPONSE_CODE_SUCCEED;
+                        callBack(response);
+                    });
+                    
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        CMLLog(@"修改失败");
+                        response.code = RESPONSE_CODE_FAILD;
+                        callBack(nil);
+                    });
+                }
+            }
+        }
+    });
 }
 
 //在相应categoryID下保存itemName

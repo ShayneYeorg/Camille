@@ -410,6 +410,7 @@
                 }
                 
                 CMLItem *cursor = firstItem;
+                cursor.isAvailable = Record_Unavailable;
                 while (cursor.nextItemID && cursor.nextItemID.length != 0) {
                     if (!itemsDic[cursor.nextItemID]) {
                         break;

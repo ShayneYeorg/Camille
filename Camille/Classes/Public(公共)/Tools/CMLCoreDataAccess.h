@@ -82,6 +82,15 @@
 + (void)addItem:(NSString *)itemName inCategory:(NSString *)categoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 /**
+ *  新增一级记账科目(含被删除分类检查)
+ *
+ *  @param ItemCategoryName     一级科目名称
+ *  @param type                 账务类型
+ *  @param callBack             回调
+ */
++ (void)addCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+/**
  *  新增一级记账科目
  *
  *  @param ItemCategoryName     一级科目名称

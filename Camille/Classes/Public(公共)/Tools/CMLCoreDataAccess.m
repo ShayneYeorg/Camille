@@ -713,6 +713,16 @@
 
 #pragma mark - 新增一级记账科目相关方法
 
+//新增一级记账科目(sync，含被删除分类检查)
++ (void)addCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
+    //1、先检查当前分类名是否已经存在
+    
+    //2、分类名存在则将它复原，并把分类下的"ITEM_LIST_HEAD"和"新增"复原
+    
+    //3、不存在则按正常流程新建分类
+    
+}
+
 //新增一级记账科目(sync)
 + (void)addItemCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
     CMLLog(@"开始建立一级科目...");

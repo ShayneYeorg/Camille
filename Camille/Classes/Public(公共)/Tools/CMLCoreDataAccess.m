@@ -716,11 +716,47 @@
 //新增一级记账科目(sync，含被删除分类检查)
 + (void)addCategory:(NSString *)itemCategoryName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
     //1、先检查当前分类名是否已经存在
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CMLItemCategory" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
     
-    //2、分类名存在则将它复原，并把分类下的"ITEM_LIST_HEAD"和"新增"复原
+    //设置查询条件
+    NSString *str = [NSString stringWithFormat:@"categoryName == '%@' AND categoryType == '%@'", itemCategoryName, type];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+    [request setPredicate:pre];
     
-    //3、不存在则按正常流程新建分类
+    //Response
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    cmlResponse.code = RESPONSE_CODE_FAILD;
+    cmlResponse.desc = @"添加分类出错";
+    cmlResponse.responseDic = nil;
     
+    //查询
+    NSError *error = nil;
+    NSMutableArray *categoris = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (categoris.count) {
+        //category已存在
+        //2、分类名存在则将它复原，并把分类下的"ITEM_LIST_HEAD"和"新增"复原
+        CMLItemCategory *category = categoris.firstObject;
+        if ([category.isAvailable isEqualToString:Record_Available]) {
+            //分类正常存在
+            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.desc = @"分类已存在";
+            cmlResponse.responseDic = nil;
+            callBack(cmlResponse);
+            
+        } else {
+            //分类被删除
+            [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Available];
+            //把分类下的"ITEM_LIST_HEAD"和"新增"复原
+            
+        }
+        
+    } else {
+        //3、不存在则按正常流程新建分类
+        [CMLCoreDataAccess addItemCategory:itemCategoryName type:type callBack:callBack];
+    }
 }
 
 //新增一级记账科目(sync)

@@ -43,17 +43,17 @@
     self.tableViewDataArr = @[
                               @[
                                   @{
-                                      @"icon": @"record_icon_selected",
+                                      @"icon": @"record_icon_record",
                                       @"title": @"每日收支明细"
                                       },
                                   @{
-                                      @"icon": @"record_icon_selected",
+                                      @"icon": @"record_icon_record",
                                       @"title": @"科目收支明细"
                                       }
                                   ],
                               @[
                                   @{
-                                      @"icon": @"record_icon_selected",
+                                      @"icon": @"record_icon_setting",
                                       @"title": @"科目设置"
                                       }
                                   ]

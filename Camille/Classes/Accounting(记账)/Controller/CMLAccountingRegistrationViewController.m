@@ -337,7 +337,7 @@
 
 - (void)addCategory:(NSString *)categoryName {
     __weak typeof(self) weakSelf = self;
-    [CMLCoreDataAccess addItemCategory:categoryName type:self.type callBack:^(CMLResponse *response) {
+    [CMLCoreDataAccess addCategory:categoryName type:self.type callBack:^(CMLResponse *response) {
         if (response) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {

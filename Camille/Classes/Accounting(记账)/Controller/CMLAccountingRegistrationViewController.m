@@ -341,13 +341,22 @@
         if (response) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                NSString *categoryID = response.responseDic[@"itemCategoryID"];
-                [weakSelf addItem:@"新增" inCategory:categoryID selectItemAfterAdd:NO];
-                
-                [SVProgressHUD showSuccessWithStatus:response.desc];
-                weakSelf.isAfterAddingCategory = YES;
-                [weakSelf fetchItemsData];
-                [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
+                NSString *status = response.responseDic[@"status"];
+                if ([status isEqualToString:@"success"]) {
+                    NSString *categoryID = response.responseDic[@"itemCategoryID"];
+                    [weakSelf addItem:@"添加" inCategory:categoryID selectItemAfterAdd:NO];
+                    
+                    [SVProgressHUD showSuccessWithStatus:response.desc];
+                    weakSelf.isAfterAddingCategory = YES;
+                    [weakSelf fetchItemsData];
+                    [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
+                    
+                } else if ([status isEqualToString:@"exist"]) {
+                    [SVProgressHUD showErrorWithStatus:response.desc];
+                    
+                } else if ([status isEqualToString:@"restore"]) {
+                    [SVProgressHUD showSuccessWithStatus:response.desc];
+                }
                 
             } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {
                 [SVProgressHUD showErrorWithStatus:response.desc];

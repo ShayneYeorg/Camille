@@ -730,7 +730,7 @@
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
     cmlResponse.code = RESPONSE_CODE_FAILD;
     cmlResponse.desc = @"添加分类出错";
-    cmlResponse.responseDic = nil;
+    cmlResponse.responseDic = @{@"status": @"error"};
     
     //查询
     NSError *error = nil;
@@ -741,22 +741,86 @@
         CMLItemCategory *category = categoris.firstObject;
         if ([category.isAvailable isEqualToString:Record_Available]) {
             //分类正常存在
-            cmlResponse.code = RESPONSE_CODE_FAILD;
+            cmlResponse.code = RESPONSE_CODE_SUCCEED;
             cmlResponse.desc = @"分类已存在";
-            cmlResponse.responseDic = nil;
+            cmlResponse.responseDic = @{@"status": @"exist"};
             callBack(cmlResponse);
             
         } else {
             //分类被删除
-            [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Available];
             //把分类下的"ITEM_LIST_HEAD"和"新增"复原
-            
+            BOOL isListHeadItemsRestore = [CMLCoreDataAccess restoreListHeadItemsInCategory:category];
+            if (isListHeadItemsRestore) {
+                //成功复原后就复原category
+                [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Available];
+                [CMLCoreDataAccess setLastItemCategoryNextID:category.categoryID type:category.categoryType];
+                cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立成功", itemCategoryName];
+                cmlResponse.responseDic = @{@"status": @"restore"};
+                callBack(cmlResponse);
+                
+            } else {
+                cmlResponse.code = RESPONSE_CODE_FAILD;
+                cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立失败", itemCategoryName];
+                cmlResponse.responseDic = @{@"status": @"error"};
+                callBack(cmlResponse);
+            }
         }
         
     } else {
         //3、不存在则按正常流程新建分类
         [CMLCoreDataAccess addItemCategory:itemCategoryName type:type callBack:callBack];
     }
+}
+
++ (BOOL)restoreListHeadItemsInCategory:(CMLItemCategory *)category {
+    //科目"新增"
+    NSFetchRequest *request1 = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity1 = [NSEntityDescription entityForName:@"CMLItem" inManagedObjectContext:kManagedObjectContext];
+    [request1 setEntity:entity1];
+    
+    NSString *str1 = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == '添加' AND itemType == '%@'", category.categoryID, category.categoryType];
+    NSPredicate *pre1 = [NSPredicate predicateWithFormat:str1];
+    [request1 setPredicate:pre1];
+    
+    NSError *error1 = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request1 error:&error1] mutableCopy];
+    CMLItem *item;
+    if (items.count) {
+        item = items.firstObject;
+        [CMLCoreDataAccess alterItem:item intoItemName:nil category:nil isAvailable:Record_Available callBack:^(CMLResponse *response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [CMLCoreDataAccess setItem:item nextItemID:nil];
+            }
+        }];
+        
+    } else {
+        return NO;
+    }
+    
+    //ITEM_LIST_HEAD
+    NSFetchRequest *request2 = [[NSFetchRequest alloc] init];
+    [request2 setEntity:entity1];
+    
+    NSString *str2 = [NSString stringWithFormat:@"categoryID == '%@' AND itemName == 'ITEM_LIST_HEAD' AND itemType == '%@'", category.categoryID, category.categoryType];
+    NSPredicate *pre2 = [NSPredicate predicateWithFormat:str2];
+    [request2 setPredicate:pre2];
+    
+    NSError *error2 = nil;
+    NSMutableArray *items2 = [[kManagedObjectContext executeFetchRequest:request2 error:&error2] mutableCopy];
+    if (items2.count) {
+        CMLItem *listHead = items2.firstObject;
+        [CMLCoreDataAccess alterItem:listHead intoItemName:nil category:nil isAvailable:Record_Available callBack:^(CMLResponse *response) {
+            if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                [CMLCoreDataAccess setItem:listHead nextItemID:item.itemID];
+            }
+        }];
+        
+    } else {
+        return NO;
+    }
+    
+    return YES;
 }
 
 //新增一级记账科目(sync)
@@ -771,7 +835,7 @@
     if (newID == nil) {
         cmlResponse.code = RESPONSE_CODE_FAILD;
         cmlResponse.desc = @"分配新的一级科目ID出错";
-        cmlResponse.responseDic = nil;
+        cmlResponse.responseDic = @{@"status": @"error"};
         
     } else {
         //Entity
@@ -791,7 +855,7 @@
                 CMLLog(@"新增时发生错误:%@,%@",error,[error userInfo]);
                 cmlResponse.code = RESPONSE_CODE_FAILD;
                 cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立出错", itemCategoryName];
-                cmlResponse.responseDic = nil;
+                cmlResponse.responseDic = @{@"status": @"error"};
                 
             } else {
                 //将一级科目链表最后一个科目的nextCategoryID置为newID
@@ -800,14 +864,14 @@
                     CMLLog(@"保存一级科目成功...");
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
                     cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立成功", itemCategoryName];
-                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", nil];
+                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:newID, @"itemCategoryID", @"success", @"status", nil];
                     
                 } else {
                     CMLLog(@"保存一级科目失败...");
                     CMLLog(@"错误:%@,%@",error,[error userInfo]);
                     cmlResponse.code = RESPONSE_CODE_FAILD;
                     cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立失败", itemCategoryName];
-                    cmlResponse.responseDic = nil;
+                    cmlResponse.responseDic = @{@"status": @"error"};
                 }
             }
         }

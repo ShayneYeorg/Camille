@@ -356,6 +356,9 @@
                     
                 } else if ([status isEqualToString:@"restore"]) {
                     [SVProgressHUD showSuccessWithStatus:response.desc];
+                    weakSelf.isAfterAddingCategory = YES;
+                    [weakSelf fetchItemsData];
+                    [[[CMLTool getWindow] viewWithTag:kNewItemAddingViewTag] removeFromSuperview];
                 }
                 
             } else if ([response.code isEqualToString:RESPONSE_CODE_FAILD]) {

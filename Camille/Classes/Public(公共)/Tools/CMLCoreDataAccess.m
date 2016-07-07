@@ -754,6 +754,7 @@
                 //成功复原后就复原category
                 [CMLCoreDataAccess alterCategory:category intoCategoryName:nil categoryType:nil isAvailable:Record_Available];
                 [CMLCoreDataAccess setLastItemCategoryNextID:category.categoryID type:category.categoryType];
+                [CMLCoreDataAccess setCategory:category nextCategoryID:nil];
                 cmlResponse.code = RESPONSE_CODE_SUCCEED;
                 cmlResponse.desc = [NSString stringWithFormat:@"分类\"%@\"建立成功", itemCategoryName];
                 cmlResponse.responseDic = @{@"status": @"restore"};

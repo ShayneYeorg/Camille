@@ -235,7 +235,17 @@
         CMLAccountingItemRightCell *cell = [CMLAccountingItemRightCell loadFromNib];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         CMLItem *item = self.itemsModel[indexPath.row];
-        cell.cellText.text = item.itemName;
+        
+        if (indexPath.row == 0) {
+            //“新增分类”或“添加”按钮
+            NSMutableAttributedString *aItemName = [[NSMutableAttributedString  alloc]initWithString:item.itemName];
+            [aItemName addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica-Bold" size:16.0] range:NSMakeRange(0, aItemName.length)];
+            cell.cellText.attributedText = aItemName;
+            
+        } else {
+            cell.cellText.text = item.itemName;
+        }
+        
         return cell;
     }
 }

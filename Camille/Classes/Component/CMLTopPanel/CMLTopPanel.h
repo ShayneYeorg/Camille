@@ -12,6 +12,9 @@
 
 + (instancetype)loadTopViewAbove:(UIView *)superView;
 
+- (void)showWithAnimation:(BOOL)animated;
+- (void)hideWithAnimation:(BOOL)animated;
+
 - (void)motionAfterScrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView;
 - (void)motionAfterScrollViewWillBeginDragging:(UIScrollView *)scrollView;

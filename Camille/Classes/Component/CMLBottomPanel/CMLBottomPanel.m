@@ -7,19 +7,18 @@
 //
 
 #import "CMLBottomPanel.h"
-#import "GMConstants.h"
 
-#define kBottomViewHeight  44
+const CGFloat bottomViewHeight  = 44;
 
 @interface CMLBottomPanel ()
 
-@property (nonatomic, assign) BOOL isManualDragging;
-@property (nonatomic, assign) CGFloat bottomViewInitialY;
 @property (nonatomic, assign) CGFloat superViewHeight;
 
 @end
 
 @implementation CMLBottomPanel {
+    BOOL _isManualDragging;
+    CGFloat _bottomViewInitialY;
     CGFloat _currentOffsetY;
     CGFloat _previousOffsetY;
 }
@@ -27,11 +26,9 @@
 #pragma mark - Public
 
 + (instancetype)loadBottomViewAbove:(UIView *)superView {
-    CMLBottomPanel *view = [[CMLBottomPanel alloc]initWithFrame:CGRectMake(0, superView.bounds.size.height-kBottomViewHeight, superView.bounds.size.width, kBottomViewHeight)];
-    view.backgroundColor = kAppColor;
-    view.isManualDragging = NO;
+    CMLBottomPanel *view = [[CMLBottomPanel alloc]initWithFrame:CGRectMake(0, superView.bounds.size.height-bottomViewHeight, superView.bounds.size.width, bottomViewHeight)];
     view.superViewHeight = superView.bounds.size.height;
-    view.bottomViewInitialY = view.frame.origin.y;
+    [view configDetails];
     [superView addSubview:view];
     
     return view;
@@ -40,10 +37,10 @@
 - (void)motionAfterScrollViewDidScroll:(UIScrollView *)scrollView {
     _currentOffsetY = scrollView.contentOffset.y;
     
-    if (_isManualDragging && self.frame.origin.y <= _superViewHeight && self.frame.origin.y >= _bottomViewInitialY) {
+    if (_isManualDragging) {
         CGRect topViewCurrentFrame = self.frame;
         //运动
-        [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y-(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, kBottomViewHeight)];
+        [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y-(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, bottomViewHeight)];
         
         //校正
         if (self.frame.origin.y > _superViewHeight) {
@@ -60,7 +57,7 @@
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView {
     _isManualDragging = NO;
     
-    if (self.frame.origin.y < _superViewHeight-(kBottomViewHeight/2)) {
+    if (self.frame.origin.y < _superViewHeight-(bottomViewHeight/2)) {
         [self showWithAnimation:YES];
         
     } else {
@@ -74,25 +71,31 @@
 
 #pragma mark - Private
 
+- (void)configDetails {
+    self.backgroundColor = kAppColor;
+    _isManualDragging = NO;
+    _bottomViewInitialY = self.frame.origin.y;
+}
+
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, _bottomViewInitialY, self.bounds.size.width, kBottomViewHeight)];
+            [self setFrame:CGRectMake(0, _bottomViewInitialY, self.bounds.size.width, bottomViewHeight)];
         }];
         
     } else {
-        [self setFrame:CGRectMake(0, _bottomViewInitialY, self.bounds.size.width, kBottomViewHeight)];
+        [self setFrame:CGRectMake(0, _bottomViewInitialY, self.bounds.size.width, bottomViewHeight)];
     }
 }
 
 - (void)hideWithAnimation:(BOOL)animated {
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, _superViewHeight, self.bounds.size.width, kBottomViewHeight)];
+            [self setFrame:CGRectMake(0, _superViewHeight, self.bounds.size.width, bottomViewHeight)];
         }];
         
     } else {
-        [self setFrame:CGRectMake(0, _superViewHeight, self.bounds.size.width, kBottomViewHeight)];
+        [self setFrame:CGRectMake(0, _superViewHeight, self.bounds.size.width, bottomViewHeight)];
     }
 }
 

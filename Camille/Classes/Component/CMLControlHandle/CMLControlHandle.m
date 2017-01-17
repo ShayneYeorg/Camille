@@ -8,17 +8,26 @@
 
 #import "CMLControlHandle.h"
 
-const CGFloat controlHandleHeight                 = 50;
-const CGFloat controlHandleWidth                  = 90;
-const CGFloat controlHandleDefaultBottomInterval  = 50;
+#define DEGREES_TO_RADIANS(x) (0.0174532925 * (x))
+#define kTurningSpeed         5
 
-@implementation CMLControlHandleCircleView
+const CGFloat controlHandleHeight                = 50;
+const CGFloat controlHandleWidth                 = 90;
+const CGFloat controlHandleDefaultBottomInterval = 50;
+
+@implementation CMLControlHandleCircleView {
+    CGFloat _currentRadian;
+}
+
+#pragma mark - Public
 
 + (CMLControlHandleCircleView *)loadCircleView {
     CMLControlHandleCircleView *circleView = [[CMLControlHandleCircleView alloc]initWithFrame:CGRectMake(0, 0, controlHandleHeight, controlHandleHeight)];
     circleView.layer.cornerRadius = controlHandleHeight/2;
     circleView.layer.masksToBounds = YES;
     circleView.backgroundColor = kAppColor;
+    circleView.isClockwiseAnimating = NO;
+    circleView.isAntiClockwiseAnimating = NO;
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, circleView.frame.size.width, circleView.frame.size.height)];
     lbl.textAlignment = NSTextAlignmentCenter;
@@ -31,13 +40,22 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
 }
 
 - (void)turnByClockwise {
-    CABasicAnimation* rotate =  [CABasicAnimation animationWithKeyPath: @"transform.rotation.z"];
+    if (_isClockwiseAnimating) {
+        return;
+    }
+    
+    [self.layer removeAllAnimations];
+    _isAntiClockwiseAnimating = NO;
+    _isClockwiseAnimating = YES;
+    
+    CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotate.removedOnCompletion = FALSE;
     rotate.fillMode = kCAFillModeForwards;
-    [rotate setToValue: [NSNumber numberWithFloat: - M_PI / 2]];
+    [rotate setToValue:[NSNumber numberWithFloat: M_PI / 2]];
     rotate.repeatCount = HUGE_VALF;
-    
-    rotate.duration = 0.25;
+    rotate.removedOnCompletion = NO;
+    rotate.fillMode = kCAFillModeForwards;
+    rotate.duration = 0.08;
     rotate.cumulative = TRUE;
     rotate.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     
@@ -45,28 +63,51 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
 }
 
 - (void)turnByAntiClockwise {
-//    CABasicAnimation* rotate =  [CABasicAnimation animationWithKeyPath: @"transform.rotation.z"];
-//    rotate.removedOnCompletion = FALSE;
-//    rotate.fillMode = kCAFillModeForwards;
-//    [rotate setToValue: [NSNumber numberWithFloat: - M_PI / 2]];
-//    rotate.repeatCount = HUGE_VALF;
-//    
-//    rotate.duration = 0.25;
-//    rotate.cumulative = TRUE;
-//    rotate.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-//    
-//    [self.layer addAnimation:rotate forKey:@"rotateAnimation"];
+    if (_isAntiClockwiseAnimating) {
+        return;
+    }
+    
+    [self.layer removeAllAnimations];
+    _isClockwiseAnimating = NO;
+    _isAntiClockwiseAnimating = YES;
+    
+    CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotate.removedOnCompletion = FALSE;
+    rotate.fillMode = kCAFillModeForwards;
+    [rotate setToValue:[NSNumber numberWithFloat: - M_PI / 2]];
+    rotate.repeatCount = HUGE_VALF;
+    rotate.removedOnCompletion = NO;
+    rotate.fillMode = kCAFillModeForwards;
+    rotate.duration = 0.08;
+    rotate.cumulative = TRUE;
+    rotate.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    
+    [self.layer addAnimation:rotate forKey:@"rotateAnimation"];
+}
+
+- (void)turnFrom:(CGFloat)lastOffsetY to:(CGFloat)currentOffsetY {
+    CGFloat displacement = currentOffsetY - lastOffsetY;
+    _currentRadian += DEGREES_TO_RADIANS(displacement) * kTurningSpeed;
+    //需要累积
+    self.layer.transform = CATransform3DMakeRotation(_currentRadian, 0, 0, 1);
 }
 
 - (void)stop {
+    _isClockwiseAnimating = NO;
+    _isAntiClockwiseAnimating = NO;
     [self.layer removeAllAnimations];
 }
 
 - (void)restore {
+    _currentRadian = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.layer.transform = CATransform3DMakeRotation(_currentRadian, 0, 0, 1);
+    }];
     
 }
 
 @end
+
 
 @interface CMLControlHandle ()
 
@@ -78,7 +119,6 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
 
 @implementation CMLControlHandle {
     CGFloat _currentOffsetY;
-    CGFloat _lastOffsetY;
     BOOL _isManualDragging;
     CGFloat _reserveWidth; //hide的时候保留的宽度
 }
@@ -122,7 +162,7 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
 }
 
 - (void)restore {
-    
+    [self.circleView restore];
 }
 
 - (void)showWithAnimation:(BOOL)animated {
@@ -137,7 +177,7 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
             if (self.alpha != 1) {
                 [UIView animateWithDuration:0.2 animations:^{
                     self.alpha = 1;
-                }];                
+                }];
             }
         }
         
@@ -169,7 +209,7 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
         
     } else {
         if (_moveAnimation) {
-        self.frame = CGRectMake(_superViewWidth - _reserveWidth, currentFrame.origin.y, currentFrame.size.width, currentFrame.size.height);
+            self.frame = CGRectMake(_superViewWidth - _reserveWidth, currentFrame.origin.y, currentFrame.size.width, currentFrame.size.height);
             
         } else {
             self.alpha = 0;
@@ -204,10 +244,23 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
         }
     }
     
+    
+    if (_isConstantSpeedTurning) {
+        if (_currentOffsetY > _lastOffsetY) {
+            [self turnByClockwise];
+            
+        } else {
+            [self turnByAntiClockwise];
+        }
+        
+    } else {
+        [self turnFrom:_lastOffsetY to:_currentOffsetY];
+    }
+    
     _lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView {
+- (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     _isManualDragging = NO;
     
     if (_moveAnimation) {
@@ -218,10 +271,37 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
             [self hideWithAnimation:YES];
         }
     }
+    
+    if (_isConstantSpeedTurning) {
+        [self stop];
+        
+    } else {
+        if (!decelerate) {
+            //            NSLog(@"不动了");
+            //scrollView直接停住不动了，要复位self
+            [self restore];
+            
+        } else {
+            //            NSLog(@"继续移动");
+            //还会继续移动
+        }
+    }
 }
 
 - (void)motionAfterScrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _isManualDragging = YES;
+}
+
+
+- (void)motionAfterScrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (_isConstantSpeedTurning) {
+        [self stop];
+        
+    } else {
+        //        NSLog(@"停了");
+        //scrollView滑动后自动停止了，要复位self
+        [self restore];
+    }
 }
 
 #pragma mark - Setter
@@ -262,6 +342,7 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
     _isManualDragging = NO;
     _reserveWidth = controlHandleHeight + 10;
     _rightViewHidden = NO;
+    _isConstantSpeedTurning = NO;
 }
 
 - (void)configRightView {
@@ -271,7 +352,7 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.rightView.frame.size.width, self.rightView.frame.size.height)];
     lbl.textAlignment = NSTextAlignmentCenter;
     lbl.font = [UIFont systemFontOfSize:14];
-    lbl.text = @"一笔";
+    lbl.text = @"     一笔";
     lbl.textColor = [UIColor grayColor];
     [self.rightView addSubview:lbl];
     
@@ -292,6 +373,10 @@ const CGFloat controlHandleDefaultBottomInterval  = 50;
     if (self.clickAction) {
         self.clickAction();
     }
+}
+
+- (void)turnFrom:(CGFloat)lastOffsetY to:(CGFloat)currentOffsetY {
+    [self.circleView turnFrom:lastOffsetY to:currentOffsetY];
 }
 
 @end

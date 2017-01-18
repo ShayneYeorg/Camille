@@ -32,6 +32,7 @@
 @property (nonatomic, strong) UIView *grayView;
 @property (nonatomic, strong) AddAccountingView *addingView;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, assign) BOOL isToBottomBtnClicked;
 
 @end
 
@@ -54,6 +55,7 @@
 
 - (void)configDetails {
     _currentTableViewInsetY = topPanelHeight;
+    _isToBottomBtnClicked = NO;
 }
 
 - (void)configBackgroungView {
@@ -179,8 +181,11 @@
         //在最底部
         [self.toBottomHandle hideWithAnimation:YES];
         [self.controlHandle restore];
-        _currentTableViewInsetY = topPanelHeight;
-        self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+        if (self.isToBottomBtnClicked) {
+            self.isToBottomBtnClicked = NO;
+            _currentTableViewInsetY = topPanelHeight;
+            self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+        }
         
     } else {
         [self.toBottomHandle showWithAnimation:YES];
@@ -249,6 +254,7 @@
     self.toBottomHandle.moveAnimation = NO;
     __weak typeof(self) weakSelf = self;
     self.toBottomHandle.clickAction = ^{
+        weakSelf.isToBottomBtnClicked = YES;
         NSDictionary *dic = weakSelf.dataArr.firstObject;
         NSArray *arr = dic[@"0"];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.dataArr.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];

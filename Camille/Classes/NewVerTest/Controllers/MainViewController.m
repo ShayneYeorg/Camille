@@ -208,6 +208,10 @@
         [self.dataArr removeLastObject];
         [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
         
+    } else if (self.dataArr.count == 14) {
+        //第二次下拉
+        [self.dataArr removeLastObject];
+        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

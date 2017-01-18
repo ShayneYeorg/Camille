@@ -69,7 +69,9 @@ static NSMutableArray *allDataArr;
         [returnArrM addObject:dicM2];
         
     } else if (startIndex == 40) {
-        
+        for (int i = 13; i < 20; i++) {
+            [returnArrM addObject:allDataArr[i]];
+        }
     }
     
     return returnArrM;

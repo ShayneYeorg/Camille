@@ -40,6 +40,8 @@
 #define kContent_CenterX kContent_Width/2
 #define kContent_CenterY kContent_Height/2
 
+//常用Block
+typedef void (^VoidBlock)(void);
 
 
 

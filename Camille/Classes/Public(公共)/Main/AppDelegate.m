@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CMLTabBarController.h"
 #import "CMLRecordViewController.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
 
@@ -24,7 +25,8 @@
     
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;
-    self.window.rootViewController = [[CMLTabBarController alloc]init];
+//    self.window.rootViewController = [[CMLTabBarController alloc]init];
+    self.window.rootViewController = [[MainViewController alloc]init];
     [self.window makeKeyAndVisible];
     
     return YES;

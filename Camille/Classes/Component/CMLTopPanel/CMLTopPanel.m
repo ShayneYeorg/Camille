@@ -41,10 +41,11 @@ const CGFloat topPanelHeight  = 64;
         } else if (self.frame.origin.y < -topPanelHeight) {
             [self hideWithAnimation:NO];
             
-        } else {
-            if ([self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
-                [self.delegate topPanelDidScroll:self];
-            }
+        }
+        
+        //已校正过了，所以self.frame.origin.y肯定在0到-topPanelHeight之间
+        if ([self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
+            [self.delegate topPanelDidScroll:self];
         }
     }
     

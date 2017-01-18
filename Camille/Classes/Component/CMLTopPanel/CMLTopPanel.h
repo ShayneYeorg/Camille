@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+extern const CGFloat topPanelHeight;
+
+@class CMLTopPanel;
+
+@protocol CMLTopPanelDelegate <NSObject>
+
+- (void)topPanelDidScroll:(CMLTopPanel *)topPanel;
+
+@end
+
 @interface CMLTopPanel : UIView
+
+@property (nonatomic, weak) id <CMLTopPanelDelegate> delegate;
 
 + (instancetype)loadTopViewAbove:(UIView *)superView;
 

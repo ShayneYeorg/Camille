@@ -8,7 +8,7 @@
 
 #import "CMLTopPanel.h"
 
-const CGFloat topViewHeight  = 64;
+const CGFloat topPanelHeight  = 64;
 
 @implementation CMLTopPanel {
     BOOL _isManualDragging;
@@ -19,7 +19,7 @@ const CGFloat topViewHeight  = 64;
 #pragma mark - Public
 
 + (instancetype)loadTopViewAbove:(UIView *)superView {
-    CMLTopPanel *view = [[CMLTopPanel alloc]initWithFrame:CGRectMake(0, 0, superView.bounds.size.width, topViewHeight)];
+    CMLTopPanel *view = [[CMLTopPanel alloc]initWithFrame:CGRectMake(0, 0, superView.bounds.size.width, topPanelHeight)];
     [view configDetails];
     [superView addSubview:view];
     
@@ -29,18 +29,22 @@ const CGFloat topViewHeight  = 64;
 - (void)motionAfterScrollViewDidScroll:(UIScrollView *)scrollView {
     _currentOffsetY = scrollView.contentOffset.y;
     
-    // && self.frame.origin.y <= 0 && self.frame.origin.y >= -topViewHeight
     if (_isManualDragging) {
         CGRect topViewCurrentFrame = self.frame;
         //运动
-        [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y+(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, topViewHeight)];
+        [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y+(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, topPanelHeight)];
         
         //校正
         if (self.frame.origin.y > 0) {
             [self showWithAnimation:NO];
             
-        } else if (self.frame.origin.y < -topViewHeight) {
+        } else if (self.frame.origin.y < -topPanelHeight) {
             [self hideWithAnimation:NO];
+            
+        } else {
+            if ([self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
+                [self.delegate topPanelDidScroll:self];
+            }
         }
     }
     
@@ -50,7 +54,7 @@ const CGFloat topViewHeight  = 64;
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView {
     _isManualDragging = NO;
     
-    if (self.frame.origin.y > -(topViewHeight/2)) {
+    if (self.frame.origin.y > -(topPanelHeight/2)) {
         [self showWithAnimation:YES];
         
     } else {
@@ -79,22 +83,22 @@ const CGFloat topViewHeight  = 64;
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topViewHeight)];
+            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
         }];
         
     } else {
-        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topViewHeight)];
+        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
     }
 }
 
 - (void)hideWithAnimation:(BOOL)animated {
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, -topViewHeight, self.bounds.size.width, topViewHeight)];
+            [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
         }];
         
     } else {
-        [self setFrame:CGRectMake(0, -topViewHeight, self.bounds.size.width, topViewHeight)];
+        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
     }
 }
 

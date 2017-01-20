@@ -179,6 +179,7 @@
     CGFloat bottomOffset = scrollView.contentSize.height - contentOffsetY;
     if (bottomOffset <= height) {
         //在最底部
+        self.topView.delegateSwitch = NO;
         [self.toBottomHandle hideWithAnimation:YES];
         [self.controlHandle restore];
         if (self.isToBottomBtnClicked) {
@@ -188,6 +189,7 @@
         }
         
     } else {
+        self.topView.delegateSwitch = YES;
         [self.toBottomHandle showWithAnimation:YES];
     }
 }

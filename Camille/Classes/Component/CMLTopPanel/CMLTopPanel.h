@@ -21,6 +21,7 @@ extern const CGFloat topPanelHeight;
 @interface CMLTopPanel : UIView
 
 @property (nonatomic, weak) id <CMLTopPanelDelegate> delegate;
+@property (nonatomic, assign) BOOL delegateSwitch; //是否要回调delegate的方法
 
 + (instancetype)loadTopViewAbove:(UIView *)superView;
 

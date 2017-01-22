@@ -71,6 +71,7 @@
 		3499BE1A1C84144D004EE4BD /* CMLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE121C84144D004EE4BD /* CMLItem.m */; };
 		3499BE1B1C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE141C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m */; };
 		3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE161C84144D004EE4BD /* CMLAccounting.m */; };
+		34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */; };
 		34D03C481CFC364300422D9D /* CMLItemCategorySettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */; };
 		34D03C491CFC364300422D9D /* CMLItemCategorySettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */; };
 		34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C4B1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m */; };
@@ -214,6 +215,8 @@
 		3499BE141C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLAccounting+CoreDataProperties.m"; sourceTree = "<group>"; };
 		3499BE151C84144D004EE4BD /* CMLAccounting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccounting.h; sourceTree = "<group>"; };
 		3499BE161C84144D004EE4BD /* CMLAccounting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccounting.m; sourceTree = "<group>"; };
+		34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UpsideDown.h"; sourceTree = "<group>"; };
+		34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UpsideDown.m"; sourceTree = "<group>"; };
 		34D03C451CFC364300422D9D /* CMLItemCategorySettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemCategorySettingCell.h; sourceTree = "<group>"; };
 		34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemCategorySettingCell.m; sourceTree = "<group>"; };
 		34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLItemCategorySettingCell.xib; sourceTree = "<group>"; };
@@ -449,6 +452,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		34C82C301E345EF4001CDC93 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */,
+				34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		34D21C2D1C776CC8004264C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +614,7 @@
 				34D21C8B1C7814F3004264C2 /* Tools */,
 				34D21CA11C788948004264C2 /* Category */,
 				340579321C8EB4E700C79F9D /* Lib */,
+				34C82C301E345EF4001CDC93 /* Extension */,
 				34D21C8A1C7814F3004264C2 /* Other */,
 			);
 			path = "Public(公共)";
@@ -792,6 +805,7 @@
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
 				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
+				34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */,
 				34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
 				34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */,

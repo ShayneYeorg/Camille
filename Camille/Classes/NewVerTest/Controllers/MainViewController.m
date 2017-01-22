@@ -14,6 +14,7 @@
 #import "CMLControlHandle.h"
 #import "AddAccountingView.h"
 #import "SectionHeaderView.h"
+#import "UIScrollView+UpsideDown.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20
@@ -179,7 +180,7 @@
     CGFloat bottomOffset = scrollView.contentSize.height - contentOffsetY;
     if (bottomOffset <= height) {
         //在最底部
-        self.topView.delegateSwitch = NO;
+        self.tableView.scrollsToBottom = YES;
         [self.toBottomHandle hideWithAnimation:YES];
         [self.controlHandle restore];
         if (self.isToBottomBtnClicked) {
@@ -189,7 +190,7 @@
         }
         
     } else {
-        self.topView.delegateSwitch = YES;
+        self.tableView.scrollsToBottom = NO;
         [self.toBottomHandle showWithAnimation:YES];
     }
 }

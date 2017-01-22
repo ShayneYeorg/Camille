@@ -12,7 +12,7 @@
 
 + (instancetype)loadSectionHeaderView {
     SectionHeaderView *view = [[SectionHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kSectionHeaderHeight)];
-    view.backgroundColor = RGB(120, 120, 120);
+    view.backgroundColor = RGB(150, 150, 150);
     
     return view;
 }

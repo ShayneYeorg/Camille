@@ -7,6 +7,7 @@
 //
 
 #import "CMLTopPanel.h"
+#import "UIScrollView+UpsideDown.h"
 
 const CGFloat topPanelHeight  = 64;
 
@@ -44,7 +45,7 @@ const CGFloat topPanelHeight  = 64;
         }
         
         //已校正过了，所以self.frame.origin.y肯定在0到-topPanelHeight之间
-        if (_delegateSwitch && [self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
+        if (!scrollView.scrollsToBottom && [self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
             [self.delegate topPanelDidScroll:self];
         }
     }
@@ -72,7 +73,6 @@ const CGFloat topPanelHeight  = 64;
 - (void)configDetails {
     self.backgroundColor = kAppColor;
     _isManualDragging = NO;
-    _delegateSwitch = NO;
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, self.bounds.size.width, self.bounds.size.height-20)];
     lbl.textAlignment = NSTextAlignmentCenter;

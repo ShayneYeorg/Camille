@@ -30,7 +30,7 @@ const CGFloat topPanelHeight  = 64;
 - (void)motionAfterScrollViewDidScroll:(UIScrollView *)scrollView {
     _currentOffsetY = scrollView.contentOffset.y;
     
-    if (_isManualDragging) {
+    if (!scrollView.scrollsToBottom && _isManualDragging) {
         CGRect topViewCurrentFrame = self.frame;
         //运动
         [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y+(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, topPanelHeight)];
@@ -45,7 +45,7 @@ const CGFloat topPanelHeight  = 64;
         }
         
         //已校正过了，所以self.frame.origin.y肯定在0到-topPanelHeight之间
-        if (!scrollView.scrollsToBottom && [self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
+        if ([self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
             [self.delegate topPanelDidScroll:self];
         }
     }
@@ -84,9 +84,22 @@ const CGFloat topPanelHeight  = 64;
 
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
-        }];
+//        [UIView animateWithDuration:0.2 animations:^{
+//            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
+//        }];
+        
+        CGFloat currentY = self.frame.origin.y;
+        while (currentY < 0) {
+            currentY += 2;
+            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
+            if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+                [self.delegate topPanelDidShowWithAnimation:self];
+            }
+        }
+        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+            [self.delegate topPanelDidShowWithAnimation:self];
+        }
         
     } else {
         [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
@@ -95,9 +108,22 @@ const CGFloat topPanelHeight  = 64;
 
 - (void)hideWithAnimation:(BOOL)animated {
     if (animated) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-        }];
+//        [UIView animateWithDuration:0.2 animations:^{
+//            [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
+//        }];
+
+        CGFloat currentY = self.frame.origin.y;
+        while (currentY > -topPanelHeight) {
+            currentY -= 2;
+            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
+            if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+                [self.delegate topPanelDidHideWithAnimation:self];
+            }
+        }
+        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+            [self.delegate topPanelDidHideWithAnimation:self];
+        }
         
     } else {
         [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];

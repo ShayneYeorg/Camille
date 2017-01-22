@@ -304,4 +304,12 @@
     }
 }
 
+- (void)topPanelDidShowWithAnimation:(CMLTopPanel *)topPanel {
+    self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+}
+
+- (void)topPanelDidHideWithAnimation:(CMLTopPanel *)topPanel {
+    self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+}
+
 @end

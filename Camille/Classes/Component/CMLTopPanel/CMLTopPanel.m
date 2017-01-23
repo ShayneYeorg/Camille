@@ -88,22 +88,64 @@ const CGFloat topPanelHeight  = 64;
 //            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
 //        }];
         
-        CGFloat currentY = self.frame.origin.y;
-        while (currentY < 0) {
-            currentY += 2;
-            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
-            if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-                [self.delegate topPanelDidShowWithAnimation:self];
-            }
-        }
-        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
-        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-            [self.delegate topPanelDidShowWithAnimation:self];
-        }
+//        CGFloat currentY = self.frame.origin.y;
+//        while (currentY < 0) {
+//            currentY += 2;
+//            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
+//            if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+//                [self.delegate topPanelDidShowWithAnimation:self];
+//            }
+//        }
+//        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
+//        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+//            [self.delegate topPanelDidShowWithAnimation:self];
+//        }
+
+        [self moveFrom:self.frame.origin.y isShowing:YES];
         
     } else {
         [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
     }
+}
+
+- (void)moveFrom:(CGFloat)currentY isShowing:(BOOL)isShowing {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.02 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        CGFloat newY;
+        if (isShowing) {
+            newY = currentY + 5;
+            
+        } else {
+            newY = currentY - 5;
+        }
+        
+        self.frame = CGRectMake(0, newY, self.bounds.size.width, topPanelHeight);
+        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+            [self.delegate topPanelDidShowWithAnimation:self];
+        }
+        
+        if (isShowing) {
+            if (newY < 0) {
+                [self moveFrom:newY isShowing:isShowing];
+                
+            } else {
+                self.frame = CGRectMake(0, 0, self.bounds.size.width, topPanelHeight);
+                if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+                    [self.delegate topPanelDidShowWithAnimation:self];
+                }
+            }
+            
+        } else {
+            if (newY > -topPanelHeight) {
+                [self moveFrom:newY isShowing:isShowing];
+                
+            } else {
+                self.frame = CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight);
+                if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+                    [self.delegate topPanelDidShowWithAnimation:self];
+                }
+            }
+        }
+    });
 }
 
 - (void)hideWithAnimation:(BOOL)animated {
@@ -112,18 +154,20 @@ const CGFloat topPanelHeight  = 64;
 //            [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
 //        }];
 
-        CGFloat currentY = self.frame.origin.y;
-        while (currentY > -topPanelHeight) {
-            currentY -= 2;
-            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
-            if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-                [self.delegate topPanelDidHideWithAnimation:self];
-            }
-        }
-        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-            [self.delegate topPanelDidHideWithAnimation:self];
-        }
+//        CGFloat currentY = self.frame.origin.y;
+//        while (currentY > -topPanelHeight) {
+//            currentY -= 2;
+//            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
+//            if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+//                [self.delegate topPanelDidHideWithAnimation:self];
+//            }
+//        }
+//        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
+//        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+//            [self.delegate topPanelDidHideWithAnimation:self];
+//        }
+        
+        [self moveFrom:self.frame.origin.y isShowing:NO];
         
     } else {
         [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];

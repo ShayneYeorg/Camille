@@ -199,6 +199,16 @@
     [self.controlHandle motionAfterScrollViewDidEndDecelerating:scrollView];
 }
 
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    [self.topView hideWithAnimation:NO];
+    [self.bottomView hideWithAnimation:NO];
+    return YES;
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    [self.controlHandle restore];
+}
+
 - (void)loadNewDataWithExistCount:(NSInteger)count {
     _isLoading = YES;
     [self.controlHandle restore];

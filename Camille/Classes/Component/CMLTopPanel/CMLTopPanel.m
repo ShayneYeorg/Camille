@@ -84,27 +84,26 @@ const CGFloat topPanelHeight  = 64;
 
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
-//        [UIView animateWithDuration:0.2 animations:^{
-//            [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
-//        }];
-        
-//        CGFloat currentY = self.frame.origin.y;
-//        while (currentY < 0) {
-//            currentY += 2;
-//            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
-//            if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-//                [self.delegate topPanelDidShowWithAnimation:self];
-//            }
-//        }
-//        [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
-//        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-//            [self.delegate topPanelDidShowWithAnimation:self];
-//        }
 
         [self moveFrom:self.frame.origin.y isShowing:YES];
         
     } else {
         [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
+            [self.delegate topPanelDidShowWithAnimation:self];
+        }
+    }
+}
+
+- (void)hideWithAnimation:(BOOL)animated {
+    if (animated) {
+        [self moveFrom:self.frame.origin.y isShowing:NO];
+        
+    } else {
+        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+            [self.delegate topPanelDidHideWithAnimation:self];
+        }
     }
 }
 
@@ -140,38 +139,12 @@ const CGFloat topPanelHeight  = 64;
                 
             } else {
                 self.frame = CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight);
-                if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-                    [self.delegate topPanelDidShowWithAnimation:self];
+                if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
+                    [self.delegate topPanelDidHideWithAnimation:self];
                 }
             }
         }
     });
-}
-
-- (void)hideWithAnimation:(BOOL)animated {
-    if (animated) {
-//        [UIView animateWithDuration:0.2 animations:^{
-//            [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-//        }];
-
-//        CGFloat currentY = self.frame.origin.y;
-//        while (currentY > -topPanelHeight) {
-//            currentY -= 2;
-//            self.frame = CGRectMake(0, currentY, self.bounds.size.width, topPanelHeight);
-//            if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-//                [self.delegate topPanelDidHideWithAnimation:self];
-//            }
-//        }
-//        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-//        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-//            [self.delegate topPanelDidHideWithAnimation:self];
-//        }
-        
-        [self moveFrom:self.frame.origin.y isShowing:NO];
-        
-    } else {
-        [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-    }
 }
 
 @end

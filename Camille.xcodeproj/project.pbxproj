@@ -303,6 +303,7 @@
 				34883E0A1E2C9B26001C78E4 /* CMLControlHandle */,
 				3426CC3F1E1E4889006B2215 /* CMLBottomPanel */,
 				3426CC421E1E4889006B2215 /* CMLTopPanel */,
+				34C82C351E35FD44001CDC93 /* CMLTransition */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -459,6 +460,13 @@
 				34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		34C82C351E35FD44001CDC93 /* CMLTransition */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CMLTransition;
 			sourceTree = "<group>";
 		};
 		34D21C2D1C776CC8004264C2 /* Classes */ = {

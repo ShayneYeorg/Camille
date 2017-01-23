@@ -15,7 +15,7 @@
 }
 
 - (BOOL)scrollsToBottom {
-    return objc_getAssociatedObject(self, _cmd);
+    return ([objc_getAssociatedObject(self, _cmd) integerValue] != 0);
 }
 
 @end

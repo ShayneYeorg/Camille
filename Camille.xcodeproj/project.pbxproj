@@ -72,6 +72,10 @@
 		3499BE1B1C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE141C84144D004EE4BD /* CMLAccounting+CoreDataProperties.m */; };
 		3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BE161C84144D004EE4BD /* CMLAccounting.m */; };
 		34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */; };
+		34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */; };
+		34C82C3B1E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.m */; };
+		34C82C3E1E360459001CDC93 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C3D1E360459001CDC93 /* AccountViewController.m */; };
+		34C82C411E3605B0001CDC93 /* UIViewController+CMLTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C401E3605B0001CDC93 /* UIViewController+CMLTransition.m */; };
 		34D03C481CFC364300422D9D /* CMLItemCategorySettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */; };
 		34D03C491CFC364300422D9D /* CMLItemCategorySettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */; };
 		34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D03C4B1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m */; };
@@ -217,6 +221,14 @@
 		3499BE161C84144D004EE4BD /* CMLAccounting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccounting.m; sourceTree = "<group>"; };
 		34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UpsideDown.h"; sourceTree = "<group>"; };
 		34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UpsideDown.m"; sourceTree = "<group>"; };
+		34C82C361E35FE51001CDC93 /* CMLTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTransitionManager.h; sourceTree = "<group>"; };
+		34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTransitionManager.m; sourceTree = "<group>"; };
+		34C82C391E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CMLTransitionManager+BreakOpenAnimation.h"; sourceTree = "<group>"; };
+		34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLTransitionManager+BreakOpenAnimation.m"; sourceTree = "<group>"; };
+		34C82C3C1E360459001CDC93 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		34C82C3D1E360459001CDC93 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		34C82C3F1E3605B0001CDC93 /* UIViewController+CMLTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CMLTransition.h"; sourceTree = "<group>"; };
+		34C82C401E3605B0001CDC93 /* UIViewController+CMLTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CMLTransition.m"; sourceTree = "<group>"; };
 		34D03C451CFC364300422D9D /* CMLItemCategorySettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLItemCategorySettingCell.h; sourceTree = "<group>"; };
 		34D03C461CFC364300422D9D /* CMLItemCategorySettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLItemCategorySettingCell.m; sourceTree = "<group>"; };
 		34D03C471CFC364300422D9D /* CMLItemCategorySettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMLItemCategorySettingCell.xib; sourceTree = "<group>"; };
@@ -416,6 +428,8 @@
 			children = (
 				34883E191E2F6B34001C78E4 /* MainViewController.h */,
 				34883E1A1E2F6B34001C78E4 /* MainViewController.m */,
+				34C82C3C1E360459001CDC93 /* AccountViewController.h */,
+				34C82C3D1E360459001CDC93 /* AccountViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -458,6 +472,8 @@
 			children = (
 				34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */,
 				34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */,
+				34C82C3F1E3605B0001CDC93 /* UIViewController+CMLTransition.h */,
+				34C82C401E3605B0001CDC93 /* UIViewController+CMLTransition.m */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -465,6 +481,10 @@
 		34C82C351E35FD44001CDC93 /* CMLTransition */ = {
 			isa = PBXGroup;
 			children = (
+				34C82C361E35FE51001CDC93 /* CMLTransitionManager.h */,
+				34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */,
+				34C82C391E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.h */,
+				34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.m */,
 			);
 			path = CMLTransition;
 			sourceTree = "<group>";
@@ -848,11 +868,14 @@
 				34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */,
 				34883E2D1E2F6B5D001C78E4 /* AddAccountingView.m in Sources */,
 				3426CC451E1E4889006B2215 /* CMLBottomPanel.m in Sources */,
+				34C82C411E3605B0001CDC93 /* UIViewController+CMLTransition.m in Sources */,
 				3405793B1C8EB4E700C79F9D /* SVIndefiniteAnimatedView.m in Sources */,
 				3405793D1C8EB4E700C79F9D /* SVProgressHUD.m in Sources */,
 				34FA38961C944A0300A049E8 /* CMLAccountingAmountCell.m in Sources */,
+				34C82C3B1E36018F001CDC93 /* CMLTransitionManager+BreakOpenAnimation.m in Sources */,
 				34FA389B1C95358500A049E8 /* CMLAccountingDateCell.m in Sources */,
 				34883E2F1E2F6B5D001C78E4 /* SectionHeaderView.m in Sources */,
+				34C82C3E1E360459001CDC93 /* AccountViewController.m in Sources */,
 				3441D0B41C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m in Sources */,
 				345E0BA21C9F90F600A52488 /* MJPropertyKey.m in Sources */,
 				3426CC461E1E4889006B2215 /* CMLTopPanel.m in Sources */,
@@ -873,6 +896,7 @@
 				34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */,
 				34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */,
 				345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */,
+				34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */,
 				3499BE1C1C84144D004EE4BD /* CMLAccounting.m in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,
 				3499BE1A1C84144D004EE4BD /* CMLItem.m in Sources */,

@@ -1,0 +1,15 @@
+//
+//  CMLTransitionManager+BreakOpenAnimation.h
+//  Camille
+//
+//  Created by 杨淳引 on 2017/1/23.
+//  Copyright © 2017年 shayneyeorg. All rights reserved.
+//
+
+#import "CMLTransitionManager.h"
+
+@interface CMLTransitionManager (BreakOpenAnimation)
+
+- (void)breakOpenWithTransitionContext:(id <UIViewControllerContextTransitioning>)transitionContext;
+
+@end

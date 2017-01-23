@@ -15,6 +15,8 @@
 #import "AddAccountingView.h"
 #import "SectionHeaderView.h"
 #import "UIScrollView+UpsideDown.h"
+#import "AccountViewController.h"
+#import "UIViewController+CMLTransition.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20
@@ -150,6 +152,15 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+//    [self presentViewController:[AccountViewController new] animated:YES completion:^{
+//        
+//    }];
+    
+    [self CML_presentViewController:[[AccountViewController alloc] init] animationType:0 completion:nil];
+}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self.topView motionAfterScrollViewDidEndDragging:scrollView];

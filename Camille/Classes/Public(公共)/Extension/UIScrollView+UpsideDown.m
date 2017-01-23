@@ -8,16 +8,14 @@
 
 #import "UIScrollView+UpsideDown.h"
 
-static BOOL _scrollsToBottom;
-
 @implementation UIScrollView (UpsideDown)
 
 - (void)setScrollsToBottom:(BOOL)scrollsToBottom {
-    _scrollsToBottom = scrollsToBottom;
+    objc_setAssociatedObject(self, @selector(scrollsToBottom), @(scrollsToBottom), OBJC_ASSOCIATION_RETAIN);
 }
 
 - (BOOL)scrollsToBottom {
-    return _scrollsToBottom;
+    return objc_getAssociatedObject(self, _cmd);
 }
 
 @end

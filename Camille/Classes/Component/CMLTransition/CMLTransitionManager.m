@@ -23,10 +23,10 @@
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
     _transitionContext = transitionContext;
-    [self transitionBackAnimation:transitionContext withAnimationType:0];
+    [self transitionAnimation:transitionContext withAnimationType:_transitionType];
 }
 
-- (void)transitionBackAnimation:(id <UIViewControllerContextTransitioning>) transitionContext withAnimationType:(NSInteger)animationType {
+- (void)transitionAnimation:(id <UIViewControllerContextTransitioning>)transitionContext withAnimationType:(NSInteger)animationType {
     
 //    if ((NSInteger)animationType < (NSInteger)WXSTransitionAnimationTypeDefault) {
 //        [self backSysTransitionAnimationWithType:_backAnimationType  context:transitionContext];
@@ -49,12 +49,23 @@
 //        }
 //    }
 //    free(methodlist);
-    
-    [self brickOpenVerticalNextTransitionAnimation:transitionContext];
+    switch (animationType) {
+        case 1:
+            [self brickOpenVerticalNextTransitionAnimation:transitionContext];
+            break;
+            
+        default:
+            [self brickOpenVerticalBackTransitionAnimation:transitionContext];
+            break;
+    }
 }
 
 - (void)brickOpenVerticalNextTransitionAnimation:(id<UIViewControllerContextTransitioning>)transitionContext {
     [self breakOpenWithTransitionContext:transitionContext];
+}
+
+-(void)brickOpenVerticalBackTransitionAnimation:(id<UIViewControllerContextTransitioning>)transitionContext{
+    [self brickCloseBackWithTransitionContext:transitionContext];
 }
 
 @end

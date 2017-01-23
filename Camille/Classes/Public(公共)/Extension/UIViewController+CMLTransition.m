@@ -9,6 +9,8 @@
 #import "UIViewController+CMLTransition.h"
 #import "CMLTransitionManager.h"
 
+CMLTransitionManager *_transtion;
+
 @implementation UIViewController (CMLTransition)
 
 - (void)CML_presentViewController:(UIViewController *)viewControllerToPresent animationType:(NSInteger)animationType completion:(void (^)(void))completion {
@@ -42,16 +44,22 @@
 //        return nil;//present directly
 //    }
     
-//    !_transtion ? _transtion = [[WXSTransitionManager alloc] init] : nil ;
+    !_transtion ? _transtion = [[CMLTransitionManager alloc] init] : nil ;
 //    WXSTransitionProperty *make = [[WXSTransitionProperty alloc] init];
 //    self.wxs_callBackTransition ? self.wxs_callBackTransition(make) : nil;
 //    _transtion = [WXSTransitionManager copyPropertyFromObjcet:make toObjcet:_transtion];
-//    _transtion.transitionType = WXSTransitionTypePresent;
+    _transtion.transitionType = 1;
 //    self.wxs_delegateFlag = _transtion.isSysBackAnimation ? NO : YES;
 //    self.wxs_backGestureEnable =  make.backGestureEnable;
 //    return _transtion;
     
-    return [CMLTransitionManager new];
+    return _transtion;
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    !_transtion ? _transtion = [[CMLTransitionManager alloc] init] : nil;
+    _transtion.transitionType = 2;
+    return _transtion;
 }
 
 @end

@@ -10,6 +10,7 @@
 
 @interface CMLTransitionManager : NSObject <UIViewControllerAnimatedTransitioning>
 
+@property (nonatomic, assign) NSInteger transitionType;
 @property (nonatomic, assign) NSTimeInterval animationTime;
 
 @end

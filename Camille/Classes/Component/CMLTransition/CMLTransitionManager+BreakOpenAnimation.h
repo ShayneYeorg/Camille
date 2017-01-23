@@ -12,4 +12,6 @@
 
 - (void)breakOpenWithTransitionContext:(id <UIViewControllerContextTransitioning>)transitionContext;
 
+- (void)brickCloseBackWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext;
+
 @end

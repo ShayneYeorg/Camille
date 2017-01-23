@@ -17,7 +17,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor yellowColor];
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
+    b.backgroundColor = [UIColor blackColor];
+    [b setTitle:@"click" forState:UIControlStateNormal];
+    [b addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:b];
+}
+
+- (void)dealloc {
+    CMLLog(@"%s", __func__);
+}
+
+- (void)click {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

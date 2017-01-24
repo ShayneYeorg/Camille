@@ -17,24 +17,23 @@
     
     UIView *fromView = fromVC.view;
     UIView *toView = toVC.view;
+    
     [containerView addSubview:fromView];
     [containerView addSubview:toView];
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    
     toView.layer.transform = CATransform3DMakeTranslation(screenWidth,0,0);
-    [UIView animateWithDuration:1 animations:^{
-        
-        fromView.layer.transform = CATransform3DMakeScale(0.95,0.95,1);
+    
+    [UIView animateWithDuration:self.transitionTime animations:^{
+        fromView.layer.transform = CATransform3DMakeScale(0.9,0.9,1);
         toView.layer.transform = CATransform3DIdentity;
         
-    } completion:^(BOOL finished){
-        
+    } completion:^(BOOL finished) {
         if ([transitionContext transitionWasCancelled]) {
             [transitionContext completeTransition:NO];
             fromView.layer.transform = CATransform3DIdentity;
             
-        }else{
+        } else {
             [transitionContext completeTransition:YES];
             fromView.layer.transform = CATransform3DIdentity;
         }
@@ -42,7 +41,6 @@
 }
 
 - (void)backlashThenPopWithContext:(id<UIViewControllerContextTransitioning>)transitionContext {
-    
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIView *containerView = [transitionContext containerView];
@@ -57,42 +55,26 @@
     [containerView addSubview:fromView];
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    toView.layer.transform = CATransform3DMakeScale(0.95,0.95,1);
+    toView.layer.transform = CATransform3DMakeScale(0.9,0.9,1);
     fromView.layer.transform = CATransform3DIdentity;
-    [UIView animateWithDuration:1 animations:^{
+    
+    [UIView animateWithDuration:self.transitionTime animations:^{
         toView.layer.transform = CATransform3DIdentity;
         fromView.layer.transform = CATransform3DMakeTranslation(screenWidth,0,0);
         
-    } completion:^(BOOL finished){
-        
+    } completion:^(BOOL finished) {
         [tempToView removeFromSuperview];
         toView.hidden = NO;
         [tempFromView removeFromSuperview];
         toView.layer.transform = CATransform3DIdentity;
         if ([transitionContext transitionWasCancelled]) {
             [transitionContext completeTransition:NO];
-        }else{
+            
+        } else {
             [transitionContext completeTransition:YES];
         }
     }];
-    
-//    self.willEndInteractiveBlock = ^(BOOL success) {
-//        
-//        if (success) {
-//            toView.layer.transform = CATransform3DIdentity;
-//            fromView.hidden = YES;
-//            [containerView addSubview:tempToView];
-//        }else {
-//            fromView.hidden = NO;
-//            toView.layer.transform = CATransform3DIdentity;
-//            
-//            [tempToView removeFromSuperview];
-//            [containerView addSubview:tempFromView];
-//            
-//            
-//        }
-//        
-//    };
-    
 }
+
 @end
+

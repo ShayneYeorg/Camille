@@ -158,7 +158,7 @@
     
 //    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
     
-    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:CMLTransitionAnimationBacklashThenPush completion:nil];
+    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

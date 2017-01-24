@@ -21,5 +21,6 @@ typedef NS_ENUM (NSInteger, CMLTransitionType) {
 @interface CMLTransitionManager : NSObject <UIViewControllerAnimatedTransitioning>
 
 @property (nonatomic, assign) CMLTransitionType transitionType;
+@property (nonatomic, assign) NSTimeInterval transitionTime;
 
 @end

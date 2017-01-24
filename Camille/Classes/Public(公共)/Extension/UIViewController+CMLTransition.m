@@ -30,12 +30,14 @@ CMLTransitionManager *_transtion;
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     !_transtion ? _transtion = [[CMLTransitionManager alloc] init] : nil ;
     _transtion.transitionType = CMLTransitionOpen;
+    _transtion.transitionTime = 0.5;
     return _transtion;
 }
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     !_transtion ? _transtion = [[CMLTransitionManager alloc] init] : nil;
     _transtion.transitionType = CMLTransitionClose;
+    _transtion.transitionTime = 0.5;
     return _transtion;
 }
 

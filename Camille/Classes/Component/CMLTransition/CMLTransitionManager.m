@@ -14,7 +14,7 @@
 @implementation CMLTransitionManager
 
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-    return 1;
+    return _transitionTime;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -29,10 +29,8 @@
             break;
             
         case CMLTransitionAnimationBacklashThenPush:
-            [self backlashThenPushTransitionWithContext:transitionContext transitionType:transitionType];
-            break;
-            
         default:
+            [self backlashThenPushTransitionWithContext:transitionContext transitionType:transitionType];
             break;
     }
 }

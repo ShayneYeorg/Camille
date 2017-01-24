@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15F34" minimumToolsVersion="Automatic">
-    <entity name="CMLAccounting" representedClassName="CMLAccounting" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="createTime" optional="YES" attributeType="Date" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Accounting" representedClassName="Accounting" syncable="YES">
+        <attribute name="accountingID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="createTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="happenDay" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="happenTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="happenTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CMLItem" representedClassName="CMLItem" syncable="YES">
-        <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="Item" representedClassName="Item" syncable="YES">
         <attribute name="isAvailable" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nextItemID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CMLItemCategory" representedClassName="CMLItemCategory" syncable="YES">
-        <attribute name="categoryID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="categoryName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="categoryType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isAvailable" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nextCategoryID" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="Report_Month_Item" representedClassName="Report_Month_Item" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Report_Month_Item_NeedUpdate" representedClassName="Report_Month_Item_NeedUpdate" syncable="YES">
+        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CMLAccounting" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="CMLItem" positionX="-27" positionY="54" width="128" height="135"/>
-        <element name="CMLItemCategory" positionX="-54" positionY="18" width="128" height="120"/>
+        <element name="Accounting" positionX="-504" positionY="-66" width="128" height="165"/>
+        <element name="Item" positionX="-504" positionY="126" width="128" height="105"/>
+        <element name="Report_Month_Item_NeedUpdate" positionX="-153" positionY="-63" width="198" height="90"/>
+        <element name="Report_Month_Item" positionX="-315" positionY="-69" width="128" height="105"/>
     </elements>
 </model>

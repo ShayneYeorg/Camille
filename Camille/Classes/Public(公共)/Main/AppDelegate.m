@@ -20,8 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [CMLCoreDataAccess checkInitialItem:Item_Type_Cost];
-    [CMLCoreDataAccess checkInitialItem:Item_Type_Income];
+//    [CMLCoreDataAccess checkInitialItem:Item_Type_Cost];
+//    [CMLCoreDataAccess checkInitialItem:Item_Type_Income];
     
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;

@@ -1,5 +1,5 @@
 //
-//  CMLTransitionManager+BreakOpenAnimation.h
+//  CMLTransitionManager+BreakAnimation.h
 //  Camille
 //
 //  Created by 杨淳引 on 2017/1/23.
@@ -8,10 +8,9 @@
 
 #import "CMLTransitionManager.h"
 
-@interface CMLTransitionManager (BreakOpenAnimation)
+@interface CMLTransitionManager (BreakAnimation)
 
 - (void)breakOpenWithTransitionContext:(id <UIViewControllerContextTransitioning>)transitionContext;
-
-- (void)brickCloseBackWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext;
+- (void)breakCloseWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext;
 
 @end

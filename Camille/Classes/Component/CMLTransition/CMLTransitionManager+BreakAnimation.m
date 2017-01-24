@@ -1,14 +1,14 @@
 //
-//  CMLTransitionManager+BreakOpenAnimation.m
+//  CMLTransitionManager+BreakAnimation.m
 //  Camille
 //
 //  Created by 杨淳引 on 2017/1/23.
 //  Copyright © 2017年 shayneyeorg. All rights reserved.
 //
 
-#import "CMLTransitionManager+BreakOpenAnimation.h"
+#import "CMLTransitionManager+BreakAnimation.h"
 
-@implementation CMLTransitionManager (BreakOpenAnimation)
+@implementation CMLTransitionManager (BreakAnimation)
 
 
 - (void)breakOpenWithTransitionContext:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -77,7 +77,7 @@
     
 }
 
-- (void)brickCloseBackWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
+- (void)breakCloseWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
     
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
@@ -157,6 +157,9 @@
 //        };
 
 }
+
+
+
 
 - (UIImage *)imageFromView: (UIView *)view atFrame:(CGRect)rect{
     

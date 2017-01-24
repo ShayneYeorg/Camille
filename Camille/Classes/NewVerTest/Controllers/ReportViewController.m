@@ -7,6 +7,7 @@
 //
 
 #import "ReportViewController.h"
+#import "UIViewController+CMLTransition.h"
 
 @interface ReportViewController ()
 
@@ -17,15 +18,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     b.backgroundColor = [UIColor redColor];
     [b setTitle:@"click" forState:UIControlStateNormal];
     [b addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
+    
+    UIButton *b2 = [[UIButton alloc]initWithFrame:CGRectMake(100, 300, 100, 50)];
+    b2.backgroundColor = [UIColor blackColor];
+    [b2 setTitle:@"go" forState:UIControlStateNormal];
+    [b2 addTarget:self action:@selector(click2) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:b2];
+}
+
+- (void)click2 {
+    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:CMLTransitionAnimationBacklashThenPush completion:nil];
 }
 
 - (void)click {
-    NSLog(@"click");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -25,6 +25,7 @@
     
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;
+    self.window.backgroundColor = [UIColor redColor];
 //    self.window.rootViewController = [[CMLTabBarController alloc]init];
     self.window.rootViewController = [[MainViewController alloc]init];
     [self.window makeKeyAndVisible];

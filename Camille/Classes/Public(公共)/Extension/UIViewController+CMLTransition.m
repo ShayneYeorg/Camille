@@ -22,6 +22,7 @@ CMLTransitionManager *_transtion;
 
 - (void)CML_presentViewController:(UIViewController *)viewControllerToPresent transitionType:(CMLTransitionAnimationType)transitionAnimationType completion:(void (^)(void))completion {
     viewControllerToPresent.transitioningDelegate = viewControllerToPresent;
+    self.transitionAnimationType = transitionAnimationType;
     viewControllerToPresent.transitionAnimationType = transitionAnimationType;
     [self presentViewController:viewControllerToPresent animated:YES completion:completion];
 }

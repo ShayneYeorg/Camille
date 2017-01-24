@@ -7,14 +7,9 @@
 //
 
 #import "CMLTransitionManager.h"
-#import "CMLTransitionManager+BreakOpenAnimation.h"
 #import "UIViewController+CMLTransition.h"
-
-@interface CMLTransitionManager ()
-
-//@property (nonatomic, assign) id <UIViewControllerContextTransitioning> transitionContext;
-
-@end
+#import "CMLTransitionManager+BreakAnimation.h"
+#import "CMLTransitionManager+BacklashThenPushAnimation.h"
 
 @implementation CMLTransitionManager
 
@@ -29,12 +24,15 @@
 
 - (void)transitionAnimation:(id <UIViewControllerContextTransitioning>)transitionContext transitionAnimationType:(CMLTransitionAnimationType)animationType transitionType:(CMLTransitionType)transitionType {
     switch (animationType) {
-        case CMLTransitionAnimationBreakOpen:
+        case CMLTransitionAnimationBreak:
             [self breakTransitionWithContext:transitionContext transitionType:transitionType];
             break;
             
+        case CMLTransitionAnimationBacklashThenPush:
+            [self backlashThenPushTransitionWithContext:transitionContext transitionType:transitionType];
+            break;
+            
         default:
-//            [self brickOpenVerticalBackTransitionAnimation:transitionContext];
             break;
     }
 }
@@ -46,7 +44,22 @@
             break;
             
         case CMLTransitionClose:
-            [self brickCloseBackWithTransitionContext:transitionContext];
+            [self breakCloseWithTransitionContext:transitionContext];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)backlashThenPushTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext transitionType:(CMLTransitionType)transitionType {
+    switch (transitionType) {
+        case CMLTransitionOpen:
+            [self backlashThenPushWithContext:transitionContext];
+            break;
+            
+        case CMLTransitionClose:
+            [self backlashThenPopWithContext:transitionContext];
             break;
             
         default:

@@ -19,6 +19,8 @@
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
 
+#import "Accounting+CoreDataClass.h"
+
 #define cellHeight         50
 #define dataCountPerPage   20
 #define reloadOffset       60

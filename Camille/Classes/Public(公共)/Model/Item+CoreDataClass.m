@@ -84,6 +84,7 @@ static NSDictionary *itemsDictionary;
             item.itemID = newID;
             item.itemType = type;
             item.isAvailable = Record_Available;
+            item.useCount = 0;
             
             //保存
             NSError *error = nil;
@@ -95,7 +96,7 @@ static NSDictionary *itemsDictionary;
                 } else {
                     cmlResponse.code = RESPONSE_CODE_SUCCEED;
                     cmlResponse.desc = kTipSaveSuccess;
-                    CMLLog(@"新增item成功");
+                    CMLLog(@"新增item(%@)成功", itemName);
                     cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:item, KEY_Item, nil];
                     callBack(cmlResponse);
                 }
@@ -184,5 +185,9 @@ static NSDictionary *itemsDictionary;
         callBack(nil);
     }
 }
+
+#pragma mark - 查询item
+
+
 
 @end

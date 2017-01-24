@@ -18,5 +18,6 @@
 @dynamic itemName;
 @dynamic itemType;
 @dynamic isAvailable;
+@dynamic useCount;
 
 @end

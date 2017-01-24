@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *itemName;
 @property (nullable, nonatomic, copy) NSString *itemType;
 @property (nullable, nonatomic, copy) NSString *isAvailable;
+@property (nonatomic, assign) int64_t useCount;
 
 @end
 

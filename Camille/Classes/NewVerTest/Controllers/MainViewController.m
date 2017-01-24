@@ -52,19 +52,11 @@
     
     [self configDetails];
     [self configBackgroungView];
-//    [self configTableView];
-//    [self configTopView];
-//    [self configBottomView];
-//    [self configControlHandle];
-//    [self configToBottomHandle];
-    
-    
-    [Item addItemWithName:@"二" type:Item_Type_Cost callBack:^(CMLResponse * _Nonnull response) {
-//        Item *i = response.responseDic[KEY_Item];
-//        [Item deleteItem:i callBack:^(CMLResponse * _Nonnull response) {
-//            
-//        }];
-    }];
+    [self configTableView];
+    [self configTopView];
+    [self configBottomView];
+    [self configControlHandle];
+    [self configToBottomHandle];
 }
 
 - (void)configDetails {

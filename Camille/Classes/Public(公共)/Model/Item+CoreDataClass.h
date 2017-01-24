@@ -60,3 +60,15 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 #import "Item+CoreDataProperties.h"
+
+
+
+//测试数据
+//    [Item addItemWithName:@"二" type:Item_Type_Cost callBack:^(CMLResponse * _Nonnull response) {
+////        Item *i = response.responseDic[KEY_Item];
+////        [Item deleteItem:i callBack:^(CMLResponse * _Nonnull response) {
+////
+////        }];
+//    }];
+
+

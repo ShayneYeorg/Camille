@@ -14,7 +14,7 @@ static NSDictionary *itemsDictionary;
 
 #pragma mark - 添加item
 
-+ (void)addItem:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
++ (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
     //1、先判断itemName是否存在
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -44,6 +44,7 @@ static NSDictionary *itemsDictionary;
         if (theExistItem) {
             if ([theExistItem.isAvailable isEqualToString:Record_Available]) {
                 //查询对象是有效的
+                CMLLog(@"添加的item已存在并且是有效的");
                 cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
                 cmlResponse.code = RESPONSE_CODE_FAILD;
                 cmlResponse.desc = kTipExist;
@@ -51,6 +52,7 @@ static NSDictionary *itemsDictionary;
                 
             } else {
                 //查询对象之前被删除过，将它复原即可
+                CMLLog(@"添加的item被删除过，只需复原即可");
                 [self restoreItem:theExistItem callBack:^(CMLResponse *response) {
                     if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
@@ -70,7 +72,7 @@ static NSDictionary *itemsDictionary;
         
     } else {
         //5、查询发现item不存在，需要添加
-        NSString *newID = [self createNewItemIDWithItemType:type];
+        NSString *newID = [self createNewItemID];
         if (newID == nil) {
             CMLLog(@"分配itemID时出错");
             callBack(nil);
@@ -122,18 +124,10 @@ static NSDictionary *itemsDictionary;
 }
 
 //为新item创建ID
-+ (NSString *)createNewItemIDWithItemType:(NSString *)itemType {
-    //为二级记账科目分配一个ID（使用当前时间的年月日时分秒组成）
-    NSString *newID;
-    
-    //检查新分配ID在当前一级科目下是否有重名，有则重新分配，直到没有重名为止
-    @try {
-        do {
-            newID = [self createANewItemID];
-            
-        } while (![self verifyItemID:newID]);
-        
-    } @catch (NSException *exception) {
++ (NSString *)createNewItemID {
+    //分配一个ID并检查新分配ID在当前一级科目下是否有重名，有则返回nil
+    NSString *newID = [self createANewItemID];
+    if (![self verifyItemID:newID]) {
         return nil;
     }
     
@@ -176,6 +170,19 @@ static NSDictionary *itemsDictionary;
 
 #pragma mark - 删除item
 
-
++ (void)deleteItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack {
+    item.isAvailable = Record_Unavailable;
+    CMLResponse *response = [[CMLResponse alloc]init];
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"删除item成功");
+        response.code = RESPONSE_CODE_SUCCEED;
+        callBack(response);
+        
+    } else {
+        CMLLog(@"删除item失败");
+        callBack(nil);
+    }
+}
 
 @end

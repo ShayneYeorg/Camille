@@ -13,6 +13,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Item : NSManagedObject
 
+
+/**
+ 添加item
+
+ @param itemName 要添加的item的名字
+ @param type     要添加的item的类型
+ @param callBack 回调
+ */
++ (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+
+/**
+ 删除item
+
+ @param item     要删除的item
+ @param callBack 回调
+ */
++ (void)deleteItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack;
+
+
+
+
+
+
+
+
 /**
  判断某个item是否存在，查询的是缓存字典的数据
 

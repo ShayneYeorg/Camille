@@ -19,7 +19,7 @@
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
 
-#import "Accounting+CoreDataClass.h"
+#import "Item+CoreDataClass.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20
@@ -52,11 +52,19 @@
     
     [self configDetails];
     [self configBackgroungView];
-    [self configTableView];
-    [self configTopView];
-    [self configBottomView];
-    [self configControlHandle];
-    [self configToBottomHandle];
+//    [self configTableView];
+//    [self configTopView];
+//    [self configBottomView];
+//    [self configControlHandle];
+//    [self configToBottomHandle];
+    
+    
+    [Item addItemWithName:@"二" type:Item_Type_Cost callBack:^(CMLResponse * _Nonnull response) {
+//        Item *i = response.responseDic[KEY_Item];
+//        [Item deleteItem:i callBack:^(CMLResponse * _Nonnull response) {
+//            
+//        }];
+    }];
 }
 
 - (void)configDetails {

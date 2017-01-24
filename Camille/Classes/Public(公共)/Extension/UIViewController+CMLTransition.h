@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CMLTransitionManager.h"
 
 @interface UIViewController (CMLTransition) <UIViewControllerTransitioningDelegate>
 
-- (void)CML_presentViewController:(UIViewController *)viewControllerToPresent animationType:(NSInteger)animationType completion:(void (^)(void))completion;
+@property (nonatomic, assign) CMLTransitionAnimationType transitionAnimationType;
+
+- (void)CML_presentViewController:(UIViewController *)viewControllerToPresent transitionType:(CMLTransitionAnimationType)transitionType completion:(void (^)(void))completion;
 
 @end

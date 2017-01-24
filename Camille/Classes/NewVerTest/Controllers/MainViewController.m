@@ -159,7 +159,7 @@
 //        
 //    }];
     
-    [self CML_presentViewController:[[AccountViewController alloc] init] animationType:0 completion:nil];
+    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreakOpen completion:nil];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

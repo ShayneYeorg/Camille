@@ -8,9 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM (NSInteger, CMLTransitionAnimationType) {
+    CMLTransitionAnimationBreakOpen = 0,
+    CMLTransitionAnimationBacklashThenPush,
+};
+
+typedef NS_ENUM (NSInteger, CMLTransitionType) {
+    CMLTransitionOpen = 0,
+    CMLTransitionClose,
+};
+
 @interface CMLTransitionManager : NSObject <UIViewControllerAnimatedTransitioning>
 
-@property (nonatomic, assign) NSInteger transitionType;
-@property (nonatomic, assign) NSTimeInterval animationTime;
+@property (nonatomic, assign) CMLTransitionAnimationType transitionAnimationType;
+@property (nonatomic, assign) CMLTransitionType transitionType;
+//@property (nonatomic, assign) NSTimeInterval animationTime;
 
 @end

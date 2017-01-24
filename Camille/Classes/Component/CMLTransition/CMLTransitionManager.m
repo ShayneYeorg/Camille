@@ -8,64 +8,50 @@
 
 #import "CMLTransitionManager.h"
 #import "CMLTransitionManager+BreakOpenAnimation.h"
+#import "UIViewController+CMLTransition.h"
 
 @interface CMLTransitionManager ()
 
-@property (nonatomic, assign) id <UIViewControllerContextTransitioning> transitionContext;
+//@property (nonatomic, assign) id <UIViewControllerContextTransitioning> transitionContext;
 
 @end
 
 @implementation CMLTransitionManager
 
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-    return _animationTime;
+    return 1;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-    _transitionContext = transitionContext;
-    [self transitionAnimation:transitionContext withAnimationType:_transitionType];
+    UIViewController *viewControllerToPresent = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    [self transitionAnimation:transitionContext transitionAnimationType:viewControllerToPresent.transitionAnimationType transitionType:_transitionType];
 }
 
-- (void)transitionAnimation:(id <UIViewControllerContextTransitioning>)transitionContext withAnimationType:(NSInteger)animationType {
-    
-//    if ((NSInteger)animationType < (NSInteger)WXSTransitionAnimationTypeDefault) {
-//        [self backSysTransitionAnimationWithType:_backAnimationType  context:transitionContext];
-//    }
-//    
-//    unsigned int count = 0;
-//    Method *methodlist = class_copyMethodList([WXSTransitionManager class], &count);
-//    int tag= 0;
-//    for (int i = 0; i < count; i++) {
-//        Method method = methodlist[i];
-//        SEL selector = method_getName(method);
-//        NSString *methodName = NSStringFromSelector(selector);
-//        if ([methodName rangeOfString:@"BackTransitionAnimation"].location != NSNotFound) {
-//            tag++;
-//            if (tag == animationType - WXSTransitionAnimationTypeDefault) {
-//                ((void (*)(id,SEL,id<UIViewControllerContextTransitioning>,WXSTransitionAnimationType))objc_msgSend)(self,selector,transitionContext,animationType);
-//                break;
-//            }
-//            
-//        }
-//    }
-//    free(methodlist);
+- (void)transitionAnimation:(id <UIViewControllerContextTransitioning>)transitionContext transitionAnimationType:(CMLTransitionAnimationType)animationType transitionType:(CMLTransitionType)transitionType {
     switch (animationType) {
-        case 1:
-            [self brickOpenVerticalNextTransitionAnimation:transitionContext];
+        case CMLTransitionAnimationBreakOpen:
+            [self breakTransitionWithContext:transitionContext transitionType:transitionType];
             break;
             
         default:
-            [self brickOpenVerticalBackTransitionAnimation:transitionContext];
+//            [self brickOpenVerticalBackTransitionAnimation:transitionContext];
             break;
     }
 }
 
-- (void)brickOpenVerticalNextTransitionAnimation:(id<UIViewControllerContextTransitioning>)transitionContext {
-    [self breakOpenWithTransitionContext:transitionContext];
-}
-
--(void)brickOpenVerticalBackTransitionAnimation:(id<UIViewControllerContextTransitioning>)transitionContext{
-    [self brickCloseBackWithTransitionContext:transitionContext];
+- (void)breakTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext transitionType:(CMLTransitionType)transitionType {
+    switch (transitionType) {
+        case CMLTransitionOpen:
+            [self breakOpenWithTransitionContext:transitionContext];
+            break;
+            
+        case CMLTransitionClose:
+            [self brickCloseBackWithTransitionContext:transitionContext];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

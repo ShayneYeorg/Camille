@@ -21,6 +21,12 @@
 #define kTipDeleteFail                @"删除失败"
 #define kTipFetchSuccess              @"查询成功"
 #define kTipFetchFail                 @"查询失败"
+#define kTipExist                     @"查询对象已存在"
+#define kTipRestore                   @"科目已复原"
+
+//KEY
+#define KEY_Item                      @"item"
+#define KEY_ItemID                    @"itemID"
 
 @interface CMLResponse : NSObject
 

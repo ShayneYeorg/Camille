@@ -47,6 +47,16 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
  */
 + (void)fetchItemsWithType:(Item_Fetch_Type)itemFetchType callBack:(void(^)(CMLResponse *response))callBack;
 
+/**
+ 修改某个item，参数传nil则表示此字段不改动
+
+ @param item 要修改的item
+ @param itemName 修改后的itemName
+ @param itemType 修改后的itemType
+ @param callBack 回调
+ */
++ (void)alterItem:(Item *)item itemName:(NSString *)itemName itemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack;
+
 
 
 /**
@@ -105,5 +115,21 @@ NS_ASSUME_NONNULL_END
 ////
 ////        }];
 //    }];
+
+
+
+//NSString *itemName = [Item itemNameByItemID:@"20170125125913"];
+//NSString *itemType = [Item itemTypeByItemID:@"20170125125913"];
+//NSArray *arr1 = [Item getAllIncomeItems];
+//NSArray *arr2 = [Item getAllCostItems];
+//
+//Item *i = arr1[1];
+//[Item itemUsed:i];
+//
+//NSArray *arr22 = [Item getAllCostItems];
+//NSArray *arr21 = [Item getAllIncomeItems];
+//
+//CMLLog(@"finish");
+
 
 

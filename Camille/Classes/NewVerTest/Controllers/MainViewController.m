@@ -57,7 +57,6 @@
 //    [self configBottomView];
 //    [self configControlHandle];
 //    [self configToBottomHandle];
-    
 }
 
 - (void)configDetails {

@@ -11,6 +11,7 @@
 typedef NS_ENUM (NSInteger, CMLTransitionAnimationType) {
     CMLTransitionAnimationBreak = 0,
     CMLTransitionAnimationBacklashThenPush,
+    CMLTransitionAnimationBoom,
 };
 
 typedef NS_ENUM (NSInteger, CMLTransitionType) {

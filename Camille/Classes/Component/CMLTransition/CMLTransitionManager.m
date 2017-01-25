@@ -10,6 +10,7 @@
 #import "UIViewController+CMLTransition.h"
 #import "CMLTransitionManager+BreakAnimation.h"
 #import "CMLTransitionManager+BacklashThenPushAnimation.h"
+#import "CMLTransitionManager+BoomAnimation.h"
 
 @implementation CMLTransitionManager
 
@@ -26,6 +27,10 @@
     switch (animationType) {
         case CMLTransitionAnimationBreak:
             [self breakTransitionWithContext:transitionContext transitionType:transitionType];
+            break;
+            
+        case CMLTransitionAnimationBoom:
+            [self boomTransitionWithContext:transitionContext transitionType:transitionType];
             break;
             
         case CMLTransitionAnimationBacklashThenPush:
@@ -58,6 +63,21 @@
             
         case CMLTransitionClose:
             [self backlashThenPopWithContext:transitionContext];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)boomTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext transitionType:(CMLTransitionType)transitionType {
+    switch (transitionType) {
+        case CMLTransitionOpen:
+            [self boomOpenWithContext:transitionContext];
+            break;
+            
+        case CMLTransitionClose:
+            [self boomCloseWithContext:transitionContext];
             break;
             
         default:

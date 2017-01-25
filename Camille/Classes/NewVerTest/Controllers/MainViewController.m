@@ -16,10 +16,10 @@
 #import "SectionHeaderView.h"
 #import "UIScrollView+UpsideDown.h"
 #import "AccountViewController.h"
+#import "AccountAddingViewController.h"
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
 
-#import "Accounting+CoreDataClass.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20
@@ -160,7 +160,9 @@
     
 //    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
     
-    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
+//    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
+    
+    [self CML_presentViewController:[AccountAddingViewController new] transitionType:CMLTransitionAnimationBoom completion:nil];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

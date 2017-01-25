@@ -8,9 +8,46 @@
 
 #import "Item+CoreDataClass.h"
 
-static NSDictionary *itemsDictionary;
+//缓存
+static BOOL needUpdate; //以下这4个容器类对象的内容是否过期，由needUpdate来标识
+static NSMutableDictionary *itemNameMapper; //key为itemID，value为itemName
+static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
+static NSMutableArray *incomeItems; //存放所有的收入item
+static NSMutableArray *costItems; //存放所有的支出item
 
 @implementation Item
+
+#pragma mark - Life Cycle
+
++ (void)load {
+    CMLLog(@"%s", __func__);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        needUpdate = YES;
+        itemNameMapper = [NSMutableDictionary dictionary];
+        itemTypeMapper = [NSMutableDictionary dictionary];
+        incomeItems = [NSMutableArray array];
+        costItems = [NSMutableArray array];
+    });
+}
+
+#pragma mark - Pubilc
+
+
+
+#pragma mark - 数据状态管理
+
++ (void)_setNeedUpdate {
+    needUpdate = YES;
+}
+
++ (BOOL)_needUpdate {
+    return needUpdate;
+}
+
++ (void)_update {
+    
+}
 
 #pragma mark - 添加item
 
@@ -58,9 +95,11 @@ static NSDictionary *itemsDictionary;
                         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
                         cmlResponse.code = RESPONSE_CODE_SUCCEED;
                         cmlResponse.desc = kTipRestore;
+                        [self _setNeedUpdate];
                         callBack(cmlResponse);
                         
                     } else {
+                        [self _setNeedUpdate];
                         callBack(nil);
                     }
                 }];
@@ -91,6 +130,7 @@ static NSDictionary *itemsDictionary;
             if ([kManagedObjectContext save:&error]) {
                 if (error) {
                     CMLLog(@"添加item时发生错误:%@,%@",error,[error userInfo]);
+                    [self _setNeedUpdate];
                     callBack(nil);
                     
                 } else {
@@ -98,10 +138,12 @@ static NSDictionary *itemsDictionary;
                     cmlResponse.desc = kTipSaveSuccess;
                     CMLLog(@"新增item(%@)成功", itemName);
                     cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:item, KEY_Item, nil];
+                    [self _setNeedUpdate];
                     callBack(cmlResponse);
                 }
                 
             } else {
+                [self _setNeedUpdate];
                 callBack(nil);
             }
         }
@@ -178,16 +220,66 @@ static NSDictionary *itemsDictionary;
     if ([kManagedObjectContext save:&error]) {
         CMLLog(@"删除item成功");
         response.code = RESPONSE_CODE_SUCCEED;
+        [self _setNeedUpdate];
         callBack(response);
         
     } else {
         CMLLog(@"删除item失败");
+        [self _setNeedUpdate];
         callBack(nil);
     }
 }
 
 #pragma mark - 查询item
 
-
++ (void)fetchItemsWithType:(Item_Fetch_Type)itemFetchType callBack:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //Response
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    
+    //设置查询条件
+    switch (itemFetchType) {
+        case Item_Fetch_Cost: {
+            NSString *str = [NSString stringWithFormat:@"itemType == '%@'", Item_Type_Cost];
+            NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+            [request setPredicate:pre];
+        }
+            break;
+            
+        case Item_Fetch_Income: {
+            NSString *str = [NSString stringWithFormat:@"itemType == '%@'", Item_Type_Income];
+            NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+            [request setPredicate:pre];
+        }
+            break;
+            
+        case Item_Fetch_All:
+        default:
+            break;
+    }
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    //取数据
+    if (items == nil) {
+        CMLLog(@"查询items时发生错误:%@,%@", error, [error userInfo]);
+        callBack(nil);
+        
+    } else {
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = kTipFetchSuccess;
+        [items sortUsingComparator:^NSComparisonResult(Item *i1, Item *i2) {
+            return [@(i2.useCount) compare:@(i1.useCount)];
+        }];
+        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:items, KEY_Items, nil];
+        callBack(cmlResponse);
+    }
+}
 
 @end

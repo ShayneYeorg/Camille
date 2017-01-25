@@ -26,6 +26,7 @@
 
 //KEY
 #define KEY_Item                      @"item"
+#define KEY_Items                     @"items"
 #define KEY_ItemID                    @"itemID"
 
 @interface CMLResponse : NSObject

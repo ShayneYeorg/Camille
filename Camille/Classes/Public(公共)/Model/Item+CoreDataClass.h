@@ -11,6 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
+    Item_Fetch_All = 0,
+    Item_Fetch_Income,
+    Item_Fetch_Cost,
+};
+
 @interface Item : NSManagedObject
 
 
@@ -32,8 +38,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)deleteItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack;
 
+/**
+ 查询item
 
-
+ @param itemFetchType item类型
+ @param callBack 回调
+ */
++ (void)fetchItemsWithType:(Item_Fetch_Type)itemFetchType callBack:(void(^)(CMLResponse *response))callBack;
 
 
 

@@ -20,7 +20,6 @@ static NSMutableArray *costItems; //存放所有的支出item
 #pragma mark - Life Cycle
 
 + (void)load {
-    CMLLog(@"%s", __func__);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         needUpdate = YES;
@@ -33,7 +32,77 @@ static NSMutableArray *costItems; //存放所有的支出item
 
 #pragma mark - Pubilc
 
++ (NSString *)itemNameByItemID:(NSString *)itemID {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    if ([self _needUpdate]) {
+        [self _update];
+    }
+    dispatch_semaphore_signal(lock);
+    
+    return itemNameMapper[itemID];
+}
 
++ (NSString *)itemTypeByItemID:(NSString *)itemID {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    if ([self _needUpdate]) {
+        [self _update];
+    }
+    dispatch_semaphore_signal(lock);
+    
+    return itemTypeMapper[itemID];
+}
+
++ (NSMutableArray *)getAllIncomeItems {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    if ([self _needUpdate]) {
+        [self _update];
+    }
+    dispatch_semaphore_signal(lock);
+    
+    return incomeItems;
+}
+
++ (NSMutableArray *)getAllCostItems {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    if ([self _needUpdate]) {
+        [self _update];
+    }
+    dispatch_semaphore_signal(lock);
+    
+    return costItems;
+}
+
++ (void)itemUsed:(Item *)item {
+    item.useCount += 1;
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"更新item的useCount成功");
+        
+    } else {
+        CMLLog(@"更新item的useCount失败");
+    }
+    [self _setNeedUpdate];
+}
 
 #pragma mark - 数据状态管理
 
@@ -46,7 +115,57 @@ static NSMutableArray *costItems; //存放所有的支出item
 }
 
 + (void)_update {
+    __weak typeof(self) weakSelf = self;
     
+    [self fetchItemsWithType:Item_Fetch_Income callBack:^(CMLResponse * _Nonnull response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+                [incomeItems removeAllObjects];
+                [incomeItems addObjectsFromArray:response.responseDic[KEY_Items]];
+                for (Item *i in incomeItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                }
+            }
+        }
+    }];
+    
+    [self fetchItemsWithType:Item_Fetch_Cost callBack:^(CMLResponse * _Nonnull response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+                [costItems removeAllObjects];
+                [costItems addObjectsFromArray:response.responseDic[KEY_Items]];
+                for (Item *i in costItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                }
+            }
+        }
+    }];
+    
+    needUpdate = NO;
+}
+
++ (void)_updateItemNameMapperWithKey:(NSString *)key value:(NSString *)value {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    [itemNameMapper setValue:value forKey:key];
+    dispatch_semaphore_signal(lock);
+}
+
++ (void)_updateItemTypeMapperWithKey:(NSString *)key value:(NSString *)value {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    [itemTypeMapper setValue:value forKey:key];
+    dispatch_semaphore_signal(lock);
 }
 
 #pragma mark - 添加item

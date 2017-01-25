@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
  */
 + (void)deleteItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack;
 
+
 /**
  查询item
 
@@ -48,23 +49,46 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
 
 
 
-
-
 /**
- 判断某个item是否存在，查询的是缓存字典的数据
-
- @param itemID item的ID
- @return       void
- */
-+ (BOOL)isItemIDExist:(NSString *)itemID;
-
-/**
- 从缓存字典里取出某个item
+ 根据某个itemID获得它的itemName，查询的是缓存的数据
  
  @param itemID item的ID
- @return       void
+ @return       itemName
  */
 + (NSString *)itemNameByItemID:(NSString *)itemID;
+
+
+/**
+ 根据某个itemID获得它的itemType，查询的是缓存的数据
+
+ @param itemID item的ID
+ @return       itemType
+ */
++ (NSString *)itemTypeByItemID:(NSString *)itemID;
+
+
+/**
+ 获得所有的收入item，数组已根据item的使用次数进行了排序
+
+ @return 所有的收入item
+ */
++ (NSMutableArray *)getAllIncomeItems;
+
+
+/**
+ 获得所有的支出item，数组已根据item的使用次数进行了排序
+ 
+ @return 所有的支出item
+ */
++ (NSMutableArray *)getAllCostItems;
+
+
+/**
+ 标识使用了某个item，会让item的使用次数加1
+
+ @param itemID item的ID
+ */
++ (void)itemUsed:(Item *)item;
 
 @end
 

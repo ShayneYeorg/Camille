@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
     Item_Fetch_All = 0,
     Item_Fetch_Income,
@@ -19,6 +17,7 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
 
 @interface Item : NSManagedObject
 
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  添加item
@@ -46,16 +45,6 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
  @param callBack 回调
  */
 + (void)fetchItemsWithType:(Item_Fetch_Type)itemFetchType callBack:(void(^)(CMLResponse *response))callBack;
-
-/**
- 修改某个item，参数传nil则表示此字段不改动
-
- @param item 要修改的item
- @param itemName 修改后的itemName
- @param itemType 修改后的itemType
- @param callBack 回调
- */
-+ (void)alterItem:(Item *)item itemName:(NSString *)itemName itemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack;
 
 
 
@@ -100,9 +89,20 @@ typedef NS_ENUM(NSInteger, Item_Fetch_Type) {
  */
 + (void)itemUsed:(Item *)item;
 
-@end
-
 NS_ASSUME_NONNULL_END
+
+//由于这个方法可传nil，所以放在NONULL编译块的外面
+/**
+ 修改某个item，参数传nil则表示此字段不改动
+ 
+ @param item 要修改的item
+ @param itemName 修改后的itemName
+ @param itemType 修改后的itemType
+ @param callBack 回调
+ */
++ (void)alterItem:(Item * _Nonnull)item itemName:(NSString * _Nullable)itemName itemType:(NSString * _Nullable)itemType callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack;
+
+@end
 
 #import "Item+CoreDataProperties.h"
 
@@ -130,6 +130,20 @@ NS_ASSUME_NONNULL_END
 //NSArray *arr21 = [Item getAllIncomeItems];
 //
 //CMLLog(@"finish");
+
+
+
+//NSArray *arr1 = [Item getAllIncomeItems];
+//Item *i = arr1[1];
+//CMLLog(@"%@", i.itemName);
+//CMLLog(@"%@", i.itemType);
+//
+//[Item alterItem:i itemName:nil itemType:Item_Type_Cost callback:^(CMLResponse * _Nullable response) {
+//    NSArray *arr2 = [Item getAllIncomeItems];
+//    Item *i = arr2[1];
+//    CMLLog(@"%@", i.itemName);
+//    CMLLog(@"%@", i.itemType);
+//}];
 
 
 

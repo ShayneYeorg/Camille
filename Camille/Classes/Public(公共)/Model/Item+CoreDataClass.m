@@ -403,6 +403,30 @@ static NSMutableArray *costItems; //存放所有的支出item
 
 #pragma mark - 修改item
 
-
++ (void)alterItem:(Item * _Nonnull)item itemName:(NSString * _Nullable)itemName itemType:(NSString * _Nullable)itemType callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack {
+    //此处不做item重名的判断了，因为不排除有将某个item的账务归并到另一个item名下的可能性出现
+    //但是在添加item的方法里还是必须要判断重名的，因为如果item已存在就没必要添加了
+    if (itemName.length) {
+        item.itemName = itemName;
+    }
+    
+    if (itemType.length) {
+        item.itemType = itemType;
+    }
+    
+    CMLResponse *response = [[CMLResponse alloc]init];
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改item成功");
+        response.code = RESPONSE_CODE_SUCCEED;
+        [self _setNeedUpdate];
+        callBack(response);
+        
+    } else {
+        CMLLog(@"修改item失败");
+        [self _setNeedUpdate];
+        callBack(nil);
+    }
+}
 
 @end

@@ -14,6 +14,8 @@
 
 @implementation Accounting
 
+#pragma mark - 添加accounting
+
 + (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack {
     //Entity
     Accounting *accounting = [NSEntityDescription insertNewObjectForEntityForName:@"Accounting" inManagedObjectContext:kManagedObjectContext];
@@ -44,6 +46,8 @@
     callBack(cmlResponse);
 }
 
+#pragma mark - 删除accounting
+
 + (void)deleteAccounting:(Accounting *)accounting callBack:(void(^)(CMLResponse *response))callBack {
     [kManagedObjectContext deleteObject:accounting];
     
@@ -62,6 +66,8 @@
     }
     callBack(cmlResponse);
 }
+
+#pragma mark - 查询accounting
 
 + (void)fetchAccountingsFrom:(NSInteger)startIndex count:(NSInteger)count callBack:(void(^)(CMLResponse *response))callBack {
     //request和entity
@@ -99,6 +105,34 @@
     }
     
     callBack(cmlResponse);
+}
+
+#pragma mark - 修改accounting
+
++ (void)alertAccounting:(Accounting * _Nonnull)accounting amount:(NSNumber * _Nullable)amount desc:(NSString * _Nullable)desc itemID:(NSString * _Nullable)itemID callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack {
+    if (amount) {
+        accounting.amount = amount;
+    }
+    
+    if (desc.length) {
+        accounting.desc = desc;
+    }
+    
+    if (itemID.length) {
+        accounting.itemID = itemID;
+    }
+    
+    CMLResponse *response = [[CMLResponse alloc]init];
+    NSError *error = nil;
+    if ([kManagedObjectContext save:&error]) {
+        CMLLog(@"修改accounting成功");
+        response.code = RESPONSE_CODE_SUCCEED;
+        callBack(response);
+        
+    } else {
+        CMLLog(@"修改accounting失败");
+        callBack(nil);
+    }
 }
 
 @end

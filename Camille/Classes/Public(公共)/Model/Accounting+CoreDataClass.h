@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface Accounting : NSManagedObject
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  新增账务记录
@@ -40,9 +40,22 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)fetchAccountingsFrom:(NSInteger)startIndex count:(NSInteger)count callBack:(void(^)(CMLResponse *response))callBack;
 
-@end
-
 NS_ASSUME_NONNULL_END
+
+
+//由于这个方法可传nil，所以放在NONULL编译块的外面
+/**
+ 修改某条accounting
+
+ @param accounting 要修改的账务
+ @param amount 修改的金额
+ @param desc 修改的备注
+ @param itemID 修改的所属item
+ @param callBack 回调
+ */
++ (void)alertAccounting:(Accounting * _Nonnull)accounting amount:(NSNumber * _Nullable)amount desc:(NSString * _Nullable)desc itemID:(NSString * _Nullable)itemID callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack;
+
+@end
 
 #import "Accounting+CoreDataProperties.h"
 

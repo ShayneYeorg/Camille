@@ -15,14 +15,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Accounting *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *itemID;
-@property (nullable, nonatomic, copy) NSDate *createTime;
-@property (nullable, nonatomic, copy) NSDate *happenTime;
 @property (nullable, nonatomic, copy) NSString *accountingID;
 @property (nullable, nonatomic, copy) NSNumber *amount;
+@property (nullable, nonatomic, copy) NSDate *happenTime;
+@property (nullable, nonatomic, copy) NSString *desc;
+
+@property (nullable, nonatomic, copy) NSString *itemID;
+@property (nullable, nonatomic, copy) NSDate *createTime;
 @property (nullable, nonatomic, copy) NSString *happenDay;
 @property (nullable, nonatomic, copy) NSString *owner;
-@property (nullable, nonatomic, copy) NSString *desc;
 
 @end
 

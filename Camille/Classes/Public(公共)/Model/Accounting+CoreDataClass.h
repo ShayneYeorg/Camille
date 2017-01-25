@@ -77,5 +77,23 @@ NS_ASSUME_NONNULL_END
 //    }];
 
 
+//[Accounting fetchAccountingsFrom:0 count:1 callBack:^(CMLResponse * _Nonnull response) {
+//    if ([response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//        for (Accounting *a in response.responseDic[@"accountings"]) {
+//            CMLLog(@"%f", a.amount.floatValue);
+//            CMLLog(@"%@", a.desc);
+//            CMLLog(@"%@", a.itemID);
+//            
+//            [Accounting alertAccounting:a amount:nil desc:@"尼玛" itemID:@"2333" callback:^(CMLResponse * _Nullable response) {
+//                
+//            }];
+//            
+//            CMLLog(@"%f", a.amount.floatValue);
+//            CMLLog(@"%@", a.desc);
+//            CMLLog(@"%@", a.itemID);
+//        }
+//    }
+//}];
+
 
 

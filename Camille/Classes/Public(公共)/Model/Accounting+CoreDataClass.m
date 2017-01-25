@@ -11,6 +11,7 @@
 
 #warning - 要完善
 #define kEmptyString         @""
+//还有NSNumber精度丢失的问题
 
 @implementation Accounting
 

@@ -19,7 +19,7 @@
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
 
-#import "Item+CoreDataClass.h"
+#import "Accounting+CoreDataClass.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20

@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    self.view.backgroundColor = [UIColor clearColor];
+//    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.view.backgroundColor = [UIColor yellowColor];
     
     UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     b.backgroundColor = [UIColor blueColor];

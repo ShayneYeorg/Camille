@@ -17,14 +17,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    self.view.backgroundColor = [UIColor yellowColor];
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    CGFloat viewWidth = self.view.frame.size.width;
+    CGFloat viewHeight = self.view.frame.size.height;
+    
+    UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(viewWidth*0.05, viewHeight*0.05, viewWidth*0.9, viewHeight*0.9)];
+    backgroundView.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:backgroundView];
     
     UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     b.backgroundColor = [UIColor blueColor];
     [b setTitle:@"click" forState:UIControlStateNormal];
     [b addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:b];
+    [backgroundView addSubview:b];
 }
 
 - (void)click {

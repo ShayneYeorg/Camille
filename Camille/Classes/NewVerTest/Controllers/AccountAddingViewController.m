@@ -17,10 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor redColor];
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.view.backgroundColor = [UIColor clearColor];
     
     UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
-    b.backgroundColor = [UIColor blackColor];
+    b.backgroundColor = [UIColor blueColor];
     [b setTitle:@"click" forState:UIControlStateNormal];
     [b addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];

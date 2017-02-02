@@ -158,11 +158,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
+    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
     
 //    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
     
-    [self CML_presentViewController:[AccountAddingViewController new] transitionType:CMLTransitionAnimationBoom completion:nil];
+//    [self CML_presentViewController:[AccountAddingViewController new] transitionType:CMLTransitionAnimationBoom completion:nil];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

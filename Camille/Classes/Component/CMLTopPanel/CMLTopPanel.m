@@ -84,7 +84,6 @@ const CGFloat topPanelHeight  = 64;
 
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
-
         [self moveFrom:self.frame.origin.y isShowing:YES];
         
     } else {
@@ -108,13 +107,13 @@ const CGFloat topPanelHeight  = 64;
 }
 
 - (void)moveFrom:(CGFloat)currentY isShowing:(BOOL)isShowing {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.02 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         CGFloat newY;
         if (isShowing) {
-            newY = currentY + 5;
+            newY = currentY + 10;
             
         } else {
-            newY = currentY - 5;
+            newY = currentY - 10;
         }
         
         self.frame = CGRectMake(0, newY, self.bounds.size.width, topPanelHeight);

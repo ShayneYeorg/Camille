@@ -21,8 +21,8 @@
 #define RGB(r, g, b) [UIColor colorWithRed:((r) / 255.0) green:((g) / 255.0) blue:((b) / 255.0) alpha:1.0]
 
 //App
-//#define kAppColor RGB(252,202,28)
-#define kAppColor RGB(102,102,102)
+#define kAppColor RGB(252,202,28)
+//#define kAppColor RGB(102,102,102)
 #define kAppViewColor RGB(255,255,245)
 #define kAppTextColor RGB(45,25,0)
 #define kItemLeftTableViewColor  RGB(245,191,1)
@@ -34,6 +34,7 @@
 //设备屏幕尺寸
 #define kScreen_Height ([UIScreen mainScreen].bounds.size.height)
 #define kScreen_Width ([UIScreen mainScreen].bounds.size.width)
+#define ScaleOn375(x) ([UIScreen mainScreen].applicationFrame.size.width*(x))/375.f
 
 //应用尺寸(不包括状态栏,通话时状态栏高度不是20，所以需要知道具体尺寸)
 #define kContent_Height ([UIScreen mainScreen].applicationFrame.size.height)

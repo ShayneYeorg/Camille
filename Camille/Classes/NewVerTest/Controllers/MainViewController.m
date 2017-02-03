@@ -35,9 +35,9 @@
 @property (nonatomic, strong) CMLBottomPanel *bottomView;
 @property (nonatomic, strong) CMLControlHandle *controlHandle;
 @property (nonatomic, strong) CMLControlHandle *toBottomHandle;
-@property (nonatomic, strong) UIView *grayView;
-@property (nonatomic, strong) AddAccountingView *addingView;
-@property (nonatomic, strong) UITapGestureRecognizer *tap;
+//@property (nonatomic, strong) UIView *grayView;
+//@property (nonatomic, strong) AddAccountingView *addingView;
+//@property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, assign) BOOL isToBottomBtnClicked;
 
 @end
@@ -115,15 +115,6 @@
     return _activityView;
 }
 
-- (UITapGestureRecognizer *)tap {
-    if (!_tap) {
-        _tap = [[UITapGestureRecognizer alloc]init];
-        [_tap addTarget:self action:@selector(dismissAddingView)];
-        _tap.delegate = self;
-    }
-    return _tap;
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return [SectionHeaderView loadSectionHeaderView];
 }
@@ -158,13 +149,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
+    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
     
 //    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
-    
-    AccountAddingViewController *accountAddingViewController = [AccountAddingViewController new];
-//    accountAddingViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    [self CML_presentViewController:accountAddingViewController transitionType:CMLTransitionAnimationBoom completion:nil];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -254,11 +241,6 @@
     });
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    CGPoint touchPoint = [touch locationInView:self.backgroundView];
-    return !CGRectContainsPoint(self.addingView.frame, touchPoint);
-}
-
 #pragma mark - CMLControlHandle
 
 - (void)configControlHandle {
@@ -266,19 +248,8 @@
     self.controlHandle.lastOffsetY = self.tableView.contentOffset.y;
     __weak typeof(self) weakSelf = self;
     self.controlHandle.clickAction = ^{
-        weakSelf.grayView = [[UIView alloc]initWithFrame:weakSelf.backgroundView.bounds];
-        weakSelf.grayView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
-        
-        [weakSelf.grayView addGestureRecognizer:weakSelf.tap];
-        [weakSelf.backgroundView addSubview:weakSelf.grayView];
-        
-        weakSelf.addingView = [AddAccountingView loadFromNib];
-        CGRect currentFrame = weakSelf.addingView.frame;
-        weakSelf.addingView.frame = CGRectMake((kScreen_Width-currentFrame.size.width)/2, (kScreen_Height-currentFrame.size.height)/2, currentFrame.size.width, currentFrame.size.height);
-        weakSelf.addingView.saveBtnClickAction = ^{
-            [weakSelf save];
-        };
-        [weakSelf.grayView addSubview:weakSelf.addingView];
+        AccountAddingViewController *accountAddingViewController = [AccountAddingViewController new];
+        [weakSelf CML_presentViewController:accountAddingViewController transitionType:CMLTransitionAnimationBoom completion:nil];
     };
 }
 
@@ -294,30 +265,6 @@
         [weakSelf.topView showWithAnimation:YES];
         [weakSelf.bottomView showWithAnimation:YES];
     };
-}
-
-- (void)dismissAddingView {
-    [self.addingView removeFromSuperview];
-    [self.grayView removeFromSuperview];
-}
-
-- (void)save {
-    if (self.addingView.name.text.length && self.addingView.value.text.length) {
-        [self.dataArr removeAllObjects];
-        
-        TestDataAccounting *accouonting = [TestDataAccounting new];
-        accouonting.name = self.addingView.name.text;
-        accouonting.value = self.addingView.value.text.floatValue;
-        accouonting.isOutcome = YES;
-        accouonting.desc = @"";
-        
-        [self.dataArr addObject:accouonting];
-        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:0 to:dataCountPerPage]];
-        [self.tableView reloadData];
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArr.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-        
-        [self dismissAddingView];
-    }
 }
 
 #pragma mark - CMLTopPanelDelegate

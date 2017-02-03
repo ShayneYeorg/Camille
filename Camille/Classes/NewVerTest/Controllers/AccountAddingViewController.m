@@ -40,6 +40,8 @@
     CGFloat viewHeight = self.view.frame.size.height;
     
     self.backgroundView = [[UIView alloc]initWithFrame:CGRectMake(viewWidth*0.05, viewHeight*0.05, viewWidth*0.9, viewHeight*0.9)];
+    self.backgroundView.layer.cornerRadius = 10;
+    self.backgroundView.clipsToBounds = YES;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.backgroundView];
 }

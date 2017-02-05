@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^DismissBlock)(NSString *itemID);
+
 @interface ItemInputViewController : UIViewController
 
-@property (nonatomic, copy) VoidBlock dismissBlock;
+@property (nonatomic, copy) DismissBlock dismissBlock;
 
-+ (instancetype)initWithInitialPosition:(CGRect)initialPosition;
++ (instancetype)initWithInitialPosition:(CGRect)initialPosition itemType:(NSString *)itemType;
 
 @end

@@ -67,6 +67,7 @@
 		3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC51C82D8F2004EE4BD /* CMLResponse.m */; };
 		34A46FA81E437F740035B09A /* UIImageView+Dealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FA71E437F740035B09A /* UIImageView+Dealloc.m */; };
 		34A46FBA1E46DA9D0035B09A /* ItemInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FB91E46DA9D0035B09A /* ItemInputViewController.m */; };
+		34A46FBD1E46FA1C0035B09A /* CMLDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */; };
 		34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */; };
 		34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */; };
 		34C82C3B1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m */; };
@@ -225,6 +226,8 @@
 		34A46FA71E437F740035B09A /* UIImageView+Dealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Dealloc.m"; sourceTree = "<group>"; };
 		34A46FB81E46DA9D0035B09A /* ItemInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemInputViewController.h; sourceTree = "<group>"; };
 		34A46FB91E46DA9D0035B09A /* ItemInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemInputViewController.m; sourceTree = "<group>"; };
+		34A46FBB1E46FA1C0035B09A /* CMLDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLDataManager.h; sourceTree = "<group>"; };
+		34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLDataManager.m; sourceTree = "<group>"; };
 		34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UpsideDown.h"; sourceTree = "<group>"; };
 		34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UpsideDown.m"; sourceTree = "<group>"; };
 		34C82C361E35FE51001CDC93 /* CMLTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTransitionManager.h; sourceTree = "<group>"; };
@@ -725,6 +728,8 @@
 			children = (
 				34D21C8C1C7814F3004264C2 /* CMLTool.h */,
 				34D21C8D1C7814F3004264C2 /* CMLTool.m */,
+				34A46FBB1E46FA1C0035B09A /* CMLDataManager.h */,
+				34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */,
 				34E3846A1CA12576004A5A8C /* CMLTool+NSDate.h */,
 				34E3846B1CA12576004A5A8C /* CMLTool+NSDate.m */,
 				3499BDC11C82D60C004EE4BD /* CMLCoreDataAccess.h */,
@@ -914,6 +919,7 @@
 				34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */,
 				34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,
+				34A46FBD1E46FA1C0035B09A /* CMLDataManager.m in Sources */,
 				34431E281CEB48E0001E4A54 /* CMLRecordItemDetailViewController.m in Sources */,
 				345E0BA81C9F90F600A52488 /* NSString+MJExtension.m in Sources */,
 				34FA389F1C96980C00A049E8 /* CMLAccountingDatePickerView.m in Sources */,

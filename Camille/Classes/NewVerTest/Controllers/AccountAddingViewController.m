@@ -119,14 +119,19 @@
 - (void)itemInput {
     CGRect newFrame = [self.backgroundView convertRect:self.itemInputField.frame toView:self.view];
     
-    ItemInputViewController *itemInputViewController = [ItemInputViewController initWithInitialPosition:newFrame];
+    ItemInputViewController *itemInputViewController = [ItemInputViewController initWithInitialPosition:newFrame itemType:self.itemType];
     [self addChildViewController:itemInputViewController];
     [self.view addSubview:itemInputViewController.view];
     
     __weak ItemInputViewController *weakItemInputViewController = itemInputViewController;
-    itemInputViewController.dismissBlock = ^{
+    itemInputViewController.dismissBlock = ^(NSString *itemID) {
         [weakItemInputViewController.view removeFromSuperview];
         [weakItemInputViewController removeFromParentViewController];
+        
+        if (itemID && itemID.length) {
+            //选择了某个item
+            CMLLog(@"选择的itemID是：%@", itemID);
+        }
     };
 }
 

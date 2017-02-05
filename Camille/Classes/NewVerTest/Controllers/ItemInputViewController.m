@@ -7,10 +7,13 @@
 //
 
 #import "ItemInputViewController.h"
+#import "CMLDataManager.h"
 
 @interface ItemInputViewController () <UITextFieldDelegate>
 
 @property (nonatomic, assign) CGRect initialPosition;
+@property (nonatomic, copy) NSString *itemType;
+@property (nonatomic, strong) NSArray *itemsArr;
 
 @property (nonatomic, strong) UIView *backgroundView;
 
@@ -24,9 +27,10 @@
 
 #pragma mark - Life Cycle
 
-+ (instancetype)initWithInitialPosition:(CGRect)initialPosition {
++ (instancetype)initWithInitialPosition:(CGRect)initialPosition itemType:(NSString *)itemType {
     ItemInputViewController *itemInputViewController = [ItemInputViewController new];
     itemInputViewController.initialPosition = initialPosition;
+    itemInputViewController.itemType = itemType;
     return itemInputViewController;
 }
 
@@ -34,7 +38,9 @@
     [super viewDidLoad];
     
     [self configBackgroundView];
-    if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0) {
+    if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0 && self.itemType.length) {
+        self.itemsArr = [CMLDataManager getItemsWithItemType:self.itemType];
+        
         self.itemInputField = [[UITextField alloc]initWithFrame:self.initialPosition];
         self.itemInputField.delegate = self;
         self.itemInputField.backgroundColor = RGB(230, 230, 230);
@@ -90,17 +96,49 @@
 - (void)dismiss {
     if (self.dismissBlock) {
         [self.dismissBtn removeFromSuperview];
+        [self.confirmBtn removeFromSuperview];
         [UIView animateWithDuration:0.2 animations:^{
             self.itemInputField.frame = self.initialPosition;
             
         } completion:^(BOOL finished) {
-            self.dismissBlock();
+            self.dismissBlock(nil);
         }];
     }
 }
 
 - (void)confirm {
-    CMLLog(@"confirm");
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemName == %@", self.itemInputField.text];
+    NSArray *selectedItems = [self.itemsArr filteredArrayUsingPredicate:predicate];
+    if (selectedItems.count) {
+        //此item已存在
+        if (self.dismissBlock) {
+            Item *selectedItem = selectedItems.firstObject;
+            [self.dismissBtn removeFromSuperview];
+            [self.confirmBtn removeFromSuperview];
+            [UIView animateWithDuration:0.2 animations:^{
+                self.itemInputField.frame = self.initialPosition;
+                
+            } completion:^(BOOL finished) {
+                self.dismissBlock(selectedItem.itemID);
+            }];
+        }
+        
+    } else {
+        //此item不存在
+        [Item addItemWithName:self.itemInputField.text type:self.itemType callBack:^(CMLResponse * _Nonnull response) {
+            if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                Item *selectedItem = response.responseDic[KEY_Item];
+                [self.dismissBtn removeFromSuperview];
+                [self.confirmBtn removeFromSuperview];
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.itemInputField.frame = self.initialPosition;
+                    
+                } completion:^(BOOL finished) {
+                    self.dismissBlock(selectedItem.itemID);
+                }];
+            }
+        }];
+    }
 }
 
 #pragma mark - UITextFieldDelegate

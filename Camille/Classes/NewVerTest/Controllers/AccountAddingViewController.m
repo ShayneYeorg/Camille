@@ -33,6 +33,8 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView;
 
+@property (nonatomic, strong) UIButton *saveButton;
+
 @end
 
 @implementation AccountAddingViewController
@@ -47,6 +49,7 @@
     [self configItemInputField];
     [self configAmountInputField];
     [self configDateInputField];
+    [self configSaveButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,6 +144,18 @@
     [self.dateInputField addGestureRecognizer:tap];
 }
 
+- (void)configSaveButton {
+    self.saveButton = [[UIButton alloc]initWithFrame:CGRectMake((self.backgroundView.frame.size.width - ScaleOn375(100)) / 2, self.backgroundView.frame.size.height - 20 - ScaleOn375(30), ScaleOn375(100), ScaleOn375(30))];
+    self.saveButton.backgroundColor = [UIColor greenColor];
+    [self.saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundView addSubview:self.saveButton];
+}
+
+- (void)configDescInputField {
+    
+}
+
 #pragma mark - Getter
 
 - (CMLAccountingDatePickerView *)datePickerView {
@@ -195,6 +210,7 @@
 }
 
 - (void)showDatePicker {
+    [self endEditing];
     [self.datePickerView show];
 }
 
@@ -202,6 +218,10 @@
     self.happenTime = date;
     NSString *dateStr = [CMLTool transDateToString:date];
     self.dateLabel.text = dateStr;
+}
+
+- (void)save {
+    CMLLog(@"保存");
 }
 
 #pragma mark - UITextFieldDelegate

@@ -8,7 +8,7 @@
 
 #import "ItemInputViewController.h"
 
-@interface ItemInputViewController ()
+@interface ItemInputViewController () <UITextFieldDelegate>
 
 @property (nonatomic, assign) CGRect initialPosition;
 
@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UITextField *itemInputField;
 @property (nonatomic, strong) UIButton *dismissBtn;
+@property (nonatomic, strong) UIButton *confirmBtn;
 
 @end
 
@@ -35,11 +36,12 @@
     [self configBackgroundView];
     if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0) {
         self.itemInputField = [[UITextField alloc]initWithFrame:self.initialPosition];
+        self.itemInputField.delegate = self;
         self.itemInputField.backgroundColor = RGB(230, 230, 230);
         self.itemInputField.layer.cornerRadius = 5;
         self.itemInputField.clipsToBounds = YES;
         [self.backgroundView addSubview:self.itemInputField];
-        self.itemInputField.placeholder = @" 项目";
+        self.itemInputField.placeholder = @"项目";
         [self configInitialAnamation];
         
     } else {
@@ -71,6 +73,14 @@
         [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [self.backgroundView addSubview:self.dismissBtn];
         
+        self.confirmBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
+        self.confirmBtn.backgroundColor = [UIColor clearColor];
+        [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [self.confirmBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+        [self.confirmBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+        self.confirmBtn.hidden = YES;
+        [self.backgroundView addSubview:self.confirmBtn];
+        
         [self.itemInputField becomeFirstResponder];
     }];
 }
@@ -87,6 +97,27 @@
             self.dismissBlock();
         }];
     }
+}
+
+- (void)confirm {
+    CMLLog(@"confirm");
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSMutableString *newText = textField.text.mutableCopy;
+    [newText replaceCharactersInRange:range withString:string];
+    if (newText.length > 0) {
+        self.confirmBtn.hidden = NO;
+        self.dismissBtn.hidden = YES;
+        
+    } else {
+        self.confirmBtn.hidden = YES;
+        self.dismissBtn.hidden = NO;
+    }
+    
+    return YES;
 }
 
 @end

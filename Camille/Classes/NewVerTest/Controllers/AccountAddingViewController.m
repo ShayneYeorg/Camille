@@ -10,7 +10,16 @@
 
 @interface AccountAddingViewController ()
 
+@property (nonatomic, copy) NSNumber *amount;
+@property (nonatomic, copy) NSDate *happenTime;
+@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy) NSString *itemID;
+
 @property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, copy) NSString *itemType;
+@property (nonatomic, strong) UIView *itemTypeBtn;
+@property (nonatomic, strong) UILabel *costLabel;
+@property (nonatomic, strong) UILabel *incomeLabel;
 
 @end
 
@@ -19,10 +28,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [self configDetail];
     [self configBackgroundView];
     [self configBackButton];
+    [self configItemTypeBtn];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +42,7 @@
 
 - (void)configDetail {
     self.view.backgroundColor = [UIColor clearColor];
+    self.itemType = Item_Type_Cost;
 }
 
 - (void)configBackgroundView {
@@ -54,7 +64,43 @@
     [self.backgroundView addSubview:b];
 }
 
+- (void)configItemTypeBtn {
+    self.itemTypeBtn = [[UIView alloc]initWithFrame:CGRectMake((self.backgroundView.frame.size.width - ScaleOn375(100)) / 2, 10, ScaleOn375(100), ScaleOn375(30))];
+    self.itemTypeBtn.backgroundColor = [UIColor redColor];
+    
+    self.costLabel = [[UILabel alloc]init];
+    self.costLabel.text = @"支出";
+    [self.costLabel sizeToFit];
+    [self.itemTypeBtn addSubview:self.costLabel];
+    
+    self.incomeLabel = [[UILabel alloc]init];
+    self.incomeLabel.text = @"收入";
+    [self.incomeLabel sizeToFit];
+    self.incomeLabel.hidden = YES;
+    [self.itemTypeBtn addSubview:self.incomeLabel];
+    
+    [self.backgroundView addSubview:self.itemTypeBtn];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(switchItemType)];
+    [self.itemTypeBtn addGestureRecognizer:tap];
+}
+
 #pragma mark - Private
+
+- (void)switchItemType {
+    if ([self.itemType isEqualToString:Item_Type_Cost]) {
+        self.itemType = Item_Type_Income;
+        self.costLabel.hidden = YES;
+        self.incomeLabel.hidden = NO;
+        CMLLog(@"self.itemType = %@", self.itemType);
+        
+    } else {
+        self.itemType = Item_Type_Cost;
+        self.costLabel.hidden = NO;
+        self.incomeLabel.hidden = YES;
+        CMLLog(@"self.itemType = %@", self.itemType);
+    }
+}
 
 - (void)click {
     [self dismissViewControllerAnimated:YES completion:nil];

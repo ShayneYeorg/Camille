@@ -35,9 +35,6 @@
 @property (nonatomic, strong) CMLBottomPanel *bottomView;
 @property (nonatomic, strong) CMLControlHandle *controlHandle;
 @property (nonatomic, strong) CMLControlHandle *toBottomHandle;
-//@property (nonatomic, strong) UIView *grayView;
-//@property (nonatomic, strong) AddAccountingView *addingView;
-//@property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, assign) BOOL isToBottomBtnClicked;
 
 @end

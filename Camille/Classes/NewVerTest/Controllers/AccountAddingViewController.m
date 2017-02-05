@@ -8,6 +8,7 @@
 
 #import "AccountAddingViewController.h"
 #import "ItemInputViewController.h"
+#import "DescInputViewController.h"
 #import "CMLTool+NSDate.h"
 #import "CMLAccountingDatePickerView.h"
 
@@ -35,6 +36,8 @@
 
 @property (nonatomic, strong) UIButton *saveButton;
 
+@property (nonatomic, strong) UIView *descInputField;
+
 @end
 
 @implementation AccountAddingViewController
@@ -50,6 +53,11 @@
     [self configAmountInputField];
     [self configDateInputField];
     [self configSaveButton];
+    [self configDescInputField];
+}
+
+- (void)dealloc {
+    CMLLog(@"%s", __func__);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,7 +161,14 @@
 }
 
 - (void)configDescInputField {
+    self.descInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateInputField.origin.y - ScaleOn375(30) - 20)];
+    self.descInputField.backgroundColor = RGB(230, 230, 230);
+    self.descInputField.layer.cornerRadius = 10;
+    self.descInputField.clipsToBounds = YES;
+    [self.backgroundView addSubview:self.descInputField];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(descInput)];
+    [self.descInputField addGestureRecognizer:tap];
 }
 
 #pragma mark - Getter
@@ -222,6 +237,24 @@
 
 - (void)save {
     CMLLog(@"保存");
+}
+
+- (void)descInput {
+    CGRect newFrame = [self.backgroundView convertRect:self.descInputField.frame toView:self.view];
+    
+    DescInputViewController *descInputViewController = [DescInputViewController initWithInitialPosition:newFrame];
+    [self addChildViewController:descInputViewController];
+    [self.view addSubview:descInputViewController.view];
+    
+    __weak DescInputViewController *weakDescInputViewController = descInputViewController;
+    descInputViewController.dismissBlock = ^(NSString *desc) {
+        [weakDescInputViewController.view removeFromSuperview];
+        [weakDescInputViewController removeFromParentViewController];
+        
+        if (desc && desc.length) {
+            self.desc = desc;
+        }
+    };
 }
 
 #pragma mark - UITextFieldDelegate

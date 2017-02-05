@@ -7,6 +7,7 @@
 //
 
 #import "AccountAddingViewController.h"
+#import "ItemInputViewController.h"
 
 @interface AccountAddingViewController ()
 
@@ -16,10 +17,13 @@
 @property (nonatomic, copy) NSString *itemID;
 
 @property (nonatomic, strong) UIView *backgroundView;
+
 @property (nonatomic, copy) NSString *itemType;
 @property (nonatomic, strong) UIView *itemTypeBtn;
 @property (nonatomic, strong) UILabel *costLabel;
 @property (nonatomic, strong) UILabel *incomeLabel;
+
+@property (nonatomic, strong) UIView *itemInputField;
 
 @end
 
@@ -32,6 +36,7 @@
     [self configBackgroundView];
     [self configBackButton];
     [self configItemTypeBtn];
+    [self configItemInputField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +65,7 @@
     UIButton *b = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - ScaleOn375(50), 0, ScaleOn375(50), ScaleOn375(50))];
     b.backgroundColor = [UIColor clearColor];
     [b setBackgroundImage:[UIImage imageNamed:@"close_btn"] forState:UIControlStateNormal];
-    [b addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
+    [b addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.backgroundView addSubview:b];
 }
 
@@ -85,6 +90,15 @@
     [self.itemTypeBtn addGestureRecognizer:tap];
 }
 
+- (void)configItemInputField {
+    self.itemInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 30 + ScaleOn375(30), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
+    self.itemInputField.backgroundColor = [UIColor redColor];
+    [self.backgroundView addSubview:self.itemInputField];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(itemInput)];
+    [self.itemInputField addGestureRecognizer:tap];
+}
+
 #pragma mark - Private
 
 - (void)switchItemType {
@@ -92,17 +106,29 @@
         self.itemType = Item_Type_Income;
         self.costLabel.hidden = YES;
         self.incomeLabel.hidden = NO;
-        CMLLog(@"self.itemType = %@", self.itemType);
         
     } else {
         self.itemType = Item_Type_Cost;
         self.costLabel.hidden = NO;
         self.incomeLabel.hidden = YES;
-        CMLLog(@"self.itemType = %@", self.itemType);
     }
 }
 
-- (void)click {
+- (void)itemInput {
+    CGRect newFrame = [self.backgroundView convertRect:self.itemInputField.frame toView:self.view];
+    
+    ItemInputViewController *itemInputViewController = [ItemInputViewController initWithInitialPosition:newFrame];
+    [self addChildViewController:itemInputViewController];
+    [self.view addSubview:itemInputViewController.view];
+    
+    __weak ItemInputViewController *weakItemInputViewController = itemInputViewController;
+    itemInputViewController.dismissBlock = ^{
+        [weakItemInputViewController.view removeFromSuperview];
+        [weakItemInputViewController removeFromParentViewController];
+    };
+}
+
+- (void)back {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

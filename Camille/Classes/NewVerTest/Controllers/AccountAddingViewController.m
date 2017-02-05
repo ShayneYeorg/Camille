@@ -8,8 +8,10 @@
 
 #import "AccountAddingViewController.h"
 #import "ItemInputViewController.h"
+#import "CMLTool+NSDate.h"
+#import "CMLAccountingDatePickerView.h"
 
-@interface AccountAddingViewController () <UITextFieldDelegate>
+@interface AccountAddingViewController () <UITextFieldDelegate, CMLAccountingDatePickerViewDelegate>
 
 @property (nonatomic, copy) NSNumber *amount;
 @property (nonatomic, copy) NSDate *happenTime;
@@ -27,6 +29,10 @@
 
 @property (nonatomic, strong) UITextField *amountInputField;
 
+@property (nonatomic, strong) UIView *dateInputField;
+@property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView;
+
 @end
 
 @implementation AccountAddingViewController
@@ -40,6 +46,7 @@
     [self configItemTypeBtn];
     [self configItemInputField];
     [self configAmountInputField];
+    [self configDateInputField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,6 +125,33 @@
     self.amountInputField.placeholder = @"金额";
 }
 
+- (void)configDateInputField {
+    self.dateInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 70 + ScaleOn375(90), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
+    self.dateInputField.backgroundColor = RGB(230, 230, 230);
+    self.dateInputField.layer.cornerRadius = 5;
+    self.dateInputField.clipsToBounds = YES;
+    [self.backgroundView addSubview:self.dateInputField];
+    
+    self.dateLabel = [[UILabel alloc]initWithFrame:self.dateInputField.bounds];
+    self.dateLabel.textColor = RGB(170, 170, 170);
+    [self.dateInputField addSubview:self.dateLabel];
+    [self chooseDate:[NSDate date]];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showDatePicker)];
+    [self.dateInputField addGestureRecognizer:tap];
+}
+
+#pragma mark - Getter
+
+- (CMLAccountingDatePickerView *)datePickerView {
+    if (_datePickerView == nil) {
+        _datePickerView = [CMLAccountingDatePickerView loadFromNib];
+        _datePickerView.delegate = self;
+        [self.view addSubview:_datePickerView];
+    }
+    return _datePickerView;
+}
+
 #pragma mark - Private
 
 - (void)endEditing {
@@ -150,8 +184,7 @@
         [weakItemInputViewController removeFromParentViewController];
         
         if (itemID && itemID.length) {
-            //选择了某个item
-            CMLLog(@"选择的itemID是：%@", itemID);
+            self.itemID = itemID;
         }
     };
 }
@@ -159,6 +192,16 @@
 - (void)back {
     [self endEditing];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showDatePicker {
+    [self.datePickerView show];
+}
+
+- (void)chooseDate:(NSDate *)date {
+    self.happenTime = date;
+    NSString *dateStr = [CMLTool transDateToString:date];
+    self.dateLabel.text = dateStr;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -227,6 +270,13 @@
             self.amount = [NSNumber numberWithFloat:textField.text.floatValue];
         }
     }
+}
+
+#pragma mark - CMLAccountingDatePickerViewDelegate
+
+- (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
+    [self chooseDate:selectedDate];
+    [self.datePickerView dismiss];
 }
 
 @end

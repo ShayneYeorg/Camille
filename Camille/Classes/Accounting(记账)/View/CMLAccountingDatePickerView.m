@@ -11,6 +11,7 @@
 @interface CMLAccountingDatePickerView ()
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker; //日期选择器
+@property (nonatomic, strong) UIView *coverView;
 
 @end
 
@@ -27,17 +28,32 @@
 }
 
 - (void)show {
-    self.isShow = YES;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.y = kScreen_Height - kPickerViewHeight;
-    }];
+    if (self.superview) {
+        [self.superview insertSubview:self.coverView belowSubview:self];
+        
+        self.isShow = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.y = kScreen_Height - kPickerViewHeight;
+        }];
+    }
 }
 
 - (void)dismiss {
+    [self.coverView removeFromSuperview];
     self.isShow = NO;
     [UIView animateWithDuration:0.3 animations:^{
         self.y = kScreen_Height;
     }];
+}
+
+#pragma mark - Getter
+
+- (UIView *)coverView {
+    if (!_coverView) {
+        _coverView = [[UIView alloc]initWithFrame:self.superview.bounds];
+        _coverView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+    }
+    return _coverView;
 }
 
 #pragma mark - Private

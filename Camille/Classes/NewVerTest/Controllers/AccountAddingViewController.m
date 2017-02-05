@@ -92,7 +92,9 @@
 
 - (void)configItemInputField {
     self.itemInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 30 + ScaleOn375(30), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
-    self.itemInputField.backgroundColor = [UIColor redColor];
+    self.itemInputField.backgroundColor = RGB(230, 230, 230);
+    self.itemInputField.layer.cornerRadius = 5;
+    self.itemInputField.clipsToBounds = YES;
     [self.backgroundView addSubview:self.itemInputField];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(itemInput)];

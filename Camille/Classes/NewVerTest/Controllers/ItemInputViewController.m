@@ -12,8 +12,10 @@
 
 @property (nonatomic, assign) CGRect initialPosition;
 
+@property (nonatomic, strong) UIView *backgroundView;
 
-@property (nonatomic, strong) UIView *testItemInputField;
+@property (nonatomic, strong) UITextField *itemInputField;
+@property (nonatomic, strong) UIButton *dismissBtn;
 
 @end
 
@@ -29,12 +31,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     
+    [self configBackgroundView];
     if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0) {
-        self.testItemInputField = [[UIView alloc]initWithFrame:self.initialPosition];
-        self.testItemInputField.backgroundColor = [UIColor redColor];
-        [self.view addSubview:self.testItemInputField];
+        self.itemInputField = [[UITextField alloc]initWithFrame:self.initialPosition];
+        self.itemInputField.backgroundColor = RGB(230, 230, 230);
+        self.itemInputField.layer.cornerRadius = 5;
+        self.itemInputField.clipsToBounds = YES;
+        [self.backgroundView addSubview:self.itemInputField];
+        self.itemInputField.placeholder = @" 项目";
+        [self configInitialAnamation];
         
     } else {
         CMLLog(@"需要使用initWithInitialPosition:方法先指定inputField的初始位置");
@@ -43,17 +49,44 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UI Configuration
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)configBackgroundView {
+    self.backgroundView = [[UIView alloc]initWithFrame:self.view.frame];
+    self.backgroundView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.backgroundView];
 }
-*/
+
+- (void)configInitialAnamation {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.itemInputField.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 70, self.itemInputField.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+        self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
+        self.dismissBtn.backgroundColor = [UIColor clearColor];
+        [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+        [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [self.backgroundView addSubview:self.dismissBtn];
+        
+        [self.itemInputField becomeFirstResponder];
+    }];
+}
+
+#pragma mark - Private
+
+- (void)dismiss {
+    if (self.dismissBlock) {
+        [self.dismissBtn removeFromSuperview];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.itemInputField.frame = self.initialPosition;
+            
+        } completion:^(BOOL finished) {
+            self.dismissBlock();
+        }];
+    }
+}
 
 @end

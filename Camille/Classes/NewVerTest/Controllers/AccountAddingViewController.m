@@ -9,7 +9,7 @@
 #import "AccountAddingViewController.h"
 #import "ItemInputViewController.h"
 
-@interface AccountAddingViewController ()
+@interface AccountAddingViewController () <UITextFieldDelegate>
 
 @property (nonatomic, copy) NSNumber *amount;
 @property (nonatomic, copy) NSDate *happenTime;
@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) UIView *itemInputField;
 
+@property (nonatomic, strong) UITextField *amountInputField;
+
 @end
 
 @implementation AccountAddingViewController
@@ -37,6 +39,7 @@
     [self configBackButton];
     [self configItemTypeBtn];
     [self configItemInputField];
+    [self configAmountInputField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,6 +62,9 @@
     self.backgroundView.clipsToBounds = YES;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.backgroundView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEditing)];
+    [self.backgroundView addGestureRecognizer:tap];
 }
 
 - (void)configBackButton {
@@ -101,7 +107,22 @@
     [self.itemInputField addGestureRecognizer:tap];
 }
 
+- (void)configAmountInputField {
+    self.amountInputField = [[UITextField alloc]initWithFrame:CGRectMake(20, 50 + ScaleOn375(60), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
+    self.amountInputField.delegate = self;
+    self.amountInputField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.amountInputField.backgroundColor = RGB(230, 230, 230);
+    self.amountInputField.layer.cornerRadius = 5;
+    self.amountInputField.clipsToBounds = YES;
+    [self.backgroundView addSubview:self.amountInputField];
+    self.amountInputField.placeholder = @"金额";
+}
+
 #pragma mark - Private
+
+- (void)endEditing {
+    [self.view endEditing:YES];
+}
 
 - (void)switchItemType {
     if ([self.itemType isEqualToString:Item_Type_Cost]) {
@@ -136,7 +157,76 @@
 }
 
 - (void)back {
+    [self endEditing];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.amountInputField) {
+        //检测输入内容是否合法
+        for (NSUInteger i = 0; i < [string length]; i++) {
+            unichar character = [string characterAtIndex:i];
+            if ((character < '0' || character > '9') && character != '.') {
+                CMLLog(@"输入了非法字符");
+                return NO;
+            }
+        }
+        return YES;
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.amountInputField) {
+        if (!self.amountInputField.text.length) {
+            return;
+            
+        } else {
+            //是否有小数点？
+            NSString *searchText = textField.text;
+            NSError *pointError = NULL;
+            NSRegularExpression *pointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.]" options:NSRegularExpressionCaseInsensitive error:&pointError];
+            NSTextCheckingResult *result = [pointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+            if (result) {
+                //有小数点
+                //小数点前有数字没？没有就补上0
+                NSError *zeroBeforePointError = NULL;
+                NSRegularExpression *zeroBeforePointRegex = [NSRegularExpression regularExpressionWithPattern:@"[0-9][.]" options:NSRegularExpressionCaseInsensitive error:&zeroBeforePointError];
+                NSTextCheckingResult *zeroBeforePointResult = [zeroBeforePointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+                if (!zeroBeforePointResult) {
+                    //小数点前没数字，补上个0
+                    textField.text = [NSString stringWithFormat:@"0%@", textField.text];
+                }
+                
+                //小数点后有数字没？没有就补上00
+                NSError *zeroAfterPointError = NULL;
+                NSRegularExpression *zeroAfterPointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.][0-9]" options:NSRegularExpressionCaseInsensitive error:&zeroAfterPointError];
+                NSTextCheckingResult *zeroAfterPointResult = [zeroAfterPointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+                if (!zeroAfterPointResult) {
+                    //小数点后没数字，补上00
+                    textField.text = [NSString stringWithFormat:@"%@00", textField.text];
+                }
+                
+                //小数点只有一个数字？补上0
+                NSError *oneNumAfterPointError = NULL;
+                NSRegularExpression *oneNumAfterPointRegex = [NSRegularExpression regularExpressionWithPattern:@"[.][0-9]$" options:NSRegularExpressionCaseInsensitive error:&oneNumAfterPointError];
+                NSTextCheckingResult *oneNumAfterPointResult = [oneNumAfterPointRegex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+                if (oneNumAfterPointResult) {
+                    //小数点只有一个数字，补上0
+                    textField.text = [NSString stringWithFormat:@"%@0", textField.text];
+                }
+                
+            } else {
+                //无小数点，补上小数点和后两位
+                textField.text = [NSString stringWithFormat:@"%@.00", textField.text];
+            }
+            
+            //最终保存金额
+            self.amount = [NSNumber numberWithFloat:textField.text.floatValue];
+        }
+    }
 }
 
 @end

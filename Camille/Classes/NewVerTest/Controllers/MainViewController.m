@@ -246,6 +246,9 @@
     __weak typeof(self) weakSelf = self;
     self.controlHandle.clickAction = ^{
         AccountAddingViewController *accountAddingViewController = [AccountAddingViewController new];
+        accountAddingViewController.saveSuccessCallback = ^{
+            CMLLog(@"保存成功");
+        };
         [weakSelf CML_presentViewController:accountAddingViewController transitionType:CMLTransitionAnimationBoom completion:nil];
     };
 }

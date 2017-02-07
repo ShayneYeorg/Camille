@@ -11,6 +11,7 @@
 #import "DescInputViewController.h"
 #import "CMLTool+NSDate.h"
 #import "CMLAccountingDatePickerView.h"
+#import "CMLDataManager.h"
 
 @interface AccountAddingViewController () <UITextFieldDelegate, CMLAccountingDatePickerViewDelegate>
 
@@ -236,7 +237,30 @@
 }
 
 - (void)save {
-    CMLLog(@"保存");
+    //1、检查各个项目是否齐全
+    if (!self.itemID.length || !self.amount || !self.happenTime) {
+        CMLLog(@"项目缺失");
+        return;
+    }
+    
+    //2、保存
+    CMLLog(@"%@ %f %@ %@", self.itemID, self.amount.floatValue, self.happenTime, self.desc);
+    if (!self.desc) {
+        self.desc = @"";
+    }
+    CML_DECLARE_WEAK_SELF
+    [Accounting addAccountingWithItemID:self.itemID amount:self.amount happneTime:self.happenTime desc:self.desc callBack:^(CMLResponse * _Nonnull response) {
+        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+            [SVProgressHUD showSuccessWithStatus:@"保存成功！"];
+            if (weakSelf.saveSuccessCallback) {
+                weakSelf.saveSuccessCallback();
+            }
+            [weakSelf back];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"保存出错！"];
+        }
+    }];
 }
 
 - (void)descInput {

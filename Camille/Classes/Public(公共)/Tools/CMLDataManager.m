@@ -18,14 +18,4 @@
     return [Item getAllIncomeItems];
 }
 
-+ (NSString *)confirmItemWithItemName:(NSString *)itemName {
-    //1、先检查itemName是否已存在
-    
-    //2、存在则返回对应itemID
-    
-    //3、不存在则新建item
-    
-    return nil;
-}
-
 @end

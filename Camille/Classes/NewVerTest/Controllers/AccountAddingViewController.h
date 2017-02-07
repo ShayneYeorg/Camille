@@ -10,4 +10,6 @@
 
 @interface AccountAddingViewController : UIViewController
 
+@property (nonatomic, strong) VoidBlock saveSuccessCallback;
+
 @end

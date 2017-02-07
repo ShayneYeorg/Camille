@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Item+CoreDataClass.h"
+#import "Accounting+CoreDataClass.h"
 
 @interface CMLDataManager : NSObject
 
 + (NSArray *)getItemsWithItemType:(NSString *)itemType;
 
-+ (NSString *)confirmItemWithItemName:(NSString *)itemName;
+
 
 @end

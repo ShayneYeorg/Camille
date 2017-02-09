@@ -102,7 +102,7 @@
     } else {
         cmlResponse.code = RESPONSE_CODE_SUCCEED;
         cmlResponse.desc = kTipFetchSuccess;
-        cmlResponse.responseDic = @{@"accountings": accountings};
+        cmlResponse.responseDic = @{KEY_Accountings: accountings};
     }
     
     callBack(cmlResponse);

@@ -37,12 +37,16 @@
 @property (nonatomic, strong) CMLControlHandle *toBottomHandle;
 @property (nonatomic, assign) BOOL isToBottomBtnClicked;
 
+@property (nonatomic, strong) NSMutableArray *accountingsData;
+
 @end
 
 @implementation MainViewController {
     BOOL _isLoading;
     CGFloat _currentTableViewInsetY;
 }
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,11 +58,16 @@
     [self configBottomView];
     [self configControlHandle];
     [self configToBottomHandle];
+    
+    [self fetchAllAccountings];
 }
+
+#pragma mark - UI Configuration
 
 - (void)configDetails {
     _currentTableViewInsetY = topPanelHeight;
     _isToBottomBtnClicked = NO;
+    _isLoading = NO;
 }
 
 - (void)configBackgroungView {
@@ -78,11 +87,9 @@
     
     self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
     
-    NSDictionary *dic = self.dataArr.firstObject;
-    NSArray *arr = dic[@"0"];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.dataArr.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-    
-    _isLoading = NO;
+//    NSDictionary *dic = self.dataArr.firstObject;
+//    NSArray *arr = dic[@"0"];
+//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.dataArr.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
 - (void)configTopView {
@@ -93,6 +100,8 @@
 - (void)configBottomView {
     self.bottomView = [CMLBottomPanel loadBottomViewAbove:self.backgroundView];
 }
+
+#pragma mark - Getter
 
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -112,6 +121,52 @@
     return _activityView;
 }
 
+#pragma mark - Private
+
+- (void)loadNewDataWithExistCount:(NSInteger)count {
+    _isLoading = YES;
+    [self.controlHandle restore];
+    [self.tableView setContentInset:UIEdgeInsetsMake(reloadOffset, 0, 44, 0)];
+    [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
+    self.tableView.scrollEnabled = NO;
+    self.activityView.hidden = NO;
+    if (self.dataArr.count == 7) {
+        //第一次下拉
+        [self.dataArr removeLastObject];
+        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
+        
+    } else if (self.dataArr.count == 14) {
+        //第二次下拉
+        [self.dataArr removeLastObject];
+        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.activityView.hidden = YES;
+        [self.tableView reloadData];
+        [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
+        [self.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
+        [self.controlHandle restore];
+        _isLoading = NO;
+        self.tableView.scrollEnabled = YES;
+    });
+}
+
+#pragma mark - Fetch Data
+
+- (void)fetchAllAccountings {
+    //数据缓存在中间层
+    
+    
+}
+
+- (void)fetchAccountingsByDate:(NSDate *)date {
+    //这种形式的查询不做缓存
+    
+}
+
+#pragma mark - UITableViewDelegate
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return [SectionHeaderView loadSectionHeaderView];
 }
@@ -128,6 +183,16 @@
     return cellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
+    
+    //    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
+}
+
+#pragma mark - UITableViewDataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *arr = self.dataArr[self.dataArr.count - 1 -section][[NSString stringWithFormat:@"%zd", self.dataArr.count - 1 -section]];
     return arr.count;
@@ -143,13 +208,7 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
-    
-//    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
-}
+#pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self.topView motionAfterScrollViewDidEndDragging:scrollView];
@@ -209,35 +268,6 @@
     [self.controlHandle restore];
 }
 
-- (void)loadNewDataWithExistCount:(NSInteger)count {
-    _isLoading = YES;
-    [self.controlHandle restore];
-    [self.tableView setContentInset:UIEdgeInsetsMake(reloadOffset, 0, 44, 0)];
-    [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
-    self.tableView.scrollEnabled = NO;
-    self.activityView.hidden = NO;
-    if (self.dataArr.count == 7) {
-        //第一次下拉
-        [self.dataArr removeLastObject];
-        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-        
-    } else if (self.dataArr.count == 14) {
-        //第二次下拉
-        [self.dataArr removeLastObject];
-        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-    }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.activityView.hidden = YES;
-        [self.tableView reloadData];
-        [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
-        [self.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
-        [self.controlHandle restore];
-        _isLoading = NO;
-        self.tableView.scrollEnabled = YES;
-    });
-}
-
 #pragma mark - CMLControlHandle
 
 - (void)configControlHandle {
@@ -247,7 +277,7 @@
     self.controlHandle.clickAction = ^{
         AccountAddingViewController *accountAddingViewController = [AccountAddingViewController new];
         accountAddingViewController.saveSuccessCallback = ^{
-            CMLLog(@"保存成功");
+            //新添加账务成功，刷新页面
         };
         [weakSelf CML_presentViewController:accountAddingViewController transitionType:CMLTransitionAnimationBoom completion:nil];
     };

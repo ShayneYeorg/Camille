@@ -28,6 +28,10 @@
 #define KEY_Item                      @"item"
 #define KEY_Items                     @"items"
 #define KEY_ItemID                    @"itemID"
+#define KEY_Accountings               @"accountings"
+
+//常用短语
+#define PHRASE_ResponseSuccess (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED])
 
 @interface CMLResponse : NSObject
 

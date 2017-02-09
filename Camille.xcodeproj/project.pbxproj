@@ -65,6 +65,7 @@
 		3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */; };
 		3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC21C82D60C004EE4BD /* CMLCoreDataAccess.m */; };
 		3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC51C82D8F2004EE4BD /* CMLResponse.m */; };
+		349A06D51E49C5F000B3F2AA /* MainDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 349A06D41E49C5F000B3F2AA /* MainDataModel.m */; };
 		34A46FA81E437F740035B09A /* UIImageView+Dealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FA71E437F740035B09A /* UIImageView+Dealloc.m */; };
 		34A46FBA1E46DA9D0035B09A /* ItemInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FB91E46DA9D0035B09A /* ItemInputViewController.m */; };
 		34A46FBD1E46FA1C0035B09A /* CMLDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */; };
@@ -223,6 +224,8 @@
 		3499BDC21C82D60C004EE4BD /* CMLCoreDataAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLCoreDataAccess.m; sourceTree = "<group>"; };
 		3499BDC41C82D8F2004EE4BD /* CMLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLResponse.h; sourceTree = "<group>"; };
 		3499BDC51C82D8F2004EE4BD /* CMLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLResponse.m; sourceTree = "<group>"; };
+		349A06D31E49C5F000B3F2AA /* MainDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDataModel.h; sourceTree = "<group>"; };
+		349A06D41E49C5F000B3F2AA /* MainDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainDataModel.m; sourceTree = "<group>"; };
 		34A46FA61E437F740035B09A /* UIImageView+Dealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Dealloc.h"; sourceTree = "<group>"; };
 		34A46FA71E437F740035B09A /* UIImageView+Dealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Dealloc.m"; sourceTree = "<group>"; };
 		34A46FB81E46DA9D0035B09A /* ItemInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemInputViewController.h; sourceTree = "<group>"; };
@@ -493,6 +496,8 @@
 		34883E1B1E2F6B34001C78E4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				349A06D31E49C5F000B3F2AA /* MainDataModel.h */,
+				349A06D41E49C5F000B3F2AA /* MainDataModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -992,6 +997,7 @@
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				34F6EDB51E3739A0004AD9E8 /* CMLItemCategory+CoreDataProperties.m in Sources */,
 				34F6ED9D1E3738D0004AD9E8 /* Item+CoreDataProperties.m in Sources */,
+				349A06D51E49C5F000B3F2AA /* MainDataModel.m in Sources */,
 				34340AF31C9FEE3500FECAD7 /* CMLRecordDetailCell.m in Sources */,
 				34A46FBA1E46DA9D0035B09A /* ItemInputViewController.m in Sources */,
 				34F6ED9F1E3738D0004AD9E8 /* Accounting+CoreDataProperties.m in Sources */,

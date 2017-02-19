@@ -47,6 +47,6 @@
 typedef void (^VoidBlock)(void);
 
 //其他
-#define CML_DECLARE_WEAK_SELF __weak typeof(self) weakSelf = self;
+#define DECLARE_WEAK_SELF __weak typeof(self) weakSelf = self;
 
 

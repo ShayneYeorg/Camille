@@ -248,7 +248,7 @@
     if (!self.desc) {
         self.desc = @"";
     }
-    CML_DECLARE_WEAK_SELF
+    DECLARE_WEAK_SELF
     [Accounting addAccountingWithItemID:self.itemID amount:self.amount happneTime:self.happenTime desc:self.desc callBack:^(CMLResponse * _Nonnull response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             [SVProgressHUD showSuccessWithStatus:@"保存成功！"];

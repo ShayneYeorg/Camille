@@ -76,4 +76,16 @@
     return day;
 }
 
+//判断两个日期是否是同一天
++ (BOOL)isDate:(NSDate *)date1 equalsToDate:(NSDate *)date2 {
+    NSString *strDate1 = [self transDateToString:date1];
+    NSString *strDate2 = [self transDateToString:date2];
+    
+    if ([strDate1 isEqualToString:strDate2]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end

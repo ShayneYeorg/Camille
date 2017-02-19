@@ -91,6 +91,7 @@ static NSMutableArray *allAccountingsArrangeByDay;
 
 //要update几条accounting数据
 + (void)_accountingsUpdateFromIndex:(NSInteger)starIndex count:(NSInteger)pageCount callback:(void(^)(BOOL isUpdateSuccess))callback {
+    DECLARE_WEAK_SELF
     [Accounting fetchAccountingsFrom:starIndex count:pageCount callBack:^(CMLResponse * _Nonnull response) {
         if (PHRASE_ResponseSuccess) {
             if (starIndex == 0) {
@@ -99,7 +100,7 @@ static NSMutableArray *allAccountingsArrangeByDay;
                 [allAccountingsArrangeByDay removeAllObjects];
                 allAccountings = response.responseDic[KEY_Accountings];
                 if (allAccountings) {
-                    [self _arrangeAccountingsByDayWithLoadType:Load_Type_Refresh];
+                    [weakSelf _arrangeAccountingsByDayWithLoadType:Load_Type_Refresh];
                     
                 } else {
                     callback(NO);
@@ -110,7 +111,7 @@ static NSMutableArray *allAccountingsArrangeByDay;
                 NSArray *newPageData = response.responseDic[KEY_Accountings];
                 if (newPageData) {
                     [allAccountings addObjectsFromArray:response.responseDic[KEY_Accountings]];
-                    [self _arrangeAccountingsByDayWithLoadType:Load_Type_LoadMore];
+                    [weakSelf _arrangeAccountingsByDayWithLoadType:Load_Type_LoadMore];
                     
                 } else {
                     callback(NO);
@@ -126,7 +127,46 @@ static NSMutableArray *allAccountingsArrangeByDay;
 
 + (void)_arrangeAccountingsByDayWithLoadType:(Load_Type)loadType {
     //为了提高性能，不同的loadType方式，处理方式不同
-    
+    switch (loadType) {
+        case Load_Type_Refresh: {
+            MainSectionModel *currentSection;
+            for (Accounting *accounting in allAccountings) {
+                if (currentSection) {
+                    if ([CMLTool isDate:accounting.happenTime equalsToDate:currentSection.happenDate]) {
+                        //建立一个cell
+                        MainCellModel *cellModel = [MainCellModel mainCellModelWithAccounting:accounting];
+                        
+                        //添加cell
+                        [currentSection.cellModels addObject:cellModel];
+                        
+                    } else {
+                        
+                    }
+                    
+                } else {
+                    //新建一个section
+                    MainSectionModel *sectionModel = [MainSectionModel mainSectionModelWithAccounting:accounting];
+                    [allAccountingsArrangeByDay addObject:sectionModel];
+                    currentSection = sectionModel;
+                    
+                    //建立第一个cell
+                    MainCellModel *cellModel = [MainCellModel mainCellModelWithAccounting:accounting];
+                    
+                    //添加第一个cell
+                    [sectionModel.cellModels addObject:cellModel];
+                }
+            }
+        }
+            break;
+            
+        case Load_Type_LoadMore: {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

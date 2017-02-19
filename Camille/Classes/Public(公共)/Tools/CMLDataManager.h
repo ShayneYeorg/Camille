@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Item+CoreDataClass.h"
-#import "Accounting+CoreDataClass.h"
+#import "MainDataModel.h"
 
 typedef NS_ENUM (NSInteger, Load_Type) {
     Load_Type_Refresh = 0,

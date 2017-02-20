@@ -26,7 +26,7 @@
     accounting.amount = amount;
     accounting.happenTime = happenTime;
     accounting.desc = desc;
-    accounting.happenDay = [CMLTool getDayFromADate:happenTime];
+    accounting.happenDay = [CMLTool transDateToString:happenTime];
     accounting.createTime = [NSDate date];
     
     //保存

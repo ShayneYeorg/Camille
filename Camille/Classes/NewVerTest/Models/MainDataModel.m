@@ -13,13 +13,16 @@
 + (instancetype)mainCellModelWithAccounting:(Accounting *)accounting {
     MainCellModel *cellModel = [MainCellModel new];
     
-    cellModel.itemName = [Item itemNameByItemID:accounting.itemID];
     NSString *symbol = @"-";
-    NSString *itemType = [Item itemTypeByItemID:accounting.itemID];
-    if ([itemType isEqualToString:Item_Type_Income]) {
+    cellModel.itemType = [Item itemTypeByItemID:accounting.itemID];
+    cellModel.amount = accounting.amount.floatValue;
+    if ([cellModel.itemType isEqualToString:Item_Type_Income]) {
         symbol = @"+";
     }
-    cellModel.amount = [NSString stringWithFormat:@"%@%.2f", symbol, accounting.amount.floatValue];
+    
+    cellModel.displayItemName = [Item itemNameByItemID:accounting.itemID];
+    cellModel.displayAmount = [NSString stringWithFormat:@"%@%.2f", symbol, accounting.amount.floatValue];
+    cellModel.displayDesc = accounting.desc;
     
     return cellModel;
 }
@@ -32,7 +35,7 @@
     MainSectionModel *sectionModel = [MainSectionModel new];
     
     sectionModel.happenDate = accounting.happenTime;
-    sectionModel.date = [CMLTool transDateToString:accounting.happenTime];
+    sectionModel.diaplayDate = [CMLTool transDateToString:accounting.happenTime];
     sectionModel.cellModels = [NSMutableArray array];
     
     return sectionModel;
@@ -41,7 +44,12 @@
 - (void)addCell:(MainCellModel *)cellModel {
     [self.cellModels addObject:cellModel];
     
-    
+    if ([cellModel.itemType isEqualToString:Item_Type_Income]) {
+        self.totalIncome += cellModel.amount;
+        
+    } else {
+        self.totalCost += cellModel.amount;
+    }
 }
 
 @end

@@ -14,6 +14,11 @@ typedef NS_ENUM (NSInteger, Load_Type) {
     Load_Type_LoadMore,
 };
 
+typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
+    Accounting_Arrange_All = 0, //整理所有的Accounting数据
+    Accounting_Arrange_New_Page, //只整理新的一页Accounting数据
+};
+
 @interface CMLDataManager : NSObject
 
 + (NSArray *)getItemsWithItemType:(NSString *)itemType;

@@ -51,13 +51,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configDetails];
-    [self configBackgroungView];
-    [self configTableView];
-    [self configTopView];
-    [self configBottomView];
-    [self configControlHandle];
-    [self configToBottomHandle];
+//    [self configDetails];
+//    [self configBackgroungView];
+//    [self configTableView];
+//    [self configTopView];
+//    [self configBottomView];
+//    [self configControlHandle];
+//    [self configToBottomHandle];
     
     [self fetchAllAccountings];
 }

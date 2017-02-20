@@ -13,20 +13,34 @@
 
 @interface MainCellModel : NSObject
 
+//展示的内容
+
 /**
  *  项目名称
  */
-@property (nonatomic, copy) NSString *itemName;
+@property (nonatomic, copy) NSString *displayItemName;
 
 /**
  *  金额
  */
-@property (nonatomic, copy) NSString *amount;
+@property (nonatomic, copy) NSString *displayAmount;
 
 /**
  *  备注
  */
-@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy) NSString *displayDesc;
+
+//其他属性
+
+/**
+ *  账务类型
+ */
+@property (nonatomic, copy) NSString *itemType;
+
+/**
+ *  金额
+ */
+@property (nonatomic, assign) CGFloat amount;
 
 
 /**
@@ -41,15 +55,12 @@
 
 @interface MainSectionModel : NSObject
 
+//展示的内容
+
 /**
  *  日期（string）
  */
-@property (nonatomic, copy) NSString *date;
-
-/**
- *  日期（date）
- */
-@property (nonatomic, strong) NSDate *happenDate;
+@property (nonatomic, copy) NSString *diaplayDate;
 
 /**
  *  支出总额
@@ -59,12 +70,19 @@
 /**
  *  收入总额
  */
-@property (nonatomic, assign) CGFloat *totalIncome;
+@property (nonatomic, assign) CGFloat totalIncome;
+
+//其他属性
 
 /**
  *  cell内容
  */
 @property (nonatomic, strong) NSMutableArray *cellModels;
+
+/**
+ *  日期（date）
+ */
+@property (nonatomic, strong) NSDate *happenDate;
 
 
 /**

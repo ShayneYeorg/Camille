@@ -129,6 +129,11 @@
 
 #pragma mark - Private
 
+- (void)_scrollToBottomWithAnimation:(BOOL)animated {
+    MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData.firstObject;
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:animated];
+}
+
 - (void)loadNewDataWithExistCount:(NSInteger)count {
     _isLoading = YES;
     [self.controlHandle restore];
@@ -168,8 +173,7 @@
         [weakSelf.tableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{
             //会在主队列里等待tableView reload完再执行
-            MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData.firstObject;
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+            [self _scrollToBottomWithAnimation:NO];
         });
     }];
 }
@@ -302,10 +306,7 @@
     __weak typeof(self) weakSelf = self;
     self.toBottomHandle.clickAction = ^{
         weakSelf.isToBottomBtnClicked = YES;
-        
-        MainSectionModel *sectionModel = (MainSectionModel *)weakSelf.accountingsData.firstObject;
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        
+        [weakSelf _scrollToBottomWithAnimation:YES];
         [weakSelf.topView showWithAnimation:YES];
         [weakSelf.bottomView showWithAnimation:YES];
     };

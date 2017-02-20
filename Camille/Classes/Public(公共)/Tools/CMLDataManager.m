@@ -9,8 +9,7 @@
 #import "CMLDataManager.h"
 
 //缓存
-#warning - accountingsPageCount记得改回20
-static NSInteger accountingsPageCount = 5;
+static NSInteger accountingsPageCount = 20;
 static BOOL accountingsNeedUpdate;
 static NSMutableArray *allAccountings;
 static NSMutableArray *allAccountingsArrangeByDay;
@@ -58,7 +57,7 @@ static NSMutableArray *allAccountingsArrangeByDay;
         }
         
     } else {
-        //二、缓存数据已被污染
+        //二、缓存数据无数据 或 已被污染
         //重新update数据，然后返回当前缓存的allAccountingsArrangeByDay
         //1、loadType为Load_Type_Refresh表示(初次打开 | 添加了新的accounting)
         //2、loadType为Load_Type_LoadMore表示(加载新页)
@@ -186,3 +185,11 @@ static NSMutableArray *allAccountingsArrangeByDay;
 }
 
 @end
+
+
+//Accounting fetch测试数据
+
+//DECLARE_WEAK_SELF
+//[CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
+//    weakSelf.accountingsData = accountings;
+//}];

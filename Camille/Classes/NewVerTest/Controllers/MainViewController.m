@@ -52,28 +52,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self configDetails];
-//    [self configBackgroungView];
-//    [self configTableView];
-//    [self configTopView];
-//    [self configBottomView];
-//    [self configControlHandle];
-//    [self configToBottomHandle];
+    [self configDetails];
+    [self configBackgroungView];
+    [self configTableView];
+    [self configTopView];
+    [self configBottomView];
+    [self configControlHandle];
+    [self configToBottomHandle];
     
     [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
-    
-    [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
-    
-    
-    
-//    [Item addItemWithName:@"花销一" type:Item_Type_Cost callBack:^(CMLResponse * _Nonnull response) {
-//    }];
-    
-//    NSDate *today = [NSDate date];
-//    NSDate *firstDay = [CMLTool getFirstDateInMonth:today];
-//    NSDate *lastDay = [CMLTool getLastDateInMonth:today];
-//    
-//    [Accounting addAccountingWithItemID:@"20170220150658" amount:[NSNumber numberWithFloat:103] happneTime:firstDay desc:@"无" callBack:^(CMLResponse * _Nonnull response) {}];
 }
 
 #pragma mark - UI Configuration

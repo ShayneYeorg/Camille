@@ -29,7 +29,6 @@
 
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UITableView *tableView;
-//@property (nonatomic, strong) NSMutableArray *dataArr;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
@@ -62,6 +61,8 @@
     [self configToBottomHandle];
     
     [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
+    
+//    [Accounting addAccountingWithItemID:@"20170220171937" amount:[NSNumber numberWithFloat:307] happneTime:[NSDate date] desc:@"无" callBack:^(CMLResponse * _Nonnull response) {}];
 }
 
 #pragma mark - UI Configuration
@@ -88,10 +89,6 @@
     self.tableView.tableFooterView = [UIView new];
     
     self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
-    
-//    NSDictionary *dic = self.dataArr.firstObject;
-//    NSArray *arr = dic[@"0"];
-//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.dataArr.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
 - (void)configTopView {
@@ -169,8 +166,12 @@
     [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
         weakSelf.accountingsData = accountings;
         [weakSelf.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //会在主队列里等待tableView reload完再执行
+            MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData.firstObject;
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        });
     }];
-    
 }
 
 - (void)fetchAccountingsByDate:(NSDate *)date {
@@ -214,7 +215,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AccountingCell *cell = [AccountingCell loadFromNib];
     MainSectionModel *sectionModel = self.accountingsData[self.accountingsData.count - 1 - indexPath.section];
-    MainCellModel *cellModel = (MainCellModel *)sectionModel.cellModels[self.accountingsData.count - 1 - indexPath.section];
+    MainCellModel *cellModel = (MainCellModel *)sectionModel.cellModels[sectionModel.cellModels.count - 1 - indexPath.row];
     cell.model = cellModel;
     
     return cell;
@@ -301,9 +302,10 @@
     __weak typeof(self) weakSelf = self;
     self.toBottomHandle.clickAction = ^{
         weakSelf.isToBottomBtnClicked = YES;
-//        NSDictionary *dic = weakSelf.accountingsData.firstObject;
-//        NSArray *arr = dic[@"0"];
-//        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        
+        MainSectionModel *sectionModel = (MainSectionModel *)weakSelf.accountingsData.firstObject;
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        
         [weakSelf.topView showWithAnimation:YES];
         [weakSelf.bottomView showWithAnimation:YES];
     };

@@ -19,7 +19,6 @@
 #import "AccountAddingViewController.h"
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
-#import "MainDataModel.h"
 #import "CMLDataManager.h"
 
 #define cellHeight         50
@@ -30,14 +29,16 @@
 
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataArr;
+//@property (nonatomic, strong) NSMutableArray *dataArr;
+
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+
 @property (nonatomic, strong) CMLTopPanel *topView;
 @property (nonatomic, strong) CMLBottomPanel *bottomView;
 @property (nonatomic, strong) CMLControlHandle *controlHandle;
 @property (nonatomic, strong) CMLControlHandle *toBottomHandle;
-@property (nonatomic, assign) BOOL isToBottomBtnClicked;
 
+@property (nonatomic, assign) BOOL isToBottomBtnClicked;
 @property (nonatomic, strong) NSMutableArray *accountingsData;
 
 @end
@@ -104,12 +105,19 @@
 
 #pragma mark - Getter
 
-- (NSMutableArray *)dataArr {
-    if (!_dataArr) {
-        _dataArr = [NSMutableArray array];
-        [_dataArr addObjectsFromArray:[TestData dataArrayFrom:0 to:dataCountPerPage]];
+//- (NSMutableArray *)dataArr {
+//    if (!_dataArr) {
+//        _dataArr = [NSMutableArray array];
+//        [_dataArr addObjectsFromArray:[TestData dataArrayFrom:0 to:dataCountPerPage]];
+//    }
+//    return _dataArr;
+//}
+
+- (NSMutableArray *)accountingsData {
+    if (!_accountingsData) {
+        _accountingsData = [NSMutableArray array];
     }
-    return _dataArr;
+    return _accountingsData;
 }
 
 - (UIActivityIndicatorView *)activityView {
@@ -131,16 +139,16 @@
     [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
     self.tableView.scrollEnabled = NO;
     self.activityView.hidden = NO;
-    if (self.dataArr.count == 7) {
-        //第一次下拉
-        [self.dataArr removeLastObject];
-        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-        
-    } else if (self.dataArr.count == 14) {
-        //第二次下拉
-        [self.dataArr removeLastObject];
-        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-    }
+//    if (self.dataArr.count == 7) {
+//        //第一次下拉
+//        [self.dataArr removeLastObject];
+//        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
+//        
+//    } else if (self.dataArr.count == 14) {
+//        //第二次下拉
+//        [self.dataArr removeLastObject];
+//        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
+//    }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.activityView.hidden = YES;
@@ -160,6 +168,7 @@
     DECLARE_WEAK_SELF
     [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
         weakSelf.accountingsData = accountings;
+        [weakSelf.tableView reloadData];
     }];
     
 }
@@ -176,7 +185,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataArr.count;
+    return self.accountingsData.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -198,16 +207,15 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *arr = self.dataArr[self.dataArr.count - 1 -section][[NSString stringWithFormat:@"%zd", self.dataArr.count - 1 -section]];
-    return arr.count;
+    MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData[self.accountingsData.count - 1 - section];
+    return sectionModel.cellModels.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AccountingCell *cell = [AccountingCell loadFromNib];
-    NSDictionary *dic = self.dataArr[self.dataArr.count - 1 - indexPath.section];
-    NSArray *arr = dic[[NSString stringWithFormat:@"%zd", self.dataArr.count - 1 - indexPath.section]];
-    TestDataAccounting *accounting = arr[arr.count - 1 - indexPath.row];
-    cell.model = accounting;
+    MainSectionModel *sectionModel = self.accountingsData[self.accountingsData.count - 1 - indexPath.section];
+    MainCellModel *cellModel = (MainCellModel *)sectionModel.cellModels[self.accountingsData.count - 1 - indexPath.section];
+    cell.model = cellModel;
     
     return cell;
 }
@@ -220,11 +228,11 @@
     [self.controlHandle motionAfterScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
     
     //假数据
-    if (self.tableView.contentOffset.y < -reloadOffset) {
-        if (!_isLoading) {
-            [self loadNewDataWithExistCount:self.dataArr.count];
-        }
-    }
+//    if (self.tableView.contentOffset.y < -reloadOffset) {
+//        if (!_isLoading) {
+//            [self loadNewDataWithExistCount:self.dataArr.count];
+//        }
+//    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -293,9 +301,9 @@
     __weak typeof(self) weakSelf = self;
     self.toBottomHandle.clickAction = ^{
         weakSelf.isToBottomBtnClicked = YES;
-        NSDictionary *dic = weakSelf.dataArr.firstObject;
-        NSArray *arr = dic[@"0"];
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.dataArr.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+//        NSDictionary *dic = weakSelf.accountingsData.firstObject;
+//        NSArray *arr = dic[@"0"];
+//        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arr.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:YES];
         [weakSelf.topView showWithAnimation:YES];
         [weakSelf.bottomView showWithAnimation:YES];
     };

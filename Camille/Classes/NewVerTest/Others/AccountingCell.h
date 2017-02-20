@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TestDataAccounting.h"
+#import "MainDataModel.h"
 
 @interface AccountingCell : UITableViewCell
 
-@property (nonatomic, strong) TestDataAccounting *model;
+@property (nonatomic, strong) MainCellModel *model;
 
 + (instancetype)loadFromNib;
 

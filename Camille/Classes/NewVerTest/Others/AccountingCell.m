@@ -33,15 +33,11 @@
     // Configure the view for the selected state
 }
 
-- (void)setModel:(TestDataAccounting *)model {
+- (void)setModel:(MainCellModel *)model {
     _model = model;
     
-    self.nameLabel.text = model.name;
-    NSString *symbol = @"-";
-    if (!_model.isOutcome) {
-        symbol = @"+";
-    }
-    self.valueLabel.text = [NSString stringWithFormat:@"%@%.2f", symbol, _model.value];
+    self.nameLabel.text = model.displayItemName;
+    self.valueLabel.text = _model.displayAmount;
 }
 
 @end

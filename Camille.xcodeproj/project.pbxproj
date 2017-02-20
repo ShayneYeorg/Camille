@@ -70,7 +70,7 @@
 		34A46FBA1E46DA9D0035B09A /* ItemInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FB91E46DA9D0035B09A /* ItemInputViewController.m */; };
 		34A46FBD1E46FA1C0035B09A /* CMLDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */; };
 		34A46FC01E47232D0035B09A /* DescInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FBF1E47232D0035B09A /* DescInputViewController.m */; };
-		34BC49311E5AC7DC004790A8 /* CMLCoreDataHeadFiles.h in Sources */ = {isa = PBXBuildFile; fileRef = 34BC49301E5AC7DC004790A8 /* CMLCoreDataHeadFiles.h */; };
+		34BC49311E5AC7DC004790A8 /* CoreDataModels.h in Sources */ = {isa = PBXBuildFile; fileRef = 34BC49301E5AC7DC004790A8 /* CoreDataModels.h */; };
 		34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */; };
 		34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */; };
 		34C82C3B1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m */; };
@@ -235,7 +235,8 @@
 		34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLDataManager.m; sourceTree = "<group>"; };
 		34A46FBE1E47232D0035B09A /* DescInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescInputViewController.h; sourceTree = "<group>"; };
 		34A46FBF1E47232D0035B09A /* DescInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescInputViewController.m; sourceTree = "<group>"; };
-		34BC49301E5AC7DC004790A8 /* CMLCoreDataHeadFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLCoreDataHeadFiles.h; sourceTree = "<group>"; };
+		34BC49301E5AC7DC004790A8 /* CoreDataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataModels.h; sourceTree = "<group>"; };
+		34BC49321E5B3885004790A8 /* ReportModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportModels.h; sourceTree = "<group>"; };
 		34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UpsideDown.h"; sourceTree = "<group>"; };
 		34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UpsideDown.m"; sourceTree = "<group>"; };
 		34C82C361E35FE51001CDC93 /* CMLTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTransitionManager.h; sourceTree = "<group>"; };
@@ -756,7 +757,8 @@
 			isa = PBXGroup;
 			children = (
 				34D21C991C78892E004264C2 /* Camille.xcdatamodeld */,
-				34BC49301E5AC7DC004790A8 /* CMLCoreDataHeadFiles.h */,
+				34BC49301E5AC7DC004790A8 /* CoreDataModels.h */,
+				34BC49321E5B3885004790A8 /* ReportModels.h */,
 				34F6ED8C1E3738D0004AD9E8 /* Item+CoreDataClass.h */,
 				34F6ED8D1E3738D0004AD9E8 /* Item+CoreDataClass.m */,
 				34F6ED8E1E3738D0004AD9E8 /* Item+CoreDataProperties.h */,
@@ -1010,7 +1012,7 @@
 				345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */,
 				34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */,
 				34C82C441E36E971001CDC93 /* ReportViewController.m in Sources */,
-				34BC49311E5AC7DC004790A8 /* CMLCoreDataHeadFiles.h in Sources */,
+				34BC49311E5AC7DC004790A8 /* CoreDataModels.h in Sources */,
 				34D21C771C78149E004264C2 /* CMLAccountingViewController.m in Sources */,
 				34E3846C1CA12576004A5A8C /* CMLTool+NSDate.m in Sources */,
 				34A46FC01E47232D0035B09A /* DescInputViewController.m in Sources */,

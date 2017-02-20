@@ -9,7 +9,8 @@
 #import "CMLDataManager.h"
 
 //缓存
-static NSInteger accountingsPageCount = 20;
+#warning - accountingsPageCount记得改回20
+static NSInteger accountingsPageCount = 5;
 static BOOL accountingsNeedUpdate;
 static NSMutableArray *allAccountings;
 static NSMutableArray *allAccountingsArrangeByDay;
@@ -36,18 +37,18 @@ static NSMutableArray *allAccountingsArrangeByDay;
 }
 
 + (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(NSMutableArray *accountings))callBack {
-    if (loadType == Load_Type_Refresh) {
-        //刷新(取消日期查询 或者 添加了新的accounting)
-        if (![self _accountingsNeedUpdate]) {
-            //缓存数据未被污染，直接返回当前缓存的allAccountingsArrangeByDay
-            //(取消日期查询)
+    if (![self _accountingsNeedUpdate]) {
+        //一、缓存数据未被污染
+        if (loadType == Load_Type_Refresh) {
+            //1、(取消日期查询)
+            //直接返回当前缓存的allAccountingsArrangeByDay
             callBack(allAccountingsArrangeByDay);
             
         } else {
-            //缓存数据已被污染，重新update一页数据，然后返回当前缓存的allAccountingsArrangeByDay
-            //(添加了新的accounting)
-            [self _accountingsUpdateFromIndex:0 count:accountingsPageCount callback:^(BOOL isUpdateSuccess) {
-                if (isUpdateSuccess) {
+            //2、(加载新页)
+            //直接在当前基础上取下一页数据
+            [self _fetchAccountingsFromIndex:allAccountings.count count:accountingsPageCount callback:^(BOOL isFetchSuccess) {
+                if (isFetchSuccess) {
                     callBack(allAccountingsArrangeByDay);
                     
                 } else {
@@ -57,29 +58,18 @@ static NSMutableArray *allAccountingsArrangeByDay;
         }
         
     } else {
-        //获取更多数据（下拉加载更多）
-        if (![self _accountingsNeedUpdate]) {
-            //缓存数据未被污染，可以直接在当前基础上取下一页数据
-            [self _accountingsUpdateFromIndex:allAccountings.count count:accountingsPageCount callback:^(BOOL isUpdateSuccess) {
-                if (isUpdateSuccess) {
-                    callBack(allAccountingsArrangeByDay);
-                    
-                } else {
-                    callBack(nil);
-                }
-            }];
-            
-        } else {
-            //缓存数据已被污染，所有数据都要全部重新拿
-            [self _accountingsUpdateFromIndex:0 count:allAccountings.count + accountingsPageCount callback:^(BOOL isUpdateSuccess) {
-                if (isUpdateSuccess) {
-                    callBack(allAccountingsArrangeByDay);
-                    
-                } else {
-                    callBack(nil);
-                }
-            }];
-        }
+        //二、缓存数据已被污染
+        //重新update数据，然后返回当前缓存的allAccountingsArrangeByDay
+        //1、loadType为Load_Type_Refresh表示(初次打开 | 添加了新的accounting)
+        //2、loadType为Load_Type_LoadMore表示(加载新页)
+        [self _updateAccountingWithLoadType:loadType callback:^(BOOL isUpdateSuccess) {
+            if (isUpdateSuccess) {
+                callBack(allAccountingsArrangeByDay);
+                
+            } else {
+                callBack(nil);
+            }
+        }];
     }
 }
 
@@ -91,27 +81,43 @@ static NSMutableArray *allAccountingsArrangeByDay;
     return accountingsNeedUpdate;
 }
 
-//要update几条accounting数据
-+ (void)_accountingsUpdateFromIndex:(NSInteger)starIndex count:(NSInteger)pageCount callback:(void(^)(BOOL isUpdateSuccess))callback {
++ (void)_updateAccountingWithLoadType:(Load_Type)loadType callback:(void(^)(BOOL isUpdateSuccess))callback {
+    NSInteger count = accountingsPageCount;
+    if (loadType == Load_Type_LoadMore) {
+        count += allAccountings.count;
+    }
+    
+    [self _fetchAccountingsFromIndex:0 count:count callback:^(BOOL isFetchSuccess) {
+        if (isFetchSuccess) {
+            accountingsNeedUpdate = NO;
+            callback(YES);
+            
+        } else {
+            callback(NO);
+        }
+    }];
+}
+
+//fetch accounting数据
++ (void)_fetchAccountingsFromIndex:(NSInteger)starIndex count:(NSInteger)pageCount callback:(void(^)(BOOL isFetchSuccess))callback {
     DECLARE_WEAK_SELF
     [Accounting fetchAccountingsFrom:starIndex count:pageCount callBack:^(CMLResponse * _Nonnull response) {
         if (PHRASE_ResponseSuccess) {
             if (starIndex == 0) {
-                //清空allAccountings，重新整理allAccountingsArrangeByDay
-                allAccountings = response.responseDic[KEY_Accountings];
+                //1、清空allAccountings，重新整理allAccountingsArrangeByDay
+                NSArray *allData = response.responseDic[KEY_Accountings];
                 if (allAccountings) {
-                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_All];
+                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_All newAccountings:allData];
                     
                 } else {
                     callback(NO);
                 }
                 
             } else {
-                //在当前缓存基础上继续添加
+                //2、在当前缓存基础上继续添加
                 NSArray *newPageData = response.responseDic[KEY_Accountings];
                 if (newPageData) {
-                    [allAccountings addObjectsFromArray:response.responseDic[KEY_Accountings]];
-                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_New_Page];
+                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_New_Page newAccountings:newPageData];
                     
                 } else {
                     callback(NO);
@@ -125,14 +131,22 @@ static NSMutableArray *allAccountingsArrangeByDay;
     }];
 }
 
-+ (void)_arrangeAccountingsByDayWithType:(Accounting_Arrange_Type)accountingArrangeType {
++ (void)_arrangeAccountingsByDayWithType:(Accounting_Arrange_Type)accountingArrangeType newAccountings:(NSArray *)newAccountings {
+    //一、清理数据
     if (accountingArrangeType == Accounting_Arrange_All) {
-        //全部Accounting重新整理进allAccountingsArrangeByDay
+        //重新赋值allAccountings
+        //allAccountingsArrangeByDay清空以便完全重新整理
+        allAccountings = newAccountings.mutableCopy;
         [allAccountingsArrangeByDay removeAllObjects];
+        
+    } else {
+        //将新页的Accounting添加到allAccountings里
+        [allAccountings addObjectsFromArray:newAccountings];
     }
     
+    //二、整理数据
     MainSectionModel *currentSection;
-    for (Accounting *accounting in allAccountings) {
+    for (Accounting *accounting in newAccountings) {
         if (currentSection && [currentSection.diaplayDate isEqualToString:accounting.happenDay]) {
             //建立一个cell
             MainCellModel *cellModel = [MainCellModel mainCellModelWithAccounting:accounting];
@@ -143,12 +157,12 @@ static NSMutableArray *allAccountingsArrangeByDay;
         } else {
             //重新在allAccountingsArrangeByDay中找出这条accounting对应的MainSectionModel
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"diaplayDate=%@", accounting.happenDay];
-            MainSectionModel *mainSectionModel = (MainSectionModel *)[[allAccountingsArrangeByDay filteredArrayUsingPredicate:predicate] lastObject];
+            MainSectionModel *existSectionModel = (MainSectionModel *)[[allAccountingsArrangeByDay filteredArrayUsingPredicate:predicate] lastObject];
             
-            //遍历第一个accounting的时候，currentSection会为nil
-            //allAccountingsArrangeByDay中没有对应日期的数据的时候，mainSectionModel会为nil
+            //①、遍历第一个accounting的时候，existSectionModel肯定为nil
+            //②、allAccountingsArrangeByDay中没有对应日期的数据的时候，existSectionModel也会为nil
             //这两种情况下都需要新建MainSectionModel
-            if (!currentSection || !mainSectionModel) {
+            if (!existSectionModel) {
                 //allAccountingsArrangeByDay中未有这个日期的MainSectionModel
                 //新建一个section
                 MainSectionModel *sectionModel = [MainSectionModel mainSectionModelWithAccounting:accounting];
@@ -163,7 +177,7 @@ static NSMutableArray *allAccountingsArrangeByDay;
                 
             } else {
                 //allAccountingsArrangeByDay中已有这个日期的MainSectionModel
-                currentSection = mainSectionModel;
+                currentSection = existSectionModel;
                 MainCellModel *cellModel = [MainCellModel mainCellModelWithAccounting:accounting];
                 [currentSection addCell:cellModel];
             }

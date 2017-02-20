@@ -19,7 +19,8 @@
 #import "AccountAddingViewController.h"
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
-
+#import "MainDataModel.h"
+#import "CMLDataManager.h"
 
 #define cellHeight         50
 #define dataCountPerPage   20
@@ -59,7 +60,20 @@
 //    [self configControlHandle];
 //    [self configToBottomHandle];
     
-    [self fetchAllAccountings];
+    [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
+    
+    [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
+    
+    
+    
+//    [Item addItemWithName:@"花销一" type:Item_Type_Cost callBack:^(CMLResponse * _Nonnull response) {
+//    }];
+    
+//    NSDate *today = [NSDate date];
+//    NSDate *firstDay = [CMLTool getFirstDateInMonth:today];
+//    NSDate *lastDay = [CMLTool getLastDateInMonth:today];
+//    
+//    [Accounting addAccountingWithItemID:@"20170220150658" amount:[NSNumber numberWithFloat:103] happneTime:firstDay desc:@"无" callBack:^(CMLResponse * _Nonnull response) {}];
 }
 
 #pragma mark - UI Configuration
@@ -154,9 +168,12 @@
 
 #pragma mark - Fetch Data
 
-- (void)fetchAllAccountings {
+- (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType {
     //数据缓存在中间层
-    
+    DECLARE_WEAK_SELF
+    [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
+        weakSelf.accountingsData = accountings;
+    }];
     
 }
 

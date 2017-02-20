@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Item+CoreDataClass.h"
-#import "Accounting+CoreDataClass.h"
+#import "CMLCoreDataHeadFiles.h"
 #import "CMLTool+NSDate.h"
 
 @interface MainCellModel : NSObject

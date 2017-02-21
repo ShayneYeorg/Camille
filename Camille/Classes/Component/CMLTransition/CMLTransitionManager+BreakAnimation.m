@@ -7,6 +7,7 @@
 //
 
 #import "CMLTransitionManager+BreakAnimation.h"
+#import "CMLTransitionManager+CommonMethods.h"
 
 @implementation CMLTransitionManager (BreakAnimation)
 
@@ -91,17 +92,6 @@
         [imgView0 removeFromSuperview];
         [imgView1 removeFromSuperview];
     }];
-}
-
-- (UIImage *)imageFromView:(UIView *)view atFrame:(CGRect)rect {
-    UIGraphicsBeginImageContext(view.frame.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    UIRectClip(rect);
-    [view.layer renderInContext:context];
-    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return theImage;
 }
 
 @end

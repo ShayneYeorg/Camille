@@ -57,11 +57,7 @@
 		34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E1A1E2F6B34001C78E4 /* MainViewController.m */; };
 		34883E2B1E2F6B5D001C78E4 /* AccountingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E201E2F6B5D001C78E4 /* AccountingCell.m */; };
 		34883E2C1E2F6B5D001C78E4 /* AccountingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34883E211E2F6B5D001C78E4 /* AccountingCell.xib */; };
-		34883E2D1E2F6B5D001C78E4 /* AddAccountingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E231E2F6B5D001C78E4 /* AddAccountingView.m */; };
-		34883E2E1E2F6B5D001C78E4 /* AddAccountingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34883E241E2F6B5D001C78E4 /* AddAccountingView.xib */; };
 		34883E2F1E2F6B5D001C78E4 /* SectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E261E2F6B5D001C78E4 /* SectionHeaderView.m */; };
-		34883E301E2F6B5D001C78E4 /* TestData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E281E2F6B5D001C78E4 /* TestData.m */; };
-		34883E311E2F6B5D001C78E4 /* TestDataAccounting.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E2A1E2F6B5D001C78E4 /* TestDataAccounting.m */; };
 		3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */; };
 		3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC21C82D60C004EE4BD /* CMLCoreDataAccess.m */; };
 		3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3499BDC51C82D8F2004EE4BD /* CMLResponse.m */; };
@@ -72,6 +68,7 @@
 		34A46FC01E47232D0035B09A /* DescInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A46FBF1E47232D0035B09A /* DescInputViewController.m */; };
 		34BC49311E5AC7DC004790A8 /* CoreDataModels.h in Sources */ = {isa = PBXBuildFile; fileRef = 34BC49301E5AC7DC004790A8 /* CoreDataModels.h */; };
 		34BC49381E5C24E4004790A8 /* CMLTransitionManager+CommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC49371E5C24E4004790A8 /* CMLTransitionManager+CommonMethods.m */; };
+		34BC493A1E5C3AFC004790A8 /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34BC49391E5C3AFC004790A8 /* SectionHeaderView.xib */; };
 		34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */; };
 		34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C371E35FE51001CDC93 /* CMLTransitionManager.m */; };
 		34C82C3B1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C82C3A1E36018F001CDC93 /* CMLTransitionManager+BreakAnimation.m */; };
@@ -211,15 +208,8 @@
 		34883E1F1E2F6B5D001C78E4 /* AccountingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountingCell.h; sourceTree = "<group>"; };
 		34883E201E2F6B5D001C78E4 /* AccountingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountingCell.m; sourceTree = "<group>"; };
 		34883E211E2F6B5D001C78E4 /* AccountingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountingCell.xib; sourceTree = "<group>"; };
-		34883E221E2F6B5D001C78E4 /* AddAccountingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAccountingView.h; sourceTree = "<group>"; };
-		34883E231E2F6B5D001C78E4 /* AddAccountingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAccountingView.m; sourceTree = "<group>"; };
-		34883E241E2F6B5D001C78E4 /* AddAccountingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAccountingView.xib; sourceTree = "<group>"; };
 		34883E251E2F6B5D001C78E4 /* SectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionHeaderView.h; sourceTree = "<group>"; };
 		34883E261E2F6B5D001C78E4 /* SectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionHeaderView.m; sourceTree = "<group>"; };
-		34883E271E2F6B5D001C78E4 /* TestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestData.h; sourceTree = "<group>"; };
-		34883E281E2F6B5D001C78E4 /* TestData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestData.m; sourceTree = "<group>"; };
-		34883E291E2F6B5D001C78E4 /* TestDataAccounting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDataAccounting.h; sourceTree = "<group>"; };
-		34883E2A1E2F6B5D001C78E4 /* TestDataAccounting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDataAccounting.m; sourceTree = "<group>"; };
 		3490A2E91C798D0900DEC138 /* CMLAccountingRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAccountingRegistrationViewController.h; sourceTree = "<group>"; };
 		3490A2EA1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAccountingRegistrationViewController.m; sourceTree = "<group>"; };
 		3499BDC11C82D60C004EE4BD /* CMLCoreDataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLCoreDataAccess.h; sourceTree = "<group>"; };
@@ -240,6 +230,7 @@
 		34BC49321E5B3885004790A8 /* ReportModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportModels.h; sourceTree = "<group>"; };
 		34BC49361E5C24E4004790A8 /* CMLTransitionManager+CommonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CMLTransitionManager+CommonMethods.h"; sourceTree = "<group>"; };
 		34BC49371E5C24E4004790A8 /* CMLTransitionManager+CommonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CMLTransitionManager+CommonMethods.m"; sourceTree = "<group>"; };
+		34BC49391E5C3AFC004790A8 /* SectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		34C82C311E346235001CDC93 /* UIScrollView+UpsideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UpsideDown.h"; sourceTree = "<group>"; };
 		34C82C321E346235001CDC93 /* UIScrollView+UpsideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UpsideDown.m"; sourceTree = "<group>"; };
 		34C82C361E35FE51001CDC93 /* CMLTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTransitionManager.h; sourceTree = "<group>"; };
@@ -514,15 +505,9 @@
 				34883E1F1E2F6B5D001C78E4 /* AccountingCell.h */,
 				34883E201E2F6B5D001C78E4 /* AccountingCell.m */,
 				34883E211E2F6B5D001C78E4 /* AccountingCell.xib */,
-				34883E221E2F6B5D001C78E4 /* AddAccountingView.h */,
-				34883E231E2F6B5D001C78E4 /* AddAccountingView.m */,
-				34883E241E2F6B5D001C78E4 /* AddAccountingView.xib */,
 				34883E251E2F6B5D001C78E4 /* SectionHeaderView.h */,
 				34883E261E2F6B5D001C78E4 /* SectionHeaderView.m */,
-				34883E271E2F6B5D001C78E4 /* TestData.h */,
-				34883E281E2F6B5D001C78E4 /* TestData.m */,
-				34883E291E2F6B5D001C78E4 /* TestDataAccounting.h */,
-				34883E2A1E2F6B5D001C78E4 /* TestDataAccounting.m */,
+				34BC49391E5C3AFC004790A8 /* SectionHeaderView.xib */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -915,8 +900,8 @@
 				345E0B651C9EE45100A52488 /* CMLRecordCell.xib in Resources */,
 				3441D0B51C7C917C00D6FE0C /* CMLAccountingItemLeftCell.xib in Resources */,
 				34340AEF1C9FDD2600FECAD7 /* CMLRecordDetailSectionHeaderView.xib in Resources */,
+				34BC493A1E5C3AFC004790A8 /* SectionHeaderView.xib in Resources */,
 				34D21CB31C789991004264C2 /* CMLAccountingViewController.xib in Resources */,
-				34883E2E1E2F6B5D001C78E4 /* AddAccountingView.xib in Resources */,
 				34431E381CF333AB001E4A54 /* CMLNewItemAddingView2.xib in Resources */,
 				34340AEA1C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib in Resources */,
 				34FA389C1C95358500A049E8 /* CMLAccountingDateCell.xib in Resources */,
@@ -961,11 +946,9 @@
 				341021A01CFAFDD800DD7561 /* CMLCategorySettingViewController.m in Sources */,
 				34D21C911C7814F3004264C2 /* main.m in Sources */,
 				34883E0D1E2C9B26001C78E4 /* CMLControlHandle.m in Sources */,
-				34883E301E2F6B5D001C78E4 /* TestData.m in Sources */,
 				34F6EDA21E3738D0004AD9E8 /* Report_Month_Item+CoreDataClass.m in Sources */,
 				34F6EDB11E3739A0004AD9E8 /* CMLAccounting+CoreDataProperties.m in Sources */,
 				34BC49381E5C24E4004790A8 /* CMLTransitionManager+CommonMethods.m in Sources */,
-				34883E311E2F6B5D001C78E4 /* TestDataAccounting.m in Sources */,
 				345E0BA01C9F90F600A52488 /* MJFoundation.m in Sources */,
 				3410219D1CFAF72D00DD7561 /* CMLItemSettingViewController.m in Sources */,
 				3405793E1C8EB4E700C79F9D /* SVRadialGradientLayer.m in Sources */,
@@ -974,7 +957,6 @@
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
 				34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */,
 				34F6ED9C1E3738D0004AD9E8 /* Item+CoreDataClass.m in Sources */,
-				34883E2D1E2F6B5D001C78E4 /* AddAccountingView.m in Sources */,
 				3426CC451E1E4889006B2215 /* CMLBottomPanel.m in Sources */,
 				34C82C411E3605B0001CDC93 /* UIViewController+CMLTransition.m in Sources */,
 				34F6EDA11E3738D0004AD9E8 /* Report_Month_Item_NeedUpdate+CoreDataProperties.m in Sources */,

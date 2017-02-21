@@ -8,11 +8,9 @@
 
 #import "MainViewController.h"
 #import "AccountingCell.h"
-#import "TestData.h"
 #import "CMLTopPanel.h"
 #import "CMLBottomPanel.h"
 #import "CMLControlHandle.h"
-#import "AddAccountingView.h"
 #import "SectionHeaderView.h"
 #import "UIScrollView+UpsideDown.h"
 #import "AccountViewController.h"
@@ -55,14 +53,12 @@
     [self configDetails];
     [self configBackgroungView];
     [self configTableView];
-    [self configTopView];
-    [self configBottomView];
+//    [self configTopView];
+//    [self configBottomView];
     [self configControlHandle];
     [self configToBottomHandle];
     
     [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
-    
-//    [Accounting addAccountingWithItemID:@"20170220171937" amount:[NSNumber numberWithFloat:307] happneTime:[NSDate date] desc:@"无" callBack:^(CMLResponse * _Nonnull response) {}];
 }
 
 #pragma mark - UI Configuration
@@ -88,7 +84,7 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+//    self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
 }
 
 - (void)configTopView {
@@ -188,7 +184,11 @@
 #pragma mark - UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [SectionHeaderView loadSectionHeaderView];
+    SectionHeaderView *sectionHeaderView = [SectionHeaderView loadSectionHeaderView];
+    MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData[self.accountingsData.count - 1 - section];
+    sectionHeaderView.date.text = sectionModel.diaplayDate;
+    
+    return sectionHeaderView;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

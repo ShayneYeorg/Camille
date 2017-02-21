@@ -23,6 +23,17 @@ typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
 
 + (NSArray *)getItemsWithItemType:(NSString *)itemType;
 
+/**
+ *  新增账务记录
+ *
+ *  @param itemID               记账项目ID
+ *  @param amount               金额
+ *  @param happenTime           发生时间
+ *  @param desc                 备注
+ *  @param callBack             回调
+ */
++ (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack;
+
 //数据缓存在本层，调用的那层不管分页情况
 + (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(NSMutableArray *accountings))callBack;
 

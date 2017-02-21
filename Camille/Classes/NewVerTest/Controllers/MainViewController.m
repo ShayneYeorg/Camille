@@ -131,7 +131,9 @@
 
 - (void)_scrollToBottomWithAnimation:(BOOL)animated {
     MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData.firstObject;
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:animated];
+    if (sectionModel) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:sectionModel.cellModels.count - 1 inSection:(self.accountingsData.count - 1)] atScrollPosition:UITableViewScrollPositionNone animated:animated];
+    }
 }
 
 - (void)loadNewDataWithExistCount:(NSInteger)count {
@@ -295,6 +297,7 @@
         AccountAddingViewController *accountAddingViewController = [AccountAddingViewController new];
         accountAddingViewController.saveSuccessCallback = ^{
             //新添加账务成功，刷新页面
+            [weakSelf fetchAllAccountingsWithLoadType:Load_Type_Refresh];
         };
         [weakSelf CML_presentViewController:accountAddingViewController transitionType:CMLTransitionAnimationBoom completion:nil];
     };

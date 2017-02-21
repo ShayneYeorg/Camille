@@ -244,12 +244,11 @@
     }
     
     //2、保存
-    CMLLog(@"%@ %f %@ %@", self.itemID, self.amount.floatValue, self.happenTime, self.desc);
     if (!self.desc) {
         self.desc = @"";
     }
     DECLARE_WEAK_SELF
-    [Accounting addAccountingWithItemID:self.itemID amount:self.amount happneTime:self.happenTime desc:self.desc callBack:^(CMLResponse * _Nonnull response) {
+    [CMLDataManager addAccountingWithItemID:self.itemID amount:self.amount happneTime:self.happenTime desc:self.desc callBack:^(CMLResponse * _Nonnull response) {
         if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
             [SVProgressHUD showSuccessWithStatus:@"保存成功！"];
             if (weakSelf.saveSuccessCallback) {

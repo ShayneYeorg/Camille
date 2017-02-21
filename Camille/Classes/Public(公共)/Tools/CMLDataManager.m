@@ -35,6 +35,17 @@ static NSMutableArray *allAccountingsArrangeByDay;
     return [Item getAllIncomeItems];
 }
 
+#pragma mark - Accounting
+
++ (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack {
+    [Accounting addAccountingWithItemID:itemID amount:amount happneTime:happenTime desc:desc callBack:^(CMLResponse * _Nonnull response) {
+        if (PHRASE_ResponseSuccess) {
+            [self _setAccountingsNeedUpdate];
+        }
+        callBack(response);
+    }];
+}
+
 + (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(NSMutableArray *accountings))callBack {
     if (![self _accountingsNeedUpdate]) {
         //一、缓存数据未被污染
@@ -76,6 +87,10 @@ static NSMutableArray *allAccountingsArrangeByDay;
     accountingsNeedUpdate = YES;
 }
 
++ (void)_setAccountingsDidUpdate {
+    accountingsNeedUpdate = NO;
+}
+
 + (BOOL)_accountingsNeedUpdate {
     return accountingsNeedUpdate;
 }
@@ -86,9 +101,10 @@ static NSMutableArray *allAccountingsArrangeByDay;
         count += allAccountings.count;
     }
     
+    DECLARE_WEAK_SELF
     [self _fetchAccountingsFromIndex:0 count:count callback:^(BOOL isFetchSuccess) {
         if (isFetchSuccess) {
-            accountingsNeedUpdate = NO;
+            [weakSelf _setAccountingsDidUpdate];
             callback(YES);
             
         } else {

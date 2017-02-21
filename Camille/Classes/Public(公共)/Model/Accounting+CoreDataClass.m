@@ -36,6 +36,7 @@
         cmlResponse.code = RESPONSE_CODE_SUCCEED;
         cmlResponse.desc = kTipSaveSuccess;
         cmlResponse.responseDic = nil;
+        CMLLog(@"账务保存成功：%@ %f %@ %@", itemID, amount.floatValue, happenTime, desc);
         
     } else {
         CMLLog(@"保存Accounting发生错误:%@,%@", error, [error userInfo]);

@@ -41,7 +41,6 @@
 @end
 
 @implementation MainViewController {
-    BOOL _isLoading;
     CGFloat _currentTableViewInsetY;
 }
 
@@ -53,8 +52,8 @@
     [self configDetails];
     [self configBackgroungView];
     [self configTableView];
-//    [self configTopView];
-//    [self configBottomView];
+    [self configTopView];
+    [self configBottomView];
     [self configControlHandle];
     [self configToBottomHandle];
     
@@ -66,7 +65,6 @@
 - (void)configDetails {
     _currentTableViewInsetY = topPanelHeight;
     _isToBottomBtnClicked = NO;
-    _isLoading = NO;
 }
 
 - (void)configBackgroungView {
@@ -76,7 +74,7 @@
 }
 
 - (void)configTableView {
-    self.tableView = [[UITableView alloc]initWithFrame:self.backgroundView.frame];
+    self.tableView = [[UITableView alloc]initWithFrame:self.backgroundView.frame style:UITableViewStylePlain];
     self.tableView.backgroundColor = RGB(200, 200, 200);
     [self.backgroundView addSubview:self.tableView];
     
@@ -84,7 +82,7 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     
-//    self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
 }
 
 - (void)configTopView {
@@ -97,14 +95,6 @@
 }
 
 #pragma mark - Getter
-
-//- (NSMutableArray *)dataArr {
-//    if (!_dataArr) {
-//        _dataArr = [NSMutableArray array];
-//        [_dataArr addObjectsFromArray:[TestData dataArrayFrom:0 to:dataCountPerPage]];
-//    }
-//    return _dataArr;
-//}
 
 - (NSMutableArray *)accountingsData {
     if (!_accountingsData) {
@@ -132,47 +122,40 @@
     }
 }
 
-- (void)loadNewDataWithExistCount:(NSInteger)count {
-    _isLoading = YES;
-    [self.controlHandle restore];
-    [self.tableView setContentInset:UIEdgeInsetsMake(reloadOffset, 0, 44, 0)];
-    [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
-    self.tableView.scrollEnabled = NO;
-    self.activityView.hidden = NO;
-//    if (self.dataArr.count == 7) {
-//        //第一次下拉
-//        [self.dataArr removeLastObject];
-//        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-//        
-//    } else if (self.dataArr.count == 14) {
-//        //第二次下拉
-//        [self.dataArr removeLastObject];
-//        [self.dataArr addObjectsFromArray:[TestData dataArrayFrom:self.dataArr.count to:self.dataArr.count+dataCountPerPage]];
-//    }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.activityView.hidden = YES;
-        [self.tableView reloadData];
-        [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
-        [self.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
-        [self.controlHandle restore];
-        _isLoading = NO;
-        self.tableView.scrollEnabled = YES;
-    });
-}
-
 #pragma mark - Fetch Data
 
 - (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType {
+//    if (loadType == Load_Type_LoadMore) {
+//        //让tableView保持在loading样式
+//        [self.controlHandle restore];
+//        [self.tableView setContentInset:UIEdgeInsetsMake(reloadOffset, 0, 44, 0)];
+//        [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
+//        self.tableView.scrollEnabled = NO;
+//        self.activityView.hidden = NO;
+//    }
+    
     //数据缓存在中间层
     DECLARE_WEAK_SELF
     [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
         weakSelf.accountingsData = accountings;
+        weakSelf.activityView.hidden = YES; //无论如何都hide一次
         [weakSelf.tableView reloadData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //会在主队列里等待tableView reload完再执行
-            [self _scrollToBottomWithAnimation:NO];
-        });
+        
+        if (loadType == Load_Type_Refresh) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //会在主队列里等待tableView reload完再执行
+                [weakSelf _scrollToBottomWithAnimation:NO];
+            });
+            
+        } else {
+            //让tableView恢复正常
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
+//                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
+                [weakSelf.controlHandle restore];
+                weakSelf.tableView.scrollEnabled = YES;
+            });
+        }
     }];
 }
 
@@ -234,11 +217,9 @@
     [self.bottomView motionAfterScrollViewDidEndDragging:scrollView];
     [self.controlHandle motionAfterScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
     
-    //假数据
+    //load more
 //    if (self.tableView.contentOffset.y < -reloadOffset) {
-//        if (!_isLoading) {
-//            [self loadNewDataWithExistCount:self.dataArr.count];
-//        }
+//        [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
 //    }
 }
 

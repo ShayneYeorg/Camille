@@ -15,8 +15,8 @@ extern const CGFloat topPanelHeight;
 @protocol CMLTopPanelDelegate <NSObject>
 
 - (void)topPanelDidScroll:(CMLTopPanel *)topPanel;
-- (void)topPanelDidShowWithAnimation:(CMLTopPanel *)topPanel;
-- (void)topPanelDidHideWithAnimation:(CMLTopPanel *)topPanel;
+- (void)topPanelDidShow:(CMLTopPanel *)topPanel animation:(BOOL)animation;
+- (void)topPanelDidHide:(CMLTopPanel *)topPanel animation:(BOOL)animation;
 
 @end
 

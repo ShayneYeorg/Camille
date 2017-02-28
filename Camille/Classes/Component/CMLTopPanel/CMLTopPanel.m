@@ -84,32 +84,32 @@ const CGFloat topPanelHeight  = 64;
 
 - (void)showWithAnimation:(BOOL)animated {
     if (animated) {
-        [self moveFrom:self.frame.origin.y isShowing:YES];
+        [self moveFrom:self.frame.origin.y isShow:YES];
         
     } else {
         [self setFrame:CGRectMake(0, 0, self.bounds.size.width, topPanelHeight)];
-        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-            [self.delegate topPanelDidShowWithAnimation:self];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidShow:animation:)]) {
+            [self.delegate topPanelDidShow:self animation:animated];
         }
     }
 }
 
 - (void)hideWithAnimation:(BOOL)animated {
     if (animated) {
-        [self moveFrom:self.frame.origin.y isShowing:NO];
+        [self moveFrom:self.frame.origin.y isShow:NO];
         
     } else {
         [self setFrame:CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight)];
-        if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-            [self.delegate topPanelDidHideWithAnimation:self];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidHide:animation:)]) {
+            [self.delegate topPanelDidHide:self animation:animated];
         }
     }
 }
 
-- (void)moveFrom:(CGFloat)currentY isShowing:(BOOL)isShowing {
+- (void)moveFrom:(CGFloat)currentY isShow:(BOOL)isShow {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         CGFloat newY;
-        if (isShowing) {
+        if (isShow) {
             newY = currentY + 10;
             
         } else {
@@ -117,29 +117,29 @@ const CGFloat topPanelHeight  = 64;
         }
         
         self.frame = CGRectMake(0, newY, self.bounds.size.width, topPanelHeight);
-        if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-            [self.delegate topPanelDidShowWithAnimation:self];
+        if ([self.delegate respondsToSelector:@selector(topPanelDidShow:animation:)]) {
+            [self.delegate topPanelDidShow:self animation:YES];
         }
         
-        if (isShowing) {
+        if (isShow) {
             if (newY < 0) {
-                [self moveFrom:newY isShowing:isShowing];
+                [self moveFrom:newY isShow:isShow];
                 
             } else {
                 self.frame = CGRectMake(0, 0, self.bounds.size.width, topPanelHeight);
-                if ([self.delegate respondsToSelector:@selector(topPanelDidShowWithAnimation:)]) {
-                    [self.delegate topPanelDidShowWithAnimation:self];
+                if ([self.delegate respondsToSelector:@selector(topPanelDidShow:animation:)]) {
+                    [self.delegate topPanelDidShow:self animation:YES];
                 }
             }
             
         } else {
             if (newY > -topPanelHeight) {
-                [self moveFrom:newY isShowing:isShowing];
+                [self moveFrom:newY isShow:isShow];
                 
             } else {
                 self.frame = CGRectMake(0, -topPanelHeight, self.bounds.size.width, topPanelHeight);
-                if ([self.delegate respondsToSelector:@selector(topPanelDidHideWithAnimation:)]) {
-                    [self.delegate topPanelDidHideWithAnimation:self];
+                if ([self.delegate respondsToSelector:@selector(topPanelDidHide:animation:)]) {
+                    [self.delegate topPanelDidHide:self animation:YES];
                 }
             }
         }

@@ -306,12 +306,22 @@
     }
 }
 
-- (void)topPanelDidShowWithAnimation:(CMLTopPanel *)topPanel {
-    self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+- (void)topPanelDidShow:(CMLTopPanel *)topPanel animation:(BOOL)animation {
+    if (animation) {
+        
+        
+    } else {
+        self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+    }
 }
 
-- (void)topPanelDidHideWithAnimation:(CMLTopPanel *)topPanel {
-    self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+- (void)topPanelDidHide:(CMLTopPanel *)topPanel animation:(BOOL)animation {
+    if (animation) {
+        
+        
+    } else {
+        self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
+    }
 }
 
 @end

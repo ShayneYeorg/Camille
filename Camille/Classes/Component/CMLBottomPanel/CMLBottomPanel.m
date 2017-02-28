@@ -38,6 +38,12 @@ const CGFloat bottomViewHeight  = 44;
     _currentOffsetY = scrollView.contentOffset.y;
     
     if (_isManualDragging) {
+        //
+        
+        
+        
+        
+        
         CGRect topViewCurrentFrame = self.frame;
         //运动
         [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y-(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, bottomViewHeight)];

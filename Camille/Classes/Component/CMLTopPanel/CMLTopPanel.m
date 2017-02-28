@@ -31,12 +31,14 @@ const CGFloat topPanelHeight  = 64;
         //1、先计算一下要运动多长距离
         CGFloat distence = scrollView.contentOffset.y - _scrollViewPreviousOffsetY;
         
-        //2、判断是否已运动到临界点，是则不需要运动了
+        //2、判断现在是否已运动到临界点，是则不需要运动了
         CGRect topPanelCurrentFrame = self.frame;
         if (topPanelCurrentFrame.origin.y == 0 && distence >= 0) {
+            _scrollViewPreviousOffsetY = scrollView.contentOffset.y;
             return;
             
         } else if (topPanelCurrentFrame.origin.y == -topPanelHeight && distence <= 0) {
+            _scrollViewPreviousOffsetY = scrollView.contentOffset.y;
             return;
         }
         

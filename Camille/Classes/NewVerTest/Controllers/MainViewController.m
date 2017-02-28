@@ -63,6 +63,7 @@
 #pragma mark - UI Configuration
 
 - (void)configDetails {
+    self.automaticallyAdjustsScrollViewInsets = NO;
     _currentTableViewInsetY = topPanelHeight;
     _isToBottomBtnClicked = NO;
 }
@@ -82,7 +83,7 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+    [self _tableViewSetContentInsetTop:topPanelHeight bottom:44];
 }
 
 - (void)configTopView {
@@ -107,8 +108,8 @@
     if (!_activityView) {
         _activityView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreen_Width-50)/2, -50, 50, 50)];
         [self.tableView addSubview:_activityView];
-        _activityView.hidden = YES;
         [_activityView startAnimating];
+        _activityView.hidden = YES;
     }
     return _activityView;
 }
@@ -122,14 +123,22 @@
     }
 }
 
+- (void)_tableViewSetContentInsetTop:(CGFloat)top bottom:(CGFloat)bottom {
+    self.tableView.contentInset = UIEdgeInsetsMake(top, 0, bottom, 0);
+}
+
+- (void)_tableViewSetContentOffset:(CGPoint)offset animated:(BOOL)animated {
+    [self.tableView setContentOffset:offset animated:animated];
+}
+
 #pragma mark - Fetch Data
 
 - (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType {
 //    if (loadType == Load_Type_LoadMore) {
 //        //让tableView保持在loading样式
 //        [self.controlHandle restore];
-//        [self.tableView setContentInset:UIEdgeInsetsMake(reloadOffset, 0, 44, 0)];
-//        [self.tableView setContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
+//        [self _tableViewSetContentInsetTop:reloadOffset bottom:44];
+//        [self _tableViewSetContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
 //        self.tableView.scrollEnabled = NO;
 //        self.activityView.hidden = NO;
 //    }
@@ -150,7 +159,8 @@
         } else {
             //让tableView恢复正常
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
+                [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
+                
 //                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
                 [weakSelf.controlHandle restore];
                 weakSelf.tableView.scrollEnabled = YES;
@@ -245,7 +255,7 @@
         if (self.isToBottomBtnClicked) {
             self.isToBottomBtnClicked = NO;
             _currentTableViewInsetY = topPanelHeight;
-            self.tableView.contentInset = UIEdgeInsetsMake(_currentTableViewInsetY, 0, 44, 0);
+            [self _tableViewSetContentInsetTop:_currentTableViewInsetY bottom:44];
         }
         
     } else {
@@ -301,27 +311,17 @@
 - (void)topPanelDidScroll:(CMLTopPanel *)topPanel {
     CGFloat newTableViewInsetY = topPanelHeight + self.topView.frame.origin.y;
     if (_currentTableViewInsetY != newTableViewInsetY) {
-        self.tableView.contentInset = UIEdgeInsetsMake(newTableViewInsetY, 0, 44, 0);
+        [self _tableViewSetContentInsetTop:newTableViewInsetY bottom:44];
         _currentTableViewInsetY = newTableViewInsetY;
     }
 }
 
 - (void)topPanelDidShow:(CMLTopPanel *)topPanel animation:(BOOL)animation {
-    if (animation) {
-        
-        
-    } else {
-        self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
-    }
+    [self _tableViewSetContentInsetTop:topPanelHeight + topPanel.frame.origin.y bottom:44];
 }
 
 - (void)topPanelDidHide:(CMLTopPanel *)topPanel animation:(BOOL)animation {
-    if (animation) {
-        
-        
-    } else {
-        self.tableView.contentInset = UIEdgeInsetsMake(topPanelHeight + topPanel.frame.origin.y, 0, 44, 0);
-    }
+    [self _tableViewSetContentInsetTop:0 bottom:44];
 }
 
 @end

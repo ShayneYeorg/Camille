@@ -19,7 +19,6 @@ const CGFloat bottomViewHeight  = 44;
 @implementation CMLBottomPanel {
     BOOL _isManualDragging;
     CGFloat _bottomViewInitialY;
-    CGFloat _currentOffsetY;
     CGFloat _previousOffsetY;
 }
 
@@ -35,26 +34,32 @@ const CGFloat bottomViewHeight  = 44;
 }
 
 - (void)motionAfterScrollViewDidScroll:(UIScrollView *)scrollView {
-    _currentOffsetY = scrollView.contentOffset.y;
-    
     if (_isManualDragging) {
-        //
+        //1、先计算要运动到哪里
+        CGFloat distence = scrollView.contentOffset.y - _previousOffsetY;
+        CGRect bottomViewCurrentFrame = self.frame;
         
-        
-        
-        
-        
-        CGRect topViewCurrentFrame = self.frame;
-        //运动
-        [self setFrame:CGRectMake(0, topViewCurrentFrame.origin.y-(_currentOffsetY-_previousOffsetY), topViewCurrentFrame.size.width, bottomViewHeight)];
-        
-        //校正
-        if (self.frame.origin.y > _superViewHeight) {
-            [self hideWithAnimation:NO];
+        //2、如果当前已经处在临界值了，则不做运动了
+        if (bottomViewCurrentFrame.origin.y == _superViewHeight && distence <= 0) {
+            _previousOffsetY = scrollView.contentOffset.y;
+            return;
             
-        } else if (self.frame.origin.y < _bottomViewInitialY) {
-            [self showWithAnimation:NO];
+        } else if (bottomViewCurrentFrame.origin.y == _bottomViewInitialY && distence >= 0) {
+            _previousOffsetY = scrollView.contentOffset.y;
+            return;
         }
+        
+        //3、判断运动是否会越界，越界则设置值运动到临界值
+        CGFloat newBottomPanelY = bottomViewCurrentFrame.origin.y - distence;
+        if (newBottomPanelY >= _superViewHeight) {
+            newBottomPanelY = _superViewHeight;
+            
+        } else if (newBottomPanelY <= _bottomViewInitialY) {
+            newBottomPanelY = _bottomViewInitialY;
+        }
+        
+        //4、运动
+        [self setFrame:CGRectMake(0, newBottomPanelY, bottomViewCurrentFrame.size.width, bottomViewHeight)];
     }
     
     _previousOffsetY = scrollView.contentOffset.y;
@@ -63,7 +68,7 @@ const CGFloat bottomViewHeight  = 44;
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView {
     _isManualDragging = NO;
     
-    if (self.frame.origin.y < _superViewHeight-(bottomViewHeight/2)) {
+    if (self.frame.origin.y < _superViewHeight - (bottomViewHeight/2)) {
         [self showWithAnimation:YES];
         
     } else {

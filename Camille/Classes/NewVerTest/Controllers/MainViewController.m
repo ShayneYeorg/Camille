@@ -107,7 +107,6 @@
     if (!_activityView) {
         _activityView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreen_Width-50)/2, -50, 50, 50)];
         [self.tableView addSubview:_activityView];
-        [_activityView startAnimating];
         _activityView.hidden = YES;
     }
     return _activityView;
@@ -133,37 +132,42 @@
 #pragma mark - Fetch Data
 
 - (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType {
-//    if (loadType == Load_Type_LoadMore) {
-//        //让tableView保持在loading样式
-//        [self.controlHandle restore];
-//        [self _tableViewSetContentInsetTop:reloadOffset bottom:44];
-//        [self _tableViewSetContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
-//        self.tableView.scrollEnabled = NO;
-//        self.activityView.hidden = NO;
-//    }
+    if (loadType == Load_Type_LoadMore) {
+        //让tableView保持在loading样式
+        [self.controlHandle restore];
+        [self _tableViewSetContentInsetTop:reloadOffset bottom:44];
+        [self _tableViewSetContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
+        self.tableView.scrollEnabled = NO;
+        self.activityView.hidden = NO;
+        [self.activityView startAnimating];
+    }
     
     //数据缓存在中间层
     DECLARE_WEAK_SELF
     [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
         weakSelf.accountingsData = accountings;
+        [weakSelf.activityView stopAnimating];
         weakSelf.activityView.hidden = YES; //无论如何都hide一次
         [weakSelf.tableView reloadData];
         
-        if (loadType == Load_Type_Refresh) {
+        if (weakSelf.accountingsData.count) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                //会在主队列里等待tableView reload完再执行
-                [weakSelf _scrollToBottomWithAnimation:NO];
+                if (loadType == Load_Type_Refresh) {
+                    //会在主队列里等待tableView reload完再执行
+                    [weakSelf _scrollToBottomWithAnimation:NO];
+                    
+                } else {
+                    //让tableView恢复正常
+                    [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
+                    
+                    //                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
+                    [weakSelf.controlHandle restore];
+                }
+                weakSelf.tableView.scrollEnabled = YES;
             });
             
         } else {
-            //让tableView恢复正常
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
-                
-//                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
-                [weakSelf.controlHandle restore];
-                weakSelf.tableView.scrollEnabled = YES;
-            });
+            weakSelf.tableView.scrollEnabled = NO;
         }
     }];
 }

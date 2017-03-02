@@ -31,7 +31,12 @@ const CGFloat topPanelHeight  = 64;
         //1、先计算一下要运动多长距离
         CGFloat distence = scrollView.contentOffset.y - _scrollViewPreviousOffsetY;
         
-        //2、判断现在是否已运动到临界点，是则不需要运动了
+        //2、假如scrollView已经到顶了，topPanel就不要动了，再动会触发topPanelDidScroll:导致scrollView反方向运动
+        if (scrollView.contentOffset.y <= 0 && distence <= 0) {
+            return;
+        }
+        
+        //3、判断现在是否已运动到临界点，是则不需要运动了
         CGRect topPanelCurrentFrame = self.frame;
         if (topPanelCurrentFrame.origin.y == 0 && distence >= 0) {
             _scrollViewPreviousOffsetY = scrollView.contentOffset.y;
@@ -42,7 +47,7 @@ const CGFloat topPanelHeight  = 64;
             return;
         }
         
-        //3、判断运动后是否会越界，会越界则让其只运动到临界点，并设置运动已完成
+        //4、判断运动后是否会越界，会越界则让其只运动到临界点，并设置运动已完成
         CGFloat topPanelNewOffsetY = topPanelCurrentFrame.origin.y + distence;
         BOOL isMoveEnded = NO;
         if (topPanelNewOffsetY >= 0) {
@@ -54,13 +59,13 @@ const CGFloat topPanelHeight  = 64;
             isMoveEnded = YES;
         }
         
-        //4、运动
+        //5、运动
         [self setFrame:CGRectMake(0, topPanelNewOffsetY, topPanelCurrentFrame.size.width, topPanelHeight)];
         if ([self.delegate respondsToSelector:@selector(topPanelDidScroll:)]) {
             [self.delegate topPanelDidScroll:self];
         }
         
-        //5、如果运动已完成，调用代理方法告知代理运动已完成
+        //6、如果运动已完成，调用代理方法告知代理运动已完成
         if (isMoveEnded) {
             if (topPanelNewOffsetY == 0 && [self.delegate respondsToSelector:@selector(topPanelDidShow:animation:)]) {
                 [self.delegate topPanelDidShow:self animation:YES];

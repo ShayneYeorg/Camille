@@ -50,3 +50,6 @@ typedef void (^VoidBlock)(void);
 #define DECLARE_WEAK_SELF __weak typeof(self) weakSelf = self;
 
 
+
+#define cellHeight         50
+

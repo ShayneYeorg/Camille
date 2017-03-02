@@ -19,7 +19,6 @@
 #import "UIViewController+CMLTransition.h"
 #import "CMLDataManager.h"
 
-#define cellHeight         50
 #define dataCountPerPage   20
 #define reloadOffset       60
 

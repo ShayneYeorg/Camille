@@ -33,4 +33,7 @@ extern const CGFloat topPanelHeight;
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView;
 - (void)motionAfterScrollViewWillBeginDragging:(UIScrollView *)scrollView;
 
+- (void)scrollViewIsLoading;
+- (void)scrollViewLoadingComplete;
+
 @end

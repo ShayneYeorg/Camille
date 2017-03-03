@@ -19,8 +19,9 @@
 #import "UIViewController+CMLTransition.h"
 #import "CMLDataManager.h"
 
-#define dataCountPerPage   20
-#define reloadOffset       60
+#define dataCountPerPage        20
+#define kLoadingOffset          60
+#define kLoadmoreThreshold     -90
 
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate, CMLTopPanelDelegate>
 
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+//@property (nonatomic, assign) BOOL isLoading; //如果处在_isLoading状态，则topPanel会隐藏，不会因为停止拖动的时候topPanel露出偏多就完全展示出来了，那样会盖住loading的UIActivityIndicatorView
 
 @property (nonatomic, strong) CMLTopPanel *topView;
 @property (nonatomic, strong) CMLBottomPanel *bottomView;
@@ -65,6 +67,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     _currentTableViewInsetY = topPanelHeight;
     _isToBottomBtnClicked = NO;
+//    self.isLoading = NO;
 }
 
 - (void)configBackgroungView {
@@ -134,14 +137,17 @@
 - (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType {
     if (loadType == Load_Type_LoadMore) {
         //让tableView保持在loading样式
+        [self.topView scrollViewIsLoading];
         [self.controlHandle restore];
-        [self _tableViewSetContentInsetTop:reloadOffset bottom:44];
-        [self _tableViewSetContentOffset:CGPointMake(0, -reloadOffset) animated:YES];
         self.tableView.scrollEnabled = NO;
         self.activityView.hidden = NO;
         [self.activityView startAnimating];
+        [self _tableViewSetContentInsetTop:kLoadingOffset bottom:44];
+        [self _tableViewSetContentOffset:CGPointMake(0, -kLoadingOffset) animated:YES];
     }
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
     //数据缓存在中间层
     DECLARE_WEAK_SELF
     [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
@@ -151,25 +157,25 @@
         [weakSelf.tableView reloadData];
         
         if (weakSelf.accountingsData.count) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (loadType == Load_Type_Refresh) {
-                    //会在主队列里等待tableView reload完再执行
-                    [weakSelf _scrollToBottomWithAnimation:NO];
-                    
-                } else {
-                    //让tableView恢复正常
-                    [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
-                    
-                    //                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - reloadOffset + kSectionHeaderHeight * 7) animated:NO];
-                    [weakSelf.controlHandle restore];
-                }
-                weakSelf.tableView.scrollEnabled = YES;
-            });
+            if (loadType == Load_Type_Refresh) {
+                [weakSelf _scrollToBottomWithAnimation:NO];
+                
+            } else {
+                //让tableView恢复正常
+                [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
+//                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - kLoadingOffset + kSectionHeaderHeight * 7) animated:NO];
+                [weakSelf.controlHandle restore];
+            }
+            weakSelf.tableView.scrollEnabled = YES;
+            [weakSelf.topView scrollViewLoadingComplete];
             
         } else {
             weakSelf.tableView.scrollEnabled = NO;
         }
     }];
+        
+        
+    });
 }
 
 - (void)fetchAccountingsByDate:(NSDate *)date {
@@ -226,14 +232,15 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    //先把必要的逻辑处理了，再让控件做反应
+    //load more
+    if (self.tableView.contentOffset.y < kLoadmoreThreshold) {
+        [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
+    }
+    
     [self.topView motionAfterScrollViewDidEndDragging:scrollView];
     [self.bottomView motionAfterScrollViewDidEndDragging:scrollView];
     [self.controlHandle motionAfterScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-    
-    //load more
-//    if (self.tableView.contentOffset.y < -reloadOffset) {
-//        [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
-//    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -243,10 +250,6 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.topView motionAfterScrollViewDidScroll:scrollView];
-    [self.bottomView motionAfterScrollViewDidScroll:scrollView];
-    [self.controlHandle motionAfterScrollViewDidScroll:scrollView];
-    
     CGFloat height = scrollView.frame.size.height;
     CGFloat contentOffsetY = scrollView.contentOffset.y;
     CGFloat bottomOffset = scrollView.contentSize.height - contentOffsetY;
@@ -265,6 +268,10 @@
         self.tableView.scrollsToBottom = NO;
         [self.toBottomHandle showWithAnimation:YES];
     }
+    
+    [self.topView motionAfterScrollViewDidScroll:scrollView];
+    [self.bottomView motionAfterScrollViewDidScroll:scrollView];
+    [self.controlHandle motionAfterScrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -320,11 +327,11 @@
 }
 
 - (void)topPanelDidShow:(CMLTopPanel *)topPanel animation:(BOOL)animation {
-    [self _tableViewSetContentInsetTop:topPanelHeight + topPanel.frame.origin.y bottom:44];
+//    [self _tableViewSetContentInsetTop:topPanelHeight + topPanel.frame.origin.y bottom:44];
 }
 
 - (void)topPanelDidHide:(CMLTopPanel *)topPanel animation:(BOOL)animation {
-    [self _tableViewSetContentInsetTop:0 bottom:44];
+//    [self _tableViewSetContentInsetTop:0 bottom:44];
 }
 
 @end

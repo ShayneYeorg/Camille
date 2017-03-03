@@ -14,6 +14,7 @@ const CGFloat topPanelHeight  = 64;
 @implementation CMLTopPanel {
     BOOL _isManualDragging;
     CGFloat _scrollViewPreviousOffsetY;
+    BOOL _isScrollViewLoading;
 }
 
 #pragma mark - Public
@@ -82,11 +83,16 @@ const CGFloat topPanelHeight  = 64;
 - (void)motionAfterScrollViewDidEndDragging:(UIScrollView *)scrollView {
     _isManualDragging = NO;
     
-    if (self.frame.origin.y > -(topPanelHeight/2)) {
-        [self showWithAnimation:YES];
+    if (_isScrollViewLoading) {
+        [self hideWithAnimation:NO];
         
     } else {
-        [self hideWithAnimation:YES];
+        if (self.frame.origin.y > -(topPanelHeight/2)) {
+            [self showWithAnimation:YES];
+            
+        } else {
+            [self hideWithAnimation:YES];
+        }
     }
 }
 
@@ -94,11 +100,20 @@ const CGFloat topPanelHeight  = 64;
     _isManualDragging = YES;
 }
 
+- (void)scrollViewIsLoading {
+    _isScrollViewLoading = YES;
+}
+
+- (void)scrollViewLoadingComplete {
+    _isScrollViewLoading = NO;
+}
+
 #pragma mark - Private
 
 - (void)configDetails {
     self.backgroundColor = kAppColor;
     _isManualDragging = NO;
+    _isScrollViewLoading = NO;
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, self.bounds.size.width, self.bounds.size.height-20)];
     lbl.textAlignment = NSTextAlignmentCenter;

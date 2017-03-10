@@ -35,6 +35,6 @@ typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
 + (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack;
 
 //数据缓存在本层，调用的那层不管分页情况
-+ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(NSMutableArray *accountings))callBack;
++ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newAccountingCount))callBack;
 
 @end

@@ -146,11 +146,11 @@
         [self _tableViewSetContentOffset:CGPointMake(0, -kLoadingOffset) animated:YES];
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
     //数据缓存在中间层
     DECLARE_WEAK_SELF
-    [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(NSMutableArray *accountings) {
+    [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newAccountingCount) {
         weakSelf.accountingsData = accountings;
         [weakSelf.activityView stopAnimating];
         weakSelf.activityView.hidden = YES; //无论如何都hide一次
@@ -158,10 +158,11 @@
         
         if (weakSelf.accountingsData.count) {
             if (loadType == Load_Type_Refresh) {
+                //第一次进入 | 添加了Accounting | 取消日期查询
                 [weakSelf _scrollToBottomWithAnimation:NO];
                 
             } else {
-                //让tableView恢复正常
+                //加载新页
                 [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
 //                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - kLoadingOffset + kSectionHeaderHeight * 7) animated:NO];
                 [weakSelf.controlHandle restore];
@@ -175,7 +176,7 @@
     }];
         
         
-    });
+//    });
 }
 
 - (void)fetchAccountingsByDate:(NSDate *)date {
@@ -279,6 +280,7 @@
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    [self _tableViewSetContentInsetTop:0 bottom:44];
     [self.topView hideWithAnimation:NO];
     [self.bottomView hideWithAnimation:NO];
     return YES;

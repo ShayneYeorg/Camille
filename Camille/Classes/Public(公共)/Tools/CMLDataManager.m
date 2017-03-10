@@ -46,23 +46,23 @@ static NSMutableArray *allAccountingsArrangeByDay;
     }];
 }
 
-+ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(NSMutableArray *accountings))callBack {
++ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newAccountingCount))callBack {
     if (![self _accountingsNeedUpdate]) {
         //一、缓存数据未被污染
         if (loadType == Load_Type_Refresh) {
             //1、(取消日期查询)
             //直接返回当前缓存的allAccountingsArrangeByDay
-            callBack(allAccountingsArrangeByDay);
+            callBack(YES, allAccountingsArrangeByDay, 0, 0);
             
         } else {
             //2、(加载新页)
             //直接在当前基础上取下一页数据
             [self _fetchAccountingsFromIndex:allAccountings.count count:accountingsPageCount callback:^(BOOL isFetchSuccess) {
                 if (isFetchSuccess) {
-                    callBack(allAccountingsArrangeByDay);
+                    callBack(YES, allAccountingsArrangeByDay, 0, 0);
                     
                 } else {
-                    callBack(nil);
+                    callBack(NO, nil, 0, 0);
                 }
             }];
         }
@@ -74,10 +74,10 @@ static NSMutableArray *allAccountingsArrangeByDay;
         //2、loadType为Load_Type_LoadMore表示(加载新页)
         [self _updateAccountingWithLoadType:loadType callback:^(BOOL isUpdateSuccess) {
             if (isUpdateSuccess) {
-                callBack(allAccountingsArrangeByDay);
+                callBack(YES, allAccountingsArrangeByDay, 0, 0);
                 
             } else {
-                callBack(nil);
+                callBack(NO, nil, 0, 0);
             }
         }];
     }

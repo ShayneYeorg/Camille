@@ -171,72 +171,72 @@
 #pragma mark - 添加item
 
 + (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
-    //1、先判断itemName是否存在
-    //request和entity
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
-    [request setEntity:entity];
-    
-    //设置查询条件
-    NSString *str = [NSString stringWithFormat:@"itemName == '%@' AND itemType == '%@'", itemName, type];
-    NSPredicate *pre = [NSPredicate predicateWithFormat:str];
-    [request setPredicate:pre];
-    
-    //Response
-    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
-    
-    //2、查询
-    NSError *error = nil;
-    NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (items == nil) {
-        //3、查询过程中出错
-        CMLLog(@"查询item出错:%@,%@",error,[error userInfo]);
-        callBack(nil);
+    @synchronized (self) {
+        //1、先判断itemName是否存在
+        //request和entity
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
+        [request setEntity:entity];
         
-    } else if (items.count) {
-        //4、查询发现item已存在
-        Item *theExistItem = items[0];
+        //设置查询条件
+        NSString *str = [NSString stringWithFormat:@"itemName == '%@' AND itemType == '%@'", itemName, type];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:str];
+        [request setPredicate:pre];
         
-        if (theExistItem) {
-            if ([theExistItem.isAvailable isEqualToString:Record_Available]) {
-                //查询对象是有效的
-                CMLLog(@"添加的item已存在并且是有效的");
-                cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
-                cmlResponse.code = RESPONSE_CODE_FAILD;
-                cmlResponse.desc = kTipExist;
-                callBack(cmlResponse);
+        //Response
+        CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+        
+        //2、查询
+        NSError *error = nil;
+        NSMutableArray *items = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        if (items == nil) {
+            //3、查询过程中出错
+            CMLLog(@"查询item出错:%@,%@",error,[error userInfo]);
+            callBack(nil);
+            
+        } else if (items.count) {
+            //4、查询发现item已存在
+            Item *theExistItem = items[0];
+            
+            if (theExistItem) {
+                if ([theExistItem.isAvailable isEqualToString:Record_Available]) {
+                    //查询对象是有效的
+                    CMLLog(@"添加的item已存在并且是有效的");
+                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
+                    cmlResponse.code = RESPONSE_CODE_FAILD;
+                    cmlResponse.desc = kTipExist;
+                    callBack(cmlResponse);
+                    
+                } else {
+                    //查询对象之前被删除过，将它复原即可
+                    CMLLog(@"添加的item被删除过，只需复原即可");
+                    [self restoreItem:theExistItem callBack:^(CMLResponse *response) {
+                        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
+                            cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                            cmlResponse.desc = kTipRestore;
+                            //                        [self _setNeedUpdate];
+                            callBack(cmlResponse);
+                            
+                        } else {
+                            //                        [self _setNeedUpdate];
+                            callBack(nil);
+                        }
+                    }];
+                }
                 
             } else {
-                //查询对象之前被删除过，将它复原即可
-                CMLLog(@"添加的item被删除过，只需复原即可");
-                [self restoreItem:theExistItem callBack:^(CMLResponse *response) {
-                    if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
-                        cmlResponse.code = RESPONSE_CODE_SUCCEED;
-                        cmlResponse.desc = kTipRestore;
-//                        [self _setNeedUpdate];
-                        callBack(cmlResponse);
-                        
-                    } else {
-//                        [self _setNeedUpdate];
-                        callBack(nil);
-                    }
-                }];
+                callBack(nil);
             }
             
         } else {
-            callBack(nil);
-        }
-        
-    } else {
-        //5、查询发现item不存在，需要添加
-        NSString *newID = [self createNewItemID];
-        if (newID == nil) {
-            CMLLog(@"分配itemID时出错");
-            callBack(nil);
-            
-        } else {
-            @synchronized (self) {
+            //5、查询发现item不存在，需要添加
+            NSString *newID = [self createNewItemID];
+            if (newID == nil) {
+                CMLLog(@"分配itemID时出错");
+                callBack(nil);
+                
+            } else {
                 //Entity
                 Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
                 item.itemName = itemName;

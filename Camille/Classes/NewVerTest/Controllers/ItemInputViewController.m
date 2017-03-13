@@ -38,17 +38,25 @@
     [super viewDidLoad];
     
     [self configBackgroundView];
+    
     if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0 && self.itemType.length) {
-        self.itemsArr = [CMLDataManager getItemsWithItemType:self.itemType];
+        [CMLDataManager fetchItemsWithItemType:self.itemType callback:^(CMLResponse *response) {
+            if (PHRASE_ResponseSuccess && [response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+                self.itemsArr = response.responseDic[KEY_Items];
+                self.itemInputField = [[UITextField alloc]initWithFrame:self.initialPosition];
+                self.itemInputField.delegate = self;
+                self.itemInputField.backgroundColor = RGB(230, 230, 230);
+                self.itemInputField.layer.cornerRadius = 5;
+                self.itemInputField.clipsToBounds = YES;
+                [self.backgroundView addSubview:self.itemInputField];
+                self.itemInputField.placeholder = @"项目";
+                [self configInitialAnamation];
+                
+            } else {
+                CMLLog(@"数据出错");
+            }
+        }];
         
-        self.itemInputField = [[UITextField alloc]initWithFrame:self.initialPosition];
-        self.itemInputField.delegate = self;
-        self.itemInputField.backgroundColor = RGB(230, 230, 230);
-        self.itemInputField.layer.cornerRadius = 5;
-        self.itemInputField.clipsToBounds = YES;
-        [self.backgroundView addSubview:self.itemInputField];
-        self.itemInputField.placeholder = @"项目";
-        [self configInitialAnamation];
         
     } else {
         CMLLog(@"需要使用initWithInitialPosition:方法先指定inputField的初始位置");

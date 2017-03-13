@@ -13,14 +13,28 @@
 + (instancetype)mainCellModelWithAccounting:(Accounting *)accounting {
     MainCellModel *cellModel = [MainCellModel new];
     
-    NSString *symbol = @"-";
-    cellModel.itemType = [Item itemTypeByItemID:accounting.itemID];
-    cellModel.amount = accounting.amount.floatValue;
-    if ([cellModel.itemType isEqualToString:Item_Type_Income]) {
-        symbol = @"+";
-    }
+    __block NSString *symbol = @"";
+    [CMLDataManager itemTypeByItemID:accounting.itemID callback:^(NSString *itemType) {
+        if (itemType.length) {
+            cellModel.itemType = itemType;
+            if ([cellModel.itemType isEqualToString:Item_Type_Cost]) {
+                symbol = @"-";
+                
+            } else {
+                symbol = @"+";
+            }
+        }
+    }];
     
-    cellModel.displayItemName = [Item itemNameByItemID:accounting.itemID];
+    cellModel.amount = accounting.amount.floatValue;
+    
+    cellModel.displayItemName = @"- -";
+    [CMLDataManager itemNameByItemID:accounting.itemID callback:^(NSString *itemName) {
+        if (itemName.length) {
+            cellModel.displayItemName = itemName;
+        }
+    }];
+    
     cellModel.displayAmount = [NSString stringWithFormat:@"%@%.2f", symbol, accounting.amount.floatValue];
     cellModel.displayDesc = accounting.desc;
     

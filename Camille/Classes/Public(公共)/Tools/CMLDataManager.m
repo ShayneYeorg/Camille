@@ -57,46 +57,35 @@ static NSInteger accountingsPageCount = 20;
 
 + (void)_updateItemsWithCallback:(void(^)(BOOL isUpdateSuccess))callback {
     DECLARE_WEAK_SELF
-    
-#warning - 要测一下这样子是否可以
-    
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_group_async(group, dispatch_get_main_queue(), ^{
-        [Item fetchItemsWithType:Item_Fetch_Income callBack:^(CMLResponse * _Nonnull response) {
-            if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
-                    [allIncomeItems removeAllObjects];
-                    [allIncomeItems addObjectsFromArray:response.responseDic[KEY_Items]];
-                    for (Item *i in allIncomeItems) {
-                        [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                        [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                    }
+    [Item fetchItemsWithType:Item_Fetch_All callBack:^(CMLResponse * _Nonnull response) {
+        if (PHRASE_ResponseSuccess) {
+            //income items
+            if (response.responseDic[KEY_Income_Items] && [response.responseDic[KEY_Income_Items] isKindOfClass:[NSArray class]]) {
+                [allIncomeItems removeAllObjects];
+                [allIncomeItems addObjectsFromArray:response.responseDic[KEY_Income_Items]];
+                for (Item *i in allIncomeItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
                 }
             }
-        }];
-    });
-    
-    dispatch_group_async(group, dispatch_get_main_queue(), ^{
-        [Item fetchItemsWithType:Item_Fetch_Cost callBack:^(CMLResponse * _Nonnull response) {
-            if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-                if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
-                    [allCostItems removeAllObjects];
-                    [allCostItems addObjectsFromArray:response.responseDic[KEY_Items]];
-                    for (Item *i in allCostItems) {
-                        [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                        [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                    }
+            
+            //cost items
+            if (response.responseDic[KEY_Cost_Items] && [response.responseDic[KEY_Cost_Items] isKindOfClass:[NSArray class]]) {
+                [allCostItems removeAllObjects];
+                [allCostItems addObjectsFromArray:response.responseDic[KEY_Cost_Items]];
+                for (Item *i in allCostItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
                 }
             }
-        }];
-    });
-    
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        itemsNeedUpdate = NO;
-        callback(YES);
-    });
-    
-//    dispatch_release(group);
+            
+            [self _setItemsDidUpdate];
+            callback(YES);
+            
+        } else {
+            callback(NO);
+        }
+    }];
 }
 
 #pragma mark -- Pubilc
@@ -110,15 +99,15 @@ static NSInteger accountingsPageCount = 20;
     }];
 }
 
-+ (void)getItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack {
++ (void)fetchItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack {
     if ([itemType isEqualToString:Item_Type_Cost]) {
-        [self getAllIncomeItemsWithCallback:callBack];
+        [self fetchAllIncomeItemsWithCallback:callBack];
     }
     
-    [self getAllCostItemsWithCallback:callBack];
+    [self fetchAllCostItemsWithCallback:callBack];
 }
 
-+ (void)getAllIncomeItemsWithCallback:(void(^)(CMLResponse *response))callBack {
++ (void)fetchAllIncomeItemsWithCallback:(void(^)(CMLResponse *response))callBack {
     CMLResponse *response = [CMLResponse new];
     if ([self _itemsNeedUpdate]) {
         [self _updateItemsWithCallback:^(BOOL isUpdateSuccess) {
@@ -141,18 +130,63 @@ static NSInteger accountingsPageCount = 20;
     }
 }
 
-+ (void)getAllCostItemsWithCallback:(void(^)(CMLResponse *response))callBack {
-//    if ([self _needUpdate]) {
-//        [self _update];
-//    }
++ (void)fetchAllCostItemsWithCallback:(void(^)(CMLResponse *response))callBack {
+    CMLResponse *response = [CMLResponse new];
+    if ([self _itemsNeedUpdate]) {
+        [self _updateItemsWithCallback:^(BOOL isUpdateSuccess) {
+            if (isUpdateSuccess) {
+                response.code = RESPONSE_CODE_SUCCEED;
+                response.desc = kTipFetchSuccess;
+                response.responseDic = @{KEY_Items: allCostItems};
+                callBack(response);
+                
+            } else {
+                callBack(nil);
+            }
+        }];
+        
+    } else {
+        response.code = RESPONSE_CODE_SUCCEED;
+        response.desc = kTipFetchSuccess;
+        response.responseDic = @{KEY_Items: allCostItems};
+        callBack(response);
+    }
 }
 
-+ (NSString *)itemNameByItemID:(NSString *)itemID {
-    return nil;
++ (void)itemNameByItemID:(NSString *)itemID callback:(void(^)(NSString *itemName))callback {
+    if ([self _itemsNeedUpdate]) {
+        [self _updateItemsWithCallback:^(BOOL isUpdateSuccess) {
+            if (isUpdateSuccess) {
+                callback((NSString *)itemNameMapper[itemID]);
+                
+            } else {
+                callback(nil);
+            }
+        }];
+        
+    } else {
+        callback((NSString *)itemNameMapper[itemID]);
+    }
 }
 
-+ (NSString *)itemTypeByItemID:(NSString *)itemID {
-    return nil;
++ (void)itemTypeByItemID:(NSString *)itemID callback:(void(^)(NSString *itemType))callback {
+    if ([self _itemsNeedUpdate]) {
+        [self _updateItemsWithCallback:^(BOOL isUpdateSuccess) {
+            if (isUpdateSuccess) {
+                callback((NSString *)itemTypeMapper[itemID]);
+                
+            } else {
+                callback(nil);
+            }
+        }];
+        
+    } else {
+        callback((NSString *)itemTypeMapper[itemID]);
+    }
+}
+
++ (void)itemUsed:(Item *)item {
+    [Item itemUsed:item];
 }
 
 #pragma mark -- Private

@@ -9,6 +9,8 @@
 #ifndef CoreDataModels_h
 #define CoreDataModels_h
 
+#import "CMLDataManager.h"
+
 #import "Item+CoreDataClass.h"
 #import "Item+CoreDataProperties.h"
 #import "Accounting+CoreDataClass.h"

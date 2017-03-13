@@ -33,25 +33,39 @@ typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
 + (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
 
 
-+ (void)getItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack;
+/**
+ 获取某个类型的所有item
+
+ @param itemType item类型
+ @param callBack 回调
+ */
++ (void)fetchItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack;
 
 
 /**
  根据某个itemID获得它的itemName，查询的是缓存的数据
  
- @param itemID item的ID
- @return       itemName
+ @param itemID itemID
+ @param callback 回调
  */
-+ (NSString *)itemNameByItemID:(NSString *)itemID;
++ (void)itemNameByItemID:(NSString *)itemID callback:(void(^)(NSString *itemName))callback;
 
 
 /**
  根据某个itemID获得它的itemType，查询的是缓存的数据
  
  @param itemID item的ID
- @return       itemType
+ @param callback 回调
  */
-+ (NSString *)itemTypeByItemID:(NSString *)itemID;
++ (void)itemTypeByItemID:(NSString *)itemID callback:(void(^)(NSString *itemType))callback;
+
+
+/**
+ 标记某个item使用了一次
+
+ @param item item
+ */
+//+ (void)itemUsed:(Item *)item;
 
 #pragma mark - Accounting
 

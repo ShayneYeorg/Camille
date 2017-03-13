@@ -16,10 +16,10 @@ static NSMutableDictionary *itemNameMapper; //key为itemID，value为itemName
 static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
 
 //Accounting缓存
-static BOOL accountingsNeedUpdate;
-static NSMutableArray *allAccountings;
-static NSMutableArray *allAccountingsArrangeByDay;
-static NSInteger accountingsPageCount = 20;
+static BOOL accountingsNeedUpdate; //以下这2个容器类对象的内容是否过期，由accountingsNeedUpdate来标识
+static NSMutableArray *allAccountings; //存放所有的accounting
+static NSMutableArray *allAccountingsArrangeByDay; //存放按日期整理过的所有accounting
+static NSInteger accountingsPageCount = 20; //每页条数
 
 @implementation CMLDataManager
 
@@ -41,53 +41,6 @@ static NSInteger accountingsPageCount = 20;
 }
 
 #pragma mark - Item
-#pragma mark -- Cache
-
-+ (void)_setItemsNeedUpdate {
-    itemsNeedUpdate = YES;
-}
-
-+ (void)_setItemsDidUpdate {
-    itemsNeedUpdate = NO;
-}
-
-+ (BOOL)_itemsNeedUpdate {
-    return itemsNeedUpdate;
-}
-
-+ (void)_updateItemsWithCallback:(void(^)(BOOL isUpdateSuccess))callback {
-    DECLARE_WEAK_SELF
-    [Item fetchItemsWithType:Item_Fetch_All callBack:^(CMLResponse * _Nonnull response) {
-        if (PHRASE_ResponseSuccess) {
-            //income items
-            if (response.responseDic[KEY_Income_Items] && [response.responseDic[KEY_Income_Items] isKindOfClass:[NSArray class]]) {
-                [allIncomeItems removeAllObjects];
-                [allIncomeItems addObjectsFromArray:response.responseDic[KEY_Income_Items]];
-                for (Item *i in allIncomeItems) {
-                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                }
-            }
-            
-            //cost items
-            if (response.responseDic[KEY_Cost_Items] && [response.responseDic[KEY_Cost_Items] isKindOfClass:[NSArray class]]) {
-                [allCostItems removeAllObjects];
-                [allCostItems addObjectsFromArray:response.responseDic[KEY_Cost_Items]];
-                for (Item *i in allCostItems) {
-                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                }
-            }
-            
-            [self _setItemsDidUpdate];
-            callback(YES);
-            
-        } else {
-            callback(NO);
-        }
-    }];
-}
-
 #pragma mark -- Pubilc
 
 + (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
@@ -189,6 +142,53 @@ static NSInteger accountingsPageCount = 20;
     [Item itemUsed:item];
 }
 
+#pragma mark -- Cache
+
++ (void)_setItemsNeedUpdate {
+    itemsNeedUpdate = YES;
+}
+
++ (void)_setItemsDidUpdate {
+    itemsNeedUpdate = NO;
+}
+
++ (BOOL)_itemsNeedUpdate {
+    return itemsNeedUpdate;
+}
+
++ (void)_updateItemsWithCallback:(void(^)(BOOL isUpdateSuccess))callback {
+    DECLARE_WEAK_SELF
+    [Item fetchItemsWithType:Item_Fetch_All callBack:^(CMLResponse * _Nonnull response) {
+        if (PHRASE_ResponseSuccess) {
+            //income items
+            if (response.responseDic[KEY_Income_Items] && [response.responseDic[KEY_Income_Items] isKindOfClass:[NSArray class]]) {
+                [allIncomeItems removeAllObjects];
+                [allIncomeItems addObjectsFromArray:response.responseDic[KEY_Income_Items]];
+                for (Item *i in allIncomeItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                }
+            }
+            
+            //cost items
+            if (response.responseDic[KEY_Cost_Items] && [response.responseDic[KEY_Cost_Items] isKindOfClass:[NSArray class]]) {
+                [allCostItems removeAllObjects];
+                [allCostItems addObjectsFromArray:response.responseDic[KEY_Cost_Items]];
+                for (Item *i in allCostItems) {
+                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                }
+            }
+            
+            [self _setItemsDidUpdate];
+            callback(YES);
+            
+        } else {
+            callback(NO);
+        }
+    }];
+}
+
 #pragma mark -- Private
 
 + (void)_updateItemNameMapperWithKey:(NSString *)key value:(NSString *)value {
@@ -213,7 +213,9 @@ static NSInteger accountingsPageCount = 20;
     dispatch_semaphore_signal(lock);
 }
 
+
 #pragma mark - Accounting
+#pragma mark -- Public
 
 + (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack {
     [Accounting addAccountingWithItemID:itemID amount:amount happneTime:happenTime desc:desc callBack:^(CMLResponse * _Nonnull response) {
@@ -261,6 +263,8 @@ static NSInteger accountingsPageCount = 20;
     }
 }
 
+#pragma mark -- Cache
+
 + (void)_setAccountingsNeedUpdate {
     accountingsNeedUpdate = YES;
 }
@@ -290,6 +294,8 @@ static NSInteger accountingsPageCount = 20;
         }
     }];
 }
+
+#pragma mark -- Private
 
 //fetch accounting数据
 + (void)_fetchAccountingsFromIndex:(NSInteger)starIndex count:(NSInteger)pageCount callback:(void(^)(BOOL isFetchSuccess))callback {

@@ -21,7 +21,39 @@ typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
 
 @interface CMLDataManager : NSObject
 
-+ (NSArray *)getItemsWithItemType:(NSString *)itemType;
+#pragma mark - Item
+
+/**
+ 添加item
+ 
+ @param itemName 要添加的item的名字
+ @param type     要添加的item的类型
+ @param callBack 回调
+ */
++ (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack;
+
+
++ (void)getItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack;
+
+
+/**
+ 根据某个itemID获得它的itemName，查询的是缓存的数据
+ 
+ @param itemID item的ID
+ @return       itemName
+ */
++ (NSString *)itemNameByItemID:(NSString *)itemID;
+
+
+/**
+ 根据某个itemID获得它的itemType，查询的是缓存的数据
+ 
+ @param itemID item的ID
+ @return       itemType
+ */
++ (NSString *)itemTypeByItemID:(NSString *)itemID;
+
+#pragma mark - Accounting
 
 /**
  *  新增账务记录

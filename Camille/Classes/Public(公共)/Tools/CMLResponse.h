@@ -27,6 +27,8 @@
 //KEY
 #define KEY_Item                      @"item"
 #define KEY_Items                     @"items"
+#define KEY_Income_Items              @"incomeItems"
+#define KEY_Cost_Items                @"costItems"
 #define KEY_ItemID                    @"itemID"
 #define KEY_Accountings               @"accountings"
 

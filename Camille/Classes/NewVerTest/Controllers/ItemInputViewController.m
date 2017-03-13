@@ -125,7 +125,7 @@
         
     } else {
         //此item不存在
-        [Item addItemWithName:self.itemInputField.text type:self.itemType callBack:^(CMLResponse * _Nonnull response) {
+        [CMLDataManager addItemWithName:self.itemInputField.text type:self.itemType callBack:^(CMLResponse * _Nonnull response) {
             if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
                 Item *selectedItem = response.responseDic[KEY_Item];
                 [self.dismissBtn removeFromSuperview];

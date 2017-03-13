@@ -48,38 +48,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-/**
- 根据某个itemID获得它的itemName，查询的是缓存的数据
- 
- @param itemID item的ID
- @return       itemName
- */
-+ (NSString *)itemNameByItemID:(NSString *)itemID;
-
-
-/**
- 根据某个itemID获得它的itemType，查询的是缓存的数据
-
- @param itemID item的ID
- @return       itemType
- */
-+ (NSString *)itemTypeByItemID:(NSString *)itemID;
-
-
-/**
- 获得所有的收入item，数组已根据item的使用次数进行了排序
-
- @return 所有的收入item
- */
-+ (NSMutableArray *)getAllIncomeItems;
-
-
-/**
- 获得所有的支出item，数组已根据item的使用次数进行了排序
- 
- @return 所有的支出item
- */
-+ (NSMutableArray *)getAllCostItems;
+///**
+// 根据某个itemID获得它的itemName，查询的是缓存的数据
+// 
+// @param itemID item的ID
+// @return       itemName
+// */
+//+ (NSString *)itemNameByItemID:(NSString *)itemID;
+//
+//
+///**
+// 根据某个itemID获得它的itemType，查询的是缓存的数据
+//
+// @param itemID item的ID
+// @return       itemType
+// */
+//+ (NSString *)itemTypeByItemID:(NSString *)itemID;
+//
+//
+///**
+// 获得所有的收入item，数组已根据item的使用次数进行了排序
+//
+// @return 所有的收入item
+// */
+//+ (NSMutableArray *)getAllIncomeItems;
+//
+//
+///**
+// 获得所有的支出item，数组已根据item的使用次数进行了排序
+// 
+// @return 所有的支出item
+// */
+//+ (NSMutableArray *)getAllCostItems;
 
 
 /**

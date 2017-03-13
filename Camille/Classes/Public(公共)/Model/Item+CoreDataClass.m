@@ -9,88 +9,88 @@
 #import "Item+CoreDataClass.h"
 
 //缓存
-static BOOL needUpdate; //以下这4个容器类对象的内容是否过期，由needUpdate来标识
-static NSMutableDictionary *itemNameMapper; //key为itemID，value为itemName
-static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
-static NSMutableArray *incomeItems; //存放所有的收入item
-static NSMutableArray *costItems; //存放所有的支出item
+//static BOOL needUpdate; //以下这4个容器类对象的内容是否过期，由needUpdate来标识
+//static NSMutableDictionary *itemNameMapper; //key为itemID，value为itemName
+//static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
+//static NSMutableArray *incomeItems; //存放所有的收入item
+//static NSMutableArray *costItems; //存放所有的支出item
 
 @implementation Item
 
 #pragma mark - Life Cycle
 
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        needUpdate = YES;
-        itemNameMapper = [NSMutableDictionary dictionary];
-        itemTypeMapper = [NSMutableDictionary dictionary];
-        incomeItems = [NSMutableArray array];
-        costItems = [NSMutableArray array];
-    });
-}
+//+ (void)load {
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        needUpdate = YES;
+//        itemNameMapper = [NSMutableDictionary dictionary];
+//        itemTypeMapper = [NSMutableDictionary dictionary];
+//        incomeItems = [NSMutableArray array];
+//        costItems = [NSMutableArray array];
+//    });
+//}
 
 #pragma mark - Pubilc
 
-+ (NSString *)itemNameByItemID:(NSString *)itemID {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    if ([self _needUpdate]) {
-        [self _update];
-    }
-    dispatch_semaphore_signal(lock);
-    
-    return itemNameMapper[itemID];
-}
-
-+ (NSString *)itemTypeByItemID:(NSString *)itemID {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    if ([self _needUpdate]) {
-        [self _update];
-    }
-    dispatch_semaphore_signal(lock);
-    
-    return itemTypeMapper[itemID];
-}
-
-+ (NSMutableArray *)getAllIncomeItems {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    if ([self _needUpdate]) {
-        [self _update];
-    }
-    dispatch_semaphore_signal(lock);
-    
-    return incomeItems;
-}
-
-+ (NSMutableArray *)getAllCostItems {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    if ([self _needUpdate]) {
-        [self _update];
-    }
-    dispatch_semaphore_signal(lock);
-    
-    return costItems;
-}
+//+ (NSString *)itemNameByItemID:(NSString *)itemID {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    if ([self _needUpdate]) {
+//        [self _update];
+//    }
+//    dispatch_semaphore_signal(lock);
+//    
+//    return itemNameMapper[itemID];
+//}
+//
+//+ (NSString *)itemTypeByItemID:(NSString *)itemID {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    if ([self _needUpdate]) {
+//        [self _update];
+//    }
+//    dispatch_semaphore_signal(lock);
+//    
+//    return itemTypeMapper[itemID];
+//}
+//
+//+ (NSMutableArray *)getAllIncomeItems {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    if ([self _needUpdate]) {
+//        [self _update];
+//    }
+//    dispatch_semaphore_signal(lock);
+//    
+//    return incomeItems;
+//}
+//
+//+ (NSMutableArray *)getAllCostItems {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    if ([self _needUpdate]) {
+//        [self _update];
+//    }
+//    dispatch_semaphore_signal(lock);
+//    
+//    return costItems;
+//}
 
 + (void)itemUsed:(Item *)item {
     item.useCount += 1;
@@ -101,72 +101,72 @@ static NSMutableArray *costItems; //存放所有的支出item
     } else {
         CMLLog(@"更新item的useCount失败");
     }
-    [self _setNeedUpdate];
+//    [self _setNeedUpdate];
 }
 
 #pragma mark - 数据状态管理
 
-+ (void)_setNeedUpdate {
-    needUpdate = YES;
-}
+//+ (void)_setNeedUpdate {
+//    needUpdate = YES;
+//}
+//
+//+ (BOOL)_needUpdate {
+//    return needUpdate;
+//}
 
-+ (BOOL)_needUpdate {
-    return needUpdate;
-}
+//+ (void)_update {
+//    __weak typeof(self) weakSelf = self;
+//    
+//    [self fetchItemsWithType:Item_Fetch_Income callBack:^(CMLResponse * _Nonnull response) {
+//        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+//                [incomeItems removeAllObjects];
+//                [incomeItems addObjectsFromArray:response.responseDic[KEY_Items]];
+//                for (Item *i in incomeItems) {
+//                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+//                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+//                }
+//            }
+//        }
+//    }];
+//    
+//    [self fetchItemsWithType:Item_Fetch_Cost callBack:^(CMLResponse * _Nonnull response) {
+//        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+//            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+//                [costItems removeAllObjects];
+//                [costItems addObjectsFromArray:response.responseDic[KEY_Items]];
+//                for (Item *i in costItems) {
+//                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+//                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+//                }
+//            }
+//        }
+//    }];
+//    
+//    needUpdate = NO;
+//}
 
-+ (void)_update {
-    __weak typeof(self) weakSelf = self;
-    
-    [self fetchItemsWithType:Item_Fetch_Income callBack:^(CMLResponse * _Nonnull response) {
-        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
-                [incomeItems removeAllObjects];
-                [incomeItems addObjectsFromArray:response.responseDic[KEY_Items]];
-                for (Item *i in incomeItems) {
-                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                }
-            }
-        }
-    }];
-    
-    [self fetchItemsWithType:Item_Fetch_Cost callBack:^(CMLResponse * _Nonnull response) {
-        if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
-            if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
-                [costItems removeAllObjects];
-                [costItems addObjectsFromArray:response.responseDic[KEY_Items]];
-                for (Item *i in costItems) {
-                    [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
-                    [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
-                }
-            }
-        }
-    }];
-    
-    needUpdate = NO;
-}
-
-+ (void)_updateItemNameMapperWithKey:(NSString *)key value:(NSString *)value {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    [itemNameMapper setValue:value forKey:key];
-    dispatch_semaphore_signal(lock);
-}
-
-+ (void)_updateItemTypeMapperWithKey:(NSString *)key value:(NSString *)value {
-    static dispatch_once_t onceToken;
-    static dispatch_semaphore_t lock;
-    dispatch_once(&onceToken, ^{
-        lock = dispatch_semaphore_create(1);
-    });
-    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-    [itemTypeMapper setValue:value forKey:key];
-    dispatch_semaphore_signal(lock);
-}
+//+ (void)_updateItemNameMapperWithKey:(NSString *)key value:(NSString *)value {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    [itemNameMapper setValue:value forKey:key];
+//    dispatch_semaphore_signal(lock);
+//}
+//
+//+ (void)_updateItemTypeMapperWithKey:(NSString *)key value:(NSString *)value {
+//    static dispatch_once_t onceToken;
+//    static dispatch_semaphore_t lock;
+//    dispatch_once(&onceToken, ^{
+//        lock = dispatch_semaphore_create(1);
+//    });
+//    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//    [itemTypeMapper setValue:value forKey:key];
+//    dispatch_semaphore_signal(lock);
+//}
 
 #pragma mark - 添加item
 
@@ -214,11 +214,11 @@ static NSMutableArray *costItems; //存放所有的支出item
                         cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:theExistItem.itemID, KEY_ItemID, theExistItem, KEY_Item,  nil];
                         cmlResponse.code = RESPONSE_CODE_SUCCEED;
                         cmlResponse.desc = kTipRestore;
-                        [self _setNeedUpdate];
+//                        [self _setNeedUpdate];
                         callBack(cmlResponse);
                         
                     } else {
-                        [self _setNeedUpdate];
+//                        [self _setNeedUpdate];
                         callBack(nil);
                     }
                 }];
@@ -236,34 +236,36 @@ static NSMutableArray *costItems; //存放所有的支出item
             callBack(nil);
             
         } else {
-            //Entity
-            Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
-            item.itemName = itemName;
-            item.itemID = newID;
-            item.itemType = type;
-            item.isAvailable = Record_Available;
-            item.useCount = 0;
-            
-            //保存
-            NSError *error = nil;
-            if ([kManagedObjectContext save:&error]) {
-                if (error) {
-                    CMLLog(@"添加item时发生错误:%@,%@",error,[error userInfo]);
-                    [self _setNeedUpdate];
-                    callBack(nil);
+            @synchronized (self) {
+                //Entity
+                Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:kManagedObjectContext];
+                item.itemName = itemName;
+                item.itemID = newID;
+                item.itemType = type;
+                item.isAvailable = Record_Available;
+                item.useCount = 0;
+                
+                //保存
+                NSError *error = nil;
+                if ([kManagedObjectContext save:&error]) {
+                    if (error) {
+                        CMLLog(@"添加item时发生错误:%@,%@",error,[error userInfo]);
+                        //                    [self _setNeedUpdate];
+                        callBack(nil);
+                        
+                    } else {
+                        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+                        cmlResponse.desc = kTipSaveSuccess;
+                        CMLLog(@"新增item(%@)成功", itemName);
+                        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:item, KEY_Item, nil];
+                        //                    [self _setNeedUpdate];
+                        callBack(cmlResponse);
+                    }
                     
                 } else {
-                    cmlResponse.code = RESPONSE_CODE_SUCCEED;
-                    cmlResponse.desc = kTipSaveSuccess;
-                    CMLLog(@"新增item(%@)成功", itemName);
-                    cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:item, KEY_Item, nil];
-                    [self _setNeedUpdate];
-                    callBack(cmlResponse);
+                    //                [self _setNeedUpdate];
+                    callBack(nil);
                 }
-                
-            } else {
-                [self _setNeedUpdate];
-                callBack(nil);
             }
         }
     }
@@ -271,17 +273,19 @@ static NSMutableArray *costItems; //存放所有的支出item
 
 //复原item
 + (void)restoreItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack {
-    item.isAvailable = Record_Available;
-    CMLResponse *response = [[CMLResponse alloc]init];
-    NSError *error = nil;
-    if ([kManagedObjectContext save:&error]) {
-        CMLLog(@"复原item成功");
-        response.code = RESPONSE_CODE_SUCCEED;
-        callBack(response);
-        
-    } else {
-        CMLLog(@"复原item失败");
-        callBack(nil);
+    @synchronized (self) {
+        item.isAvailable = Record_Available;
+        CMLResponse *response = [[CMLResponse alloc]init];
+        NSError *error = nil;
+        if ([kManagedObjectContext save:&error]) {
+            CMLLog(@"复原item成功");
+            response.code = RESPONSE_CODE_SUCCEED;
+            callBack(response);
+            
+        } else {
+            CMLLog(@"复原item失败");
+            callBack(nil);
+        }
     }
 }
 
@@ -333,19 +337,21 @@ static NSMutableArray *costItems; //存放所有的支出item
 #pragma mark - 删除item
 
 + (void)deleteItem:(Item *)item callBack:(void(^)(CMLResponse *response))callBack {
-    item.isAvailable = Record_Unavailable;
-    CMLResponse *response = [[CMLResponse alloc]init];
-    NSError *error = nil;
-    if ([kManagedObjectContext save:&error]) {
-        CMLLog(@"删除item成功");
-        response.code = RESPONSE_CODE_SUCCEED;
-        [self _setNeedUpdate];
-        callBack(response);
-        
-    } else {
-        CMLLog(@"删除item失败");
-        [self _setNeedUpdate];
-        callBack(nil);
+    @synchronized (self) {
+        item.isAvailable = Record_Unavailable;
+        CMLResponse *response = [[CMLResponse alloc]init];
+        NSError *error = nil;
+        if ([kManagedObjectContext save:&error]) {
+            CMLLog(@"删除item成功");
+            response.code = RESPONSE_CODE_SUCCEED;
+            //        [self _setNeedUpdate];
+            callBack(response);
+            
+        } else {
+            CMLLog(@"删除item失败");
+            //        [self _setNeedUpdate];
+            callBack(nil);
+        }
     }
 }
 
@@ -359,6 +365,11 @@ static NSMutableArray *costItems; //存放所有的支出item
     
     //Response
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    
+    //设置排序规则
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"useCount" ascending:NO];
+    NSArray *sortDescriptors = @[sort];
+    [request setSortDescriptors:sortDescriptors];
     
     //设置查询条件
     switch (itemFetchType) {
@@ -393,10 +404,22 @@ static NSMutableArray *costItems; //存放所有的支出item
     } else {
         cmlResponse.code = RESPONSE_CODE_SUCCEED;
         cmlResponse.desc = kTipFetchSuccess;
-        [items sortUsingComparator:^NSComparisonResult(Item *i1, Item *i2) {
-            return [@(i2.useCount) compare:@(i1.useCount)];
-        }];
-        cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:items, KEY_Items, nil];
+        if (itemFetchType == Item_Fetch_All) {
+            NSMutableArray *incomItems = [NSMutableArray array];
+            NSMutableArray *costItems = [NSMutableArray array];
+            for (Item *i in items) {
+                if ([i.itemType isEqualToString:Item_Type_Cost]) {
+                    [costItems addObject:i];
+                    
+                } else {
+                    [incomItems addObject:i];
+                }
+            }
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:incomItems, KEY_Income_Items, costItems, KEY_Cost_Items, nil];
+            
+        } else {
+            cmlResponse.responseDic = [NSDictionary dictionaryWithObjectsAndKeys:items, KEY_Items, nil];
+        }
         callBack(cmlResponse);
     }
 }
@@ -404,29 +427,32 @@ static NSMutableArray *costItems; //存放所有的支出item
 #pragma mark - 修改item
 
 + (void)alterItem:(Item * _Nonnull)item itemName:(NSString * _Nullable)itemName itemType:(NSString * _Nullable)itemType callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack {
-    //此处不做item重名的判断了，因为不排除有将某个item的账务归并到另一个item名下的可能性出现
-    //但是在添加item的方法里还是必须要判断重名的，因为如果item已存在就没必要添加了
-    if (itemName.length) {
-        item.itemName = itemName;
-    }
-    
-    if (itemType.length) {
-        item.itemType = itemType;
-    }
-    
-    CMLResponse *response = [[CMLResponse alloc]init];
-    NSError *error = nil;
-    if ([kManagedObjectContext save:&error]) {
-        CMLLog(@"修改item成功");
-        response.code = RESPONSE_CODE_SUCCEED;
-        [self _setNeedUpdate];
-        callBack(response);
+    @synchronized (self) {
+        //此处不做item重名的判断了，因为不排除有将某个item的账务归并到另一个item名下的可能性出现
+        //但是在添加item的方法里还是必须要判断重名的，因为如果item已存在就没必要添加了
+        if (itemName.length) {
+            item.itemName = itemName;
+        }
         
-    } else {
-        CMLLog(@"修改item失败");
-        [self _setNeedUpdate];
-        callBack(nil);
+        if (itemType.length) {
+            item.itemType = itemType;
+        }
+        
+        CMLResponse *response = [[CMLResponse alloc]init];
+        NSError *error = nil;
+        if ([kManagedObjectContext save:&error]) {
+            CMLLog(@"修改item成功");
+            response.code = RESPONSE_CODE_SUCCEED;
+            //        [self _setNeedUpdate];
+            callBack(response);
+            
+        } else {
+            CMLLog(@"修改item失败");
+            //        [self _setNeedUpdate];
+            callBack(nil);
+        }
     }
+    
 }
 
 @end

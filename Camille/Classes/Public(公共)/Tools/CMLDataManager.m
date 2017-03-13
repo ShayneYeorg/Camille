@@ -8,11 +8,18 @@
 
 #import "CMLDataManager.h"
 
-//缓存
-static NSInteger accountingsPageCount = 20;
+//Item缓存
+static BOOL itemsNeedUpdate; //以下这4个容器类对象的内容是否过期，由itemsNeedUpdate来标识
+static NSMutableArray *allIncomeItems; //存放所有的收入item
+static NSMutableArray *allCostItems; //存放所有的支出item
+static NSMutableDictionary *itemNameMapper; //key为itemID，value为itemName
+static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
+
+//Accounting缓存
 static BOOL accountingsNeedUpdate;
 static NSMutableArray *allAccountings;
 static NSMutableArray *allAccountingsArrangeByDay;
+static NSInteger accountingsPageCount = 20;
 
 @implementation CMLDataManager
 
@@ -21,18 +28,155 @@ static NSMutableArray *allAccountingsArrangeByDay;
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        itemsNeedUpdate = YES;
+        allIncomeItems = [NSMutableArray array];
+        allCostItems = [NSMutableArray array];
+        itemNameMapper = [NSMutableDictionary dictionary];
+        itemTypeMapper = [NSMutableDictionary dictionary];
+        
         accountingsNeedUpdate = YES;
         allAccountings = [NSMutableArray array];
         allAccountingsArrangeByDay = [NSMutableArray array];
     });
 }
 
-+ (NSArray *)getItemsWithItemType:(NSString *)itemType {
+#pragma mark - Item
+#pragma mark -- Cache
+
++ (void)_setItemsNeedUpdate {
+    itemsNeedUpdate = YES;
+}
+
++ (void)_setItemsDidUpdate {
+    itemsNeedUpdate = NO;
+}
+
++ (BOOL)_itemsNeedUpdate {
+    return itemsNeedUpdate;
+}
+
++ (void)_updateItemsWithCallback:(void(^)(BOOL isUpdateSuccess))callback {
+    DECLARE_WEAK_SELF
+    
+#warning - 要测一下这样子是否可以
+    
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, dispatch_get_main_queue(), ^{
+        [Item fetchItemsWithType:Item_Fetch_Income callBack:^(CMLResponse * _Nonnull response) {
+            if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+                    [allIncomeItems removeAllObjects];
+                    [allIncomeItems addObjectsFromArray:response.responseDic[KEY_Items]];
+                    for (Item *i in allIncomeItems) {
+                        [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                        [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                    }
+                }
+            }
+        }];
+    });
+    
+    dispatch_group_async(group, dispatch_get_main_queue(), ^{
+        [Item fetchItemsWithType:Item_Fetch_Cost callBack:^(CMLResponse * _Nonnull response) {
+            if (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED]) {
+                if ([response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
+                    [allCostItems removeAllObjects];
+                    [allCostItems addObjectsFromArray:response.responseDic[KEY_Items]];
+                    for (Item *i in allCostItems) {
+                        [weakSelf _updateItemNameMapperWithKey:i.itemID value:i.itemName];
+                        [weakSelf _updateItemTypeMapperWithKey:i.itemID value:i.itemType];
+                    }
+                }
+            }
+        }];
+    });
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        itemsNeedUpdate = NO;
+        callback(YES);
+    });
+    
+//    dispatch_release(group);
+}
+
+#pragma mark -- Pubilc
+
++ (void)addItemWithName:(NSString *)itemName type:(NSString *)type callBack:(void(^)(CMLResponse *response))callBack {
+    [Item addItemWithName:itemName type:type callBack:^(CMLResponse * _Nonnull response) {
+        if (PHRASE_ResponseSuccess) {
+            [self _setItemsNeedUpdate];
+        }
+        callBack(response);
+    }];
+}
+
++ (void)getItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack {
     if ([itemType isEqualToString:Item_Type_Cost]) {
-        return [Item getAllCostItems];
+        [self getAllIncomeItemsWithCallback:callBack];
     }
     
-    return [Item getAllIncomeItems];
+    [self getAllCostItemsWithCallback:callBack];
+}
+
++ (void)getAllIncomeItemsWithCallback:(void(^)(CMLResponse *response))callBack {
+    CMLResponse *response = [CMLResponse new];
+    if ([self _itemsNeedUpdate]) {
+        [self _updateItemsWithCallback:^(BOOL isUpdateSuccess) {
+            if (isUpdateSuccess) {
+                response.code = RESPONSE_CODE_SUCCEED;
+                response.desc = kTipFetchSuccess;
+                response.responseDic = @{KEY_Items: allIncomeItems};
+                callBack(response);
+                
+            } else {
+                callBack(nil);
+            }
+        }];
+        
+    } else {
+        response.code = RESPONSE_CODE_SUCCEED;
+        response.desc = kTipFetchSuccess;
+        response.responseDic = @{KEY_Items: allIncomeItems};
+        callBack(response);
+    }
+}
+
++ (void)getAllCostItemsWithCallback:(void(^)(CMLResponse *response))callBack {
+//    if ([self _needUpdate]) {
+//        [self _update];
+//    }
+}
+
++ (NSString *)itemNameByItemID:(NSString *)itemID {
+    return nil;
+}
+
++ (NSString *)itemTypeByItemID:(NSString *)itemID {
+    return nil;
+}
+
+#pragma mark -- Private
+
++ (void)_updateItemNameMapperWithKey:(NSString *)key value:(NSString *)value {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    [itemNameMapper setValue:value forKey:key];
+    dispatch_semaphore_signal(lock);
+}
+
++ (void)_updateItemTypeMapperWithKey:(NSString *)key value:(NSString *)value {
+    static dispatch_once_t onceToken;
+    static dispatch_semaphore_t lock;
+    dispatch_once(&onceToken, ^{
+        lock = dispatch_semaphore_create(1);
+    });
+    dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    [itemTypeMapper setValue:value forKey:key];
+    dispatch_semaphore_signal(lock);
 }
 
 #pragma mark - Accounting

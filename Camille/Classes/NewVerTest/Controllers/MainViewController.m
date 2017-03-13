@@ -50,15 +50,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configDetails];
-    [self configBackgroungView];
-    [self configTableView];
-    [self configTopView];
-    [self configBottomView];
-    [self configControlHandle];
-    [self configToBottomHandle];
-    
-    [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
+//    [self configDetails];
+//    [self configBackgroungView];
+//    [self configTableView];
+//    [self configTopView];
+//    [self configBottomView];
+//    [self configControlHandle];
+//    [self configToBottomHandle];
+//    
+//    [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
 }
 
 #pragma mark - UI Configuration

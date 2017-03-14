@@ -146,7 +146,7 @@
         [self _tableViewSetContentOffset:CGPointMake(0, -kLoadingOffset) animated:YES];
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
     //数据缓存在中间层
     DECLARE_WEAK_SELF
@@ -186,7 +186,7 @@
     }];
         
         
-    });
+//    });
 }
 
 - (void)fetchAccountingsByDate:(NSDate *)date {

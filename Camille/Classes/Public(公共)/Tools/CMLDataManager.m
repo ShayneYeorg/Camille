@@ -19,7 +19,7 @@ static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
 static BOOL accountingsNeedUpdate; //以下这2个容器类对象的内容是否过期，由accountingsNeedUpdate来标识
 static NSMutableArray *allAccountings; //存放所有的accounting
 static NSMutableArray *allAccountingsArrangeByDay; //存放按日期整理过的所有accounting
-const NSInteger accountingsPageCount = 10; //每页Accounting条数
+const NSInteger accountingsPageCount = 20; //每页Accounting条数
 
 @implementation CMLDataManager
 
@@ -55,9 +55,10 @@ const NSInteger accountingsPageCount = 10; //每页Accounting条数
 + (void)fetchItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack {
     if ([itemType isEqualToString:Item_Type_Cost]) {
         [self fetchAllIncomeItemsWithCallback:callBack];
+        
+    } else {
+        [self fetchAllCostItemsWithCallback:callBack];
     }
-    
-    [self fetchAllCostItemsWithCallback:callBack];
 }
 
 + (void)fetchAllIncomeItemsWithCallback:(void(^)(CMLResponse *response))callBack {

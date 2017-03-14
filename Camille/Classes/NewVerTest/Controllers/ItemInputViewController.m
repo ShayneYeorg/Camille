@@ -50,7 +50,8 @@
                 self.itemInputField.clipsToBounds = YES;
                 [self.backgroundView addSubview:self.itemInputField];
                 self.itemInputField.placeholder = @"项目";
-                [self configInitialAnamation];
+                [self configDismissBtn];
+                [self startInitialAnamation];
                 
             } else {
                 CMLLog(@"数据出错");
@@ -75,28 +76,41 @@
     [self.view addSubview:self.backgroundView];
 }
 
-- (void)configInitialAnamation {
+- (void)startInitialAnamation {
+    CMLLog(@"%f", self.backgroundView.frame.size.width);
     [UIView animateWithDuration:0.2 animations:^{
-        self.itemInputField.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 70, self.itemInputField.frame.size.height);
+        self.itemInputField.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 20, self.itemInputField.frame.size.height);
         
     } completion:^(BOOL finished) {
-        self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
-        self.dismissBtn.backgroundColor = [UIColor clearColor];
-        [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
-        [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-        [self.backgroundView addSubview:self.dismissBtn];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.itemInputField.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 70, self.itemInputField.frame.size.height);
+            self.dismissBtn.frame = CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height);
+            self.dismissBtn.alpha = 1;
+            
+        } completion:^(BOOL finished) {
+            
+        }];
         
-        self.confirmBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
-        self.confirmBtn.backgroundColor = [UIColor clearColor];
-        [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-        [self.confirmBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
-        [self.confirmBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
-        self.confirmBtn.hidden = YES;
-        [self.backgroundView addSubview:self.confirmBtn];
         
-        [self.itemInputField becomeFirstResponder];
+//        self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
+//        self.dismissBtn.backgroundColor = [UIColor clearColor];
+//        [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
+//        [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+//        [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+//        [self.backgroundView addSubview:self.dismissBtn];
+//        
+//        self.confirmBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.itemInputField.frame.size.height)];
+//        self.confirmBtn.backgroundColor = [UIColor clearColor];
+//        [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+//        [self.confirmBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+//        [self.confirmBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+//        self.confirmBtn.hidden = YES;
+//        [self.backgroundView addSubview:self.confirmBtn];
+//        
+//        [self.itemInputField becomeFirstResponder];
+        CMLLog(@"%f", self.dismissBtn.origin.y);
     }];
+    
 }
 
 #pragma mark - Private
@@ -147,6 +161,20 @@
             }
         }];
     }
+}
+
+#pragma mark - Getter
+
+- (void)configDismissBtn {
+    self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width, 30, 40, self.itemInputField.frame.size.height)];
+    self.dismissBtn.backgroundColor = [UIColor clearColor];
+    self.dismissBtn.alpha = 0;
+    [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundView addSubview:self.dismissBtn];
+    
+    CMLLog(@"%f", self.dismissBtn.origin.y);
 }
 
 #pragma mark - UITextFieldDelegate

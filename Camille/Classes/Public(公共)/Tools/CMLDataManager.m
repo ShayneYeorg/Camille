@@ -19,7 +19,7 @@ static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
 static BOOL accountingsNeedUpdate; //以下这2个容器类对象的内容是否过期，由accountingsNeedUpdate来标识
 static NSMutableArray *allAccountings; //存放所有的accounting
 static NSMutableArray *allAccountingsArrangeByDay; //存放按日期整理过的所有accounting
-static NSInteger accountingsPageCount = 20; //每页条数
+static NSInteger accountingsPageCount = 10; //每页条数
 
 @implementation CMLDataManager
 
@@ -226,7 +226,7 @@ static NSInteger accountingsPageCount = 20; //每页条数
     }];
 }
 
-+ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newAccountingCount))callBack {
++ (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newCellCount))callBack {
     if (![self _accountingsNeedUpdate]) {
         //一、缓存数据未被污染
         if (loadType == Load_Type_Refresh) {
@@ -237,9 +237,9 @@ static NSInteger accountingsPageCount = 20; //每页条数
         } else {
             //2、(加载新页)
             //直接在当前基础上取下一页数据
-            [self _fetchAccountingsFromIndex:allAccountings.count count:accountingsPageCount callback:^(BOOL isFetchSuccess) {
+            [self _fetchAccountingsFromIndex:allAccountings.count count:accountingsPageCount callback:^(BOOL isFetchSuccess, NSInteger newSectionCount, NSInteger newCellCount) {
                 if (isFetchSuccess) {
-                    callBack(YES, allAccountingsArrangeByDay, 0, 0);
+                    callBack(YES, allAccountingsArrangeByDay, newSectionCount, newCellCount);
                     
                 } else {
                     callBack(NO, nil, 0, 0);
@@ -284,7 +284,8 @@ static NSInteger accountingsPageCount = 20; //每页条数
     }
     
     DECLARE_WEAK_SELF
-    [self _fetchAccountingsFromIndex:0 count:count callback:^(BOOL isFetchSuccess) {
+    [self _fetchAccountingsFromIndex:0 count:count callback:^(BOOL isFetchSuccess, NSInteger newSectionCount, NSInteger newCellCount) {
+        //这种情况下newSectionCount和newCellCount没有多大意义
         if (isFetchSuccess) {
             [weakSelf _setAccountingsDidUpdate];
             callback(YES);
@@ -298,39 +299,46 @@ static NSInteger accountingsPageCount = 20; //每页条数
 #pragma mark -- Private
 
 //fetch accounting数据
-+ (void)_fetchAccountingsFromIndex:(NSInteger)starIndex count:(NSInteger)pageCount callback:(void(^)(BOOL isFetchSuccess))callback {
++ (void)_fetchAccountingsFromIndex:(NSInteger)starIndex count:(NSInteger)accountingCount callback:(void(^)(BOOL isFetchSuccess, NSInteger newSectionCount, NSInteger newCellCount))callback {
     DECLARE_WEAK_SELF
-    [Accounting fetchAccountingsFrom:starIndex count:pageCount callBack:^(CMLResponse * _Nonnull response) {
+    [Accounting fetchAccountingsFrom:starIndex count:accountingCount callBack:^(CMLResponse * _Nonnull response) {
         if (PHRASE_ResponseSuccess) {
             if (starIndex == 0) {
                 //1、清空allAccountings，重新整理allAccountingsArrangeByDay
                 NSArray *allData = response.responseDic[KEY_Accountings];
                 if (allAccountings) {
-                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_All newAccountings:allData];
+                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_All newAccountings:allData callback:^(NSInteger newSectionCount, NSInteger newCellCount) {
+                        //反正是全部重新整理，就返回0，0就好了
+                        callback(YES ,0 ,0);
+                    }];
                     
                 } else {
-                    callback(NO);
+                    callback(NO, 0, 0);
                 }
                 
             } else {
                 //2、在当前缓存基础上继续添加
                 NSArray *newPageData = response.responseDic[KEY_Accountings];
                 if (newPageData) {
-                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_New_Page newAccountings:newPageData];
+                    [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_New_Page newAccountings:newPageData callback:^(NSInteger newSectionCount, NSInteger newCellCount) {
+                        callback(YES, newSectionCount, newCellCount);
+                    }];
                     
                 } else {
-                    callback(NO);
+                    callback(NO, 0, 0);
                 }
             }
-            callback(YES);
             
         } else {
-            callback(NO);
+            callback(NO, 0, 0);
         }
     }];
 }
 
-+ (void)_arrangeAccountingsByDayWithType:(Accounting_Arrange_Type)accountingArrangeType newAccountings:(NSArray *)newAccountings {
++ (void)_arrangeAccountingsByDayWithType:(Accounting_Arrange_Type)accountingArrangeType newAccountings:(NSArray *)newAccountings callback:(void(^)(NSInteger newSectionCount, NSInteger newCellCount))callback {
+    NSInteger newSCount = 0;
+    NSInteger newCCount = 0;
+    
     //一、清理数据
     if (accountingArrangeType == Accounting_Arrange_All) {
         //重新赋值allAccountings
@@ -341,6 +349,7 @@ static NSInteger accountingsPageCount = 20; //每页条数
     } else {
         //将新页的Accounting添加到allAccountings里
         [allAccountings addObjectsFromArray:newAccountings];
+        newCCount = newAccountings.count;
     }
     
     //二、整理数据
@@ -366,6 +375,7 @@ static NSInteger accountingsPageCount = 20; //每页条数
                 //新建一个section
                 MainSectionModel *sectionModel = [MainSectionModel mainSectionModelWithAccounting:accounting];
                 [allAccountingsArrangeByDay addObject:sectionModel];
+                newSCount++;
                 currentSection = sectionModel;
                 
                 //建立第一个cell
@@ -382,6 +392,9 @@ static NSInteger accountingsPageCount = 20; //每页条数
             }
         }
     }
+    
+    //返回新增的section数和cell数，给首页布局contentOffset使用
+    callback(newSCount, newCCount);
 }
 
 @end

@@ -146,11 +146,11 @@
         [self _tableViewSetContentOffset:CGPointMake(0, -kLoadingOffset) animated:YES];
     }
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
     //数据缓存在中间层
     DECLARE_WEAK_SELF
-    [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newAccountingCount) {
+    [CMLDataManager fetchAllAccountingsWithLoadType:loadType callBack:^(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newCellCount) {
         weakSelf.accountingsData = accountings;
         [weakSelf.activityView stopAnimating];
         weakSelf.activityView.hidden = YES; //无论如何都hide一次
@@ -164,7 +164,9 @@
             } else {
                 //加载新页
                 [weakSelf _tableViewSetContentInsetTop:0 bottom:44];
-//                [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight*dataCountPerPage - kLoadingOffset + kSectionHeaderHeight * 7) animated:NO];
+                if (newCellCount > 0) {
+                    [weakSelf.tableView setContentOffset:CGPointMake(0, cellHeight * newCellCount + kSectionHeaderHeight * newSectionCount - kLoadingOffset) animated:NO];
+                }
                 [weakSelf.controlHandle restore];
             }
             weakSelf.tableView.scrollEnabled = YES;
@@ -176,7 +178,7 @@
     }];
         
         
-//    });
+    });
 }
 
 - (void)fetchAccountingsByDate:(NSDate *)date {

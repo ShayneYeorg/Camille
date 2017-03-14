@@ -19,7 +19,7 @@ static NSMutableDictionary *itemTypeMapper; //key为itemID，value为itemType
 static BOOL accountingsNeedUpdate; //以下这2个容器类对象的内容是否过期，由accountingsNeedUpdate来标识
 static NSMutableArray *allAccountings; //存放所有的accounting
 static NSMutableArray *allAccountingsArrangeByDay; //存放按日期整理过的所有accounting
-static NSInteger accountingsPageCount = 10; //每页条数
+const NSInteger accountingsPageCount = 10; //每页Accounting条数
 
 @implementation CMLDataManager
 
@@ -252,9 +252,9 @@ static NSInteger accountingsPageCount = 10; //每页条数
         //重新update数据，然后返回当前缓存的allAccountingsArrangeByDay
         //1、loadType为Load_Type_Refresh表示(初次打开 | 添加了新的accounting)
         //2、loadType为Load_Type_LoadMore表示(加载新页)
-        [self _updateAccountingWithLoadType:loadType callback:^(BOOL isUpdateSuccess) {
+        [self _updateAccountingWithLoadType:loadType callback:^(BOOL isUpdateSuccess, NSInteger newSectionCount, NSInteger newCellCount) {
             if (isUpdateSuccess) {
-                callBack(YES, allAccountingsArrangeByDay, 0, 0);
+                callBack(YES, allAccountingsArrangeByDay, newSectionCount, newCellCount);
                 
             } else {
                 callBack(NO, nil, 0, 0);
@@ -277,7 +277,7 @@ static NSInteger accountingsPageCount = 10; //每页条数
     return accountingsNeedUpdate;
 }
 
-+ (void)_updateAccountingWithLoadType:(Load_Type)loadType callback:(void(^)(BOOL isUpdateSuccess))callback {
++ (void)_updateAccountingWithLoadType:(Load_Type)loadType callback:(void(^)(BOOL isUpdateSuccess, NSInteger newSectionCount, NSInteger newCellCount))callback {
     NSInteger count = accountingsPageCount;
     if (loadType == Load_Type_LoadMore) {
         count += allAccountings.count;
@@ -286,12 +286,13 @@ static NSInteger accountingsPageCount = 10; //每页条数
     DECLARE_WEAK_SELF
     [self _fetchAccountingsFromIndex:0 count:count callback:^(BOOL isFetchSuccess, NSInteger newSectionCount, NSInteger newCellCount) {
         //这种情况下newSectionCount和newCellCount没有多大意义
+#warning - 有了修改Accounting的功能后，要测试一下Accounting被修改导致数据污染后，下拉加载更多要怎么展示
         if (isFetchSuccess) {
             [weakSelf _setAccountingsDidUpdate];
-            callback(YES);
+            callback(YES, newSectionCount, newCellCount);
             
         } else {
-            callback(NO);
+            callback(NO, 0, 0);
         }
     }];
 }
@@ -308,8 +309,7 @@ static NSInteger accountingsPageCount = 10; //每页条数
                 NSArray *allData = response.responseDic[KEY_Accountings];
                 if (allAccountings) {
                     [weakSelf _arrangeAccountingsByDayWithType:Accounting_Arrange_All newAccountings:allData callback:^(NSInteger newSectionCount, NSInteger newCellCount) {
-                        //反正是全部重新整理，就返回0，0就好了
-                        callback(YES ,0 ,0);
+                        callback(YES, newSectionCount, newCellCount);
                     }];
                     
                 } else {
@@ -337,7 +337,6 @@ static NSInteger accountingsPageCount = 10; //每页条数
 
 + (void)_arrangeAccountingsByDayWithType:(Accounting_Arrange_Type)accountingArrangeType newAccountings:(NSArray *)newAccountings callback:(void(^)(NSInteger newSectionCount, NSInteger newCellCount))callback {
     NSInteger newSCount = 0;
-    NSInteger newCCount = 0;
     
     //一、清理数据
     if (accountingArrangeType == Accounting_Arrange_All) {
@@ -349,7 +348,6 @@ static NSInteger accountingsPageCount = 10; //每页条数
     } else {
         //将新页的Accounting添加到allAccountings里
         [allAccountings addObjectsFromArray:newAccountings];
-        newCCount = newAccountings.count;
     }
     
     //二、整理数据
@@ -394,7 +392,7 @@ static NSInteger accountingsPageCount = 10; //每页条数
     }
     
     //返回新增的section数和cell数，给首页布局contentOffset使用
-    callback(newSCount, newCCount);
+    callback(newSCount, newAccountings.count);
 }
 
 @end

@@ -29,7 +29,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
-//@property (nonatomic, assign) BOOL isLoading; //如果处在_isLoading状态，则topPanel会隐藏，不会因为停止拖动的时候topPanel露出偏多就完全展示出来了，那样会盖住loading的UIActivityIndicatorView
+@property (nonatomic, assign) BOOL canLoadMore;
 
 @property (nonatomic, strong) CMLTopPanel *topView;
 @property (nonatomic, strong) CMLBottomPanel *bottomView;
@@ -67,7 +67,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     _currentTableViewInsetY = topPanelHeight;
     _isToBottomBtnClicked = NO;
-//    self.isLoading = NO;
+    self.canLoadMore = YES;
 }
 
 - (void)configBackgroungView {
@@ -169,6 +169,14 @@
                 }
                 [weakSelf.controlHandle restore];
             }
+            
+            if (newCellCount < accountingsPageCount) {
+                weakSelf.canLoadMore = NO;
+                
+            } else {
+                weakSelf.canLoadMore = YES;
+            }
+            
             weakSelf.tableView.scrollEnabled = YES;
             [weakSelf.topView scrollViewLoadingComplete];
             
@@ -237,7 +245,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     //先把必要的逻辑处理了，再让控件做反应
     //load more
-    if (self.tableView.contentOffset.y < kLoadmoreThreshold) {
+    if (self.tableView.contentOffset.y < kLoadmoreThreshold && self.canLoadMore) {
         [self fetchAllAccountingsWithLoadType:Load_Type_LoadMore];
     }
     

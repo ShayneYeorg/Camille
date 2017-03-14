@@ -19,6 +19,8 @@ typedef NS_ENUM (NSInteger, Accounting_Arrange_Type) {
     Accounting_Arrange_New_Page, //只整理新的一页Accounting数据
 };
 
+extern const NSInteger accountingsPageCount; //每页Accounting条数
+
 @interface CMLDataManager : NSObject
 
 #pragma mark - Item

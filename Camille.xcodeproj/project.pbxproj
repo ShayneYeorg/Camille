@@ -17,6 +17,7 @@
 		341021A01CFAFDD800DD7561 /* CMLCategorySettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3410219F1CFAFDD800DD7561 /* CMLCategorySettingViewController.m */; };
 		3426CC451E1E4889006B2215 /* CMLBottomPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426CC411E1E4889006B2215 /* CMLBottomPanel.m */; };
 		3426CC461E1E4889006B2215 /* CMLTopPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426CC441E1E4889006B2215 /* CMLTopPanel.m */; };
+		342AC1151E7915BF00B62FBE /* CMLDisplayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */; };
 		34340AE51C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */; };
 		34340AE81C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE71C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m */; };
 		34340AEA1C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34340AE91C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib */; };
@@ -138,6 +139,8 @@
 		3426CC411E1E4889006B2215 /* CMLBottomPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLBottomPanel.m; sourceTree = "<group>"; };
 		3426CC431E1E4889006B2215 /* CMLTopPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLTopPanel.h; sourceTree = "<group>"; };
 		3426CC441E1E4889006B2215 /* CMLTopPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLTopPanel.m; sourceTree = "<group>"; };
+		342AC1131E7915BF00B62FBE /* CMLDisplayTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLDisplayTextField.h; sourceTree = "<group>"; };
+		342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLDisplayTextField.m; sourceTree = "<group>"; };
 		34340AE31C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordMonthDetailViewController.h; sourceTree = "<group>"; };
 		34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordMonthDetailViewController.m; sourceTree = "<group>"; };
 		34340AE61C9FD02300FECAD7 /* CMLRecordDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordDetailHeaderView.h; sourceTree = "<group>"; };
@@ -364,6 +367,7 @@
 				3426CC3F1E1E4889006B2215 /* CMLBottomPanel */,
 				3426CC421E1E4889006B2215 /* CMLTopPanel */,
 				34C82C351E35FD44001CDC93 /* CMLTransition */,
+				342AC10F1E79155F00B62FBE /* CMLDisplayTextField */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -384,6 +388,15 @@
 				3426CC441E1E4889006B2215 /* CMLTopPanel.m */,
 			);
 			path = CMLTopPanel;
+			sourceTree = "<group>";
+		};
+		342AC10F1E79155F00B62FBE /* CMLDisplayTextField */ = {
+			isa = PBXGroup;
+			children = (
+				342AC1131E7915BF00B62FBE /* CMLDisplayTextField.h */,
+				342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */,
+			);
+			path = CMLDisplayTextField;
 			sourceTree = "<group>";
 		};
 		344A002C1C75E0D8008281BB = {
@@ -921,6 +934,7 @@
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
 				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,
+				342AC1151E7915BF00B62FBE /* CMLDisplayTextField.m in Sources */,
 				34C82C331E346235001CDC93 /* UIScrollView+UpsideDown.m in Sources */,
 				34431E2B1CEC4D63001E4A54 /* CMLRecordItemDetailSectionHeaderView.m in Sources */,
 				3490A2EC1C798D0900DEC138 /* CMLAccountingRegistrationViewController.m in Sources */,

@@ -12,6 +12,7 @@
 #import "CMLTool+NSDate.h"
 #import "CMLAccountingDatePickerView.h"
 #import "CMLDataManager.h"
+#import "CMLDisplayTextField.h"
 
 @interface AccountAddingViewController () <UITextFieldDelegate, CMLAccountingDatePickerViewDelegate>
 
@@ -27,7 +28,7 @@
 @property (nonatomic, strong) UILabel *costLabel;
 @property (nonatomic, strong) UILabel *incomeLabel;
 
-@property (nonatomic, strong) UIView *itemInputField;
+@property (nonatomic, strong) CMLDisplayTextField *itemInputField;
 
 @property (nonatomic, strong) UITextField *amountInputField;
 
@@ -116,14 +117,11 @@
 }
 
 - (void)configItemInputField {
-    self.itemInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 30 + ScaleOn375(30), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
-    self.itemInputField.backgroundColor = RGB(230, 230, 230);
-    self.itemInputField.layer.cornerRadius = 5;
-    self.itemInputField.clipsToBounds = YES;
+    DECLARE_WEAK_SELF
+    self.itemInputField = [CMLDisplayTextField loadDisplayTextFieldWithFrame:CGRectMake(20, 30 + ScaleOn375(30), self.backgroundView.frame.size.width - 40, ScaleOn375(30)) backgroundColor:RGB(230, 230, 230) placeHolder:@"项目" touchAction:^{
+        [weakSelf itemInput];
+    }];
     [self.backgroundView addSubview:self.itemInputField];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(itemInput)];
-    [self.itemInputField addGestureRecognizer:tap];
 }
 
 - (void)configAmountInputField {
@@ -205,17 +203,18 @@
 - (void)itemInput {
     CGRect newFrame = [self.backgroundView convertRect:self.itemInputField.frame toView:self.view];
     
-    ItemInputViewController *itemInputViewController = [ItemInputViewController initWithInitialPosition:newFrame itemType:self.itemType];
+    ItemInputViewController *itemInputViewController = [ItemInputViewController initWithInitialPosition:newFrame itemType:self.itemType initialText:[self.itemInputField currentText]];
     [self addChildViewController:itemInputViewController];
     [self.view addSubview:itemInputViewController.view];
     
+    DECLARE_WEAK_SELF
     __weak ItemInputViewController *weakItemInputViewController = itemInputViewController;
-    itemInputViewController.dismissBlock = ^(NSString *itemID) {
+    itemInputViewController.dismissBlock = ^(NSString *itemID, NSString *itemName) {
         [weakItemInputViewController.view removeFromSuperview];
         [weakItemInputViewController removeFromParentViewController];
-        
         if (itemID && itemID.length) {
-            self.itemID = itemID;
+            weakSelf.itemID = itemID;
+            [weakSelf.itemInputField refreshWithText:itemName];
         }
     };
 }

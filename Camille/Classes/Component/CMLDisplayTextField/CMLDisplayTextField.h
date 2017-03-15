@@ -10,4 +10,9 @@
 
 @interface CMLDisplayTextField : UIView
 
++ (instancetype)loadDisplayTextFieldWithFrame:(CGRect)frame backgroundColor:(UIColor *)backgroundColor placeHolder:(NSString *)placeHolder touchAction:(VoidBlock)touchAction;
+
+- (void)refreshWithText:(NSString *)text;
+- (NSString *)currentText;
+
 @end

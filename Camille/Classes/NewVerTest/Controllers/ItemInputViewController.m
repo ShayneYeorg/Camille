@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) UIView *inputFieldBackgroundView;
 @property (nonatomic, strong) UITextField *inputField;
+@property (nonatomic, strong) NSString *initialText;
+
 @property (nonatomic, strong) UIButton *dismissBtn;
 @property (nonatomic, strong) UIButton *confirmBtn;
 
@@ -28,10 +30,11 @@
 
 #pragma mark - Life Cycle
 
-+ (instancetype)initWithInitialPosition:(CGRect)initialPosition itemType:(NSString *)itemType {
++ (instancetype)initWithInitialPosition:(CGRect)initialPosition itemType:(NSString *)itemType initialText:(NSString *)initialText {
     ItemInputViewController *itemInputViewController = [ItemInputViewController new];
     itemInputViewController.initialPosition = initialPosition;
     itemInputViewController.itemType = itemType;
+    itemInputViewController.initialText = initialText;
     return itemInputViewController;
 }
 
@@ -54,8 +57,10 @@
                 self.inputField = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, self.inputFieldBackgroundView.width - 20, self.inputFieldBackgroundView.height)];
                 self.inputField.delegate = self;
                 self.inputField.placeholder = @"项目";
+                self.inputField.text = self.initialText;
                 self.inputField.backgroundColor = RGB(230, 230, 230);
                 self.inputField.borderStyle = UITextBorderStyleNone;
+                self.inputField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 [self.inputFieldBackgroundView addSubview:self.inputField];
                 self.inputField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
                 
@@ -78,6 +83,10 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc {
+    CMLLog(@"%s", __func__);
+}
+
 #pragma mark - UI Configuration
 
 - (void)configBackgroundView {
@@ -87,7 +96,6 @@
 }
 
 - (void)startInitialAnamation {
-    CMLLog(@"%f", self.backgroundView.frame.size.width);
     [UIView animateWithDuration:0.2 animations:^{
         self.inputFieldBackgroundView.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 20, self.inputFieldBackgroundView.frame.size.height);
         
@@ -125,12 +133,17 @@
             self.inputFieldBackgroundView.frame = self.initialPosition;
             
         } completion:^(BOOL finished) {
-            self.dismissBlock(nil);
+            self.dismissBlock(nil, nil);
         }];
     }
 }
 
 - (void)confirm {
+    for (Item *i in self.itemsArr) {
+        CMLLog(@"%@", i.itemName);
+    }
+    
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemName == %@", self.inputField.text];
     NSArray *selectedItems = [self.itemsArr filteredArrayUsingPredicate:predicate];
     if (selectedItems.count) {
@@ -143,7 +156,7 @@
                 self.inputFieldBackgroundView.frame = self.initialPosition;
                 
             } completion:^(BOOL finished) {
-                self.dismissBlock(selectedItem.itemID);
+                self.dismissBlock(selectedItem.itemID, selectedItem.itemName);
             }];
         }
         
@@ -158,7 +171,7 @@
                     self.inputFieldBackgroundView.frame = self.initialPosition;
                     
                 } completion:^(BOOL finished) {
-                    self.dismissBlock(selectedItem.itemID);
+                    self.dismissBlock(selectedItem.itemID, selectedItem.itemName);
                 }];
             }
         }];

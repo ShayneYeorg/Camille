@@ -54,10 +54,10 @@ const NSInteger accountingsPageCount = 20; //每页Accounting条数
 
 + (void)fetchItemsWithItemType:(NSString *)itemType callback:(void(^)(CMLResponse *response))callBack {
     if ([itemType isEqualToString:Item_Type_Cost]) {
-        [self fetchAllIncomeItemsWithCallback:callBack];
+        [self fetchAllCostItemsWithCallback:callBack];
         
     } else {
-        [self fetchAllCostItemsWithCallback:callBack];
+        [self fetchAllIncomeItemsWithCallback:callBack];
     }
 }
 

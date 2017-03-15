@@ -20,5 +20,6 @@
 @interface CMLTool : NSObject
 
 + (UIWindow *)getWindow;
++ (CGFloat)widthWithText:(NSString *)text font:(UIFont *)font;
 
 @end

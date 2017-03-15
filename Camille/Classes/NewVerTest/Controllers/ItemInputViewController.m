@@ -7,9 +7,10 @@
 //
 
 #import "ItemInputViewController.h"
+#import "ItemNameCollectCell.h"
 #import "CMLDataManager.h"
 
-@interface ItemInputViewController () <UITextFieldDelegate>
+@interface ItemInputViewController () <UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, assign) CGRect initialPosition;
 @property (nonatomic, copy) NSString *itemType;
@@ -23,6 +24,8 @@
 
 @property (nonatomic, strong) UIButton *dismissBtn;
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, strong) UICollectionView *itemsCollectionView;
 
 @end
 
@@ -105,10 +108,10 @@
             self.dismissBtn.frame = CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.inputFieldBackgroundView.frame.size.height);
             self.dismissBtn.alpha = 1;
             
-            [self.inputField becomeFirstResponder];
+//            [self.inputField becomeFirstResponder];
             
         } completion:^(BOOL finished) {
-            
+            [self configCollectionView];
         }];
     }];
 }
@@ -200,6 +203,21 @@
     [self.backgroundView addSubview:self.confirmBtn];
 }
 
+- (void)configCollectionView {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    layout.itemSize = CGSizeMake(50, 50);
+    layout.minimumLineSpacing = 10;
+    layout.minimumInteritemSpacing = 10;
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    
+    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 80, kScreen_Width, 300) collectionViewLayout:layout];
+    self.itemsCollectionView.backgroundColor = [UIColor lightGrayColor];
+    self.itemsCollectionView.delegate = self;
+    self.itemsCollectionView.dataSource = self;
+    [self.itemsCollectionView registerClass:[ItemNameCollectCell class] forCellWithReuseIdentifier:@"ItemNameCell"];
+    [self.backgroundView addSubview:self.itemsCollectionView];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -213,6 +231,28 @@
     }
     
     return YES;
+}
+
+#pragma mark - UICollectionViewDataSource
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    Item *item = self.itemsArr[indexPath.row];
+    CGFloat width = [CMLTool widthWithText:item.itemName font:[UIFont systemFontOfSize:16]];
+    return CGSizeMake(width + 10, 30);
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.itemsArr.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ItemNameCollectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemNameCell" forIndexPath:indexPath];
+    cell.contentView.backgroundColor = [UIColor grayColor];
+    Item *item = self.itemsArr[indexPath.row];
+    cell.itemName = item.itemName;
+    
+    return cell;
 }
 
 @end

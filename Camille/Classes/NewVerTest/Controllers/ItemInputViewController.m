@@ -110,20 +110,21 @@
             self.dismissBtn.frame = CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.inputFieldBackgroundView.frame.size.height);
             self.dismissBtn.alpha = 1;
             
-//            [self.inputField becomeFirstResponder];
-            
         } completion:^(BOOL finished) {
             [self configCollectionView];
+            [self.inputField becomeFirstResponder];
         }];
     }];
 }
 
 - (void)registerNotidications {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)removeNotifications {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 #pragma mark - Private
@@ -200,6 +201,15 @@
     }];
 }
 
+- (void)textFieldTextDidChange:(NSNotification *)notification {
+    if (self.inputField.text.length > 0) {
+        [self showConfirmBtn];
+        
+    } else {
+        [self showDismissBtn];
+    }
+}
+
 #pragma mark - Getter
 
 - (void)configDismissBtn {
@@ -240,13 +250,8 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSMutableString *newText = textField.text.mutableCopy;
-    [newText replaceCharactersInRange:range withString:string];
-    if (newText.length > 0) {
-        [self showConfirmBtn];
-        
-    } else {
-        [self showDismissBtn];
+    if ([string isEqualToString:@" "]) {
+        return NO;
     }
     
     return YES;

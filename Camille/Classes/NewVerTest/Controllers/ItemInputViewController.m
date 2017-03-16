@@ -132,6 +132,7 @@
     if (self.dismissBlock) {
         [self.dismissBtn removeFromSuperview];
         [self.confirmBtn removeFromSuperview];
+        [self.itemsCollectionView removeFromSuperview];
         [UIView animateWithDuration:0.2 animations:^{
             self.inputFieldBackgroundView.frame = self.initialPosition;
             
@@ -202,15 +203,15 @@
 
 - (void)configCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-//    layout.itemSize = CGSizeMake(50, 50);
     layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 80, kScreen_Width, 300) collectionViewLayout:layout];
-    self.itemsCollectionView.backgroundColor = [UIColor lightGrayColor];
+    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(10, 80, kScreen_Width - 20, 300) collectionViewLayout:layout];
+    self.itemsCollectionView.backgroundColor = [UIColor whiteColor];
     self.itemsCollectionView.delegate = self;
     self.itemsCollectionView.dataSource = self;
+    self.itemsCollectionView.showsVerticalScrollIndicator = NO;
     [self.itemsCollectionView registerClass:[ItemNameCollectCell class] forCellWithReuseIdentifier:@"ItemNameCell"];
     [self.backgroundView addSubview:self.itemsCollectionView];
 }
@@ -245,7 +246,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ItemNameCollectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemNameCell" forIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor grayColor];
     Item *item = self.itemsArr[indexPath.row];
     cell.itemName = item.itemName;
     

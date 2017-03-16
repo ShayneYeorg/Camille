@@ -42,6 +42,7 @@
         _itemNameLabel = [[UILabel alloc]initWithFrame:self.bounds];
         _itemNameLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_itemNameLabel];
+        _itemNameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     return _itemNameLabel;
 }

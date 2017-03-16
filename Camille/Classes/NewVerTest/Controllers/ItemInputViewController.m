@@ -70,6 +70,7 @@
                 [self configDismissBtn];
                 [self configConfirmBtn];
                 [self startInitialAnamation];
+                [self registerNotidications];
                 
             } else {
                 CMLLog(@"数据出错");
@@ -87,6 +88,7 @@
 }
 
 - (void)dealloc {
+    [self removeNotifications];
     CMLLog(@"%s", __func__);
 }
 
@@ -114,6 +116,14 @@
             [self configCollectionView];
         }];
     }];
+}
+
+- (void)registerNotidications {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 #pragma mark - Private
@@ -179,6 +189,17 @@
     }
 }
 
+- (void)keyboardChange:(NSNotification *)notification {
+    //获取键盘的y值
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [value CGRectValue];
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        self.itemsCollectionView.frame = CGRectMake(self.itemsCollectionView.x, self.itemsCollectionView.y, self.itemsCollectionView.width, keyboardRect.origin.y - self.itemsCollectionView.y);
+    }];
+}
+
 #pragma mark - Getter
 
 - (void)configDismissBtn {
@@ -207,7 +228,7 @@
     layout.minimumInteritemSpacing = 10;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(10, 80, kScreen_Width - 20, 300) collectionViewLayout:layout];
+    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(10, 80, kScreen_Width - 20, kScreen_Height - 80) collectionViewLayout:layout];
     self.itemsCollectionView.backgroundColor = [UIColor whiteColor];
     self.itemsCollectionView.delegate = self;
     self.itemsCollectionView.dataSource = self;
@@ -231,8 +252,15 @@
     return YES;
 }
 
-#pragma mark - UICollectionViewDataSource
+#pragma mark = UICollectionViewDelegate
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    Item *selectedItem = self.itemsArr[indexPath.row];
+    self.inputField.text = selectedItem.itemName;
+    [self confirm];
+}
+
+#pragma mark - UICollectionViewDataSource
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     Item *item = self.itemsArr[indexPath.row];

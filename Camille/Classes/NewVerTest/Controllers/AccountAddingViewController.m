@@ -137,8 +137,8 @@
     self.dateInputField.clipsToBounds = YES;
     [self.backgroundView addSubview:self.dateInputField];
     
-    self.dateLabel = [[UILabel alloc]initWithFrame:self.dateInputField.bounds];
-    self.dateLabel.textColor = RGB(170, 170, 170);
+    self.dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.dateInputField.width - 20, self.dateInputField.height)];
+    self.dateLabel.textColor = RGB(180, 180, 180);
     [self.dateInputField addSubview:self.dateLabel];
     [self chooseDate:[NSDate date]];
     

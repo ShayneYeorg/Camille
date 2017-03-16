@@ -39,7 +39,8 @@
 
 @property (nonatomic, strong) UIButton *saveButton;
 
-@property (nonatomic, strong) UIView *descInputField;
+//@property (nonatomic, strong) UIView *descInputField;
+@property (nonatomic, strong) CMLDisplayTextField *descInputField;
 
 @end
 
@@ -138,7 +139,6 @@
     [self.backgroundView addSubview:self.dateInputField];
     
     self.dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.dateInputField.width - 20, self.dateInputField.height)];
-    self.dateLabel.textColor = RGB(180, 180, 180);
     [self.dateInputField addSubview:self.dateLabel];
     [self chooseDate:[NSDate date]];
     
@@ -155,10 +155,10 @@
 }
 
 - (void)configDescInputField {
-    self.descInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateInputField.origin.y - ScaleOn375(30) - 20)];
-    self.descInputField.backgroundColor = RGB(230, 230, 230);
-    self.descInputField.layer.cornerRadius = 10;
-    self.descInputField.clipsToBounds = YES;
+    DECLARE_WEAK_SELF
+    self.descInputField = [CMLDisplayTextField loadDisplayTextFieldWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateInputField.origin.y - ScaleOn375(30) - 20) backgroundColor:RGB(230, 230, 230) placeHolder:@"备注" touchAction:^{
+        [weakSelf itemInput];
+    }];
     [self.backgroundView addSubview:self.descInputField];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(descInput)];

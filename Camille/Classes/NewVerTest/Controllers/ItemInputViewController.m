@@ -10,6 +10,8 @@
 #import "ItemNameCollectCell.h"
 #import "CMLDataManager.h"
 
+#define kCharLimit 20
+
 @interface ItemInputViewController () <UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, assign) CGRect initialPosition;
@@ -164,6 +166,15 @@
     }];
 }
 
+- (void)textFieldTextDidChange:(NSNotification *)notification {
+    if (self.inputField.text.length > 0) {
+        [self showConfirmBtn];
+        
+    } else {
+        [self showDismissBtn];
+    }
+}
+
 #pragma mark - Private
 
 - (void)startInitialAnamation {
@@ -208,6 +219,11 @@
 }
 
 - (void)confirm {
+    if (self.inputField.text.length > kCharLimit) {
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"项目名不可超过%zd个字符", kCharLimit]];
+        return;
+    }
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemName == %@", self.inputField.text];
     NSArray *selectedItems = [self.itemsArr filteredArrayUsingPredicate:predicate];
     if (selectedItems.count) {
@@ -244,18 +260,17 @@
     }
 }
 
-- (void)textFieldTextDidChange:(NSNotification *)notification {
-    if (self.inputField.text.length > 0) {
-        [self showConfirmBtn];
-        
-    } else {
-        [self showDismissBtn];
-    }
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //Item长度不能超过kCharLimit个字
+    NSMutableString *newText = textField.text.mutableCopy;
+    [newText replaceCharactersInRange:range withString:string];
+    if (newText.length > kCharLimit && string.length) {
+        return NO;
+    }
+    
+    //Item不可包含空格
     if ([string isEqualToString:@" "]) {
         return NO;
     }
@@ -263,7 +278,7 @@
     return YES;
 }
 
-#pragma mark = UICollectionViewDelegate
+#pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Item *selectedItem = self.itemsArr[indexPath.row];

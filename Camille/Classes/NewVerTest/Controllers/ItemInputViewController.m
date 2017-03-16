@@ -45,32 +45,18 @@
     [super viewDidLoad];
     
     [self configBackgroundView];
+    [self registerNotidications];
     
     if (self.initialPosition.size.width > 0 && self.initialPosition.size.height > 0 && self.itemType.length) {
+        DECLARE_WEAK_SELF
         [CMLDataManager fetchItemsWithItemType:self.itemType callback:^(CMLResponse *response) {
             if (PHRASE_ResponseSuccess && [response.responseDic[KEY_Items] isKindOfClass:[NSArray class]]) {
-                self.itemsArr = response.responseDic[KEY_Items];
-                
-                self.inputFieldBackgroundView = [[UIView alloc]initWithFrame:self.initialPosition];
-                self.inputFieldBackgroundView.backgroundColor = RGB(230, 230, 230);
-                self.inputFieldBackgroundView.layer.cornerRadius = 5;
-                self.inputFieldBackgroundView.clipsToBounds = YES;
-                [self.backgroundView addSubview:self.inputFieldBackgroundView];
-                
-                self.inputField = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, self.inputFieldBackgroundView.width - 20, self.inputFieldBackgroundView.height)];
-                self.inputField.delegate = self;
-                self.inputField.placeholder = @"项目";
-                self.inputField.text = self.initialText;
-                self.inputField.backgroundColor = RGB(230, 230, 230);
-                self.inputField.borderStyle = UITextBorderStyleNone;
-                self.inputField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                [self.inputFieldBackgroundView addSubview:self.inputField];
-                self.inputField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-                
-                [self configDismissBtn];
-                [self configConfirmBtn];
-                [self startInitialAnamation];
-                [self registerNotidications];
+                weakSelf.itemsArr = response.responseDic[KEY_Items];
+                [weakSelf configInputFieldBackgroundView];
+                [weakSelf configInputField];
+                [weakSelf configDismissBtn];
+                [weakSelf configConfirmBtn];
+                [weakSelf startInitialAnamation];
                 
             } else {
                 CMLLog(@"数据出错");
@@ -100,6 +86,86 @@
     [self.view addSubview:self.backgroundView];
 }
 
+- (void)configDismissBtn {
+    self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width, 30, 40, self.inputFieldBackgroundView.frame.size.height)];
+    self.dismissBtn.backgroundColor = [UIColor clearColor];
+    self.dismissBtn.alpha = 0;
+    [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundView addSubview:self.dismissBtn];
+}
+
+- (void)configConfirmBtn {
+    self.confirmBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.inputFieldBackgroundView.frame.size.height)];
+    self.confirmBtn.backgroundColor = [UIColor clearColor];
+    [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [self.confirmBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
+    [self.confirmBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+    self.confirmBtn.hidden = YES;
+    [self.backgroundView addSubview:self.confirmBtn];
+}
+
+- (void)configInputFieldBackgroundView {
+    self.inputFieldBackgroundView = [[UIView alloc]initWithFrame:self.initialPosition];
+    self.inputFieldBackgroundView.backgroundColor = RGB(230, 230, 230);
+    self.inputFieldBackgroundView.layer.cornerRadius = 5;
+    self.inputFieldBackgroundView.clipsToBounds = YES;
+    [self.backgroundView addSubview:self.inputFieldBackgroundView];
+}
+
+- (void)configInputField {
+    self.inputField = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, self.inputFieldBackgroundView.width - 20, self.inputFieldBackgroundView.height)];
+    self.inputField.delegate = self;
+    self.inputField.placeholder = @"项目";
+    self.inputField.text = self.initialText;
+    self.inputField.backgroundColor = RGB(230, 230, 230);
+    self.inputField.borderStyle = UITextBorderStyleNone;
+    self.inputField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.inputFieldBackgroundView addSubview:self.inputField];
+    self.inputField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+}
+
+- (void)configCollectionView {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.minimumLineSpacing = 10;
+    layout.minimumInteritemSpacing = 10;
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    
+    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(10, 80, kScreen_Width - 20, kScreen_Height - 80) collectionViewLayout:layout];
+    self.itemsCollectionView.backgroundColor = [UIColor whiteColor];
+    self.itemsCollectionView.delegate = self;
+    self.itemsCollectionView.dataSource = self;
+    self.itemsCollectionView.showsVerticalScrollIndicator = NO;
+    [self.itemsCollectionView registerClass:[ItemNameCollectCell class] forCellWithReuseIdentifier:@"ItemNameCell"];
+    [self.backgroundView addSubview:self.itemsCollectionView];
+}
+
+#pragma mark - Notification
+
+- (void)registerNotidications {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+- (void)keyboardChange:(NSNotification *)notification {
+    //获取键盘的y值
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [value CGRectValue];
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        self.itemsCollectionView.frame = CGRectMake(self.itemsCollectionView.x, self.itemsCollectionView.y, self.itemsCollectionView.width, keyboardRect.origin.y - self.itemsCollectionView.y);
+    }];
+}
+
+#pragma mark - Private
+
 - (void)startInitialAnamation {
     [UIView animateWithDuration:0.2 animations:^{
         self.inputFieldBackgroundView.frame = CGRectMake(10, 30, self.backgroundView.frame.size.width - 20, self.inputFieldBackgroundView.frame.size.height);
@@ -116,18 +182,6 @@
         }];
     }];
 }
-
-- (void)registerNotidications {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-}
-
-- (void)removeNotifications {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-}
-
-#pragma mark - Private
 
 - (void)showConfirmBtn {
     self.confirmBtn.hidden = NO;
@@ -190,17 +244,6 @@
     }
 }
 
-- (void)keyboardChange:(NSNotification *)notification {
-    //获取键盘的y值
-    NSDictionary *userInfo = [notification userInfo];
-    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [value CGRectValue];
-    
-    [UIView animateWithDuration:0.2f animations:^{
-        self.itemsCollectionView.frame = CGRectMake(self.itemsCollectionView.x, self.itemsCollectionView.y, self.itemsCollectionView.width, keyboardRect.origin.y - self.itemsCollectionView.y);
-    }];
-}
-
 - (void)textFieldTextDidChange:(NSNotification *)notification {
     if (self.inputField.text.length > 0) {
         [self showConfirmBtn];
@@ -208,43 +251,6 @@
     } else {
         [self showDismissBtn];
     }
-}
-
-#pragma mark - Getter
-
-- (void)configDismissBtn {
-    self.dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width, 30, 40, self.inputFieldBackgroundView.frame.size.height)];
-    self.dismissBtn.backgroundColor = [UIColor clearColor];
-    self.dismissBtn.alpha = 0;
-    [self.dismissBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [self.dismissBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
-    [self.dismissBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    [self.backgroundView addSubview:self.dismissBtn];
-}
-
-- (void)configConfirmBtn {
-    self.confirmBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.backgroundView.frame.size.width - 50, 30, 40, self.inputFieldBackgroundView.frame.size.height)];
-    self.confirmBtn.backgroundColor = [UIColor clearColor];
-    [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [self.confirmBtn setTitleColor:kAppTextColor forState:UIControlStateNormal];
-    [self.confirmBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
-    self.confirmBtn.hidden = YES;
-    [self.backgroundView addSubview:self.confirmBtn];
-}
-
-- (void)configCollectionView {
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.minimumLineSpacing = 10;
-    layout.minimumInteritemSpacing = 10;
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    self.itemsCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(10, 80, kScreen_Width - 20, kScreen_Height - 80) collectionViewLayout:layout];
-    self.itemsCollectionView.backgroundColor = [UIColor whiteColor];
-    self.itemsCollectionView.delegate = self;
-    self.itemsCollectionView.dataSource = self;
-    self.itemsCollectionView.showsVerticalScrollIndicator = NO;
-    [self.itemsCollectionView registerClass:[ItemNameCollectCell class] forCellWithReuseIdentifier:@"ItemNameCell"];
-    [self.backgroundView addSubview:self.itemsCollectionView];
 }
 
 #pragma mark - UITextFieldDelegate

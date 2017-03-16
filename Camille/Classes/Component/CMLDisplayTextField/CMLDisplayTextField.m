@@ -27,7 +27,7 @@
     
     displayTextField.placeHolder = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, displayTextField.width - 20, displayTextField.height)];
     displayTextField.placeHolder.text = placeHolder;
-    displayTextField.placeHolder.textColor = RGB(200, 200, 200);
+    displayTextField.placeHolder.textColor = RGB(180, 180, 180);
     [displayTextField addSubview:displayTextField.placeHolder];
     displayTextField.placeHolder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     

@@ -30,6 +30,7 @@
 
 @property (nonatomic, strong) CMLDisplayTextField *itemInputField;
 
+@property (nonatomic, strong) UIView *amountInputFieldBackgroundView;
 @property (nonatomic, strong) UITextField *amountInputField;
 
 @property (nonatomic, strong) UIView *dateInputField;
@@ -125,13 +126,19 @@
 }
 
 - (void)configAmountInputField {
-    self.amountInputField = [[UITextField alloc]initWithFrame:CGRectMake(20, 50 + ScaleOn375(60), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
+    self.amountInputFieldBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(20, 50 + ScaleOn375(60), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
+    self.amountInputFieldBackgroundView.backgroundColor = RGB(230, 230, 230);
+    self.amountInputFieldBackgroundView.layer.cornerRadius = 5;
+    self.amountInputFieldBackgroundView.clipsToBounds = YES;
+    [self.backgroundView addSubview:self.amountInputFieldBackgroundView];
+    
+    self.amountInputField = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, self.amountInputFieldBackgroundView.frame.size.width - 20, ScaleOn375(30))];
     self.amountInputField.delegate = self;
     self.amountInputField.keyboardType = UIKeyboardTypeDecimalPad;
     self.amountInputField.backgroundColor = RGB(230, 230, 230);
     self.amountInputField.layer.cornerRadius = 5;
     self.amountInputField.clipsToBounds = YES;
-    [self.backgroundView addSubview:self.amountInputField];
+    [self.amountInputFieldBackgroundView addSubview:self.amountInputField];
     self.amountInputField.placeholder = @"金额";
 }
 
@@ -284,13 +291,24 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.amountInputField) {
         //检测输入内容是否合法
+        int dotCount = 0;
         for (NSUInteger i = 0; i < [string length]; i++) {
             unichar character = [string characterAtIndex:i];
             if ((character < '0' || character > '9') && character != '.') {
                 CMLLog(@"输入了非法字符");
                 return NO;
             }
+            
+            if (character == '.') {
+                //判断'.'是否重复
+                dotCount++;
+            }
         }
+        
+        if (dotCount > 1) {
+            return NO;
+        }
+        
         return YES;
     }
     return YES;

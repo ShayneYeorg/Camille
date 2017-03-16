@@ -19,6 +19,7 @@
 		3426CC461E1E4889006B2215 /* CMLTopPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426CC441E1E4889006B2215 /* CMLTopPanel.m */; };
 		342AC1151E7915BF00B62FBE /* CMLDisplayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */; };
 		342AC1181E793B3300B62FBE /* ItemNameCollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AC1171E793B3300B62FBE /* ItemNameCollectCell.m */; };
+		342AC11C1E7A669D00B62FBE /* CMLAmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 342AC11B1E7A669D00B62FBE /* CMLAmountTextField.m */; };
 		34340AE51C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */; };
 		34340AE81C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34340AE71C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m */; };
 		34340AEA1C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34340AE91C9FD02E00FECAD7 /* CMLRecordDetailHeaderView.xib */; };
@@ -144,6 +145,8 @@
 		342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLDisplayTextField.m; sourceTree = "<group>"; };
 		342AC1161E793B3300B62FBE /* ItemNameCollectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemNameCollectCell.h; sourceTree = "<group>"; };
 		342AC1171E793B3300B62FBE /* ItemNameCollectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemNameCollectCell.m; sourceTree = "<group>"; };
+		342AC11A1E7A669D00B62FBE /* CMLAmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLAmountTextField.h; sourceTree = "<group>"; };
+		342AC11B1E7A669D00B62FBE /* CMLAmountTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLAmountTextField.m; sourceTree = "<group>"; };
 		34340AE31C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordMonthDetailViewController.h; sourceTree = "<group>"; };
 		34340AE41C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLRecordMonthDetailViewController.m; sourceTree = "<group>"; };
 		34340AE61C9FD02300FECAD7 /* CMLRecordDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLRecordDetailHeaderView.h; sourceTree = "<group>"; };
@@ -366,6 +369,7 @@
 		3426CC381E1E43E0006B2215 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				342AC1191E7A667C00B62FBE /* CMLAmountTextField */,
 				34883E0A1E2C9B26001C78E4 /* CMLControlHandle */,
 				3426CC3F1E1E4889006B2215 /* CMLBottomPanel */,
 				3426CC421E1E4889006B2215 /* CMLTopPanel */,
@@ -400,6 +404,15 @@
 				342AC1141E7915BF00B62FBE /* CMLDisplayTextField.m */,
 			);
 			path = CMLDisplayTextField;
+			sourceTree = "<group>";
+		};
+		342AC1191E7A667C00B62FBE /* CMLAmountTextField */ = {
+			isa = PBXGroup;
+			children = (
+				342AC11A1E7A669D00B62FBE /* CMLAmountTextField.h */,
+				342AC11B1E7A669D00B62FBE /* CMLAmountTextField.m */,
+			);
+			path = CMLAmountTextField;
 			sourceTree = "<group>";
 		};
 		344A002C1C75E0D8008281BB = {
@@ -1000,6 +1013,7 @@
 				345E0BA61C9F90F600A52488 /* NSObject+MJKeyValue.m in Sources */,
 				345E0B681C9EE4C300A52488 /* CMLRecordCellModel.m in Sources */,
 				34883E2B1E2F6B5D001C78E4 /* AccountingCell.m in Sources */,
+				342AC11C1E7A669D00B62FBE /* CMLAmountTextField.m in Sources */,
 				34F6EDBC1E388202004AD9E8 /* AccountAddingViewController.m in Sources */,
 				34E384691CA115B1004A5A8C /* CDatePickerViewEx.m in Sources */,
 				3441D0AF1C7C098A00D6FE0C /* CMLAccountingItemCell.m in Sources */,

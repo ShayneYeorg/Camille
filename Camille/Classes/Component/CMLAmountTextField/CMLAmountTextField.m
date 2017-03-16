@@ -65,15 +65,22 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     CGFloat amount = textField.text.floatValue;
-    NSString *strAmount = [NSString stringWithFormat:@"%.2f", amount];
-    self.textField.text = strAmount;
-    CGFloat newAmount = strAmount.floatValue;
-    self.amount = [NSNumber numberWithFloat:newAmount];
     
-//    CMLLog(@"输入金额是 - %f", amount);
-//    CMLLog(@"输入金额转换成展示字符是 - %@", strAmount);
-//    CMLLog(@"展示字符转换回float是 - %f", newAmount);
-//    CMLLog(@"保存的金额是 - %@", self.amount);
+    if (amount >= 0.01) {
+        NSString *strAmount = [NSString stringWithFormat:@"%.2f", amount];
+        self.textField.text = strAmount;
+        CGFloat newAmount = strAmount.floatValue;
+        self.amount = [NSNumber numberWithFloat:newAmount];
+        
+//        CMLLog(@"输入金额是 - %f", amount);
+//        CMLLog(@"输入金额转换成展示字符是 - %@", strAmount);
+//        CMLLog(@"展示字符转换回float是 - %f", newAmount);
+//        CMLLog(@"保存的金额是 - %@", self.amount);
+        
+    } else {
+        self.textField.text = @"";
+        self.amount = nil;
+    }
 }
 
 @end

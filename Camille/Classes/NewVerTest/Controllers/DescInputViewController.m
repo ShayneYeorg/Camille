@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UIView *backgroundView;
 
 @property (nonatomic, strong) UITextView *descInputField;
+@property (nonatomic, strong) NSString *initialText;
 
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UIButton *saveButton;
@@ -25,9 +26,10 @@
 
 #pragma mark - Life Cycle
 
-+ (instancetype)initWithInitialPosition:(CGRect)initialPosition {
++ (instancetype)initWithInitialPosition:(CGRect)initialPosition initialText:(NSString *)initialText {
     DescInputViewController *descInputViewController = [DescInputViewController new];
     descInputViewController.initialPosition = initialPosition;
+    descInputViewController.initialText = initialText;
     return descInputViewController;
 }
 
@@ -38,6 +40,8 @@
     [self addKeyboardNotification];
     if (self.initialPosition.size.width > 0 && self.initialPosition.size.height) {
         self.descInputField = [[UITextView alloc]initWithFrame:self.initialPosition];
+        self.descInputField.font = [UIFont systemFontOfSize:16];
+        self.descInputField.text = self.initialText;
         self.descInputField.delegate = self;
         self.descInputField.backgroundColor = RGB(230, 230, 230);
         self.descInputField.layer.cornerRadius = 5;
@@ -54,7 +58,6 @@
 - (void)dealloc {
     CMLLog(@"%s", __func__);
     [self removeKeyboardNotification];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,19 +124,29 @@
     }
 }
 
-#pragma mark - Keyboard Notification
+- (void)showSaveButton {
+    self.saveButton.hidden = NO;
+    self.cancelButton.hidden = YES;
+}
+
+- (void)showCancelButton {
+    self.saveButton.hidden = YES;
+    self.cancelButton.hidden = NO;
+}
+
+#pragma mark - Notification
 
 - (void)addKeyboardNotification {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)removeKeyboardNotification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
+- (void)keyboardDidChange:(NSNotification *)notification {
     NSDictionary *userInfo = [notification userInfo];
     NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [value CGRectValue];
@@ -145,12 +158,13 @@
     self.saveButton.frame = CGRectMake(self.backgroundView.frame.size.width - 60, self.descInputField.frame.size.height + self.descInputField.frame.origin.y + 10, 50, 30);
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification {
-    self.descInputField.frame = CGRectMake(self.descInputField.frame.origin.x, self.descInputField.frame.origin.y, self.descInputField.frame.size.width, self.backgroundView.frame.size.height - 80);
-    
-    self.cancelButton.frame = CGRectMake(self.backgroundView.frame.size.width - 60, self.descInputField.frame.size.height + self.descInputField.frame.origin.y + 10, 50, 30);
-    
-    self.saveButton.frame = CGRectMake(self.backgroundView.frame.size.width - 60, self.descInputField.frame.size.height + self.descInputField.frame.origin.y + 10, 50, 30);
+- (void)textFieldTextDidChange:(NSNotification *)notification {
+    if (self.descInputField.text.length > 0) {
+        [self showSaveButton];
+        
+    } else {
+        [self showCancelButton];
+    }
 }
 
 #pragma mark - UITextViewDelegate
@@ -159,12 +173,10 @@
     NSMutableString *newText = textView.text.mutableCopy;
     [newText replaceCharactersInRange:range withString:text];
     if (newText.length > 0) {
-        self.saveButton.hidden = NO;
-        self.cancelButton.hidden = YES;
+        [self showSaveButton];
         
     } else {
-        self.saveButton.hidden = YES;
-        self.cancelButton.hidden = NO;
+        [self showCancelButton];
     }
     
     return YES;

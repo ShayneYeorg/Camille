@@ -28,7 +28,7 @@
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 5;
     self.clipsToBounds = YES;
-    self.layer.borderColor = RGB(0, 191, 255).CGColor;
+    self.layer.borderColor = RGB(24, 136, 205).CGColor;
     self.layer.borderWidth = 1;
 }
 

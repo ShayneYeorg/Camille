@@ -14,6 +14,6 @@ typedef void (^DescDismissBlock)(NSString *desc);
 
 @property (nonatomic, copy) DescDismissBlock dismissBlock;
 
-+ (instancetype)initWithInitialPosition:(CGRect)initialPosition;
++ (instancetype)initWithInitialPosition:(CGRect)initialPosition initialText:(NSString *)initialText;
 
 @end

@@ -39,7 +39,6 @@
 
 @property (nonatomic, strong) UIButton *saveButton;
 
-//@property (nonatomic, strong) UIView *descInputField;
 @property (nonatomic, strong) CMLDisplayTextField *descInputField;
 
 @end
@@ -157,12 +156,9 @@
 - (void)configDescInputField {
     DECLARE_WEAK_SELF
     self.descInputField = [CMLDisplayTextField loadDisplayTextFieldWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateInputField.origin.y - ScaleOn375(30) - 20) backgroundColor:RGB(230, 230, 230) placeHolder:@"备注" touchAction:^{
-        [weakSelf itemInput];
+        [weakSelf descInput];
     }];
     [self.backgroundView addSubview:self.descInputField];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(descInput)];
-    [self.descInputField addGestureRecognizer:tap];
 }
 
 #pragma mark - Getter
@@ -215,6 +211,29 @@
     };
 }
 
+- (void)descInput {
+    CGRect newFrame = [self.backgroundView convertRect:self.descInputField.frame toView:self.view];
+    
+    DescInputViewController *descInputViewController = [DescInputViewController initWithInitialPosition:newFrame initialText:self.desc];
+    [self addChildViewController:descInputViewController];
+    [self.view addSubview:descInputViewController.view];
+    
+    __weak DescInputViewController *weakDescInputViewController = descInputViewController;
+    descInputViewController.dismissBlock = ^(NSString *desc) {
+        [weakDescInputViewController.view removeFromSuperview];
+        [weakDescInputViewController removeFromParentViewController];
+        
+        if (desc && desc.length) {
+            self.desc = desc;
+            [self.descInputField refreshWithText:desc];
+            
+        } else {
+            self.desc = @"";
+            [self.descInputField refreshWithText:@""];
+        }
+    };
+}
+
 - (void)back {
     [self endEditing];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -255,24 +274,6 @@
             [SVProgressHUD showErrorWithStatus:@"保存出错！"];
         }
     }];
-}
-
-- (void)descInput {
-    CGRect newFrame = [self.backgroundView convertRect:self.descInputField.frame toView:self.view];
-    
-    DescInputViewController *descInputViewController = [DescInputViewController initWithInitialPosition:newFrame];
-    [self addChildViewController:descInputViewController];
-    [self.view addSubview:descInputViewController.view];
-    
-    __weak DescInputViewController *weakDescInputViewController = descInputViewController;
-    descInputViewController.dismissBlock = ^(NSString *desc) {
-        [weakDescInputViewController.view removeFromSuperview];
-        [weakDescInputViewController removeFromParentViewController];
-        
-        if (desc && desc.length) {
-            self.desc = desc;
-        }
-    };
 }
 
 #pragma mark - UITextFieldDelegate

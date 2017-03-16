@@ -26,12 +26,14 @@
     displayTextField.touchAction = touchAction;
     
     displayTextField.placeHolder = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, displayTextField.width - 20, displayTextField.height)];
+    displayTextField.placeHolder.numberOfLines = 0;
     displayTextField.placeHolder.text = placeHolder;
     displayTextField.placeHolder.textColor = RGB(180, 180, 180);
     [displayTextField addSubview:displayTextField.placeHolder];
     displayTextField.placeHolder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     displayTextField.text = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, displayTextField.width - 20, displayTextField.height)];
+    displayTextField.text.numberOfLines = 0;
     displayTextField.text.text = @"";
     [displayTextField addSubview:displayTextField.text];
     displayTextField.text.hidden = YES;

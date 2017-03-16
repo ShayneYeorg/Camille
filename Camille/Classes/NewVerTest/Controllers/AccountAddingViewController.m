@@ -214,8 +214,8 @@
         [weakItemInputViewController removeFromParentViewController];
         if (itemID && itemID.length) {
             weakSelf.itemID = itemID;
-            [weakSelf.itemInputField refreshWithText:itemName];
         }
+        [weakSelf.itemInputField refreshWithText:itemName];
     };
 }
 

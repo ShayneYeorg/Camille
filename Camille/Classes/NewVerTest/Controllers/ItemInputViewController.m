@@ -142,11 +142,6 @@
 }
 
 - (void)confirm {
-    for (Item *i in self.itemsArr) {
-        CMLLog(@"%@", i.itemName);
-    }
-    
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemName == %@", self.inputField.text];
     NSArray *selectedItems = [self.itemsArr filteredArrayUsingPredicate:predicate];
     if (selectedItems.count) {
@@ -155,6 +150,7 @@
             Item *selectedItem = selectedItems.firstObject;
             [self.dismissBtn removeFromSuperview];
             [self.confirmBtn removeFromSuperview];
+            [self.itemsCollectionView removeFromSuperview];
             [UIView animateWithDuration:0.2 animations:^{
                 self.inputFieldBackgroundView.frame = self.initialPosition;
                 
@@ -170,6 +166,7 @@
                 Item *selectedItem = response.responseDic[KEY_Item];
                 [self.dismissBtn removeFromSuperview];
                 [self.confirmBtn removeFromSuperview];
+                [self.itemsCollectionView removeFromSuperview];
                 [UIView animateWithDuration:0.2 animations:^{
                     self.inputFieldBackgroundView.frame = self.initialPosition;
                     

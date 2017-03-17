@@ -97,4 +97,12 @@ extern const NSInteger accountingsPageCount; //每页Accounting条数
  */
 + (void)alertAccounting:(Accounting *)accounting amount:(NSNumber *)amount desc:(NSString *)desc itemID:(NSString *)itemID callback:(void(^)(CMLResponse *response))callBack;
 
+/**
+ *  删除账务记录
+ *
+ *  @param accounting           账务对象
+ *  @param callBack             回调
+ */
++ (void)deleteAccounting:(Accounting *)accounting callBack:(void(^)(CMLResponse *response))callBack;
+
 @end

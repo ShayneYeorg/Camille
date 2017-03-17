@@ -275,6 +275,16 @@ const NSInteger accountingsPageCount = 20; //每页Accounting条数
     }];
 }
 
++ (void)deleteAccounting:(Accounting *)accounting callBack:(void(^)(CMLResponse *response))callBack{
+    DECLARE_WEAK_SELF
+    [Accounting deleteAccounting:accounting callBack:^(CMLResponse * _Nonnull response) {
+        if (PHRASE_ResponseSuccess) {
+            [weakSelf _setAccountingsNeedUpdate];
+        }
+        callBack(response);
+    }];
+}
+
 #pragma mark -- Cache
 
 + (void)_setAccountingsNeedUpdate {

@@ -196,7 +196,17 @@ NSString *const AccountingDidAlertNotification = @"AccountingDidAlertNotificatio
 }
 
 - (void)deleteAccounting {
-    
+    DECLARE_WEAK_SELF
+    [CMLDataManager deleteAccounting:self.mainCellModel.accounting callBack:^(CMLResponse *response) {
+        if (PHRASE_ResponseSuccess) {
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:AccountingDidAlertNotification object:nil userInfo:nil];
+            [weakSelf cancel];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        }
+    }];
 }
 
 - (void)endEdit {

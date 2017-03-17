@@ -10,7 +10,7 @@
 #import "Accounting+CoreDataClass.h"
 #import "CMLDisplayTextField.h"
 #import "CMLAmountTextField.h"
-#import "CMLAccountingDatePickerView.h"
+#import "CMLDateTextField.h"
 
 #define kBtnHeight 50
 
@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) CMLDisplayTextField *itemTextField;
 @property (nonatomic, strong) CMLAmountTextField *amountTextField;
-//@property (nonatomic, strong) CMLAccountingDatePickerView *itemTextField;
+@property (nonatomic, strong) CMLDateTextField *dateTextField;
 @property (nonatomic, strong) CMLDisplayTextField *descTextField;
 
 @end
@@ -115,7 +115,13 @@
 }
 
 - (void)configDateTextField {
-    
+    self.dateTextField = [CMLDateTextField loadDateTextFieldWithFrame:CGRectMake(10, 50, 300, 30) backgroundColor:RGB(230, 230, 230) above:self.view touchAction:^{
+        
+        
+    } selectedDateAction:^(NSDate *selectedDate) {
+        
+    }];
+    [self.backgroundView addSubview:self.dateTextField];
 }
 
 - (void)configDescTextField {

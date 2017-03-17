@@ -23,6 +23,7 @@
     CMLAccountingDatePickerView *view = [[NSBundle mainBundle]loadNibNamed:@"CMLAccountingDatePickerView" owner:self options:nil][0];
     [view setFrame:CGRectMake(0, kScreen_Height, kScreen_Width, kPickerViewHeight)];
     view.isShow = NO;
+    view.hidden = YES;
     
     return view;
 }
@@ -32,6 +33,7 @@
         [self.superview insertSubview:self.coverView belowSubview:self];
         
         self.isShow = YES;
+        self.hidden = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.y = kScreen_Height - kPickerViewHeight;
         }];

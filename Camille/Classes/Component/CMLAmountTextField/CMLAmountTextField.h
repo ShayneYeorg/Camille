@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^AmountEndEditBlock)(NSNumber *amount);
+
 @interface CMLAmountTextField : UIView
 
-@property (nonatomic, strong) NSNumber *amount;
-
-+ (instancetype)loadAmountTextFieldWithFrame:(CGRect)frame backgroundColor:(UIColor *)backgroundColor placeHolder:(NSString *)placeHolder;
++ (instancetype)loadAmountTextFieldWithFrame:(CGRect)frame backgroundColor:(UIColor *)backgroundColor placeHolder:(NSString *)placeHolder endEditAction:(AmountEndEditBlock)endEditAction;
+- (void)refreshWithNumber:(NSNumber *)number;
 
 @end

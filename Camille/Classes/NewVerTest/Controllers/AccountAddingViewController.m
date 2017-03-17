@@ -81,7 +81,7 @@
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.backgroundView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEditing)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEdit)];
     [self.backgroundView addGestureRecognizer:tap];
 }
 
@@ -123,14 +123,17 @@
 }
 
 - (void)configAmountInputField {
-    self.amountTextField = [CMLAmountTextField loadAmountTextFieldWithFrame:CGRectMake(20, 50 + ScaleOn375(60), self.backgroundView.frame.size.width - 40, ScaleOn375(30)) backgroundColor:RGB(230, 230, 230) placeHolder:@"金额"];
+    DECLARE_WEAK_SELF
+    self.amountTextField = [CMLAmountTextField loadAmountTextFieldWithFrame:CGRectMake(20, 50 + ScaleOn375(60), self.backgroundView.frame.size.width - 40, ScaleOn375(30)) backgroundColor:RGB(230, 230, 230) placeHolder:@"金额" endEditAction:^(NSNumber *amout) {
+        weakSelf.amount = amout;
+    }];
     [self.backgroundView addSubview:self.amountTextField];
 }
 
 - (void)configDateInputField {
     DECLARE_WEAK_SELF
     self.dateTextField = [CMLDateTextField loadDateTextFieldWithFrame:CGRectMake(20, 70 + ScaleOn375(90), self.backgroundView.frame.size.width - 40, ScaleOn375(30)) backgroundColor:RGB(230, 230, 230) above:self.view touchAction:^{
-        [weakSelf endEditing];
+        [weakSelf endEdit];
         
     } selectedDateAction:^(NSDate *selectedDate) {
         weakSelf.happenTime = selectedDate;
@@ -156,8 +159,7 @@
 
 #pragma mark - Private
 
-- (void)endEditing {
-    self.amount = self.amountTextField.amount;
+- (void)endEdit {
     [self.view endEditing:YES];
 }
 
@@ -217,7 +219,7 @@
 }
 
 - (void)back {
-    [self endEditing];
+    [self endEdit];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

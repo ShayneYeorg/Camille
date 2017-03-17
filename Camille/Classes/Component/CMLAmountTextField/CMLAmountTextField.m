@@ -12,17 +12,20 @@
 
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, assign) BOOL hasDot; //是否已输入小数点
+@property (nonatomic, strong) NSNumber *amount;
+@property (nonatomic, copy) AmountEndEditBlock endEditBlock;
 
 @end
 
 @implementation CMLAmountTextField
 
-+ (instancetype)loadAmountTextFieldWithFrame:(CGRect)frame backgroundColor:(UIColor *)backgroundColor placeHolder:(NSString *)placeHolder {
++ (instancetype)loadAmountTextFieldWithFrame:(CGRect)frame backgroundColor:(UIColor *)backgroundColor placeHolder:(NSString *)placeHolder endEditAction:(AmountEndEditBlock)endEditAction {
     CMLAmountTextField *amountTextField = [[CMLAmountTextField alloc]initWithFrame:frame];
     amountTextField.backgroundColor = backgroundColor;
     amountTextField.layer.cornerRadius = 5;
     amountTextField.clipsToBounds = YES;
     amountTextField.hasDot = NO;
+    amountTextField.endEditBlock = endEditAction;
     
     amountTextField.textField = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, amountTextField.width - 20, amountTextField.height)];
     amountTextField.textField.delegate = amountTextField;
@@ -32,6 +35,12 @@
     amountTextField.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     return amountTextField;
+}
+
+- (void)refreshWithNumber:(NSNumber *)number {
+    if (number) {
+        self.textField.text = [NSString stringWithFormat:@"%.2f", number.floatValue];
+    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -71,6 +80,10 @@
         self.textField.text = strAmount;
         CGFloat newAmount = strAmount.floatValue;
         self.amount = [NSNumber numberWithFloat:newAmount];
+        
+        if (self.endEditBlock) {
+            self.endEditBlock(self.amount);
+        }
         
 //        CMLLog(@"输入金额是 - %f", amount);
 //        CMLLog(@"输入金额转换成展示字符是 - %@", strAmount);

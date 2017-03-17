@@ -17,6 +17,8 @@
 #define kBtnHeight 50
 #define kIntevalV  20
 
+NSString *const AccountingDidAlertNotification = @"AccountingDidAlertNotification";
+
 @interface AccountViewController ()
 
 @property (nonatomic, strong) MainCellModel *mainCellModel;
@@ -179,20 +181,30 @@
 
 #pragma mark - Private
 
+- (void)confirm {
+    DECLARE_WEAK_SELF
+    [CMLDataManager alertAccounting:self.mainCellModel.accounting amount:self.amount desc:self.desc itemID:self.itemID callback:^(CMLResponse *response) {
+        if (PHRASE_ResponseSuccess) {
+            [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:AccountingDidAlertNotification object:nil userInfo:nil];
+            [weakSelf cancel];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"修改失败"];
+        }
+    }];
+}
+
+- (void)deleteAccounting {
+    
+}
+
 - (void)endEdit {
     [self.view endEditing:YES];
 }
 
 - (void)didEdit {
     [self showConfirmBtn];
-}
-
-- (void)confirm {
-    
-}
-
-- (void)deleteAccounting {
-    
 }
 
 - (void)cancel {

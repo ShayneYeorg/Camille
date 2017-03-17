@@ -219,9 +219,10 @@ const NSInteger accountingsPageCount = 20; //每页Accounting条数
 #pragma mark -- Public
 
 + (void)addAccountingWithItemID:(NSString *)itemID amount:(NSNumber *)amount happneTime:(NSDate *)happenTime desc:(NSString *)desc callBack:(void(^)(CMLResponse *response))callBack {
+    DECLARE_WEAK_SELF
     [Accounting addAccountingWithItemID:itemID amount:amount happneTime:happenTime desc:desc callBack:^(CMLResponse * _Nonnull response) {
         if (PHRASE_ResponseSuccess) {
-            [self _setAccountingsNeedUpdate];
+            [weakSelf _setAccountingsNeedUpdate];
         }
         callBack(response);
     }];
@@ -251,7 +252,7 @@ const NSInteger accountingsPageCount = 20; //每页Accounting条数
     } else {
         //二、缓存数据无数据 或 已被污染
         //重新update数据，然后返回当前缓存的allAccountingsArrangeByDay
-        //1、loadType为Load_Type_Refresh表示(初次打开 | 添加了新的accounting)
+        //1、loadType为Load_Type_Refresh表示(初次打开 | 添加了新的accounting | 修改了accounting)
         //2、loadType为Load_Type_LoadMore表示(加载新页)
         [self _updateAccountingWithLoadType:loadType callback:^(BOOL isUpdateSuccess, NSInteger newSectionCount, NSInteger newCellCount) {
             if (isUpdateSuccess) {
@@ -262,6 +263,16 @@ const NSInteger accountingsPageCount = 20; //每页Accounting条数
             }
         }];
     }
+}
+
++ (void)alertAccounting:(Accounting *)accounting amount:(NSNumber *)amount desc:(NSString *)desc itemID:(NSString *)itemID callback:(void(^)(CMLResponse *response))callBack {
+    DECLARE_WEAK_SELF
+    [Accounting alertAccounting:accounting amount:amount desc:desc itemID:itemID callback:^(CMLResponse * _Nullable response) {
+        if (PHRASE_ResponseSuccess) {
+            [weakSelf _setAccountingsNeedUpdate];
+        }
+        callBack(response);
+    }];
 }
 
 #pragma mark -- Cache

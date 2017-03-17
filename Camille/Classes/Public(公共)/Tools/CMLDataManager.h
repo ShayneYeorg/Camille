@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MainDataModel.h"
+#import "Accounting+CoreDataClass.h"
 
 typedef NS_ENUM (NSInteger, Load_Type) {
     Load_Type_Refresh = 0,
@@ -84,5 +85,16 @@ extern const NSInteger accountingsPageCount; //每页Accounting条数
 
 //数据缓存在本层，调用的那层不管分页情况
 + (void)fetchAllAccountingsWithLoadType:(Load_Type)loadType callBack:(void(^)(BOOL isFetchSuccess, NSMutableArray *accountings, NSInteger newSectionCount, NSInteger newCellCount))callBack;
+
+/**
+ 修改某条accounting
+ 
+ @param accounting 要修改的账务
+ @param amount 修改的金额
+ @param desc 修改的备注
+ @param itemID 修改的所属item
+ @param callBack 回调
+ */
++ (void)alertAccounting:(Accounting *)accounting amount:(NSNumber *)amount desc:(NSString *)desc itemID:(NSString *)itemID callback:(void(^)(CMLResponse *response))callBack;
 
 @end

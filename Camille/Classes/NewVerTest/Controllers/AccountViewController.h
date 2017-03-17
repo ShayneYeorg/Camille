@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CMLDataManager.h"
 
+UIKIT_EXTERN NSString *const AccountingDidAlertNotification;
+
 @interface AccountViewController : UIViewController
 
 - (instancetype)initWithAccounting:(MainCellModel *)accounting;

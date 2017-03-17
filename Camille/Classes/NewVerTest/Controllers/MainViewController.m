@@ -56,8 +56,13 @@
     [self configBottomView];
     [self configControlHandle];
     [self configToBottomHandle];
+    [self addNotification];
     
     [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
+}
+
+- (void)dealloc {
+    [self removeNotification];
 }
 
 #pragma mark - UI Configuration
@@ -129,6 +134,20 @@
 
 - (void)_tableViewSetContentOffset:(CGPoint)offset animated:(BOOL)animated {
     [self.tableView setContentOffset:offset animated:animated];
+}
+
+#pragma mark - Notification
+
+- (void)addNotification {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(accountingDidAlert) name:AccountingDidAlertNotification object:nil];
+}
+
+- (void)removeNotification {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:AccountingDidAlertNotification object:nil];
+}
+
+- (void)accountingDidAlert {
+    [self fetchAllAccountingsWithLoadType:Load_Type_Refresh];
 }
 
 #pragma mark - Fetch Data

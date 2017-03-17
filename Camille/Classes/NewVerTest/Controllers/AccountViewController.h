@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CMLDataManager.h"
 
 @interface AccountViewController : UIViewController
+
+- (instancetype)initWithAccounting:(MainCellModel *)accounting;
 
 @end

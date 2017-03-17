@@ -12,6 +12,7 @@
 
 + (instancetype)mainCellModelWithAccounting:(Accounting *)accounting {
     MainCellModel *cellModel = [MainCellModel new];
+    cellModel.accounting = accounting;
     
     __block NSString *symbol = @"";
     [CMLDataManager itemTypeByItemID:accounting.itemID callback:^(NSString *itemType) {

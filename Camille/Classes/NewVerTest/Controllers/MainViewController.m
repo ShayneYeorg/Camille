@@ -17,7 +17,6 @@
 #import "AccountAddingViewController.h"
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
-#import "CMLDataManager.h"
 
 #define dataCountPerPage        20
 #define kLoadingOffset          60
@@ -219,7 +218,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self CML_presentViewController:[[AccountViewController alloc] init] transitionType:CMLTransitionAnimationBreak completion:nil];
+    MainSectionModel *sectionModel = self.accountingsData[self.accountingsData.count - 1 - indexPath.section];
+    MainCellModel *cellModel = (MainCellModel *)sectionModel.cellModels[sectionModel.cellModels.count - 1 - indexPath.row];
+    [self CML_presentViewController:[[AccountViewController alloc] initWithAccounting:cellModel] transitionType:CMLTransitionAnimationBreak completion:nil];
     
     //    [self CML_presentViewController:[[ReportViewController alloc] init] transitionType:4 completion:nil];
 }

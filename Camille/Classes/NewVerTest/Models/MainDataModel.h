@@ -31,6 +31,12 @@
 
 //其他属性
 
+
+/**
+ 整条Accounting
+ */
+@property (nonatomic, strong) Accounting *accounting;
+
 /**
  *  账务类型
  */

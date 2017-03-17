@@ -9,13 +9,12 @@
 #import "AccountAddingViewController.h"
 #import "ItemInputViewController.h"
 #import "DescInputViewController.h"
-#import "CMLTool+NSDate.h"
 #import "CMLDataManager.h"
 #import "CMLDisplayTextField.h"
 #import "CMLAmountTextField.h"
-#import "CMLAccountingDatePickerView.h"
+#import "CMLDateTextField.h"
 
-@interface AccountAddingViewController () <UITextFieldDelegate, CMLAccountingDatePickerViewDelegate>
+@interface AccountAddingViewController () <UITextFieldDelegate>
 
 @property (nonatomic, copy) NSNumber *amount;
 @property (nonatomic, copy) NSDate *happenTime;
@@ -33,9 +32,7 @@
 
 @property (nonatomic, strong) CMLAmountTextField *amountTextField;
 
-@property (nonatomic, strong) UIView *dateInputField;
-@property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) CMLAccountingDatePickerView *datePickerView;
+@property (nonatomic, strong) CMLDateTextField *dateTextField;
 
 @property (nonatomic, strong) UIButton *saveButton;
 
@@ -131,18 +128,14 @@
 }
 
 - (void)configDateInputField {
-    self.dateInputField = [[UIView alloc]initWithFrame:CGRectMake(20, 70 + ScaleOn375(90), self.backgroundView.frame.size.width - 40, ScaleOn375(30))];
-    self.dateInputField.backgroundColor = RGB(230, 230, 230);
-    self.dateInputField.layer.cornerRadius = 5;
-    self.dateInputField.clipsToBounds = YES;
-    [self.backgroundView addSubview:self.dateInputField];
-    
-    self.dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.dateInputField.width - 20, self.dateInputField.height)];
-    [self.dateInputField addSubview:self.dateLabel];
-    [self chooseDate:[NSDate date]];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showDatePicker)];
-    [self.dateInputField addGestureRecognizer:tap];
+    DECLARE_WEAK_SELF
+    self.dateTextField = [CMLDateTextField loadDateTextFieldWithFrame:CGRectMake(20, 70 + ScaleOn375(90), self.backgroundView.frame.size.width - 40, ScaleOn375(30)) backgroundColor:RGB(230, 230, 230) above:self.view touchAction:^{
+        [weakSelf endEditing];
+        
+    } selectedDateAction:^(NSDate *selectedDate) {
+        weakSelf.happenTime = selectedDate;
+    }];
+    [self.backgroundView addSubview:self.dateTextField];
 }
 
 - (void)configSaveButton {
@@ -155,21 +148,10 @@
 
 - (void)configDescInputField {
     DECLARE_WEAK_SELF
-    self.descInputField = [CMLDisplayTextField loadDisplayTextFieldWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateInputField.origin.y - ScaleOn375(30) - 20) backgroundColor:RGB(230, 230, 230) placeHolder:@"备注" touchAction:^{
+    self.descInputField = [CMLDisplayTextField loadDisplayTextFieldWithFrame:CGRectMake(20, 90 + ScaleOn375(120), self.backgroundView.frame.size.width - 40, self.saveButton.origin.y - 20 - self.dateTextField.origin.y - ScaleOn375(30) - 20) backgroundColor:RGB(230, 230, 230) placeHolder:@"备注" touchAction:^{
         [weakSelf descInput];
     }];
     [self.backgroundView addSubview:self.descInputField];
-}
-
-#pragma mark - Getter
-
-- (CMLAccountingDatePickerView *)datePickerView {
-    if (_datePickerView == nil) {
-        _datePickerView = [CMLAccountingDatePickerView loadFromNib];
-        _datePickerView.delegate = self;
-        [self.view addSubview:_datePickerView];
-    }
-    return _datePickerView;
 }
 
 #pragma mark - Private
@@ -239,17 +221,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)showDatePicker {
-    [self endEditing];
-    [self.datePickerView show];
-}
-
-- (void)chooseDate:(NSDate *)date {
-    self.happenTime = date;
-    NSString *dateStr = [CMLTool transDateToString:date];
-    self.dateLabel.text = dateStr;
-}
-
 - (void)save {
     //1、检查各个项目是否齐全
     if (!self.itemID.length || !self.amount || !self.happenTime) {
@@ -280,13 +251,6 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     return YES;
-}
-
-#pragma mark - CMLAccountingDatePickerViewDelegate
-
-- (void)accountingDatePickerView:(CMLAccountingDatePickerView *)accountingDatePickerView didClickConfirmBtn:(NSDate *)selectedDate {
-    [self chooseDate:selectedDate];
-    [self.datePickerView dismiss];
 }
 
 @end

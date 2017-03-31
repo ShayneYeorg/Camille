@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Pollution_Item : NSManagedObject
 
++ (void)setItemPolluted:(NSString *)itemID atDate:(NSDate *)date;
+
 @end
 
 NS_ASSUME_NONNULL_END

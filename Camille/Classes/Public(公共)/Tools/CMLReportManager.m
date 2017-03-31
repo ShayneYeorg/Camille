@@ -8,6 +8,7 @@
 
 #import "CMLReportManager.h"
 #import "CMLTool+NSDate.h"
+#import "Pollution_Item+CoreDataClass.h"
 
 @implementation CMLReportManager
 
@@ -54,7 +55,7 @@
 #pragma mark - Item Pollution
 
 + (void)setItemPolluted:(NSString *)itemID atDate:(NSDate *)date {
-    
+    [Pollution_Item setItemPolluted:itemID atDate:date];
 }
 
 + (void)_deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day {

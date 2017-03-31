@@ -57,6 +57,14 @@
 		345E0BA61C9F90F600A52488 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9A1C9F90F600A52488 /* NSObject+MJKeyValue.m */; };
 		345E0BA71C9F90F600A52488 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9C1C9F90F600A52488 /* NSObject+MJProperty.m */; };
 		345E0BA81C9F90F600A52488 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */; };
+		3468008C1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3468007D1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.m */; };
+		3468008D1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3468007F1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.m */; };
+		3468008E1E8E2B1C00931F82 /* Month_Summary+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800811E8E2B1C00931F82 /* Month_Summary+CoreDataClass.m */; };
+		3468008F1E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800831E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m */; };
+		346800901E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800851E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m */; };
+		346800911E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800871E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m */; };
+		346800921E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */; };
+		346800931E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */; };
 		34883E0D1E2C9B26001C78E4 /* CMLControlHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */; };
 		34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E1A1E2F6B34001C78E4 /* MainViewController.m */; };
 		34883E2B1E2F6B5D001C78E4 /* AccountingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E201E2F6B5D001C78E4 /* AccountingCell.m */; };
@@ -209,6 +217,22 @@
 		345E0B9C1C9F90F600A52488 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		345E0B9D1C9F90F600A52488 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		3468007C1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Day_Summary+CoreDataClass.h"; sourceTree = "<group>"; };
+		3468007D1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Day_Summary+CoreDataClass.m"; sourceTree = "<group>"; };
+		3468007E1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Day_Summary+CoreDataProperties.h"; sourceTree = "<group>"; };
+		3468007F1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Day_Summary+CoreDataProperties.m"; sourceTree = "<group>"; };
+		346800801E8E2B1C00931F82 /* Month_Summary+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Month_Summary+CoreDataClass.h"; sourceTree = "<group>"; };
+		346800811E8E2B1C00931F82 /* Month_Summary+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Month_Summary+CoreDataClass.m"; sourceTree = "<group>"; };
+		346800821E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Month_Summary+CoreDataProperties.h"; sourceTree = "<group>"; };
+		346800831E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Month_Summary+CoreDataProperties.m"; sourceTree = "<group>"; };
+		346800841E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Month_Summary_By_Item+CoreDataClass.h"; sourceTree = "<group>"; };
+		346800851E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Month_Summary_By_Item+CoreDataClass.m"; sourceTree = "<group>"; };
+		346800861E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Month_Summary_By_Item+CoreDataProperties.h"; sourceTree = "<group>"; };
+		346800871E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Month_Summary_By_Item+CoreDataProperties.m"; sourceTree = "<group>"; };
+		346800881E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pollution_Item+CoreDataClass.h"; sourceTree = "<group>"; };
+		346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pollution_Item+CoreDataClass.m"; sourceTree = "<group>"; };
+		3468008A1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pollution_Item+CoreDataProperties.h"; sourceTree = "<group>"; };
+		3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pollution_Item+CoreDataProperties.m"; sourceTree = "<group>"; };
 		34883E0B1E2C9B26001C78E4 /* CMLControlHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLControlHandle.h; sourceTree = "<group>"; };
 		34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLControlHandle.m; sourceTree = "<group>"; };
 		34883E191E2F6B34001C78E4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -479,6 +503,29 @@
 				345E0B9E1C9F90F600A52488 /* NSString+MJExtension.m */,
 			);
 			path = MJExtension;
+			sourceTree = "<group>";
+		};
+		3468007B1E8E2B1C00931F82 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				3468007C1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.h */,
+				3468007D1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.m */,
+				3468007E1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.h */,
+				3468007F1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.m */,
+				346800801E8E2B1C00931F82 /* Month_Summary+CoreDataClass.h */,
+				346800811E8E2B1C00931F82 /* Month_Summary+CoreDataClass.m */,
+				346800821E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.h */,
+				346800831E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m */,
+				346800841E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.h */,
+				346800851E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m */,
+				346800861E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.h */,
+				346800871E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m */,
+				346800881E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.h */,
+				346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */,
+				3468008A1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.h */,
+				3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */,
+			);
+			path = Report;
 			sourceTree = "<group>";
 		};
 		34883E0A1E2C9B26001C78E4 /* CMLControlHandle */ = {
@@ -789,6 +836,7 @@
 				34F6ED911E3738D0004AD9E8 /* Accounting+CoreDataClass.m */,
 				34F6ED921E3738D0004AD9E8 /* Accounting+CoreDataProperties.h */,
 				34F6ED931E3738D0004AD9E8 /* Accounting+CoreDataProperties.m */,
+				3468007B1E8E2B1C00931F82 /* Report */,
 				34F6EDA41E3739A0004AD9E8 /* used */,
 			);
 			path = Model;
@@ -956,10 +1004,12 @@
 				34340AE81C9FD02300FECAD7 /* CMLRecordDetailHeaderView.m in Sources */,
 				34340AE51C9FCCAB00FECAD7 /* CMLRecordMonthDetailViewController.m in Sources */,
 				345E0B641C9EE45100A52488 /* CMLRecordCell.m in Sources */,
+				346800931E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m in Sources */,
 				3405792F1C8EA70C00C79F9D /* CMLNewItemAddingView.m in Sources */,
 				34F6EDB91E3880CA004AD9E8 /* CMLTransitionManager+BoomAnimation.m in Sources */,
 				342AC1181E793B3300B62FBE /* ItemNameCollectCell.m in Sources */,
 				345E0BA71C9F90F600A52488 /* NSObject+MJProperty.m in Sources */,
+				346800911E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m in Sources */,
 				34F6EDB61E3739A0004AD9E8 /* CMLItemCategory.m in Sources */,
 				34D03C481CFC364300422D9D /* CMLItemCategorySettingCell.m in Sources */,
 				345E0BA11C9F90F600A52488 /* MJProperty.m in Sources */,
@@ -980,6 +1030,7 @@
 				34D21C901C7814F3004264C2 /* AppDelegate.m in Sources */,
 				34A46FA81E437F740035B09A /* UIImageView+Dealloc.m in Sources */,
 				34D21C7D1C7814CC004264C2 /* CMLRecordViewController.m in Sources */,
+				346800921E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m in Sources */,
 				34431E301CEC511D001E4A54 /* CMLRecordItemDetailModel.m in Sources */,
 				34F6ED9C1E3738D0004AD9E8 /* Item+CoreDataClass.m in Sources */,
 				3426CC451E1E4889006B2215 /* CMLBottomPanel.m in Sources */,
@@ -995,7 +1046,9 @@
 				34C82C3E1E360459001CDC93 /* AccountViewController.m in Sources */,
 				3441D0B41C7C917C00D6FE0C /* CMLAccountingItemLeftCell.m in Sources */,
 				345E0BA21C9F90F600A52488 /* MJPropertyKey.m in Sources */,
+				3468008C1E8E2B1C00931F82 /* Day_Summary+CoreDataClass.m in Sources */,
 				3426CC461E1E4889006B2215 /* CMLTopPanel.m in Sources */,
+				3468008E1E8E2B1C00931F82 /* Month_Summary+CoreDataClass.m in Sources */,
 				34F6EDB21E3739A0004AD9E8 /* CMLAccounting.m in Sources */,
 				3499BDC61C82D8F2004EE4BD /* CMLResponse.m in Sources */,
 				34D21CA91C788A28004264C2 /* UIBarButtonItem+Extension.m in Sources */,
@@ -1011,9 +1064,11 @@
 				34C82C471E36FB6F001CDC93 /* CMLTransitionManager+BacklashThenPushAnimation.m in Sources */,
 				34D21CAC1C789085004264C2 /* CMLTabBarController.m in Sources */,
 				34340AED1C9FDD1D00FECAD7 /* CMLRecordDetailSectionHeaderView.m in Sources */,
+				346800901E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m in Sources */,
 				3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */,
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
 				34F6EDB51E3739A0004AD9E8 /* CMLItemCategory+CoreDataProperties.m in Sources */,
+				3468008F1E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m in Sources */,
 				34F6ED9D1E3738D0004AD9E8 /* Item+CoreDataProperties.m in Sources */,
 				349A06D51E49C5F000B3F2AA /* MainDataModel.m in Sources */,
 				34340AF31C9FEE3500FECAD7 /* CMLRecordDetailCell.m in Sources */,
@@ -1022,6 +1077,7 @@
 				34D03C4C1CFC40CB00422D9D /* CMLItemCategorySettingHeaderView.m in Sources */,
 				34F6EDB41E3739A0004AD9E8 /* CMLItem.m in Sources */,
 				34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */,
+				3468008D1E8E2B1C00931F82 /* Day_Summary+CoreDataProperties.m in Sources */,
 				345E0BA51C9F90F600A52488 /* NSObject+MJCoding.m in Sources */,
 				34C82C381E35FE51001CDC93 /* CMLTransitionManager.m in Sources */,
 				34C82C441E36E971001CDC93 /* ReportViewController.m in Sources */,

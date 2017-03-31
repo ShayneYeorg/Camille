@@ -10,6 +10,13 @@
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Day_Summary" representedClassName="Day_Summary" syncable="YES">
+        <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="income" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES">
         <attribute name="isAvailable" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,7 +24,19 @@
         <attribute name="itemType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="useCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
-    <entity name="Pollution_Item" syncable="YES">
+    <entity name="Month_Summary" representedClassName="Month_Summary" syncable="YES">
+        <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="income" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Month_Summary_By_Item" representedClassName="Month_Summary_By_Item" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Pollution_Item" representedClassName="Pollution_Item" syncable="YES">
         <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,7 +44,10 @@
     </entity>
     <elements>
         <element name="Accounting" positionX="-504" positionY="-66" width="128" height="165"/>
-        <element name="Item" positionX="-504" positionY="126" width="128" height="118"/>
+        <element name="Item" positionX="-504" positionY="126" width="128" height="120"/>
         <element name="Pollution_Item" positionX="-504" positionY="63" width="128" height="105"/>
+        <element name="Month_Summary_By_Item" positionX="-495" positionY="72" width="128" height="105"/>
+        <element name="Month_Summary" positionX="-477" positionY="81" width="128" height="105"/>
+        <element name="Day_Summary" positionX="-459" positionY="99" width="128" height="120"/>
     </elements>
 </model>

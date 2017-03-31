@@ -17,13 +17,8 @@
         <attribute name="itemType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="useCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
-    <entity name="Report_Month_Item" representedClassName="Report_Month_Item" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="Report_Month_Item_NeedUpdate" representedClassName="Report_Month_Item_NeedUpdate" syncable="YES">
+    <entity name="Pollution_Item" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
@@ -31,7 +26,6 @@
     <elements>
         <element name="Accounting" positionX="-504" positionY="-66" width="128" height="165"/>
         <element name="Item" positionX="-504" positionY="126" width="128" height="118"/>
-        <element name="Report_Month_Item_NeedUpdate" positionX="-153" positionY="-63" width="198" height="90"/>
-        <element name="Report_Month_Item" positionX="-315" positionY="-69" width="128" height="105"/>
+        <element name="Pollution_Item" positionX="-504" positionY="63" width="128" height="105"/>
     </elements>
 </model>

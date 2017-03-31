@@ -68,8 +68,22 @@
     return nextMonFirstDate;
 }
 
++ (NSString *)getYearFromDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSString *year = [NSString stringWithFormat:@"%zd", cmp.year];
+    return year;
+}
+
++ (NSString *)getMonthFromDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSString *month = [NSString stringWithFormat:@"%zd", cmp.month];
+    return month;
+}
+
 //取出一个NSDate里的day
-+ (NSString *)getDayFromADate:(NSDate *)date {
++ (NSString *)getDayFromDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
     NSString *day = [NSString stringWithFormat:@"%zd", cmp.day];

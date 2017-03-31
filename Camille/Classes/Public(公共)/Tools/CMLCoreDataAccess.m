@@ -1027,7 +1027,7 @@
     accounting.amount = amount;
     accounting.type = type;
     accounting.happenTime = happenTime;
-    accounting.happenDay = [CMLTool getDayFromADate:happenTime];
+    accounting.happenDay = [CMLTool getDayFromDate:happenTime];
     accounting.createTime = [NSDate date];
     
     //异步保存数据

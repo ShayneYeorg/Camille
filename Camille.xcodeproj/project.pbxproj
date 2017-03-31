@@ -65,6 +65,7 @@
 		346800911E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800871E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataProperties.m */; };
 		346800921E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */; };
 		346800931E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */; };
+		346800961E8E2DDD00931F82 /* CMLReportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800951E8E2DDD00931F82 /* CMLReportManager.m */; };
 		34883E0D1E2C9B26001C78E4 /* CMLControlHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */; };
 		34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E1A1E2F6B34001C78E4 /* MainViewController.m */; };
 		34883E2B1E2F6B5D001C78E4 /* AccountingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E201E2F6B5D001C78E4 /* AccountingCell.m */; };
@@ -233,6 +234,8 @@
 		346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pollution_Item+CoreDataClass.m"; sourceTree = "<group>"; };
 		3468008A1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pollution_Item+CoreDataProperties.h"; sourceTree = "<group>"; };
 		3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pollution_Item+CoreDataProperties.m"; sourceTree = "<group>"; };
+		346800941E8E2DDD00931F82 /* CMLReportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLReportManager.h; sourceTree = "<group>"; };
+		346800951E8E2DDD00931F82 /* CMLReportManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLReportManager.m; sourceTree = "<group>"; };
 		34883E0B1E2C9B26001C78E4 /* CMLControlHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLControlHandle.h; sourceTree = "<group>"; };
 		34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLControlHandle.m; sourceTree = "<group>"; };
 		34883E191E2F6B34001C78E4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -810,10 +813,12 @@
 			children = (
 				34D21C8C1C7814F3004264C2 /* CMLTool.h */,
 				34D21C8D1C7814F3004264C2 /* CMLTool.m */,
-				34A46FBB1E46FA1C0035B09A /* CMLDataManager.h */,
-				34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */,
 				34E3846A1CA12576004A5A8C /* CMLTool+NSDate.h */,
 				34E3846B1CA12576004A5A8C /* CMLTool+NSDate.m */,
+				34A46FBB1E46FA1C0035B09A /* CMLDataManager.h */,
+				34A46FBC1E46FA1C0035B09A /* CMLDataManager.m */,
+				346800941E8E2DDD00931F82 /* CMLReportManager.h */,
+				346800951E8E2DDD00931F82 /* CMLReportManager.m */,
 				3499BDC11C82D60C004EE4BD /* CMLCoreDataAccess.h */,
 				3499BDC21C82D60C004EE4BD /* CMLCoreDataAccess.m */,
 				3499BDC41C82D8F2004EE4BD /* CMLResponse.h */,
@@ -990,6 +995,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				346800961E8E2DDD00931F82 /* CMLReportManager.m in Sources */,
 				34D21C931C7814F3004264C2 /* CMLTool.m in Sources */,
 				34EA4B0A1CAEA63F0075B09E /* CMLRecordMonthDetailModel.m in Sources */,
 				34D21C9B1C78892E004264C2 /* Camille.xcdatamodeld in Sources */,

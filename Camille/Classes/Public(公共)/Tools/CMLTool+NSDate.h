@@ -12,9 +12,14 @@
 
 + (NSString *)transDateToString:(NSDate *)date;
 + (NSString *)transDateToYMString:(NSDate *)date;
+
 + (NSDate *)getFirstDateInMonth:(NSDate *)date;
 + (NSDate *)getLastDateInMonth:(NSDate *)date;
-+ (NSString *)getDayFromADate:(NSDate *)date;
+
++ (NSString *)getYearFromDate:(NSDate *)date;
++ (NSString *)getMonthFromDate:(NSDate *)date;
++ (NSString *)getDayFromDate:(NSDate *)date;
+
 + (BOOL)isDate:(NSDate *)date1 equalsToDate:(NSDate *)date2;
 
 @end

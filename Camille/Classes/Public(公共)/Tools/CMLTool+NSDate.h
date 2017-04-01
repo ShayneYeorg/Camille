@@ -15,6 +15,7 @@
 
 + (NSDate *)getFirstDateInMonth:(NSDate *)date;
 + (NSDate *)getLastDateInMonth:(NSDate *)date;
++ (NSDate *)getFirstDateInNextMonth:(NSDate *)date;
 
 + (NSString *)getYearFromDate:(NSDate *)date;
 + (NSString *)getMonthFromDate:(NSDate *)date;

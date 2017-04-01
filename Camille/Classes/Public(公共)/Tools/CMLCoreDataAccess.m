@@ -1090,7 +1090,7 @@
         
         //设置查询条件
         NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
-        NSDate *endDate = [CMLTool getLastDateInMonth:date];
+        NSDate *endDate = [CMLTool getFirstDateInNextMonth:date];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime < %@", beginDate, endDate];
         [request setPredicate:pre];
         
@@ -1130,7 +1130,7 @@
         
         //设置查询条件
         NSDate *beginDate = [CMLTool getFirstDateInMonth:date];
-        NSDate *endDate = [CMLTool getLastDateInMonth:date];
+        NSDate *endDate = [CMLTool getFirstDateInNextMonth:date];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime < %@", beginDate, endDate];
         [request setPredicate:pre];
         

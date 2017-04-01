@@ -17,6 +17,7 @@
 #import "AccountAddingViewController.h"
 #import "ReportViewController.h"
 #import "UIViewController+CMLTransition.h"
+#import "CMLReportManager.h"
 
 #define dataCountPerPage        20
 #define kLoadingOffset          60

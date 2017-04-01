@@ -59,7 +59,7 @@
 }
 
 + (void)_deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day {
-    
+    [Pollution_Item deleteItemPollutionInfo:itemID year:year month:month day:day];
 }
 
 

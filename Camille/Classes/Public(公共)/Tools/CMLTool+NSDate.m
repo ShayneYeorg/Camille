@@ -58,8 +58,20 @@
     return firstDate;
 }
 
-//获取当月结束时间
+//获取本月结束时间(只有年月日，具体时间不准)
 + (NSDate *)getLastDateInMonth:(NSDate *)date {
+    NSDate *nextMonFirstDate = [self getFirstDateInNextMonth:date];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit fromDate:nextMonFirstDate];
+    [cmp setDay:[cmp day] - 1];
+    NSDate *lastDate = [calendar dateFromComponents:cmp];
+    
+    return lastDate;
+}
+
+//获取下月开始时间
++ (NSDate *)getFirstDateInNextMonth:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *cmp = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
     [cmp setMonth:[cmp month] + 1];
@@ -70,14 +82,14 @@
 
 + (NSString *)getYearFromDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitYear fromDate:date];
     NSString *year = [NSString stringWithFormat:@"%zd", cmp.year];
     return year;
 }
 
 + (NSString *)getMonthFromDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitMonth fromDate:date];
     NSString *month = [NSString stringWithFormat:@"%zd", cmp.month];
     return month;
 }
@@ -85,7 +97,7 @@
 //取出一个NSDate里的day
 + (NSString *)getDayFromDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *cmp = [calendar components:NSDayCalendarUnit fromDate:date];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitDay fromDate:date];
     NSString *day = [NSString stringWithFormat:@"%zd", cmp.day];
     return day;
 }

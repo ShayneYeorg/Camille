@@ -15,8 +15,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setItemPolluted:(NSString *)itemID atDate:(NSDate *)date;
 
++ (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day;
+
++ (void)deletePollutionItem:(Pollution_Item *)pollutionItem;
+
 @end
 
 NS_ASSUME_NONNULL_END
 
 #import "Pollution_Item+CoreDataProperties.h"
+
+
+
+//    [CMLReportManager setItemPolluted:@"123" atDate:[CMLTool getFirstDateInMonth:[NSDate date]]];
+//    [CMLReportManager setItemPolluted:@"123" atDate:[CMLTool getLastDateInMonth:[NSDate date]]];
+
+//    [CMLReportManager _deleteItemPollutionInfo:@"123" year:@"2017" month:@"4" day:nil];

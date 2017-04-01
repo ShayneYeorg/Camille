@@ -64,6 +64,9 @@
 
 
 
+
+
+
 + (void)_updateWithCallback:(void(^)(CMLResponse *response))callBack {
     
     
@@ -95,10 +98,7 @@
 
 
 + (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
-    
-    
-    
-    
+    [Pollution_Item getPollutedItemsByItemID:itemID year:year month:month day:day callback:callBack];
 }
 
 + (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack {

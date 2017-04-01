@@ -21,6 +21,7 @@
 #define kTipDeleteFail                @"删除失败"
 #define kTipFetchSuccess              @"查询成功"
 #define kTipFetchFail                 @"查询失败"
+#define kTipFetchNoRecord             @"查询无记录"
 #define kTipExist                     @"查询对象已存在"
 #define kTipRestore                   @"科目已复原"
 
@@ -31,6 +32,7 @@
 #define KEY_Cost_Items                @"costItems"
 #define KEY_ItemID                    @"itemID"
 #define KEY_Accountings               @"accountings"
+#define KEY_Pollution_Items           @"pollutionItems"
 
 //常用短语
 #define PHRASE_ResponseSuccess (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED])

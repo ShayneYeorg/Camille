@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)deletePollutionItem:(Pollution_Item *)pollutionItem;
 
++ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack;
+
 @end
 
 NS_ASSUME_NONNULL_END

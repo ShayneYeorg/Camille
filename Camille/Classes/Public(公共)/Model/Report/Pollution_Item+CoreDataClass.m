@@ -63,46 +63,16 @@
 
 + (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day {
     @synchronized (self) {
-        //1、先取出所有符合条件的Pollution_Item
-        //request和entity
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pollution_Item" inManagedObjectContext:kManagedObjectContext];
-        [request setEntity:entity];
-        
-        //设置查询条件
-        NSMutableString *strM = [NSMutableString stringWithFormat:@"itemID == '%@'", itemID];
-        if (year.length) {
-            [strM appendFormat:@" AND year == '%@'", year];
-        }
-        if (month.length) {
-            [strM appendFormat:@" AND month == '%@'", month];
-        }
-        if (day.length) {
-            [strM appendFormat:@" AND day == '%@'", day];
-        }
-        CMLLog(@"%@", strM);
-        NSPredicate *pre = [NSPredicate predicateWithFormat:strM];
-        [request setPredicate:pre];
-        
-        //2、查询
-        NSError *error = nil;
-        NSMutableArray *pollutionItems = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-        if (pollutionItems == nil) {
-            //3、查询过程中出错
-            CMLLog(@"查询Pollution_Item出错:%@,%@",error,[error userInfo]);
-            
-        } else if (pollutionItems.count) {
-            CMLLog(@"Pollution_Item的个数是：%zd", pollutionItems.count);
-            
-            //4、查询发现Pollution_Item存在
-            for (Pollution_Item *pi in pollutionItems) {
-                [self deletePollutionItem:pi];
+        [self getPollutedItemsByItemID:itemID year:year month:month day:day callback:^(CMLResponse * _Nonnull response) {
+            if (PHRASE_ResponseSuccess) {
+                NSArray *pollutionItems = response.responseDic[KEY_Pollution_Items];
+                if (pollutionItems.count) {
+                    for (Pollution_Item *pi in pollutionItems) {
+                        [self deletePollutionItem:pi];
+                    }
+                }
             }
-            
-        } else {
-            //5、查询发现Pollution_Item不存在，需要添加
-            //无需再做任何操作
-        }
+        }];
     }
 }
 
@@ -116,6 +86,53 @@
         } else {
             CMLLog(@"删除Pollution_Item失败");
         }
+    }
+}
+
++ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pollution_Item" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //设置查询条件
+    NSMutableString *strM = [NSMutableString stringWithFormat:@"itemID == '%@'", itemID];
+    if (year.length) {
+        [strM appendFormat:@" AND year == '%@'", year];
+    }
+    if (month.length) {
+        [strM appendFormat:@" AND month == '%@'", month];
+    }
+    if (day.length) {
+        [strM appendFormat:@" AND day == '%@'", day];
+    }
+    CMLLog(@"%@", strM);
+    NSPredicate *pre = [NSPredicate predicateWithFormat:strM];
+    [request setPredicate:pre];
+    
+    //查询
+    NSError *error = nil;
+    NSMutableArray *pollutionItems = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (pollutionItems == nil) {
+        //查询过程中出错
+        CMLLog(@"查询Pollution_Item出错:%@,%@",error,[error userInfo]);
+        callBack(nil);
+        
+    } else if (pollutionItems.count) {
+        CMLLog(@"Pollution_Item的个数是：%zd", pollutionItems.count);
+        CMLResponse *response = [CMLResponse new];
+        response.code = RESPONSE_CODE_SUCCEED;
+        response.desc = kTipFetchSuccess;
+        response.responseDic = @{KEY_Pollution_Items: pollutionItems};
+        callBack(response);
+        
+    } else {
+        CMLLog(@"Pollution_Item查询无记录");
+        CMLResponse *response = [CMLResponse new];
+        response.code = RESPONSE_CODE_NO_RECORD;
+        response.desc = kTipFetchNoRecord;
+        response.responseDic = nil;
+        callBack(response);
     }
 }
 

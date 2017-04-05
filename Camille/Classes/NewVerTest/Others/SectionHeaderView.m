@@ -44,8 +44,8 @@
             NSArray *dss = response.responseDic[KEY_Day_Summaries];
             if (dss.count) {
                 Day_Summary *ds = dss.firstObject;
-                weakSelf.income.text = [NSString stringWithFormat:@"%.2f", ds.income.floatValue];
-                weakSelf.cost.text = [NSString stringWithFormat:@"%.2f", ds.cost.floatValue];
+                weakSelf.income.text = [NSString stringWithFormat:@"+%.2f", ds.income.floatValue];
+                weakSelf.cost.text = [NSString stringWithFormat:@"-%.2f", ds.cost.floatValue];
             }
         }
     }];

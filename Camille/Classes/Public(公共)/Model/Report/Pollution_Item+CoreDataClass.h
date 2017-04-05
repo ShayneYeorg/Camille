@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface Pollution_Item : NSManagedObject
 
 + (void)setItemPolluted:(NSString *)itemID atDate:(NSDate *)date;
@@ -23,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END
 
 #import "Pollution_Item+CoreDataProperties.h"
 
@@ -33,3 +30,7 @@ NS_ASSUME_NONNULL_END
 //    [CMLReportManager setItemPolluted:@"123" atDate:[CMLTool getLastDateInMonth:[NSDate date]]];
 
 //    [CMLReportManager _deleteItemPollutionInfo:@"123" year:@"2017" month:@"4" day:nil];
+
+//[Pollution_Item getPollutedItemsByItemID:nil year:nil month:nil day:nil callback:^(CMLResponse * _Nonnull response) {
+//    
+//}];

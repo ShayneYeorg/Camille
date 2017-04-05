@@ -109,6 +109,41 @@
     callBack(cmlResponse);
 }
 
++ (void)fetchAccountingsInDate:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
+    //request和entity
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Accounting" inManagedObjectContext:kManagedObjectContext];
+    [request setEntity:entity];
+    
+    //Response
+    CMLResponse *cmlResponse = [[CMLResponse alloc]init];
+    
+    //设置查询条件
+    NSDate *beginDate = [CMLTool getStartTimeAtDate:date];
+    NSDate *endDate = [CMLTool getEndTimeAtDate:date];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime <= %@", beginDate, endDate];
+    [request setPredicate:pre];
+    
+    //查询
+    NSError *error = nil;
+    NSArray *accountings = [[kManagedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    //返回数据
+    if (accountings == nil) {
+        CMLLog(@"查询Accounting时发生错误:%@,%@", error, [error userInfo]);
+        cmlResponse.code = RESPONSE_CODE_FAILD;
+        cmlResponse.desc = kTipFetchFail;
+        cmlResponse.responseDic = nil;
+        
+    } else {
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = kTipFetchSuccess;
+        cmlResponse.responseDic = @{KEY_Accountings: accountings};
+    }
+    
+    callBack(cmlResponse);
+}
+
 #pragma mark - 修改accounting
 
 + (void)alertAccounting:(Accounting * _Nonnull)accounting amount:(NSNumber * _Nullable)amount desc:(NSString * _Nullable)desc itemID:(NSString * _Nullable)itemID callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack {

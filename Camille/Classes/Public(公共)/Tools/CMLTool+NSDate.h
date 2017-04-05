@@ -10,12 +10,19 @@
 
 @interface CMLTool (NSDate)
 
++ (NSDate *)dateWithYear:(NSString *)year month:(NSString *)month day:(NSString *)day;
+
++ (NSDate *)transStringToDate:(NSString *)dateStr;
 + (NSString *)transDateToString:(NSDate *)date;
 + (NSString *)transDateToYMString:(NSDate *)date;
 
 + (NSDate *)getFirstDateInMonth:(NSDate *)date;
 + (NSDate *)getLastDateInMonth:(NSDate *)date;
 + (NSDate *)getFirstDateInNextMonth:(NSDate *)date;
+
++ (NSDate *)getStartTimeAtDate:(NSDate *)date;
++ (NSDate *)getEndTimeAtDate:(NSDate *)date;
++ (NSDate *)getNextDateStartTimeAtDate:(NSDate *)date;
 
 + (NSString *)getYearFromDate:(NSDate *)date;
 + (NSString *)getMonthFromDate:(NSDate *)date;

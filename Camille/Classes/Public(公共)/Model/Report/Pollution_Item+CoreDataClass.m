@@ -96,7 +96,10 @@
     [request setEntity:entity];
     
     //设置查询条件
-    NSMutableString *strM = [NSMutableString stringWithFormat:@"itemID == '%@'", itemID];
+    NSMutableString *strM = [NSMutableString stringWithString:@"1 == 1"];
+    if (itemID.length) {
+        [strM appendFormat:@" AND itemID == '%@'", itemID];
+    }
     if (year.length) {
         [strM appendFormat:@" AND year == '%@'", year];
     }
@@ -116,7 +119,12 @@
     if (pollutionItems == nil) {
         //查询过程中出错
         CMLLog(@"查询Pollution_Item出错:%@,%@",error,[error userInfo]);
-        callBack(nil);
+        CMLLog(@"当做Pollution_Item查询无记录处理");
+        CMLResponse *response = [CMLResponse new];
+        response.code = RESPONSE_CODE_NO_RECORD;
+        response.desc = kTipFetchNoRecord;
+        response.responseDic = nil;
+        callBack(response);
         
     } else if (pollutionItems.count) {
         CMLLog(@"Pollution_Item的个数是：%zd", pollutionItems.count);

@@ -9,16 +9,12 @@
 #define kSectionHeaderHeight    50
 
 #import <UIKit/UIKit.h>
+#import "MainDataModel.h"
 
 @interface SectionHeaderView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *date;
-@property (weak, nonatomic) IBOutlet UILabel *income;
-@property (weak, nonatomic) IBOutlet UILabel *cost;
+@property (nonatomic, strong) MainSectionModel *model;
 
 + (instancetype)loadSectionHeaderView;
-
-- (void)refershIncome:(NSNumber *)income;
-- (void)refreshCost:(NSNumber *)cost;
 
 @end

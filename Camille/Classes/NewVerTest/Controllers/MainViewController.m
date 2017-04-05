@@ -19,6 +19,9 @@
 #import "UIViewController+CMLTransition.h"
 #import "CMLReportManager.h"
 
+
+#import "CMLTool+NSDate.h"
+
 #define dataCountPerPage        20
 #define kLoadingOffset          60
 #define kLoadmoreThreshold     -90
@@ -216,9 +219,10 @@
 #pragma mark - UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CMLLog(@"%s %zd", __func__, section);
     SectionHeaderView *sectionHeaderView = [SectionHeaderView loadSectionHeaderView];
     MainSectionModel *sectionModel = (MainSectionModel *)self.accountingsData[self.accountingsData.count - 1 - section];
-    sectionHeaderView.date.text = sectionModel.diaplayDate;
+    sectionHeaderView.model = sectionModel;
     
     return sectionHeaderView;
 }

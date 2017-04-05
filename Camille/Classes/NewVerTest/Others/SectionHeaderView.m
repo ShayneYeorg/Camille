@@ -7,6 +7,16 @@
 //
 
 #import "SectionHeaderView.h"
+#import "CMLReportManager.h"
+#import "Day_Summary+CoreDataClass.h"
+
+@interface SectionHeaderView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UILabel *income;
+@property (weak, nonatomic) IBOutlet UILabel *cost;
+
+@end
 
 @implementation SectionHeaderView
 
@@ -22,14 +32,23 @@
     return sectionHeaderView;
 }
 
-#pragma mark - Public
+#pragma mark - Setter
 
-- (void)refershIncome:(NSNumber *)income {
+- (void)setModel:(MainSectionModel *)model {
+    _model = model;
     
-}
-
-- (void)refreshCost:(NSNumber *)cost {
-    
+    self.date.text = _model.diaplayDate;
+    DECLARE_WEAK_SELF
+    [CMLReportManager fetchDaySummaryWithDate:_model.happenDate callback:^(CMLResponse *response) {
+        if (PHRASE_ResponseSuccess) {
+            NSArray *dss = response.responseDic[KEY_Day_Summaries];
+            if (dss.count) {
+                Day_Summary *ds = dss.firstObject;
+                weakSelf.income.text = [NSString stringWithFormat:@"%.2f", ds.income.floatValue];
+                weakSelf.cost.text = [NSString stringWithFormat:@"%.2f", ds.cost.floatValue];
+            }
+        }
+    }];
 }
 
 @end

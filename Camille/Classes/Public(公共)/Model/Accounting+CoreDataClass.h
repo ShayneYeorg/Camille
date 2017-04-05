@@ -37,8 +37,18 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param startIndex           开始下标
  *  @param count                条数
+ *  @param callBack             回调
  */
 + (void)fetchAccountingsFrom:(NSInteger)startIndex count:(NSInteger)count callBack:(void(^)(CMLResponse *response))callBack;
+
+
+/**
+ 查询某一天的所有账务
+
+ @param date                    日期
+ *  @param callBack             回调
+ */
++ (void)fetchAccountingsInDate:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack;
 
 NS_ASSUME_NONNULL_END
 
@@ -47,11 +57,11 @@ NS_ASSUME_NONNULL_END
 /**
  修改某条accounting
 
- @param accounting 要修改的账务
- @param amount 修改的金额
- @param desc 修改的备注
- @param itemID 修改的所属item
- @param callBack 回调
+ @param accounting              要修改的账务
+ @param amount                  修改的金额
+ @param desc                    修改的备注
+ @param itemID                  修改的所属item
+ @param callBack                回调
  */
 + (void)alertAccounting:(Accounting * _Nonnull)accounting amount:(NSNumber * _Nullable)amount desc:(NSString * _Nullable)desc itemID:(NSString * _Nullable)itemID callback:(void(^_Nullable)(CMLResponse * _Nullable response))callBack;
 

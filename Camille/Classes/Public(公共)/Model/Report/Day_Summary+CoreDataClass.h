@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Day_Summary : NSManagedObject
 
++ (void)getDaySummaryInYear:(NSString *)year month:(NSString *)month day:(NSString *)day autoUpdateIfNoRecord:(BOOL)autoUpdate callback:(void(^)(CMLResponse *response))callBack;
+
++ (void)updateDaySummaryInYear:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -67,8 +67,6 @@
  */
 @property (nonatomic, copy) NSString *diaplayDate;
 
-
-#warning - 总支出和总收入似乎没用，如果某一天只取了一部分的话，这个数据就是不对的
 /**
  *  支出总额
  */

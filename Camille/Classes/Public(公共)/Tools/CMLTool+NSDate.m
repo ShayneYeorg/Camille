@@ -10,6 +10,18 @@
 
 @implementation CMLTool (NSDate)
 
++ (NSDate *)dateWithYear:(NSString *)year month:(NSString *)month day:(NSString *)day {
+    NSString *dateStr = [NSString stringWithFormat:@"%@-%@-%@", year, month.length == 2? month: [NSString stringWithFormat:@"0%@", month], day.length == 2? day: [NSString stringWithFormat:@"0%@", day]];
+    NSDate *date = [self transStringToDate:dateStr];
+    return date;
+}
+
++ (NSDate *)transStringToDate:(NSString *)dateStr {
+    NSDateFormatter *fmt = [CMLTool formatterInit];
+    NSDate *date = [fmt dateFromString:dateStr];
+    return date;
+}
+
 //将NSDate转化为短日期格式的日期NSString对象
 + (NSString *)transDateToString:(NSDate *)date {
     NSDateFormatter *fmt = [CMLTool formatterInit];
@@ -78,6 +90,40 @@
     NSDate *nextMonFirstDate = [calendar dateFromComponents:cmp];
     
     return nextMonFirstDate;
+}
+
++ (NSDate *)getStartTimeAtDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
+    [cmp setHour:0];
+    [cmp setMinute:0];
+    [cmp setSecond:0];
+    NSDate *startTime = [calendar dateFromComponents:cmp];
+    
+    return startTime;
+}
+
++ (NSDate *)getEndTimeAtDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
+    [cmp setHour:23];
+    [cmp setMinute:59];
+    [cmp setSecond:59];
+    NSDate *endTime = [calendar dateFromComponents:cmp];
+    
+    return endTime;
+}
+
++ (NSDate *)getNextDateStartTimeAtDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
+    [cmp setDay:[cmp day] + 1];
+    [cmp setHour:0];
+    [cmp setMinute:0];
+    [cmp setSecond:0];
+    NSDate *nextDayStartTime = [calendar dateFromComponents:cmp];
+    
+    return nextDayStartTime;
 }
 
 + (NSString *)getYearFromDate:(NSDate *)date {

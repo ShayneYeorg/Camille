@@ -34,8 +34,12 @@
 #define KEY_Accountings               @"accountings"
 #define KEY_Pollution_Items           @"pollutionItems"
 
+#define KEY_Day_Summaries             @"daySummaries"
+#define KEY_Day_Summary               @"daySummary"
+
 //常用短语
-#define PHRASE_ResponseSuccess (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED])
+#define PHRASE_ResponseSuccess        (response && [response.code isEqualToString:RESPONSE_CODE_SUCCEED])
+#define PHRASE_ResponseNoRecord       (response && [response.code isEqualToString:RESPONSE_CODE_NO_RECORD])
 
 @interface CMLResponse : NSObject
 

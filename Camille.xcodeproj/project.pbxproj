@@ -66,6 +66,7 @@
 		346800921E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800891E8E2B1C00931F82 /* Pollution_Item+CoreDataClass.m */; };
 		346800931E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */; };
 		346800961E8E2DDD00931F82 /* CMLReportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800951E8E2DDD00931F82 /* CMLReportManager.m */; };
+		346800A11E94C26200931F82 /* MonthSummaryByItemReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 346800A01E94C26200931F82 /* MonthSummaryByItemReport.m */; };
 		34883E0D1E2C9B26001C78E4 /* CMLControlHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */; };
 		34883E1E1E2F6B34001C78E4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E1A1E2F6B34001C78E4 /* MainViewController.m */; };
 		34883E2B1E2F6B5D001C78E4 /* AccountingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34883E201E2F6B5D001C78E4 /* AccountingCell.m */; };
@@ -236,6 +237,8 @@
 		3468008B1E8E2B1C00931F82 /* Pollution_Item+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pollution_Item+CoreDataProperties.m"; sourceTree = "<group>"; };
 		346800941E8E2DDD00931F82 /* CMLReportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLReportManager.h; sourceTree = "<group>"; };
 		346800951E8E2DDD00931F82 /* CMLReportManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLReportManager.m; sourceTree = "<group>"; };
+		3468009F1E94C26200931F82 /* MonthSummaryByItemReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthSummaryByItemReport.h; sourceTree = "<group>"; };
+		346800A01E94C26200931F82 /* MonthSummaryByItemReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthSummaryByItemReport.m; sourceTree = "<group>"; };
 		34883E0B1E2C9B26001C78E4 /* CMLControlHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLControlHandle.h; sourceTree = "<group>"; };
 		34883E0C1E2C9B26001C78E4 /* CMLControlHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLControlHandle.m; sourceTree = "<group>"; };
 		34883E191E2F6B34001C78E4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -531,6 +534,47 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
+		346800971E94C10600931F82 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				3468009B1E94C24F00931F82 /* MonthSummaryByItem */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		3468009B1E94C24F00931F82 /* MonthSummaryByItem */ = {
+			isa = PBXGroup;
+			children = (
+				3468009C1E94C24F00931F82 /* Controller */,
+				3468009D1E94C24F00931F82 /* Model */,
+				3468009E1E94C24F00931F82 /* View */,
+			);
+			path = MonthSummaryByItem;
+			sourceTree = "<group>";
+		};
+		3468009C1E94C24F00931F82 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3468009F1E94C26200931F82 /* MonthSummaryByItemReport.h */,
+				346800A01E94C26200931F82 /* MonthSummaryByItemReport.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3468009D1E94C24F00931F82 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3468009E1E94C24F00931F82 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		34883E0A1E2C9B26001C78E4 /* CMLControlHandle */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,6 +680,7 @@
 			children = (
 				34883E111E2F6A1B001C78E4 /* NewVerTest */,
 				3426CC381E1E43E0006B2215 /* Component */,
+				346800971E94C10600931F82 /* Report */,
 				34D21C7E1C7814F3004264C2 /* Public(公共) */,
 				34D21C2E1C776CC8004264C2 /* Accounting(记账) */,
 				34D21C381C776CC8004264C2 /* Record(记录) */,
@@ -1073,6 +1118,7 @@
 				346800901E8E2B1C00931F82 /* Month_Summary_By_Item+CoreDataClass.m in Sources */,
 				3499BDC31C82D60C004EE4BD /* CMLCoreDataAccess.m in Sources */,
 				34D21CAF1C7890AE004264C2 /* CMLNavigationController.m in Sources */,
+				346800A11E94C26200931F82 /* MonthSummaryByItemReport.m in Sources */,
 				34F6EDB51E3739A0004AD9E8 /* CMLItemCategory+CoreDataProperties.m in Sources */,
 				3468008F1E8E2B1C00931F82 /* Month_Summary+CoreDataProperties.m in Sources */,
 				34F6ED9D1E3738D0004AD9E8 /* Item+CoreDataProperties.m in Sources */,

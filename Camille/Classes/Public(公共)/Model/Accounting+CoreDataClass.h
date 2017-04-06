@@ -45,10 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  查询某一天的所有账务
 
- @param date                    日期
+ *  @param beginDate            开始日期
+ *  @param endDate              结束日期
  *  @param callBack             回调
  */
-+ (void)fetchAccountingsInDate:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack;
++ (void)fetchAccountingsFromDate:(NSDate *)beginDate to:(NSDate *)endDate callBack:(void(^)(CMLResponse *response))callBack;
 
 NS_ASSUME_NONNULL_END
 

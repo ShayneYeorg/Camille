@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Month_Summary_By_Item : NSManagedObject
 
++ (void)getMonthItemSummaryInYear:(NSString *)year month:(NSString *)month autoUpdateIfNoRecord:(BOOL)autoUpdate callback:(void(^)(CMLResponse *response))callBack;
+
++ (void)updateMonthItemSummaryInYear:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack;
+
 @end
 
 NS_ASSUME_NONNULL_END

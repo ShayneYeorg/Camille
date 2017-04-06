@@ -20,6 +20,9 @@
 + (NSDate *)getLastDateInMonth:(NSDate *)date;
 + (NSDate *)getFirstDateInNextMonth:(NSDate *)date;
 
++ (NSDate *)getStartTimeInYear:(NSString *)year month:(NSString *)month;
++ (NSDate *)getEndTimeInYear:(NSString *)year month:(NSString *)month;
+
 + (NSDate *)getStartTimeAtDate:(NSDate *)date;
 + (NSDate *)getEndTimeAtDate:(NSDate *)date;
 + (NSDate *)getNextDateStartTimeAtDate:(NSDate *)date;

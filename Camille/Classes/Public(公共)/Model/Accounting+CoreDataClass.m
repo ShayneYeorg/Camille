@@ -109,7 +109,7 @@
     callBack(cmlResponse);
 }
 
-+ (void)fetchAccountingsInDate:(NSDate *)date callBack:(void(^)(CMLResponse *response))callBack {
++ (void)fetchAccountingsFromDate:(NSDate *)beginDate to:(NSDate *)endDate callBack:(void(^)(CMLResponse *response))callBack {
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Accounting" inManagedObjectContext:kManagedObjectContext];
@@ -119,8 +119,6 @@
     CMLResponse *cmlResponse = [[CMLResponse alloc]init];
     
     //设置查询条件
-    NSDate *beginDate = [CMLTool getStartTimeAtDate:date];
-    NSDate *endDate = [CMLTool getEndTimeAtDate:date];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"happenTime >= %@ AND happenTime <= %@", beginDate, endDate];
     [request setPredicate:pre];
     

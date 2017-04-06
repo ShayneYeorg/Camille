@@ -129,7 +129,9 @@
 
 + (void)updateDaySummaryInYear:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
     NSDate *date = [CMLTool dateWithYear:year month:month day:day];
-    [Accounting fetchAccountingsInDate:date callBack:^(CMLResponse * _Nonnull response) {
+    NSDate *beginDate = [CMLTool getStartTimeAtDate:date];
+    NSDate *endDate = [CMLTool getEndTimeAtDate:date];
+    [Accounting fetchAccountingsFromDate:beginDate to:endDate callBack:^(CMLResponse * _Nonnull response) {
         if (PHRASE_ResponseSuccess) {
             NSArray *accountings = response.responseDic[KEY_Accountings];
             __block CGFloat income = 0;

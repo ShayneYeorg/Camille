@@ -13,11 +13,11 @@
 
 + (void)setItemPolluted:(NSString *)itemID atDate:(NSDate *)date;
 
-+ (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day;
++ (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType;
 
 + (void)deletePollutionItem:(Pollution_Item *)pollutionItem;
 
-+ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack;
++ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType callback:(void(^)(CMLResponse *response))callBack;
 
 @end
 

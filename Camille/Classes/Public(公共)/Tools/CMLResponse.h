@@ -35,6 +35,7 @@
 #define KEY_Pollution_Items           @"pollutionItems"
 
 #define KEY_Day_Summaries             @"daySummaries"
+#define KEY_Month_Item_Summaries      @"monthItemSummaries"
 #define KEY_Day_Summary               @"daySummary"
 
 //常用短语

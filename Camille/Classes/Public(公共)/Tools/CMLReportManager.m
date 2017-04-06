@@ -10,13 +10,29 @@
 #import "CMLTool+NSDate.h"
 #import "Pollution_Item+CoreDataClass.h"
 #import "Day_Summary+CoreDataClass.h"
+#import "Month_Summary_By_Item+CoreDataClass.h"
 
 @implementation CMLReportManager
 
 #pragma mark - Month Item Summary
 
 + (void)fetchMonthItemSummaryInYear:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack {
-    
+    //1、判断当月内有没有污染item
+    [self _getPollutedItemsByItemID:nil year:year month:month reportType:ReportType_MonthItemSummary callback:^(CMLResponse *response) {
+        if (PHRASE_ResponseNoRecord) {
+            //2、无污染item则直接取当月的数据返回
+            [Month_Summary_By_Item getMonthItemSummaryInYear:year month:month autoUpdateIfNoRecord:YES callback:callBack];
+            
+        } else if (PHRASE_ResponseSuccess) {
+            //3、有污染item则先更新当月的数据，再查询返回
+            NSArray *pollutedItems = response.responseDic[KEY_Pollution_Items];
+            [self _updateMonthItemSummaryWithPollutedItems:pollutedItems callback:callBack];
+            
+        } else {
+            //4、出错则返回nil
+            callBack(nil);
+        }
+    }];
 }
 
 + (void)fetchMonthItemSummaryWithDate:(NSDate *)date callback:(void(^)(CMLResponse *response))callBack {
@@ -43,7 +59,7 @@
 
 + (void)fetchDaySummaryInYear:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
     //1、判断当日内有没有污染item
-    [self _getPollutedItemsByItemID:nil year:year month:month day:day callback:^(CMLResponse *response) {
+    [self _getPollutedItemsByItemID:nil year:year month:month day:day reportType:ReportType_DaySummary callback:^(CMLResponse *response) {
         if (PHRASE_ResponseNoRecord) {
             //2、无污染item则直接取当日的数据返回
             [Day_Summary getDaySummaryInYear:year month:month day:day autoUpdateIfNoRecord:YES callback:callBack];
@@ -72,8 +88,8 @@
     [Pollution_Item setItemPolluted:itemID atDate:date];
 }
 
-+ (void)_deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day {
-    [Pollution_Item deleteItemPollutionInfo:itemID year:year month:month day:day];
++ (void)_deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType {
+    [Pollution_Item deleteItemPollutionInfo:itemID year:year month:month day:day reportType:reportType];
 }
 
 
@@ -81,19 +97,12 @@
 
 
 
-//+ (void)_updateWithCallback:(void(^)(CMLResponse *response))callBack {
-//    
-//    
-//    
-//}
-
-+ (void)_updateMonthItemSummaryOnItem:(NSString *)itemID inYear:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack {
++ (void)_updateMonthItemSummaryWithPollutedItems:(NSArray *)pollutedItems callback:(void(^)(CMLResponse *response))callBack {
     //先update本月的MonthSummary，再update本月的MonthItemSummary
     
-    
 }
 
-+ (void)_updateMonthSummaryInYear:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack {
++ (void)_updateMonthSummaryWithPollutedItems:(NSArray *)pollutedItems callback:(void(^)(CMLResponse *response))callBack {
     //先update本月内的所有DaySummary，然后在update本月的MonthSummary
     
     
@@ -106,16 +115,16 @@
 
 
 
-+ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
-    [Pollution_Item getPollutedItemsByItemID:itemID year:year month:month day:day callback:callBack];
++ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType callback:(void(^)(CMLResponse *response))callBack {
+    [Pollution_Item getPollutedItemsByItemID:itemID year:year month:month day:day reportType:reportType callback:callBack];
 }
 
-+ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month callback:(void(^)(CMLResponse *response))callBack {
-    [self _getPollutedItemsByItemID:itemID year:year month:month day:nil callback:callBack];
++ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month reportType:(NSString *)reportType callback:(void(^)(CMLResponse *response))callBack {
+    [self _getPollutedItemsByItemID:itemID year:year month:month day:nil reportType:reportType callback:callBack];
 }
 
-+ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year callback:(void(^)(CMLResponse *response))callBack {
-    [self _getPollutedItemsByItemID:itemID year:year month:nil callback:callBack];
++ (void)_getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year reportType:(NSString *)reportType callback:(void(^)(CMLResponse *response))callBack {
+    [self _getPollutedItemsByItemID:itemID year:year month:nil reportType:reportType callback:callBack];
 }
 
 @end

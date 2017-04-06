@@ -92,6 +92,34 @@
     return nextMonFirstDate;
 }
 
++ (NSDate *)getStartTimeInYear:(NSString *)year month:(NSString *)month {
+    NSDate *date = [self dateWithYear:year month:month day:@"1"];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    [cmp setSecond:0];
+    [cmp setMinute:0];
+    [cmp setHour:0];
+    [cmp setDay:1];
+    NSDate *startTime = [calendar dateFromComponents:cmp];
+    
+    return startTime;
+}
+
++ (NSDate *)getEndTimeInYear:(NSString *)year month:(NSString *)month {
+    NSDate *startDate = [self dateWithYear:year month:month day:@"1"];
+    NSDate *endDate = [self getLastDateInMonth:startDate];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *cmp = [calendar components:NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:endDate];
+    [cmp setSecond:59];
+    [cmp setMinute:59];
+    [cmp setHour:23];
+    NSDate *endTime = [calendar dateFromComponents:cmp];
+    
+    return endTime;
+}
+
 + (NSDate *)getStartTimeAtDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *cmp = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];

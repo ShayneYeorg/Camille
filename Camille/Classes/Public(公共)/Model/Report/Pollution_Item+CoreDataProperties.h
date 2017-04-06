@@ -8,6 +8,9 @@
 
 #import "Pollution_Item+CoreDataClass.h"
 
+#define ReportType_DaySummary         @"0"
+#define ReportType_MonthSummary       @"1"
+#define ReportType_MonthItemSummary   @"2"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Pollution_Item *> *)fetchRequest;
 
+@property (nullable, nonatomic, copy) NSString *reportType;
 @property (nullable, nonatomic, copy) NSString *year;
 @property (nullable, nonatomic, copy) NSString *month;
 @property (nullable, nonatomic, copy) NSString *day;

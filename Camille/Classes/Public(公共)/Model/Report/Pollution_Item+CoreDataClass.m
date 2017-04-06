@@ -61,9 +61,9 @@
     }
 }
 
-+ (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day {
++ (void)deleteItemPollutionInfo:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType {
     @synchronized (self) {
-        [self getPollutedItemsByItemID:itemID year:year month:month day:day callback:^(CMLResponse * _Nonnull response) {
+        [self getPollutedItemsByItemID:itemID year:year month:month day:day reportType:reportType callback:^(CMLResponse * _Nonnull response) {
             if (PHRASE_ResponseSuccess) {
                 NSArray *pollutionItems = response.responseDic[KEY_Pollution_Items];
                 if (pollutionItems.count) {
@@ -89,7 +89,7 @@
     }
 }
 
-+ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day callback:(void(^)(CMLResponse *response))callBack {
++ (void)getPollutedItemsByItemID:(NSString *)itemID year:(NSString *)year month:(NSString *)month day:(NSString *)day reportType:(NSString *)reportType callback:(void(^)(CMLResponse *response))callBack {
     //request和entity
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pollution_Item" inManagedObjectContext:kManagedObjectContext];
@@ -108,6 +108,9 @@
     }
     if (day.length) {
         [strM appendFormat:@" AND day == '%@'", day];
+    }
+    if (reportType.length) {
+        [strM appendFormat:@" AND reportType == '%@'", day];
     }
     CMLLog(@"%@", strM);
     NSPredicate *pre = [NSPredicate predicateWithFormat:strM];
@@ -128,19 +131,19 @@
         
     } else if (pollutionItems.count) {
         CMLLog(@"Pollution_Item的个数是：%zd", pollutionItems.count);
-        CMLResponse *response = [CMLResponse new];
-        response.code = RESPONSE_CODE_SUCCEED;
-        response.desc = kTipFetchSuccess;
-        response.responseDic = @{KEY_Pollution_Items: pollutionItems};
-        callBack(response);
+        CMLResponse *cmlResponse = [CMLResponse new];
+        cmlResponse.code = RESPONSE_CODE_SUCCEED;
+        cmlResponse.desc = kTipFetchSuccess;
+        cmlResponse.responseDic = @{KEY_Pollution_Items: pollutionItems};
+        callBack(cmlResponse);
         
     } else {
         CMLLog(@"Pollution_Item查询无记录");
-        CMLResponse *response = [CMLResponse new];
-        response.code = RESPONSE_CODE_NO_RECORD;
-        response.desc = kTipFetchNoRecord;
-        response.responseDic = nil;
-        callBack(response);
+        CMLResponse *cmlResponse = [CMLResponse new];
+        cmlResponse.code = RESPONSE_CODE_NO_RECORD;
+        cmlResponse.desc = kTipFetchNoRecord;
+        cmlResponse.responseDic = nil;
+        callBack(cmlResponse);
     }
 }
 

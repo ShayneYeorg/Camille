@@ -40,12 +40,13 @@
         <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="month" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reportType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Accounting" positionX="-504" positionY="-66" width="128" height="165"/>
         <element name="Item" positionX="-504" positionY="126" width="128" height="120"/>
-        <element name="Pollution_Item" positionX="-504" positionY="63" width="128" height="105"/>
+        <element name="Pollution_Item" positionX="-504" positionY="63" width="128" height="120"/>
         <element name="Month_Summary_By_Item" positionX="-495" positionY="72" width="128" height="105"/>
         <element name="Month_Summary" positionX="-477" positionY="81" width="128" height="105"/>
         <element name="Day_Summary" positionX="-459" positionY="99" width="128" height="120"/>

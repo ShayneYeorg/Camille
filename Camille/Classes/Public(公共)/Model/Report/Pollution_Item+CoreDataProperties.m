@@ -14,6 +14,7 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Pollution_Item"];
 }
 
+@dynamic reportType;
 @dynamic year;
 @dynamic month;
 @dynamic day;
